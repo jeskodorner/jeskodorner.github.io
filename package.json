@@ -16,7 +16,8 @@
     "optimize": "node scripts/optimize.mjs",
     "new-gallery": "node scripts/new-gallery.mjs",
     "check-links": "node scripts/check-links.mjs",
-    "test": "astro check && astro build && node scripts/check-links.mjs"
+    "test": "astro check && astro build && node scripts/check-links.mjs",
+    "vorschau": "node scripts/make-preview.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
