@@ -15,7 +15,7 @@ const t = useTranslations();
     <p class="lead muted">{t.contact.intro}</p>
   </section>
 
-  <section class="container container--wide grid">
+  <section class:list={['container container--wide grid', { 'has-form': Boolean(site.contactForm.endpoint) }]}>
     <dl class="channels">
       <div id="email">
         <dt class="label muted">{t.contact.email}</dt>
@@ -50,7 +50,7 @@ const t = useTranslations();
     border-top: 2px solid var(--line-strong);
   }
   @media (min-width: 1000px) {
-    .grid {
+    .grid.has-form {
       grid-template-columns: 1fr 1fr;
     }
   }
@@ -66,10 +66,10 @@ const t = useTranslations();
     font-family: var(--font-display);
     font-weight: 700;
     text-transform: uppercase;
-    font-size: clamp(2rem, 1rem + 4.5vw, 5rem);
+    font-size: clamp(1.9rem, 0.6rem + 5.6vw, 6rem);
     line-height: 0.95;
     text-decoration: none;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
     display: inline-flex;
     align-items: baseline;
     gap: 0.2em;

@@ -28,21 +28,44 @@ body {
   font-size: var(--fs-base);
   line-height: 1.6;
   color: var(--ink);
-  background-color: var(--paper);
-  background-image: var(--grain);
+  background-color: var(--bg-base);
   -webkit-font-smoothing: antialiased;
   font-kerning: normal;
   text-rendering: optimizeLegibility;
   overflow-x: clip;
 }
-/* Papier-Struktur: eine feste, nicht gekachelte Ebene (keine sichtbaren Nahtstellen) */
-body::before {
+
+/*
+ * Hintergrund: weiche Lichtwolken (body::before) + Filmkorn (body::after).
+ * Beide liegen fest hinter dem Inhalt. Die Wolken wandern beim Scrollen langsam (siehe motion.css).
+ * Helligkeiten kommen aus tokens.css (--bg-light … --bg-shadow) und sind auf Lesbarkeit geprüft.
+ */
+body::before,
+body::after {
   content: '';
   position: fixed;
+  pointer-events: none;
+}
+body::before {
+  inset: -15%;
+  z-index: -2;
+  /* Diagonales Lichtband von oben links zur Mitte, Schattenmassen an den Rändern – wie ein Lichteinfall auf Film */
+  background:
+    radial-gradient(ellipse 46% 30% at 38% 34%, var(--bg-light) 0%, color-mix(in oklab, var(--bg-light) 70%, transparent) 35%, transparent 100%),
+    radial-gradient(ellipse 38% 26% at 60% 50%, var(--bg-light) 0%, color-mix(in oklab, var(--bg-light) 60%, transparent) 40%, transparent 100%),
+    radial-gradient(ellipse 30% 22% at 48% 66%, var(--bg-light-2) 0%, color-mix(in oklab, var(--bg-light-2) 60%, transparent) 40%, transparent 100%),
+    radial-gradient(ellipse 22% 34% at 24% 56%, var(--bg-light-2) 0%, transparent 100%),
+    radial-gradient(ellipse 52% 44% at 6% 96%, var(--bg-shadow) 0%, color-mix(in oklab, var(--bg-shadow) 80%, transparent) 40%, transparent 100%),
+    radial-gradient(ellipse 46% 40% at 98% 4%, var(--bg-shadow) 0%, color-mix(in oklab, var(--bg-shadow) 80%, transparent) 40%, transparent 100%),
+    radial-gradient(ellipse 44% 38% at 96% 98%, var(--bg-shadow) 0%, color-mix(in oklab, var(--bg-shadow) 70%, transparent) 40%, transparent 100%),
+    radial-gradient(ellipse 34% 40% at 2% 22%, var(--bg-shadow-2) 0%, color-mix(in oklab, var(--bg-shadow-2) 70%, transparent) 40%, transparent 100%),
+    radial-gradient(ellipse 30% 24% at 70% 80%, var(--bg-shadow-2) 0%, transparent 100%),
+    var(--bg-base);
+}
+body::after {
   inset: 0;
   z-index: -1;
-  pointer-events: none;
-  background: var(--mottle) center / cover no-repeat;
+  background-image: var(--grain-dark), var(--grain-light);
 }
 
 img,
@@ -347,7 +370,7 @@ a:hover .arrow,
     .reveal {
       animation-name: reveal;
       animation-timing-function: linear;
-      animation-fill-mode: both;
+      animation-fill-mode: forwards;
       animation-timeline: view();
       animation-range: entry 0% entry 35%;
     }

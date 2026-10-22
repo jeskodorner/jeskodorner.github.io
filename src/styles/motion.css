@@ -122,10 +122,12 @@ a.px:focus-visible {
       animation-timeline: view();
       animation-range: entry 0% entry 85%;
     }
+    /* fill-mode forwards: Vor dem Hereinscrollen bleibt alles normal sichtbar,
+       die Animation beginnt erst, wenn das Element den Bildschirmrand erreicht. */
     .rise {
       animation-name: rise;
       animation-timing-function: linear;
-      animation-fill-mode: both;
+      animation-fill-mode: forwards;
       animation-timeline: view();
       /* fertig, sobald das Element ganz im Bild ist – auch ganz unten auf der Seite */
       animation-range: entry 0% entry 100%;
@@ -133,7 +135,7 @@ a.px:focus-visible {
     .drift-left,
     .drift-right {
       animation-timing-function: linear;
-      animation-fill-mode: both;
+      animation-fill-mode: forwards;
       animation-timeline: view();
       animation-range: entry 0% entry 100%;
     }
@@ -155,12 +157,13 @@ a.px:focus-visible {
     .words {
       view-timeline-name: --words;
     }
+    /* Alle Wörter starten gedimmt, sobald der Satz hereinkommt, und leuchten nacheinander auf */
     .words .w {
       animation-name: word-light;
-      animation-timing-function: linear;
-      animation-fill-mode: both;
+      animation-timing-function: ease-in;
+      animation-fill-mode: forwards;
       animation-timeline: --words;
-      animation-range: cover calc(12% + var(--i) * var(--step, 2.2%)) cover calc(20% + var(--i) * var(--step, 2.2%));
+      animation-range: entry 0% cover calc(30% + var(--i) * var(--step, 3%));
     }
   }
 }
@@ -194,4 +197,25 @@ a.px:focus-visible {
   text-transform: none;
   color: var(--accent-vivid);
   font-size: 0.8em;
+}
+
+/* ---------- Hintergrund: Lichtwolken wandern beim Scrollen ---------- */
+@keyframes bg-drift {
+  from {
+    transform: translate3d(-3%, -4%, 0) rotate(-4deg) scale(1.04);
+  }
+  to {
+    transform: translate3d(4%, 5%, 0) rotate(5deg) scale(1.16);
+  }
+}
+@supports (animation-timeline: scroll()) {
+  @media (prefers-reduced-motion: no-preference) {
+    body::before {
+      animation-name: bg-drift;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: scroll(root);
+      will-change: transform;
+    }
+  }
 }

@@ -390,18 +390,26 @@ Schlägt etwas fehl, bleibt die alte Version online, und unter *Actions* steht d
 
 ## 11. Design: Farben und Schriften
 
-Palette „Sand & Terrakotta“, definiert in `src/styles/tokens.css`. Kontraste nach WCAG 2.x:
+Palette „Sand & Terrakotta“, definiert in `src/styles/tokens.css`.
 
-| Rolle | Hell | Dunkel | Kontrast hell / dunkel |
+**Hintergrund:** ein weicher Lichtverlauf wie Licht auf Film, mit hellem Band, dunkleren Rändern und kräftigem Filmkorn.
+Er liegt fest hinter dem Inhalt, die Lichtwolken wandern beim Scrollen langsam mit.
+Er ist reines CSS (Verläufe und SVG-Rauschen), also ohne Bilddatei.
+
+Die Schatten sind bewusst nicht so tief wie auf einem reinen Stimmungsbild: Text muss an **jeder** Stelle lesbar bleiben.
+Alle Textfarben sind gegen die ungünstigste Stelle des Hintergrunds geprüft (WCAG 2.x):
+
+| Rolle | Hell | Dunkel | Kontrast an der ungünstigsten Stelle (hell / dunkel) |
 |---|---|---|---|
-| Papier (Hintergrund) | `#FBF6EF` | `#15100C` | – |
-| Fläche | `#F3EADD` | `#201812` | – |
-| Text (Espresso / Leinen) | `#1C130E` | `#F6EDE2` | 17,0 : 1 / 16,3 : 1 |
-| Gedämpfter Text | `#68513F` | `#BFAB98` | 6,9 : 1 / 8,5 : 1 |
-| Akzent Terrakotta (Links, Buttons) | `#A8401C` | `#F09566` | 5,7 : 1 / 8,3 : 1 |
-| Akzent kräftig (nur große Schrift, Flächen) | `#C9542A` | `#F09566` | 4,1 : 1 (nur ab 24 px) |
+| Hintergrund: hellste Stelle | `#FDF8EE` | `#45382F` | – |
+| Hintergrund: Grundton | `#DDD2C1` | `#1A1410` | – |
+| Hintergrund: dunkelste Stelle | `#C9BCA9` | `#0B0806` | – |
+| Text | `#1C130E` | `#F6EDE2` | 9,8 : 1 / 9,7 : 1 |
+| Nebentext | `#554232` | `#BFAB98` | 5,1 : 1 / 5,1 : 1 |
+| Akzent Terrakotta (Links, kleine Schrift, Buttons) | `#85311A` | `#F09566` | 4,6 : 1 / 4,9 : 1 |
+| Akzent kräftig (nur große Schrift ab 24 px, Flächen) | `#A8401C` | `#F09566` | 3,3 : 1 |
 
-Filmkorn und Papierstruktur sind SVG-Rauschen und kommen ohne Bilddatei aus.
+Wenn du die Schatten (`--bg-shadow`) dunkler machst, musst du diese Werte neu prüfen.
 Der Hell- oder Dunkelmodus folgt der Systemeinstellung. Eine manuelle Wahl über den Umschalter wird gespeichert.
 
 **Schriften** (lokal, über Fontsource, Lizenz OFL):
