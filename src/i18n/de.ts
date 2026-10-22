@@ -7,7 +7,7 @@ export const de = {
   nav: {
     label: 'Hauptnavigation',
     home: 'Start',
-    galleries: 'Galerien',
+    galleries: 'Galerie',
     film: 'Film',
     about: 'Über mich',
     contact: 'Kontakt',
@@ -21,7 +21,7 @@ export const de = {
     top: 'Nach oben',
   },
   home: {
-    cta: 'Galerien ansehen',
+    cta: 'Zur Galerie',
     selected: 'Ausgewählte Arbeiten',
     allGalleries: 'Alle Galerien',
     aboutTeaser: 'Über mich',
@@ -32,7 +32,7 @@ export const de = {
     contactText: 'Für Aufträge, Kooperationen oder einfach Hallo.',
   },
   galleries: {
-    title: 'Galerien',
+    title: 'Galerie',
     intro: 'Serien, Reisen und Aufträge.',
     images: (n: number) => (n === 1 ? '1 Bild' : `${n} Bilder`),
     back: 'Alle Galerien',
@@ -114,6 +114,6 @@ export const de = {
     title: 'Unterbelichtet',
     text: 'Diese Seite gibt es nicht – oder nicht mehr. Vielleicht hat sich ein Tippfehler in den Link geschlichen.',
     home: 'Zur Startseite',
-    galleries: 'Zu den Galerien',
+    galleries: 'Zur Galerie',
   },
 } as const;

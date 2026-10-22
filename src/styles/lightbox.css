@@ -30,9 +30,7 @@
   outline: 3px solid #2b3bff;
   outline-offset: -4px;
 }
-.pswp__icn {
-  fill: none;
-}
+/* Eigene Symbole (Teilen, Download) sind Linien-Icons in der Textfarbe */
 .pswp__button--jd-share .pswp__icn,
 .pswp__button--jd-download .pswp__icn {
   width: 24px;
@@ -40,6 +38,33 @@
   top: 18px;
   left: 13px;
   fill: none;
+  color: var(--pswp-icon-color);
+}
+
+/* Schließen: deutlich sichtbares rundes X oben rechts */
+.pswp__button--close {
+  --pswp-icon-color: #ffffff;
+  --pswp-icon-stroke-color: transparent;
+  width: 52px;
+  height: 52px;
+  margin: 10px 12px 0 6px;
+  border-radius: 50%;
+  background: #0b0b0b;
+  transition:
+    background-color 0.2s,
+    scale 0.3s var(--pop);
+}
+.pswp__button--close .pswp__icn {
+  top: 10px;
+  left: 10px;
+}
+.pswp__button--close:hover {
+  --pswp-icon-color: #0b0b0b;
+  background: #d4ff3a;
+  scale: 1.06;
+}
+.pswp__button--close:focus-visible {
+  outline-offset: 3px;
 }
 .pswp__jd-caption {
   position: absolute;
