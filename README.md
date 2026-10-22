@@ -234,6 +234,10 @@ Willst du ein bestimmtes Bild über die volle Breite, setze es an eine passende 
 **Teilbare Bild-Links:** Jedes Bild hat eine eigene Seite (`/galerien/kueste-im-oktober/3/`) und einen Lightbox-Link
 (`/galerien/kueste-im-oktober/#bild-3`). Die Nummer entspricht der Position in der Liste. Beim Umsortieren ändern sich die Nummern.
 
+**Bildseite durchblättern:** Links und rechts neben dem Bild stehen „Vorheriges Bild“ und „Nächstes Bild“ (auf dem Handy
+darunter). Mit der Tastatur geht es per **←** und **→** weiter, **Esc** führt zurück zur Galerie an die Stelle des Bildes
+(`#pos-3`, öffnet keine Lightbox). Chrome und Edge laden das nächste Bild im Hintergrund vor.
+
 ---
 
 ## 6. Bildübergabe: Downloads und Unlisted-Galerien

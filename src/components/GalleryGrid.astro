@@ -3,6 +3,7 @@
  * Galerie-Darstellung: „showcase“ (Bühne, jedes Bild groß mit Parallax), „masonry“ oder „justified“.
  * Jedes Bild ist ein normaler Link auf seine Bildseite (funktioniert ohne JS).
  * Mit JS öffnet PhotoSwipe die Lightbox; die URL bekommt #bild-N und ist teilbar.
+ * #pos-N springt nur zum Bild, ohne Lightbox („Zur Galerie“ auf der Bildseite).
  */
 import type { Gallery } from '../lib/galleries';
 import { responsive } from '../lib/images';
@@ -48,6 +49,7 @@ const stageItems: StageItem[] = items.map((it) => ({
   title: it.img.caption,
   meta: it.exif || undefined,
   attrs: pswpAttrs(it),
+  anchor: `pos-${it.img.index}`,
 }));
 ---
 
@@ -62,6 +64,7 @@ const stageItems: StageItem[] = items.map((it) => ({
     <div id="gallery" class:list={['grid', `grid--${layout}`]} data-gallery data-count={gallery.images.length} data-layout={layout}>
       {items.map((it) => (
         <a class="ph reveal" href={it.img.pageUrl} style={`--r:${it.ratio.toFixed(4)}`} {...pswpAttrs(it)}>
+          <span class="pos" id={`pos-${it.img.index}`} />
           <Picture
             src={it.img.src}
             alt={it.img.alt}
@@ -80,6 +83,12 @@ const stageItems: StageItem[] = items.map((it) => ({
 <script>
   import { initLightbox } from '../scripts/lightbox';
   initLightbox();
+
+  // „Zur Galerie“ von der Bildseite (#pos-N): zum Bild springen. Chrome macht das nach einem
+  // Seitenwechsel mit View Transition nicht von selbst.
+  if (/^#pos-\d+$/.test(location.hash)) {
+    document.querySelector(location.hash)?.scrollIntoView({ block: 'start', behavior: 'instant' });
+  }
 </script>
 
 <style>
@@ -92,6 +101,11 @@ const stageItems: StageItem[] = items.map((it) => ({
     overflow: hidden;
     background: var(--sand);
     outline-offset: 4px;
+  }
+  .pos {
+    position: absolute;
+    top: 0;
+    left: 0;
   }
   .ph :global(img) {
     width: 100%;

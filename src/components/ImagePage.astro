@@ -57,24 +57,52 @@ const jsonLd = gallery.isUnlisted
 >
   <div class="container container--wide img-page">
     <nav class="top label" aria-label="Bildnavigation">
-      <a class="back" href={`${gallery.url}#bild-${image.index}`}>
+      <!-- #pos-N scrollt nur zum Bild; #bild-N würde die Lightbox öffnen -->
+      <a class="back" href={`${gallery.url}#pos-${image.index}`}>
         <Icon name="arrow-left" /> {t.image.back}: {gallery.title}
       </a>
       <span class="count muted">{t.image.of(image.index, n)}</span>
     </nav>
 
     <figure>
-      <div class="frame">
-        <Picture
-          src={image.src}
-          alt={image.alt}
-          sizes="(min-width: 1200px) 80vw, 100vw"
-          color={image.color}
-          lqip={image.lqip}
-          loading="eager"
-          fetchpriority="high"
-          class="main-img"
-        />
+      <!-- Bild mit Vor/Zurück links und rechts (auf dem Handy darunter); Pfeiltasten siehe Skript unten -->
+      <div class="viewer">
+        {
+          prev ? (
+            <a class="step step--prev" href={prev.pageUrl} rel="prev" aria-keyshortcuts="ArrowLeft" title="Pfeiltaste ←">
+              <span class="step-circle" aria-hidden="true">
+                <Icon name="arrow-left" />
+              </span>
+              <span class="step-label">{t.image.prev}</span>
+            </a>
+          ) : (
+            <span class="step step--prev" />
+          )
+        }
+        <div class="frame">
+          <Picture
+            src={image.src}
+            alt={image.alt}
+            sizes="(min-width: 1200px) 80vw, 100vw"
+            color={image.color}
+            lqip={image.lqip}
+            loading="eager"
+            fetchpriority="high"
+            class="main-img"
+          />
+        </div>
+        {
+          next ? (
+            <a class="step step--next" href={next.pageUrl} rel="next" aria-keyshortcuts="ArrowRight" title="Pfeiltaste →">
+              <span class="step-circle" aria-hidden="true">
+                <Icon name="arrow-right" />
+              </span>
+              <span class="step-label">{t.image.next}</span>
+            </a>
+          ) : (
+            <span class="step step--next" />
+          )
+        }
       </div>
       <figcaption>
         <h1 class="display display-3">{image.caption ?? gallery.title}</h1>
@@ -117,26 +145,34 @@ const jsonLd = gallery.isUnlisted
       </div>
     </div>
 
-    <nav class="pager" aria-label="Weitere Bilder">
-      {
-        prev ? (
-          <a href={prev.pageUrl} rel="prev" class="btn">
-            <Icon name="arrow-left" /> {t.image.prev}
-          </a>
-        ) : (
-          <span />
-        )
-      }
-      {
-        next && (
-          <a href={next.pageUrl} rel="next" class="btn">
-            {t.image.next} <Icon name="arrow-right" />
-          </a>
-        )
-      }
-    </nav>
   </div>
+  {
+    /* Chrome/Edge laden das nächste Bild schon im Hintergrund vor – Weiterblättern wirkt dann sofort.
+       Andere Browser ignorieren das. */
+    next && <script is:inline type="speculationrules" set:html={JSON.stringify({ prerender: [{ urls: [next.pageUrl] }] })} />
+  }
 </BaseLayout>
+
+<script>
+  // Tastatur: ← vorheriges Bild, → nächstes Bild, Esc zurück zur Galerie
+  const isOpen = (sel: string) => {
+    try {
+      return document.querySelector(sel) !== null;
+    } catch {
+      return false; // Browser kennt den Selektor nicht
+    }
+  };
+  document.addEventListener('keydown', (e) => {
+    if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+    if ((e.target as HTMLElement).closest('input, textarea, select, [contenteditable]')) return;
+    if (isOpen(':popover-open') || isOpen('dialog[open]')) return; // z. B. Handy-Menü offen
+    const sel = { ArrowLeft: 'a.step[rel="prev"]', ArrowRight: 'a.step[rel="next"]', Escape: 'a.back' }[e.key];
+    const link = sel ? document.querySelector<HTMLAnchorElement>(sel) : null;
+    if (!link) return;
+    e.preventDefault();
+    link.click();
+  });
+</script>
 
 <style>
   .img-page {
@@ -157,11 +193,108 @@ const jsonLd = gallery.isUnlisted
   figure {
     margin-top: 1.25rem;
   }
+
+  /* Handy: Bild oben, darunter Zurück (links) und Weiter (rechts) */
+  .viewer {
+    --frame-pad: clamp(0.5rem, 3vw, 3rem);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      'img img'
+      'prev next';
+    column-gap: 1rem;
+  }
+  .frame {
+    grid-area: img;
+    min-width: 0;
+  }
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .step--prev {
+    grid-area: prev;
+    justify-self: start;
+  }
+  .step--next {
+    grid-area: next;
+    justify-self: end;
+    flex-direction: row-reverse;
+    text-align: right;
+  }
+  .step-circle {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 3.5rem;
+    height: 3.5rem;
+    border: 2.5px solid var(--ink);
+    border-radius: 50%;
+    background: var(--wall);
+    transition:
+      background-color 0.2s,
+      scale 0.3s var(--pop);
+  }
+  .step-circle :global(svg) {
+    width: 1.4rem;
+    height: 1.4rem;
+    transition: translate 0.3s var(--pop);
+  }
+  .step-label {
+    font-size: var(--fs-xs);
+    font-weight: 800;
+    font-stretch: 85%;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    line-height: 1.3;
+  }
+  .step:hover .step-circle {
+    background: var(--lime);
+    scale: 1.06;
+  }
+  .step--prev:hover .step-circle :global(svg) {
+    translate: -0.2rem 0;
+  }
+  .step--next:hover .step-circle :global(svg) {
+    translate: 0.2rem 0;
+  }
+  /* Fokusring am Kreis statt um die ganze Klickfläche */
+  .step:focus-visible {
+    outline: none;
+  }
+  .step:focus-visible .step-circle {
+    background: var(--lime);
+    outline: 3px solid var(--blue);
+    outline-offset: 3px;
+  }
+
+  /* Ab Tablet: Zurück links, Weiter rechts neben dem Bild; die ganze Seitenfläche ist klickbar */
+  @media (min-width: 900px) {
+    .viewer {
+      grid-template-columns: minmax(9rem, 1fr) minmax(0, auto) minmax(9rem, 1fr);
+      grid-template-areas: 'prev img next';
+      column-gap: clamp(1rem, 2vw, 2rem);
+    }
+    .step {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-self: stretch;
+      padding-top: calc(var(--frame-pad) + 1.25rem);
+    }
+    .step--next {
+      flex-direction: column;
+      align-items: flex-end;
+    }
+  }
+
   /* Das Bild hängt frei an der weißen Wand */
   .frame {
     display: grid;
     place-items: center;
-    padding: clamp(0.5rem, 3vw, 3rem) 0;
+    padding: var(--frame-pad) 0;
   }
   .frame :global(.main-img) {
     width: auto;
@@ -214,11 +347,5 @@ const jsonLd = gallery.isUnlisted
     gap: 1.5rem;
     align-content: start;
     justify-items: start;
-  }
-  .pager {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    margin-top: 2.5rem;
   }
 </style>
