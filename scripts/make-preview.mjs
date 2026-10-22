@@ -91,7 +91,7 @@ mit der Website. Zum Beenden das Terminal-Fenster schließen.
 Benötigt: python3 (auf dem Mac meist vorhanden) oder Node.js.
 
 Hinweis: Diese Vorschau ist ein Schnappschuss vom ${new Date().toLocaleString('de-DE')}.
-Links zum Teilen zeigen bereits auf die spätere Adresse https://jeskodor.github.io.
+Links zum Teilen zeigen bereits auf die spätere Adresse https://jeskodorner.github.io.
 `;
 
 const cmdPath = path.join(OUT, 'Vorschau starten.command');

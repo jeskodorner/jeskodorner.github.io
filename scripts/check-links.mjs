@@ -84,7 +84,7 @@ for (const file of htmlFiles) {
 
   for (const m of html.matchAll(attrRe)) {
     const [, attr, value] = m;
-    if (attr === 'content' && !/^https?:\/\/jeskodor\.github\.io/.test(value)) continue;
+    if (attr === 'content' && !/^https?:\/\/jeskodorner\.github\.io/.test(value)) continue;
     const urls =
       attr === 'srcset' || attr === 'data-pswp-srcset'
         ? value.split(',').map((s) => s.trim().split(/\s+/)[0])
@@ -94,7 +94,7 @@ for (const file of htmlFiles) {
       if (u.startsWith('#')) {
         continue; // seiteninterne Anker prüfen wir unten nicht einzeln
       }
-      if (/^https?:\/\/jeskodor\.github\.io/.test(u)) u = u.replace(/^https?:\/\/jeskodor\.github\.io/, '');
+      if (/^https?:\/\/jeskodorner\.github\.io/.test(u)) u = u.replace(/^https?:\/\/jeskodorner\.github\.io/, '');
       if (/^(https?:)?\/\//.test(u)) {
         const host = new URL(u, 'https://x').host;
         external.set(host, (external.get(host) ?? 0) + 1);

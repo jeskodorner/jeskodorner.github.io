@@ -4,7 +4,7 @@
  */
 export const site = {
   name: 'Jesko Dorner',
-  url: 'https://jeskodor.github.io',
+  url: 'https://jeskodorner.github.io',
   lang: 'de',
   ogLocale: 'de_DE',
 
@@ -34,7 +34,7 @@ export const site = {
 
   /**
    * GoatCounter (optional, cookielos). Nur den Code eintragen,
-   * z. B. 'jeskodor' für https://jeskodor.goatcounter.com
+   * z. B. 'jeskodorner' für https://jeskodorner.goatcounter.com
    */
   analytics: { goatcounter: '' },
 

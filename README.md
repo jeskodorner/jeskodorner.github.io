@@ -2,7 +2,7 @@
 
 Statische Portfolio-Website mit Galerien, Lightbox, Bildübergabe an Kunden und Filmarbeiten.
 Gebaut mit **Astro 7** und TypeScript und gehostet kostenlos auf **GitHub Pages** unter
-**https://jeskodor.github.io**.
+**https://jeskodorner.github.io**.
 
 - Keine Cookies, keine Tracker, keine Google Fonts. Alle Schriften liegen lokal im Projekt.
 - Die Seiten funktionieren ohne JavaScript. JavaScript wird nur für Lightbox, Teilen und die E-Mail-Adresse verwendet.
@@ -325,8 +325,8 @@ Alles in `src/config/site.ts`:
    Formspree sitzt in den USA.
 
 **Statistik mit GoatCounter (cookielos)**
-1. Bei [goatcounter.com](https://www.goatcounter.com) einen Zugang anlegen, z. B. mit dem Code `jeskodor`.
-2. Eintragen: `analytics: { goatcounter: 'jeskodor' }`.
+1. Bei [goatcounter.com](https://www.goatcounter.com) einen Zugang anlegen, z. B. mit dem Code `jeskodorner`.
+2. Eintragen: `analytics: { goatcounter: 'jeskodorner' }`.
 3. Das Skript wird nur auf öffentlichen Seiten geladen, nicht auf Unlisted-Galerien. Die Datenschutzerklärung bekommt automatisch einen Abschnitt.
    Hinweis: Der gehostete Dienst ist laut GoatCounter für nicht-kommerzielle Nutzung kostenlos.
    Wenn du über die Seite Aufträge akquirierst, prüfe bitte die Bedingungen.
@@ -340,24 +340,30 @@ Die Bilder blenden ruhig über, ohne JavaScript. Bei „Bewegung reduzieren“ b
 
 ## 9. Deployment auf GitHub Pages
 
-Einmalig, ca. 10 Minuten:
+Die Adresse einer GitHub-Pages-Seite ist immer `<kontoname>.github.io`. Das Konto heißt **jeskodorner**,
+das Repository muss deshalb exakt **`jeskodorner.github.io`** heißen. Eine Organisation brauchst du nicht.
 
-1. Auf GitHub (angemeldet als **jeskodor**) ein neues Repository anlegen:
-   **Name exakt `jeskodor.github.io`**, Sichtbarkeit **Public**, ohne README, .gitignore oder Lizenz.
-2. Im Projektordner das Repo verbinden und hochladen:
-   ```bash
-   git remote add origin https://github.com/jeskodor/jeskodor.github.io.git
-   ```
-   ```bash
-   git push -u origin main
-   ```
-   Beim ersten Push fragt Git nach der Anmeldung. Am einfachsten geht das mit der GitHub-Desktop-App oder dem
-   GitHub CLI (`brew install gh`, dann `gh auth login`).
-3. Auf GitHub: **Settings → Pages → Build and deployment → Source: „GitHub Actions“** auswählen.
-4. Unter **Actions** läuft jetzt „Deploy auf GitHub Pages“ (2–5 Minuten). Danach ist die Seite unter
-   **https://jeskodor.github.io** erreichbar.
+### Einmalig einrichten (mit GitHub Desktop, ca. 10 Minuten)
 
-Ab dann gilt: **Jeder Push auf `main` veröffentlicht automatisch.** Typischer Ablauf:
+1. **GitHub Desktop** öffnen und unter *Einstellungen → Accounts* prüfen, dass du als **jeskodorner** angemeldet bist.
+2. *File → Add Local Repository…* → Projektordner „Website Jesko Dorner“ wählen → *Add Repository*.
+3. Oben auf **„Publish repository“** klicken:
+   - Name: **`jeskodorner.github.io`**
+   - Haken bei **„Keep this code private“ entfernen**. GitHub Pages braucht im kostenlosen Tarif ein öffentliches Repo.
+   - Organization: **None**
+   - *Publish Repository*
+4. Auf github.com/jeskodorner/jeskodorner.github.io: **Settings → Pages → Build and deployment → Source: „GitHub Actions“**.
+5. **Actions** → „Deploy auf GitHub Pages“ → **Run workflow** → *Run workflow*.
+   Der erste automatische Lauf direkt nach dem Veröffentlichen kann fehlschlagen, weil Pages da noch nicht eingeschaltet war. Das ist normal.
+6. Nach 2–5 Minuten ist der Lauf grün und die Seite unter **https://jeskodorner.github.io** erreichbar.
+
+### Änderungen veröffentlichen
+
+**Jeder Push auf `main` veröffentlicht automatisch.** In GitHub Desktop:
+1. Links erscheinen die geänderten Dateien. Unten eine kurze Beschreibung eintragen, z. B. „Neue Galerie: Küste im Oktober“ → **Commit to main**.
+2. Oben **Push origin** klicken.
+
+Oder im Terminal:
 
 ```bash
 git add -A
@@ -373,6 +379,22 @@ git push
 
 Der Workflow (`.github/workflows/deploy.yml`) prüft vor dem Veröffentlichen Typen, Inhalte, Links und Unlisted-Regeln.
 Schlägt etwas fehl, bleibt die alte Version online, und unter *Actions* steht der Grund.
+
+### Alternative: ohne GitHub Desktop (Terminal)
+
+```bash
+brew install gh
+```
+
+```bash
+gh auth login
+```
+
+```bash
+gh repo create jeskodorner/jeskodorner.github.io --public --source . --push
+```
+
+Danach weiter mit Schritt 4 und 5 von oben.
 
 ---
 
@@ -461,7 +483,7 @@ Den Slug um z. B. `-x7k2p9` ergänzen oder die Galerie mit `--unlisted` neu anle
 
 **Seite auf GitHub zeigt 404 oder eine alte Version**
 - *Settings → Pages → Source* muss auf **GitHub Actions** stehen, nicht auf „Deploy from a branch“.
-- Das Repo muss exakt `jeskodor.github.io` heißen. Sonst stimmt die Adresse nicht.
+- Das Repo muss exakt `jeskodorner.github.io` heißen. Sonst stimmt die Adresse nicht.
 - Unter *Actions* nachsehen, ob der letzte Lauf grün ist. Nach einem grünen Lauf kann es 1–2 Minuten dauern.
 
 **Bilder fehlen auf GitHub, lokal sind sie da**
