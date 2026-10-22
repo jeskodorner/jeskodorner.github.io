@@ -1,0 +1,106 @@
+---
+import { site } from '../config/site';
+import { useTranslations } from '../i18n';
+import Icon from './Icon.astro';
+import EmailLink from './EmailLink.astro';
+
+const t = useTranslations();
+const year = new Date().getFullYear();
+const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : String(year);
+---
+
+<footer class="site-footer">
+  <div class="container container--wide">
+    <div class="top">
+      <div class="contact">
+        <p class="label muted">{t.nav.contact}</p>
+        <p class="links">
+          <EmailLink class="big-link" />
+          <a class="big-link" href={site.instagram.url} rel="me noopener" target="_blank">
+            <Icon name="instagram" size="0.9em" /> @{site.instagram.handle}
+          </a>
+        </p>
+      </div>
+      <nav class="legal" aria-label="Rechtliches">
+        <a href="/impressum/">{t.footer.imprint}</a>
+        <a href="/datenschutz/">{t.footer.privacy}</a>
+        <a href="#top">{t.footer.top} ↑</a>
+      </nav>
+    </div>
+
+    <p class="wordmark display mega" aria-hidden="true">Jesko Dorner</p>
+
+    <p class="copy label muted">
+      <small>© {years} {site.name}. {t.footer.rights}</small>
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-top: var(--section);
+    padding-top: clamp(2.5rem, 5vw, 4.5rem);
+    padding-bottom: 1.5rem;
+    border-top: 2px solid var(--line-strong);
+    overflow: hidden;
+  }
+  .top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 2rem;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 2rem;
+    margin-top: 0.6rem;
+  }
+  .contact :global(.big-link) {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: var(--fs-lead);
+    font-weight: 360;
+    text-decoration: none;
+    background: linear-gradient(currentColor, currentColor) no-repeat left bottom / 100% 1px;
+    transition: background-size 0.35s var(--ease), color 0.2s;
+  }
+  .contact :global(.big-link:hover) {
+    background-size: 0 1px;
+    background-position: right bottom;
+  }
+  .legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.75rem;
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .legal a {
+    text-decoration: none;
+  }
+  .legal a:hover {
+    text-decoration: underline;
+  }
+  .wordmark {
+    margin-top: clamp(2.5rem, 6vw, 5rem);
+    white-space: nowrap;
+    font-size: clamp(4rem, 0.4rem + 16.4vw, 25rem);
+    line-height: 0.78;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    user-select: none;
+  }
+  .copy {
+    margin-top: 1.25rem;
+  }
+  .copy small {
+    font-size: inherit;
+  }
+</style>

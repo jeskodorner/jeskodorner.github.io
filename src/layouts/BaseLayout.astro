@@ -1,0 +1,45 @@
+---
+import '@fontsource-variable/sofia-sans-extra-condensed';
+import '@fontsource-variable/sofia-sans';
+import '@fontsource-variable/fraunces';
+import '@fontsource-variable/fraunces/wght-italic.css';
+import '../styles/global.css';
+
+import BaseHead, { type Props as HeadProps } from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { site } from '../config/site';
+import { useTranslations } from '../i18n';
+
+export interface Props extends HeadProps {
+  /** Header transparent über dem Hero (nur Startseite) */
+  overlayHeader?: boolean;
+  /** Zusätzliche Klasse für <main> */
+  mainClass?: string;
+}
+
+const { overlayHeader = false, mainClass, ...head } = Astro.props;
+const t = useTranslations();
+---
+
+<!doctype html>
+<html lang={site.lang} id="top">
+  <head>
+    <BaseHead {...head} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{t.skipLink}</a>
+    <Header overlay={overlayHeader} />
+    <main id="main" class={mainClass} tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  main:focus {
+    outline: none;
+  }
+</style>

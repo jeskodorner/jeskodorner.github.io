@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { useTranslations } from '../i18n';
+
+export interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+const t = useTranslations();
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="container container--wide legal">
+    <h1 class="display display-2">{title}</h1>
+    <p class="warning" role="note"><strong>Hinweis:</strong> {t.legal.placeholder}</p>
+    <div class="prose">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .legal {
+    padding-top: clamp(2.5rem, 6vw, 5rem);
+  }
+  .warning {
+    max-width: var(--max-text);
+    margin-block: 2rem 2.5rem;
+    padding: 1rem 1.2rem;
+    border: 2px solid var(--accent);
+    background: var(--paper-2);
+    color: var(--ink);
+  }
+  .prose :global(.ph) {
+    background: var(--sand);
+    padding: 0 0.25em;
+    font-style: italic;
+  }
+</style>

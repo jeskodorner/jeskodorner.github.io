@@ -1,0 +1,51 @@
+---
+import type { ImageMetadata } from 'astro';
+import { responsive } from '../lib/images';
+
+export interface Props {
+  src: ImageMetadata;
+  alt: string;
+  sizes: string;
+  /** Dominante Farbe / Blur-Platzhalter aus meta.json */
+  color?: string;
+  lqip?: string;
+  loading?: 'lazy' | 'eager';
+  fetchpriority?: 'high' | 'low' | 'auto';
+  class?: string;
+  pictureClass?: string;
+  style?: string;
+}
+
+const {
+  src,
+  alt,
+  sizes,
+  color = '#d9c9b4',
+  lqip,
+  loading = 'lazy',
+  fetchpriority,
+  class: className,
+  pictureClass,
+  style = '',
+} = Astro.props;
+
+const set = await responsive(src);
+const bg = `background-color:${color};${lqip ? `background-image:url(${lqip});` : ''}${style}`;
+---
+
+<picture class={pictureClass}>
+  <source type="image/avif" srcset={set.avif} sizes={sizes} />
+  <img
+    class:list={['ph-img', className]}
+    src={set.src}
+    srcset={set.webp}
+    sizes={sizes}
+    width={set.width}
+    height={set.height}
+    alt={alt}
+    loading={loading}
+    decoding={loading === 'eager' ? 'sync' : 'async'}
+    fetchpriority={fetchpriority}
+    style={bg}
+  />
+</picture>

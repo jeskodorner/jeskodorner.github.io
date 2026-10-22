@@ -1,0 +1,90 @@
+/*
+ * Design-Tokens – Palette „Sand & Terrakotta“ (heller, mit mehr Punch)
+ * Kontraste (WCAG 2.x), hell:  Text/Papier 17:1 · Gedämpft/Papier 6,9:1 · Akzent/Papier 5,7:1
+ *                      dunkel: Text/Papier 16,3:1 · Gedämpft/Papier 8,5:1 · Akzent/Papier 8,3:1
+ * --accent-vivid (hell #C9542A, 4,1:1) NUR für große Schrift (ab 24 px) und Flächen/Grafik.
+ */
+
+:root {
+  --paper: #fbf6ef;
+  --paper-2: #f3eadd;
+  --sand: #e8dac6;
+  --ink: #1c130e;
+  --ink-soft: #68513f;
+  --accent: #a8401c;
+  --accent-vivid: #c9542a;
+  --on-accent: #fbf6ef;
+  --line: rgb(28 19 14 / 0.16);
+  --line-strong: #1c130e;
+  --scrim: 21 14 10;
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .11 0 0 0 0 .07 0 0 0 0 .05 1.1 0 0 0 -.47'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  --mottle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.0045' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .38 0 0 0 0 .22 .5 0 0 0 -.16'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
+  color-scheme: light;
+
+  /* Schriften – alle lokal eingebunden (keine Google-Fonts-CDN) */
+  --font-display: 'Sofia Sans Extra Condensed Variable', 'Arial Narrow', 'Roboto Condensed', sans-serif;
+  --font-serif: 'Fraunces Variable', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Sofia Sans Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Fließende Schriftgrößen 360 px → 2560 px */
+  --fs-xs: 0.8125rem;
+  --fs-sm: 0.9375rem;
+  --fs-base: clamp(1.0625rem, 1rem + 0.2vw, 1.25rem);
+  --fs-lead: clamp(1.25rem, 1.05rem + 0.8vw, 1.9rem);
+  --fs-h3: clamp(1.9rem, 1.4rem + 2vw, 3.2rem);
+  --fs-h2: clamp(3rem, 1.6rem + 6vw, 8rem);
+  --fs-h1: clamp(4.25rem, 1.5rem + 12vw, 14rem);
+  --fs-mega: clamp(5rem, 0.5rem + 19vw, 24rem);
+
+  /* Abstände */
+  --gutter: clamp(1rem, 0.4rem + 3vw, 3.5rem);
+  --gap: clamp(0.5rem, 0.3rem + 0.8vw, 1.25rem);
+  --section: clamp(4.5rem, 2rem + 9vw, 11rem);
+  --max: 1760px;
+  --max-text: 64ch;
+  --header-h: 4.5rem;
+
+  --radius: 2px;
+  --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
+}
+
+@media (min-width: 900px) {
+  :root {
+    --header-h: 5.25rem;
+  }
+}
+
+/* Dunkel – warmes Braun. Zweimal definiert: Systemeinstellung + manuelle Wahl. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --paper: #15100c;
+    --paper-2: #201812;
+    --sand: #33271e;
+    --ink: #f6ede2;
+    --ink-soft: #bfab98;
+    --accent: #f09566;
+    --accent-vivid: #f09566;
+    --on-accent: #15100c;
+    --line: rgb(246 237 226 / 0.16);
+    --line-strong: #f6ede2;
+    --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .96 0 0 0 0 .9 0 0 0 0 .82 1 0 0 0 -.5'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    --mottle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.0045' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .3 0 0 0 0 .18 .45 0 0 0 -.15'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  --paper: #15100c;
+  --paper-2: #201812;
+  --sand: #33271e;
+  --ink: #f6ede2;
+  --ink-soft: #bfab98;
+  --accent: #f09566;
+  --accent-vivid: #f09566;
+  --on-accent: #15100c;
+  --line: rgb(246 237 226 / 0.16);
+  --line-strong: #f6ede2;
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .96 0 0 0 0 .9 0 0 0 0 .82 1 0 0 0 -.5'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  --mottle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.0045' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .3 0 0 0 0 .18 .45 0 0 0 -.15'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
+  color-scheme: dark;
+}

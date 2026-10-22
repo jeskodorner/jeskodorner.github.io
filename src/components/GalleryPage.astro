@@ -1,0 +1,268 @@
+---
+/** Gemeinsame Vorlage für öffentliche (/galerien/…) und unlisted (/g/…) Galerien. */
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import GalleryGrid from './GalleryGrid.astro';
+import ShareBox from './ShareBox.astro';
+import DownloadBox from './DownloadBox.astro';
+import Icon from './Icon.astro';
+import Picture from './Picture.astro';
+import { getNeighbours, type Gallery } from '../lib/galleries';
+import { ogImage, responsive } from '../lib/images';
+import { useTranslations, formatMonth } from '../i18n';
+import { site } from '../config/site';
+
+export interface Props {
+  gallery: Gallery;
+}
+
+const { gallery } = Astro.props;
+const t = useTranslations();
+const { prev, next } = await getNeighbours(gallery);
+const og = await ogImage(gallery.cover.src);
+const absUrl = new URL(gallery.url, Astro.site ?? site.url).href;
+const hasBody = Boolean(gallery.entry.body?.trim());
+const { Content } = hasBody ? await render(gallery.entry) : { Content: null };
+
+// Strukturierte Daten nur für öffentliche Galerien
+const jsonLd = gallery.isUnlisted
+  ? undefined
+  : {
+      '@context': 'https://schema.org',
+      '@type': 'ImageGallery',
+      name: gallery.title,
+      description: gallery.description,
+      url: absUrl,
+      dateCreated: gallery.date.toISOString().slice(0, 10),
+      ...(gallery.location ? { locationCreated: { '@type': 'Place', name: gallery.location } } : {}),
+      author: { '@type': 'Person', name: site.name, url: site.url },
+      image: await Promise.all(
+        gallery.images.map(async (img) => {
+          const set = await responsive(img.src);
+          const v = set.webpVariants.find((x) => x.width >= 1200) ?? set.largest;
+          return {
+            '@type': 'ImageObject',
+            contentUrl: new URL(v.url, site.url).href,
+            url: new URL(img.pageUrl, site.url).href,
+            name: img.caption ?? img.alt,
+            description: img.alt,
+            creator: { '@type': 'Person', name: site.name },
+            creditText: site.name,
+            copyrightNotice: `© ${site.name}`,
+            acquireLicensePage: new URL('/kontakt/', site.url).href,
+          };
+        }),
+      ),
+    };
+---
+
+<BaseLayout
+  title={gallery.title}
+  description={gallery.description}
+  image={{ ...og, alt: gallery.cover.alt }}
+  noindex={gallery.isUnlisted}
+  noReferrer={gallery.isUnlisted}
+  jsonLd={jsonLd}
+>
+  <div class="progress" aria-hidden="true"></div>
+
+  <article>
+    <header class="g-head container container--wide">
+      {
+        !gallery.isUnlisted && (
+          <a class="back label" href="/galerien/">
+            <Icon name="arrow-left" /> {t.galleries.back}
+          </a>
+        )
+      }
+      <p class="label meta-row muted">
+        <span>{t.galleries.images(gallery.images.length)}</span>
+        <span>{formatMonth(gallery.date)}</span>
+        {gallery.location && <span>{gallery.location}</span>}
+      </p>
+      <h1 class="display display-1 title" style={`view-transition-name: gt-${gallery.slug}`}>{gallery.title}</h1>
+
+      <div class="intro">
+        <div class="text">
+          <p class="lead">{gallery.description}</p>
+          {
+            Content && (
+              <div class="prose body">
+                <Content />
+              </div>
+            )
+          }
+        </div>
+        <div class="side">
+          {gallery.download && <DownloadBox {...gallery.download} />}
+          <ShareBox url={absUrl} title={gallery.title} template={gallery.shareText} />
+        </div>
+      </div>
+
+      {
+        gallery.isUnlisted && (
+          <p class="private">
+            <Icon name="lock" /> {t.galleries.unlisted}
+          </p>
+        )
+      }
+    </header>
+
+    <section class="container container--wide grid-wrap" aria-label={t.galleries.images(gallery.images.length)}>
+      <GalleryGrid gallery={gallery} />
+    </section>
+  </article>
+
+  {
+    (prev || next) && (
+      <nav class="neighbours container container--wide" aria-label="Weitere Galerien">
+        {prev && (
+          <a class="nb nb--prev" href={prev.url}>
+            <span class="label muted">
+              <Icon name="arrow-left" /> {t.galleries.prev}
+            </span>
+            <span class="nb-body">
+              <Picture src={prev.cover.src} alt="" sizes="160px" color={prev.cover.color} lqip={prev.cover.lqip} class="nb-img" />
+              <span class="display display-3">{prev.title}</span>
+            </span>
+          </a>
+        )}
+        {next && (
+          <a class="nb nb--next" href={next.url}>
+            <span class="label muted">
+              {t.galleries.next} <Icon name="arrow-right" />
+            </span>
+            <span class="nb-body">
+              <span class="display display-3">{next.title}</span>
+              <Picture src={next.cover.src} alt="" sizes="160px" color={next.cover.color} lqip={next.cover.lqip} class="nb-img" />
+            </span>
+          </a>
+        )}
+      </nav>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .progress {
+    position: fixed;
+    inset: 0 0 auto;
+    height: 3px;
+    z-index: 60;
+    background: var(--accent-vivid);
+    transform-origin: 0 50%;
+    transform: scaleX(0);
+    pointer-events: none;
+  }
+  @supports (animation-timeline: scroll()) {
+    .progress {
+      animation: progress linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+  @keyframes progress {
+    to {
+      transform: scaleX(1);
+    }
+  }
+
+  .g-head {
+    padding-top: clamp(2rem, 5vw, 4.5rem);
+    padding-bottom: clamp(2rem, 5vw, 4rem);
+  }
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    text-decoration: none;
+    margin-bottom: clamp(1.5rem, 4vw, 3rem);
+  }
+  .title {
+    margin-top: 0.75rem;
+    max-width: 14ch;
+  }
+  .intro {
+    display: grid;
+    gap: 2rem;
+    margin-top: clamp(1.75rem, 4vw, 3.5rem);
+    padding-top: clamp(1.25rem, 3vw, 2rem);
+    border-top: 2px solid var(--line-strong);
+  }
+  .text {
+    max-width: 52ch;
+  }
+  .body {
+    margin-top: 1.25rem;
+  }
+  .side {
+    display: grid;
+    gap: 1.5rem;
+    align-content: start;
+  }
+  @media (min-width: 960px) {
+    .intro {
+      grid-template-columns: 1.15fr 1fr;
+      gap: clamp(2rem, 6vw, 7rem);
+    }
+  }
+  .private {
+    display: flex;
+    gap: 0.6em;
+    align-items: baseline;
+    margin-top: 2rem;
+    padding: 0.9rem 1.1rem;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+  }
+  .private :global(svg) {
+    flex: none;
+    translate: 0 0.15em;
+  }
+
+  .neighbours {
+    display: grid;
+    gap: 1rem;
+    margin-top: var(--section);
+    padding-top: 2rem;
+    border-top: 2px solid var(--line-strong);
+  }
+  @media (min-width: 760px) {
+    .neighbours {
+      grid-template-columns: 1fr 1fr;
+    }
+    .nb--next {
+      grid-column: 2;
+      text-align: right;
+      justify-items: end;
+    }
+  }
+  .nb {
+    display: grid;
+    gap: 1rem;
+    text-decoration: none;
+  }
+  .nb .label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+  .nb-body {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+  .nb :global(.nb-img) {
+    width: clamp(80px, 12vw, 160px);
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    transition: transform 0.6s var(--ease);
+  }
+  .nb:hover :global(.nb-img) {
+    transform: rotate(-2deg) scale(1.04);
+  }
+  .nb:hover .display {
+    color: var(--accent);
+  }
+</style>

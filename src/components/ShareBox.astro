@@ -1,0 +1,126 @@
+---
+/**
+ * Teilen: Link kopieren, Web Share API (v. a. mobil), WhatsApp, E-Mail.
+ * Ohne JavaScript bleiben WhatsApp/E-Mail-Links und ein markierbares Linkfeld.
+ */
+import Icon from './Icon.astro';
+import { useTranslations } from '../i18n';
+import { fillShareText } from '../lib/galleries';
+
+export interface Props {
+  url: string;
+  title: string;
+  template: string;
+  /** Kompakte Darstellung (z. B. auf Bildseiten) */
+  compact?: boolean;
+}
+
+const { url, title, template, compact = false } = Astro.props;
+const t = useTranslations();
+const text = fillShareText(template, title, url);
+const whatsapp = `https://wa.me/?text=${encodeURIComponent(text)}`;
+const mail = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(text)}`;
+---
+
+<div class:list={['share', { 'share--compact': compact }]} data-share-box>
+  <p class="label muted share-title">{t.share.title}</p>
+  <div class="share-actions">
+    <button class="btn btn--small js-only" type="button" data-copy={url}>
+      <Icon name="link" /><span data-copy-label>{t.share.copy}</span>
+    </button>
+    <button class="btn btn--small" type="button" data-native-share data-url={url} data-title={title} data-text={text} hidden>
+      <Icon name="share" />{t.share.native}
+    </button>
+    <a class="btn btn--small" href={whatsapp} target="_blank" rel="noopener noreferrer">
+      <Icon name="whatsapp" />{t.share.whatsapp}
+    </a>
+    <a class="btn btn--small" href={mail}>
+      <Icon name="mail" />{t.share.mail}
+    </a>
+  </div>
+  <label class="no-js-only share-field">
+    <span class="visually-hidden">{t.share.linkLabel}</span>
+    <input type="text" readonly value={url} />
+  </label>
+  <p class="share-status visually-hidden" role="status" aria-live="polite" data-copy-status></p>
+</div>
+
+<script>
+  import { de } from '../i18n/de';
+
+  async function copy(text: string) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      // Fallback für ältere Browser / unsichere Kontexte
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.append(ta);
+      ta.select();
+      let ok = false;
+      try {
+        ok = document.execCommand('copy');
+      } catch {
+        ok = false;
+      }
+      ta.remove();
+      return ok;
+    }
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-share-box]').forEach((box) => {
+    const status = box.querySelector<HTMLElement>('[data-copy-status]');
+    box.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) => {
+      const label = btn.querySelector<HTMLElement>('[data-copy-label]');
+      btn.addEventListener('click', async () => {
+        const ok = await copy(btn.dataset.copy!);
+        const msg = ok ? de.share.copied : de.share.copyFailed;
+        if (status) status.textContent = msg;
+        if (label) {
+          label.textContent = ok ? de.share.copied : de.share.copy;
+          window.setTimeout(() => (label.textContent = de.share.copy), 2200);
+        }
+      });
+    });
+    box.querySelectorAll<HTMLButtonElement>('[data-native-share]').forEach((btn) => {
+      if (typeof navigator.share !== 'function') return;
+      btn.hidden = false;
+      btn.addEventListener('click', () => {
+        navigator
+          .share({ title: btn.dataset.title, text: btn.dataset.text, url: btn.dataset.url })
+          .catch(() => {
+            /* abgebrochen */
+          });
+      });
+    });
+  });
+</script>
+
+<style>
+  .share-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.6rem;
+  }
+  .share-field input {
+    width: 100%;
+    max-width: 34rem;
+    margin-top: 0.6rem;
+    padding: 0.6rem 0.8rem;
+    border: 1.5px solid var(--line-strong);
+    border-radius: var(--radius);
+    background: var(--paper);
+    font-size: var(--fs-sm);
+  }
+  .share--compact .share-title {
+    display: none;
+  }
+  .share--compact .share-actions {
+    margin-top: 0;
+  }
+</style>

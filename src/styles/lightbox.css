@@ -1,0 +1,78 @@
+/* PhotoSwipe an die Palette anpassen */
+.pswp {
+  --pswp-bg: #120d0a;
+  --pswp-placeholder-bg: #2a2019;
+  --pswp-icon-color: #f6ede2;
+  --pswp-icon-color-secondary: #120d0a;
+  --pswp-icon-stroke-color: #120d0a;
+  --pswp-icon-stroke-width: 1px;
+  --pswp-error-text-color: #f6ede2;
+  font-family: var(--font-sans);
+}
+.pswp__counter {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  opacity: 1;
+  margin-inline-start: 1.25rem;
+}
+.pswp__button {
+  opacity: 0.9;
+}
+.pswp__button:focus-visible {
+  outline: 3px solid #f09566;
+  outline-offset: -4px;
+}
+.pswp__icn {
+  fill: none;
+}
+.pswp__button--jd-share .pswp__icn,
+.pswp__button--jd-download .pswp__icn {
+  width: 24px;
+  height: 24px;
+  top: 18px;
+  left: 13px;
+}
+.pswp__jd-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1rem clamp(1rem, 4vw, 4.5rem) max(1.1rem, env(safe-area-inset-bottom));
+  color: #f6ede2;
+  text-align: center;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+.pswp__jd-caption:empty {
+  display: none;
+}
+.jd-caption__text {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1rem, 0.9rem + 0.5vw, 1.3rem);
+  font-weight: 340;
+  max-width: 60ch;
+  margin-inline: auto;
+}
+.jd-caption__exif {
+  margin-top: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #bfab98;
+  font-variant-numeric: tabular-nums;
+}
+.jd-caption__status {
+  margin-top: 0.35rem;
+  font-size: 0.8rem;
+  color: #f09566;
+}
+.pswp--ui-visible .pswp__jd-caption {
+  opacity: 1;
+}
+.pswp:not(.pswp--ui-visible) .pswp__jd-caption {
+  opacity: 0;
+}

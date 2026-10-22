@@ -1,0 +1,47 @@
+---
+/**
+ * E-Mail-Link mit einfachem Scraping-Schutz:
+ * Die Adresse steht nur rückwärts in data-Attributen und wird im Browser zusammengesetzt.
+ * Ohne JavaScript erscheint eine lesbare, aber nicht maschinell erkennbare Schreibweise.
+ */
+import { site } from '../config/site';
+import { useTranslations } from '../i18n';
+import Icon from './Icon.astro';
+
+export interface Props {
+  class?: string;
+  /** Statt der Adresse einen eigenen Linktext zeigen */
+  text?: string;
+  icon?: boolean;
+  subject?: string;
+}
+
+const { class: className, text, icon = true, subject } = Astro.props;
+const t = useTranslations();
+const rev = (s: string) => [...s].reverse().join('');
+---
+
+<a
+  class:list={[className, 'email-link']}
+  href="/kontakt/#email"
+  data-u={rev(site.email.user)}
+  data-d={rev(site.email.domain)}
+  data-subject={subject}
+  data-text={text}
+>
+  {icon && <Icon name="mail" size="0.9em" />}
+  <span class="email-text">{text ?? t.contact.emailFallback}</span>
+</a>
+
+<script>
+  document.querySelectorAll<HTMLAnchorElement>('a.email-link[data-u]').forEach((a) => {
+    const rev = (s = '') => [...s].reverse().join('');
+    const address = `${rev(a.dataset.u)}@${rev(a.dataset.d)}`;
+    const subject = a.dataset.subject ? `?subject=${encodeURIComponent(a.dataset.subject)}` : '';
+    a.href = `mailto:${address}${subject}`;
+    if (!a.dataset.text) {
+      const span = a.querySelector('.email-text');
+      if (span) span.textContent = address;
+    }
+  });
+</script>

@@ -1,0 +1,297 @@
+---
+import { getCollection } from 'astro:content';
+import { site } from '../config/site';
+import { useTranslations } from '../i18n';
+import ThemeToggle from './ThemeToggle.astro';
+import Icon from './Icon.astro';
+
+export interface Props {
+  /** Startseite: Header liegt transparent über dem Hero und wird beim Scrollen fest */
+  overlay?: boolean;
+}
+
+const { overlay = false } = Astro.props;
+const t = useTranslations();
+const hasFilms = (await getCollection('films')).length > 0;
+const path = Astro.url.pathname;
+
+const links = [
+  { href: '/galerien/', label: t.nav.galleries, match: ['/galerien/', '/g/'] },
+  ...(hasFilms ? [{ href: '/film/', label: t.nav.film, match: ['/film/'] }] : []),
+  { href: '/ueber-mich/', label: t.nav.about, match: ['/ueber-mich/'] },
+  { href: '/kontakt/', label: t.nav.contact, match: ['/kontakt/'] },
+];
+const isCurrent = (match: string[]) => match.some((m) => path.startsWith(m));
+---
+
+<header class:list={['site-header', { 'site-header--overlay': overlay }]}>
+  <div class="bar container container--wide">
+    <a class="logo display" href="/" aria-label={`${site.name} – ${t.nav.home}`}>
+      Jesko <span>Dorner</span>
+    </a>
+
+    <nav class="nav-desktop" aria-label={t.nav.label}>
+      <ul>
+        {
+          links.map((l) => (
+            <li>
+              <a href={l.href} aria-current={isCurrent(l.match) ? 'page' : undefined}>
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="actions">
+      <ThemeToggle />
+      <button class="menu-btn" type="button" popovertarget="site-menu" aria-label={t.nav.menu}>
+        <Icon name="menu" size={26} />
+      </button>
+    </div>
+  </div>
+
+  <div id="site-menu" class="menu" popover>
+    <div class="menu-inner container">
+      <div class="menu-top">
+        <span class="label muted">{t.nav.menu}</span>
+        <button class="menu-close" type="button" popovertarget="site-menu" popovertargetaction="hide" aria-label={t.nav.close}>
+          <Icon name="close" size={28} />
+        </button>
+      </div>
+      <nav aria-label={t.nav.label}>
+        <ul>
+          <li><a class="display" href="/" aria-current={path === '/' ? 'page' : undefined}>{t.nav.home}</a></li>
+          {
+            links.map((l) => (
+              <li>
+                <a class="display" href={l.href} aria-current={isCurrent(l.match) ? 'page' : undefined}>
+                  {l.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <p class="menu-foot label">
+        <a href={site.instagram.url} rel="me noopener" target="_blank">@{site.instagram.handle}</a>
+      </p>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    height: var(--header-h);
+    display: flex;
+    align-items: center;
+    color: var(--ink);
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(10px) saturate(1.1);
+    -webkit-backdrop-filter: blur(10px) saturate(1.1);
+    border-bottom: 1px solid var(--line);
+    view-transition-name: site-header;
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+  .logo {
+    font-size: clamp(1.55rem, 1.2rem + 1.2vw, 2.3rem);
+    text-decoration: none;
+    white-space: nowrap;
+    line-height: 1;
+    transition: font-size 0.3s var(--ease);
+  }
+  .logo span {
+    color: var(--accent-vivid);
+  }
+  .logo:hover {
+    color: inherit;
+  }
+
+  .nav-desktop {
+    display: none;
+    margin-left: auto;
+  }
+  .nav-desktop ul {
+    display: flex;
+    gap: clamp(1.25rem, 2.5vw, 2.75rem);
+    list-style: none;
+    padding: 0;
+  }
+  .nav-desktop a {
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    padding-block: 0.4rem;
+    background: linear-gradient(currentColor, currentColor) no-repeat left bottom / 0 2px;
+    transition: background-size 0.35s var(--ease), color 0.2s;
+  }
+  .nav-desktop a:hover,
+  .nav-desktop a[aria-current='page'] {
+    background-size: 100% 2px;
+  }
+  .nav-desktop a[aria-current='page'] {
+    color: var(--accent);
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .menu-btn,
+  .menu-close {
+    display: inline-grid;
+    place-items: center;
+    width: 2.9rem;
+    height: 2.9rem;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+  }
+  .menu-btn:hover,
+  .menu-close:hover {
+    background: var(--line);
+  }
+
+  @media (min-width: 820px) {
+    .nav-desktop {
+      display: block;
+    }
+    .menu-btn {
+      display: none;
+    }
+  }
+
+  /* Mobiles Menü als Popover (funktioniert ohne JavaScript) */
+  .menu {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    color: var(--ink);
+    background-color: var(--paper);
+    background-image: var(--grain), var(--mottle);
+  }
+  .menu-inner {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-block: 1rem 2rem;
+  }
+  .menu-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: calc(var(--header-h) - 1rem);
+  }
+  .menu ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 6vh;
+    display: grid;
+    gap: 0.35rem;
+  }
+  .menu ul a {
+    font-size: clamp(3.5rem, 18vw, 6rem);
+    text-decoration: none;
+  }
+  .menu ul a[aria-current='page'] {
+    color: var(--accent-vivid);
+  }
+  .menu-foot {
+    margin-top: auto;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .menu:popover-open {
+      animation: menu-in 0.35s var(--ease);
+    }
+  }
+  @keyframes menu-in {
+    from {
+      opacity: 0;
+      transform: translateY(-1.5rem);
+    }
+  }
+  /* Fallback für Browser ohne Popover-API: Links immer sichtbar */
+  @supports not selector(:popover-open) {
+    .nav-desktop {
+      display: block;
+    }
+    .nav-desktop ul {
+      gap: 0.9rem;
+      flex-wrap: wrap;
+    }
+    .menu-btn,
+    .menu {
+      display: none;
+    }
+  }
+
+  /* Kompakter Header beim Scrollen (CSS Scroll-Driven Animations) */
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .site-header {
+        animation: header-compact linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0 180px;
+      }
+      .logo {
+        animation: logo-compact linear both;
+        animation-timeline: scroll(root);
+        animation-range: 0 180px;
+      }
+      /* Startseite: zuerst transparent über dem Hero */
+      .site-header--overlay {
+        position: fixed;
+        inset-inline: 0;
+        animation-name: header-overlay;
+        animation-range: 0 60svh;
+      }
+    }
+  }
+  @keyframes header-compact {
+    to {
+      height: calc(var(--header-h) - 1.25rem);
+    }
+  }
+  @keyframes logo-compact {
+    to {
+      font-size: clamp(1.4rem, 1.1rem + 0.8vw, 1.8rem);
+    }
+  }
+  @keyframes header-overlay {
+    0% {
+      color: #fbf6ef;
+      background-color: transparent;
+      border-bottom-color: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+    85% {
+      color: #fbf6ef;
+      background-color: transparent;
+      border-bottom-color: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+    100% {
+      height: calc(var(--header-h) - 1.25rem);
+    }
+  }
+</style>

@@ -1,0 +1,78 @@
+---
+import Icon from './Icon.astro';
+import { useTranslations } from '../i18n';
+const t = useTranslations();
+---
+
+<button class="theme-toggle js-only" type="button" aria-label={t.theme.toggle} aria-pressed="false" data-theme-toggle>
+  <Icon name="moon" size={22} class="i-moon" />
+  <Icon name="sun" size={22} class="i-sun" />
+</button>
+
+<script>
+  const root = document.documentElement;
+  const media = window.matchMedia('(prefers-color-scheme: dark)');
+  const current = () => (root.dataset.theme as 'light' | 'dark' | undefined) ?? (media.matches ? 'dark' : 'light');
+
+  function sync() {
+    const dark = current() === 'dark';
+    document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach((b) => {
+      b.setAttribute('aria-pressed', String(dark));
+    });
+  }
+
+  document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const next = current() === 'dark' ? 'light' : 'dark';
+      root.dataset.theme = next;
+      try {
+        localStorage.setItem('theme', next);
+      } catch {
+        /* privater Modus – Wahl gilt dann nur für diese Seite */
+      }
+      sync();
+    });
+  });
+  media.addEventListener('change', sync);
+  sync();
+</script>
+
+<style>
+  .theme-toggle {
+    display: inline-grid;
+    place-items: center;
+    width: 2.9rem;
+    height: 2.9rem;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    transition: background-color 0.2s, transform 0.4s var(--ease);
+  }
+  .theme-toggle:hover {
+    background: var(--line);
+  }
+  .theme-toggle:active {
+    transform: rotate(-25deg);
+  }
+  .theme-toggle :global(svg) {
+    grid-area: 1 / 1;
+  }
+  /* Im hellen Modus den Mond zeigen (zum Wechseln nach dunkel) und umgekehrt */
+  .theme-toggle :global(.i-sun) {
+    display: none;
+  }
+  :global(:root[data-theme='dark']) .theme-toggle :global(.i-sun) {
+    display: block;
+  }
+  :global(:root[data-theme='dark']) .theme-toggle :global(.i-moon) {
+    display: none;
+  }
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme='light'])) .theme-toggle :global(.i-sun) {
+      display: block;
+    }
+    :global(:root:not([data-theme='light'])) .theme-toggle :global(.i-moon) {
+      display: none;
+    }
+  }
+</style>

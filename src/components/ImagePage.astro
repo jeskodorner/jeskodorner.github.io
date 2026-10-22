@@ -1,0 +1,221 @@
+---
+/** Einzelbild-Seite (funktioniert ohne JavaScript, teilbar mit eigener Vorschau). */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Picture from './Picture.astro';
+import ShareBox from './ShareBox.astro';
+import Icon from './Icon.astro';
+import type { Gallery, GalleryImage } from '../lib/galleries';
+import { exifRows } from '../lib/exif';
+import { getImage } from 'astro:assets';
+import { responsive } from '../lib/images';
+import { useTranslations, formatDate } from '../i18n';
+import { site } from '../config/site';
+
+export interface Props {
+  gallery: Gallery;
+  image: GalleryImage;
+}
+
+const { gallery, image } = Astro.props;
+const t = useTranslations();
+const n = gallery.images.length;
+const prev = gallery.images[image.index - 2];
+const next = gallery.images[image.index];
+const rows = gallery.showExif ? exifRows(image.exif) : [];
+const shotDate = gallery.showExif && image.exif.date ? new Date(image.exif.date) : undefined;
+const absUrl = new URL(image.pageUrl, Astro.site ?? site.url).href;
+const title = `${image.caption ?? gallery.title} (${t.image.of(image.index, n)})`;
+
+const og = await getImage({ src: image.src, width: 1200, format: 'jpg', quality: 80 });
+const set = await responsive(image.src);
+const content = set.webpVariants.find((v) => v.width >= 1200) ?? set.largest;
+
+const jsonLd = gallery.isUnlisted
+  ? undefined
+  : {
+      '@context': 'https://schema.org',
+      '@type': 'ImageObject',
+      contentUrl: new URL(content.url, site.url).href,
+      url: absUrl,
+      name: image.caption ?? image.alt,
+      description: image.alt,
+      creator: { '@type': 'Person', name: site.name, url: site.url },
+      creditText: site.name,
+      copyrightNotice: `© ${site.name}`,
+      acquireLicensePage: new URL('/kontakt/', site.url).href,
+      isPartOf: { '@type': 'ImageGallery', name: gallery.title, url: new URL(gallery.url, site.url).href },
+    };
+---
+
+<BaseLayout
+  title={title}
+  description={image.alt}
+  image={{ url: og.src, width: 1200, height: Math.round((1200 * image.src.height) / image.src.width), alt: image.alt }}
+  noindex={gallery.isUnlisted}
+  noReferrer={gallery.isUnlisted}
+  jsonLd={jsonLd}
+>
+  <div class="container container--wide img-page">
+    <nav class="top label" aria-label="Bildnavigation">
+      <a class="back" href={`${gallery.url}#bild-${image.index}`}>
+        <Icon name="arrow-left" /> {t.image.back}: {gallery.title}
+      </a>
+      <span class="count muted">{t.image.of(image.index, n)}</span>
+    </nav>
+
+    <figure>
+      <div class="frame">
+        <Picture
+          src={image.src}
+          alt={image.alt}
+          sizes="(min-width: 1200px) 80vw, 100vw"
+          color={image.color}
+          lqip={image.lqip}
+          loading="eager"
+          fetchpriority="high"
+          class="main-img"
+        />
+      </div>
+      <figcaption>
+        <h1 class="display display-3">{image.caption ?? gallery.title}</h1>
+        {image.caption && <p class="label muted">{gallery.title}</p>}
+      </figcaption>
+    </figure>
+
+    <div class="details">
+      {
+        (rows.length > 0 || shotDate) && (
+          <section aria-labelledby="exif-h">
+            <h2 id="exif-h" class="label muted">{t.image.exif}</h2>
+            <dl class="exif">
+              {rows.map((r) => (
+                <div>
+                  <dt>{r.label}</dt>
+                  <dd>{r.value}</dd>
+                </div>
+              ))}
+              {shotDate && !Number.isNaN(shotDate.getTime()) && (
+                <div>
+                  <dt>{t.image.date}</dt>
+                  <dd>{formatDate(shotDate)}</dd>
+                </div>
+              )}
+            </dl>
+          </section>
+        )
+      }
+      <div class="actions">
+        {
+          image.originalUrl && (
+            <a class="btn btn--accent" href={image.originalUrl} target="_blank" rel="noopener noreferrer">
+              <Icon name="download" /> {t.download.original}
+              <span class="visually-hidden">{t.download.external}</span>
+            </a>
+          )
+        }
+        <ShareBox url={absUrl} title={title} template={gallery.shareText} />
+      </div>
+    </div>
+
+    <nav class="pager" aria-label="Weitere Bilder">
+      {
+        prev ? (
+          <a href={prev.pageUrl} rel="prev" class="btn">
+            <Icon name="arrow-left" /> {t.image.prev}
+          </a>
+        ) : (
+          <span />
+        )
+      }
+      {
+        next && (
+          <a href={next.pageUrl} rel="next" class="btn">
+            {t.image.next} <Icon name="arrow-right" />
+          </a>
+        )
+      }
+    </nav>
+  </div>
+</BaseLayout>
+
+<style>
+  .img-page {
+    padding-top: clamp(1.25rem, 3vw, 2.5rem);
+  }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    text-decoration: none;
+  }
+  figure {
+    margin-top: 1.25rem;
+  }
+  .frame {
+    display: grid;
+    place-items: center;
+    padding: clamp(0.5rem, 2vw, 2rem);
+    background: var(--paper-2);
+  }
+  .frame :global(.main-img) {
+    width: auto;
+    max-width: 100%;
+    max-height: calc(100svh - var(--header-h) - 9rem);
+    object-fit: contain;
+  }
+  figcaption {
+    margin-top: 1.25rem;
+    display: grid;
+    gap: 0.4rem;
+  }
+  .details {
+    display: grid;
+    gap: 2rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--line-strong);
+  }
+  @media (min-width: 900px) {
+    .details {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .exif {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+    gap: 1rem 1.5rem;
+    margin-top: 0.8rem;
+  }
+  .exif dt {
+    font-size: var(--fs-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-soft);
+    font-weight: 650;
+  }
+  .exif dd {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 650;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+  }
+  .actions {
+    display: grid;
+    gap: 1.5rem;
+    align-content: start;
+    justify-items: start;
+  }
+  .pager {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+</style>
