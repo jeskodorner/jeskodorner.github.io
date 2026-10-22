@@ -5,9 +5,9 @@ youtube: "https://youtu.be/BGQW-PVmkUM"
 format: "Video"
 # year: 2026
 # roles: ["Kamera", "Schnitt"]
-# Eigenes Standbild als Vorschau (optional), sonst farbige Vorschau:
-# still: ./images/kunst-kel.jpg
-# stillAlt: "Beschreibung des Standbilds"
+# Vorschaubild (lokal gespeichert, damit beim Seitenaufruf nichts von YouTube geladen wird)
+still: ./images/kunst-kel.jpg
+stillAlt: "Eine Person steht in einem hellen Zimmer mit Kleiderständer, Fahrrad und Zimmerpflanzen."
 color: blue
 order: 1
 ---

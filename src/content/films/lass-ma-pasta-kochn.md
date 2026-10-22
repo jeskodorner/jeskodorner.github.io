@@ -5,9 +5,9 @@ youtube: "https://youtu.be/Qm-xUZpwJ7M"
 format: "Video"
 # year: 2026
 # roles: ["Kamera", "Schnitt"]
-# Eigenes Standbild als Vorschau (optional), sonst farbige Vorschau:
-# still: ./images/lass-ma-pasta-kochn.jpg
-# stillAlt: "Beschreibung des Standbilds"
+# Vorschaubild (lokal gespeichert, damit beim Seitenaufruf nichts von YouTube geladen wird)
+still: ./images/lass-ma-pasta-kochn.jpg
+stillAlt: "Lachende Person auf dem Fahrrad unter blauem Himmel mit Wolken, aufgenommen aus der eigenen Perspektive."
 color: orange
 order: 3
 ---

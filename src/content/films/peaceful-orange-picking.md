@@ -5,9 +5,9 @@ youtube: "https://youtu.be/L_KqwPinNzI"
 format: "Video"
 # year: 2026
 # roles: ["Kamera", "Schnitt"]
-# Eigenes Standbild als Vorschau (optional), sonst farbige Vorschau:
-# still: ./images/peaceful-orange-picking.jpg
-# stillAlt: "Beschreibung des Standbilds"
+# Vorschaubild (lokal gespeichert, damit beim Seitenaufruf nichts von YouTube geladen wird)
+still: ./images/peaceful-orange-picking.jpg
+stillAlt: "Eine Person im weißen T-Shirt pflückt Orangen von einem Baum."
 color: violet
 order: 4
 ---

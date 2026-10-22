@@ -116,6 +116,10 @@ const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (
       grid-template-columns: 3fr 2fr;
       align-items: center;
     }
+    /* Abwechselnd links/rechts – das Video behält dabei immer die breitere Spalte */
+    .film:nth-child(even) {
+      grid-template-columns: 2fr 3fr;
+    }
     .film:nth-child(even) .media {
       order: 2;
     }

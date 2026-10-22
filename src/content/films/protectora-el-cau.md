@@ -5,9 +5,9 @@ youtube: "https://youtu.be/yESSsgfX_DA"
 format: "Videotrailer"
 # year: 2026
 # roles: ["Kamera", "Schnitt"]
-# Eigenes Standbild als Vorschau (optional), sonst farbige Vorschau:
-# still: ./images/protectora-el-cau.jpg
-# stillAlt: "Beschreibung des Standbilds"
+# Vorschaubild (lokal gespeichert, damit beim Seitenaufruf nichts von YouTube geladen wird)
+still: ./images/protectora-el-cau.jpg
+stillAlt: "Ein Hund mit offenem Maul blickt neugierig in die Kamera."
 color: pink
 order: 0
 ---
