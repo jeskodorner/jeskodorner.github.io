@@ -44,7 +44,8 @@ export function initLightbox() {
     children: 'a.ph',
     pswpModule: () => import('photoswipe'),
     bgOpacity: 1,
-    showHideAnimationType: reduced ? 'none' : 'zoom',
+    // Bühne: Bilder sind per Parallax verschoben → sanft überblenden statt aus dem Vorschaubild zoomen
+    showHideAnimationType: reduced ? 'none' : galleryEl.dataset.layout === 'showcase' ? 'fade' : 'zoom',
     zoomAnimationDuration: reduced ? 0 : 333,
     closeTitle: de.lightbox.close,
     zoomTitle: de.lightbox.zoom,

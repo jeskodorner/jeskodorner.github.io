@@ -5,7 +5,7 @@ slug: kueste-im-oktober
 date: 2026-10-04
 location: "Sylt"
 description: "Platzhalter-Serie: Licht, Wind und Weite an der Nordsee – wenn die Saison vorbei ist und der Strand wieder still wird."
-layout: masonry
+layout: showcase
 visibility: public
 showExif: true
 # downloadUrl: https://…

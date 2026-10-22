@@ -1,8 +1,10 @@
 ---
 import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
-import { inlineMd } from '../lib/text';
+import { inlineMd, wordSpans } from '../lib/text';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Picture from '../components/Picture.astro';
+import ParallaxImage from '../components/ParallaxImage.astro';
+import Showcase, { type StageItem } from '../components/Showcase.astro';
 import Icon from '../components/Icon.astro';
 import EmailLink from '../components/EmailLink.astro';
 import portrait from '../assets/portrait.jpg';
@@ -30,8 +32,16 @@ const jsonLd = {
   sameAs: [site.instagram.url],
 };
 
-// Raster-Muster für „Ausgewählte Arbeiten“ (12-Spalten-Raster, wiederholt sich)
-const pattern = ['w7 tall', 'w5', 'w5', 'w4', 'w8', 'w6', 'w6 tall', 'w4', 'w8'];
+// Ausgewählte Arbeiten: jedes Bild bekommt seine eigene Bühne
+const stageItems: StageItem[] = featured.map(({ gallery, image }) => ({
+  image,
+  href: image.pageUrl,
+  title: image.caption ?? gallery.title,
+  kicker: gallery.title + (gallery.location ? ` — ${gallery.location}` : ''),
+  kickerHref: gallery.url,
+}));
+// Schriftband aus der Zeile über dem Namen (z. B. „Fotografie · Kamera · Drehbuch“)
+const bandWords = (text.kicker ?? 'Fotografie · Kamera · Drehbuch').split('·').map((w) => w.trim()).filter(Boolean);
 const duration = heroList.length * site.hero.secondsPerImage;
 // Überblend-Keyframes passend zur Bildanzahl (CSS erlaubt keine berechneten Keyframe-Prozente)
 const share = 100 / heroList.length;
@@ -91,18 +101,34 @@ const fadeCss = slideshow
   {
     (text.statement || text.note) && (
       <section class="statement container container--wide section">
-        {text.statement && <p class="display display-2 reveal" set:html={inlineMd(text.statement)} />}
-        {text.note && <p class="statement-note muted">{text.note}</p>}
+        {text.statement && <p class="display display-2 words" set:html={wordSpans(text.statement)} />}
+        {text.note && <p class="statement-note muted rise">{text.note}</p>}
       </section>
     )
   }
 
+  <!-- Schriftband, zieht beim Scrollen seitlich durch -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      {
+        [0, 1, 2].flatMap((r) =>
+          bandWords.map((w, i) => (
+            <>
+              <span class={(i + r) % 2 ? 'o' : ''}>{w}</span>
+              <em>&</em>
+            </>
+          )),
+        )
+      }
+    </div>
+  </div>
+
   <!-- Ausgewählte Arbeiten -->
   {
     featured.length > 0 && (
-      <section class="selected container container--wide" aria-labelledby="sel-h">
-        <div class="sec-head">
-          <h2 id="sel-h" class="display display-2">
+      <section class="selected" aria-labelledby="sel-h">
+        <div class="sec-head container container--wide">
+          <h2 id="sel-h" class="display display-2 drift-left">
             {t.home.selected}
             <sup class="count">({String(featured.length).padStart(2, '0')})</sup>
           </h2>
@@ -110,27 +136,7 @@ const fadeCss = slideshow
             {t.home.allGalleries} ({galleries.length}) <span class="arrow" aria-hidden="true">→</span>
           </a>
         </div>
-        <ul class="mosaic" role="list">
-          {featured.map(({ gallery, image }, i) => (
-            <li class:list={['m-item reveal', ...(pattern[i % pattern.length] ?? 'w6').split(' ')]}>
-              <a href={image.pageUrl}>
-                <span class="m-media">
-                  <Picture
-                    src={image.src}
-                    alt={image.alt}
-                    sizes="(min-width: 900px) 60vw, 100vw"
-                    color={image.color}
-                    lqip={image.lqip}
-                  />
-                </span>
-                <span class="m-cap">
-                  <span class="label m-nr">Nº {String(i + 1).padStart(2, '0')}</span>
-                  <span class="m-title">{image.caption ?? gallery.title}</span>
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
+        <Showcase items={stageItems} />
       </section>
     )
   }
@@ -140,7 +146,7 @@ const fadeCss = slideshow
     films.length > 0 && (
       <section class="film-teaser container container--wide section" aria-labelledby="film-h">
         <div class="sec-head">
-          <h2 id="film-h" class="display display-2">
+          <h2 id="film-h" class="display display-2 drift-right">
             {t.home.filmTeaser.split(' ').slice(0, -1).join(' ')} <em>{t.home.filmTeaser.split(' ').slice(-1)}</em>
           </h2>
           <a class="more label" href="/film/">
@@ -149,7 +155,7 @@ const fadeCss = slideshow
         </div>
         <ul class="film-list" role="list">
           {films.slice(0, 3).map((f) => (
-            <li class="reveal">
+            <li class="rise">
               <a href={`/film/#${f.id}`} class="film-row">
                 <span class="display display-3">{f.data.title}</span>
                 <span class="label muted">{f.data.roles.join(' & ')}</span>
@@ -169,10 +175,8 @@ const fadeCss = slideshow
 
   <!-- Über mich -->
   <section class="about container container--wide section" aria-labelledby="about-h">
-    <div class="about-img reveal">
-      <Picture src={portrait} alt="Porträt von Jesko Dorner" sizes="(min-width: 900px) 40vw, 100vw" />
-    </div>
-    <div class="about-text">
+    <ParallaxImage class="about-img" src={portrait} alt="Porträt von Jesko Dorner" sizes="(min-width: 900px) 40vw, 100vw" ratio="4 / 5" />
+    <div class="about-text rise">
       <h2 id="about-h" class="label muted">{t.home.aboutTeaser}</h2>
       {text.aboutTeaser && <p class="lead" set:html={inlineMd(text.aboutTeaser)} />}
       <a class="btn" href="/ueber-mich/">{t.home.aboutMore} <span class="arrow" aria-hidden="true">→</span></a>
@@ -183,7 +187,7 @@ const fadeCss = slideshow
   <section class="cta" aria-labelledby="cta-h">
     <div class="container container--wide">
       <h2 id="cta-h" class="display mega cta-title">
-        Lass uns <em>reden.</em>
+        <span class="drift-left">Lass uns</span> <em class="drift-right">reden.</em>
       </h2>
       <div class="cta-row">
         <p class="lead">{t.home.contactText}</p>
@@ -239,6 +243,43 @@ const fadeCss = slideshow
   @keyframes hero-zoom {
     from {
       transform: scale(1.08);
+    }
+  }
+  /* Beim Scrollen: Bild gleitet langsamer (Parallax), Titel hebt sich schneller und blendet aus */
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .hero-media {
+        animation-name: hero-parallax;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: scroll(root);
+        animation-range: 0 100svh;
+      }
+      .hero-content {
+        animation-name: hero-lift;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: scroll(root);
+        animation-range: 0 55svh;
+      }
+      .hero-credit {
+        animation-name: hero-lift;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+        animation-timeline: scroll(root);
+        animation-range: 0 60svh;
+      }
+    }
+  }
+  @keyframes hero-parallax {
+    to {
+      transform: translate3d(0, 32%, 0) scale(1.06);
+    }
+  }
+  @keyframes hero-lift {
+    to {
+      transform: translate3d(0, -22vh, 0);
+      opacity: 0;
     }
   }
   .hero-shade {
@@ -361,88 +402,14 @@ const fadeCss = slideshow
     text-decoration: none;
     white-space: nowrap;
   }
-
-  /* ---------- Mosaik ---------- */
-  .mosaic {
-    list-style: none;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: clamp(1.25rem, 3vw, 2.5rem) var(--gap);
+  .selected {
+    padding-top: var(--section);
   }
-  @media (max-width: 899px) {
-    .m-item:nth-child(3n + 1) {
-      grid-column: span 2;
-    }
+  .selected .sec-head {
+    margin-bottom: clamp(3rem, 8vw, 8rem);
   }
-  @media (min-width: 900px) {
-    .mosaic {
-      grid-template-columns: repeat(12, minmax(0, 1fr));
-      align-items: start;
-    }
-    .w4 {
-      grid-column: span 4;
-    }
-    .w5 {
-      grid-column: span 5;
-    }
-    .w6 {
-      grid-column: span 6;
-    }
-    .w7 {
-      grid-column: span 7;
-    }
-    .w8 {
-      grid-column: span 8;
-    }
-    .m-item:nth-child(even) {
-      margin-top: clamp(2rem, 6vw, 7rem);
-    }
-  }
-  .m-item a {
-    display: grid;
-    gap: 0.75rem;
-    text-decoration: none;
-  }
-  .m-media {
-    display: block;
-    overflow: hidden;
-    aspect-ratio: 4 / 3;
-    background: var(--sand);
-  }
-  .tall .m-media {
-    aspect-ratio: 4 / 5;
-  }
-  .m-media :global(picture) {
-    display: block;
-    height: 100%;
-  }
-  .m-media :global(img) {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 1.1s var(--ease);
-  }
-  .m-item a:hover .m-media :global(img) {
-    transform: scale(1.05);
-  }
-  .m-cap {
-    display: flex;
-    gap: 0.9rem;
-    align-items: baseline;
-  }
-  .m-nr {
-    color: var(--accent);
-    white-space: nowrap;
-  }
-  .m-title {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-weight: 340;
-    font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.35rem);
-  }
-  .m-item a:hover .m-title {
-    color: var(--accent);
+  .statement .words {
+    max-width: 18ch;
   }
 
   /* ---------- Film-Teaser ---------- */
@@ -492,11 +459,8 @@ const fadeCss = slideshow
     }
   }
   .about-img {
-    max-width: 34rem;
-  }
-  .about-img :global(img) {
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
+    width: 100%;
+    max-width: 36rem;
   }
   .about-text {
     display: grid;
@@ -521,6 +485,13 @@ const fadeCss = slideshow
   }
   .cta-title em {
     color: inherit;
+  }
+  .cta-title span,
+  .cta-title em {
+    display: inline-block;
+  }
+  .cta {
+    overflow: hidden;
   }
   .cta-row {
     display: flex;

@@ -48,7 +48,7 @@ export interface Gallery {
   date: Date;
   location?: string;
   description: string;
-  layout: 'masonry' | 'justified';
+  layout: 'showcase' | 'masonry' | 'justified';
   visibility: 'public' | 'unlisted';
   isUnlisted: boolean;
   showExif: boolean;

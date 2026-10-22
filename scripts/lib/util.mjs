@@ -68,7 +68,7 @@ export const c = {
   bold: (s) => `\x1b[1m${s}\x1b[0m`,
 };
 
-export function galleryTemplate({ title, slug, date, layout = 'masonry', visibility = 'public', location }) {
+export function galleryTemplate({ title, slug, date, layout = 'showcase', visibility = 'public', location }) {
   return `---
 # Titel der Galerie
 title: ${JSON.stringify(title)}
@@ -78,7 +78,7 @@ date: ${date}
 ${location ? `location: ${JSON.stringify(location)}` : '# location: "Ort"'}
 # Kurzbeschreibung (1–2 Sätze) – erscheint auf der Kachel und in Link-Vorschauen
 description: "Kurze Beschreibung der Galerie."
-# masonry | justified
+# showcase = Bühne (jedes Bild groß, Parallax) · masonry = Raster · justified = gleich hohe Reihen
 layout: ${layout}
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex
 visibility: ${visibility}

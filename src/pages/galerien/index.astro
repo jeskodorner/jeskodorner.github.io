@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import Picture from '../../components/Picture.astro';
+import ParallaxImage from '../../components/ParallaxImage.astro';
 import { getPublicGalleries } from '../../lib/galleries';
 import { ogImage } from '../../lib/images';
 import { useTranslations, formatMonth } from '../../i18n';
@@ -12,61 +12,60 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
 
 <BaseLayout title={t.galleries.title} description={`${t.galleries.title}: ${t.galleries.intro}`} image={og}>
   <section class="container container--wide head">
-    <h1 class="display display-1">
+    <h1 class="display display-1 drift-left">
       {t.galleries.title}<sup class="count">({String(galleries.length).padStart(2, '0')})</sup>
     </h1>
-    <p class="lead muted">{t.galleries.intro}</p>
+    <p class="lead muted rise">{t.galleries.intro}</p>
   </section>
 
-  <section class="container container--wide">
-    {galleries.length === 0 && <p>{t.galleries.empty}</p>}
-    <ul class="tiles" role="list">
-      {
-        galleries.map((g, i) => (
-          <li class:list={['tile reveal', { 'tile--wide': i % 3 === 0 }]}>
-            <a href={g.url}>
-              <span class="media">
-                <Picture
-                  src={g.cover.src}
-                  alt={g.cover.alt}
-                  sizes={i % 3 === 0 ? '(min-width: 900px) 66vw, 100vw' : '(min-width: 900px) 33vw, 100vw'}
-                  color={g.cover.color}
-                  lqip={g.cover.lqip}
-                  loading={i < 2 ? 'eager' : 'lazy'}
-                  fetchpriority={i === 0 ? 'high' : undefined}
-                />
-                <span class="crop" aria-hidden="true" />
-                <span class="overlay" aria-hidden="true">
-                  <span class="label">{t.galleries.images(g.images.length)} →</span>
-                </span>
+  {galleries.length === 0 && <p class="container">{t.galleries.empty}</p>}
+
+  <ol class="glist" role="list">
+    {
+      galleries.map((g, i) => (
+        <li class:list={['gitem', { 'gitem--flip': i % 2 === 1 }]}>
+          <a class="glink" href={g.url}>
+            <ParallaxImage
+              class="gcover"
+              src={g.cover.src}
+              alt={g.cover.alt}
+              sizes="(min-width: 900px) 62vw, 100vw"
+              color={g.cover.color}
+              lqip={g.cover.lqip}
+              ratio="4 / 3"
+              loading={i === 0 ? 'eager' : 'lazy'}
+              fetchpriority={i === 0 ? 'high' : undefined}
+            >
+              <span class="crop" aria-hidden="true" />
+            </ParallaxImage>
+            <span class="ginfo rise">
+              <span class="nr display" aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
               </span>
-              <span class="info">
-                <span class="nr display" aria-hidden="true">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <span class="txt">
-                  <span class="display display-3 name" style={`view-transition-name: gt-${g.slug}`}>
-                    {g.title}
-                  </span>
-                  <span class="label muted meta-row">
-                    <span>{t.galleries.images(g.images.length)}</span>
-                    <span>{formatMonth(g.date)}</span>
-                    {g.location && <span>{g.location}</span>}
-                  </span>
-                </span>
+              <span class="display display-2 name" style={`view-transition-name: gt-${g.slug}`}>
+                {g.title}
               </span>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-  </section>
+              <span class="label muted meta-row">
+                <span>{t.galleries.images(g.images.length)}</span>
+                <span>{formatMonth(g.date)}</span>
+                {g.location && <span>{g.location}</span>}
+              </span>
+              <span class="desc">{g.description}</span>
+              <span class="go label">
+                Galerie ansehen <span class="arrow" aria-hidden="true">→</span>
+              </span>
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ol>
 </BaseLayout>
 
 <style>
   .head {
     padding-top: clamp(2.5rem, 6vw, 5rem);
-    padding-bottom: clamp(2rem, 5vw, 4rem);
+    padding-bottom: clamp(3rem, 8vw, 7rem);
   }
   .count {
     font-size: 0.28em;
@@ -78,114 +77,104 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
   .lead {
     margin-top: 1rem;
   }
-  .tiles {
+
+  .glist {
     list-style: none;
     padding: 0;
     display: grid;
-    gap: clamp(2.5rem, 5vw, 4.5rem) var(--gutter);
+    gap: clamp(5rem, 2rem + 11vw, 14rem);
   }
-  @media (min-width: 900px) {
-    .tiles {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-    .tile--wide {
-      grid-column: span 2;
-    }
-  }
-  .tile a {
-    display: grid;
-    gap: 1rem;
-    text-decoration: none;
-  }
-  .media {
-    position: relative;
-    display: block;
-    overflow: hidden;
-    aspect-ratio: 4 / 5;
-    background: var(--sand);
-  }
-  /* 2 Spalten breit mit 16:10 ist fast genau so hoch wie 1 Spalte mit 4:5 → ruhige Zeilen */
-  @media (min-width: 900px) {
-    .tiles {
-      grid-auto-flow: dense;
-    }
-    .tile--wide .media {
-      aspect-ratio: 16 / 10;
-    }
-  }
-  .media :global(img) {
-    position: absolute;
-    inset: 0;
+  .gitem {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 1.1s var(--ease);
+    max-width: 2400px;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
   }
+  .glink {
+    display: grid;
+    gap: clamp(1.25rem, 3vw, 2.5rem);
+    text-decoration: none;
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .glink {
+      grid-template-columns: 62fr 38fr;
+      column-gap: clamp(2rem, 5vw, 6rem);
+    }
+    .gitem--flip .glink {
+      grid-template-columns: 38fr 62fr;
+    }
+    .gitem--flip :global(.gcover) {
+      grid-column: 2;
+      grid-row: 1;
+    }
+    .gitem--flip .ginfo {
+      grid-column: 1;
+      grid-row: 1;
+    }
+  }
+  .glink :global(.gcover) {
+    width: 100%;
+  }
+
   /* Schnittmarken wie auf einem Kontaktbogen */
   .crop {
     position: absolute;
-    inset: 0.9rem;
+    inset: 1rem;
     pointer-events: none;
     opacity: 0;
     transition:
       opacity 0.4s,
-      inset 0.5s var(--ease);
+      inset 0.6s var(--ease);
     --c: #fbf6ef;
     background:
-      linear-gradient(var(--c), var(--c)) top left / 22px 2px,
-      linear-gradient(var(--c), var(--c)) top left / 2px 22px,
-      linear-gradient(var(--c), var(--c)) top right / 22px 2px,
-      linear-gradient(var(--c), var(--c)) top right / 2px 22px,
-      linear-gradient(var(--c), var(--c)) bottom left / 22px 2px,
-      linear-gradient(var(--c), var(--c)) bottom left / 2px 22px,
-      linear-gradient(var(--c), var(--c)) bottom right / 22px 2px,
-      linear-gradient(var(--c), var(--c)) bottom right / 2px 22px;
+      linear-gradient(var(--c), var(--c)) top left / 26px 2px,
+      linear-gradient(var(--c), var(--c)) top left / 2px 26px,
+      linear-gradient(var(--c), var(--c)) top right / 26px 2px,
+      linear-gradient(var(--c), var(--c)) top right / 2px 26px,
+      linear-gradient(var(--c), var(--c)) bottom left / 26px 2px,
+      linear-gradient(var(--c), var(--c)) bottom left / 2px 26px,
+      linear-gradient(var(--c), var(--c)) bottom right / 26px 2px,
+      linear-gradient(var(--c), var(--c)) bottom right / 2px 26px;
     background-repeat: no-repeat;
   }
-  .overlay {
-    position: absolute;
-    inset: auto 0 0;
-    padding: 2.5rem 1.25rem 1.1rem;
-    color: #fbf6ef;
-    background: linear-gradient(to top, rgb(var(--scrim) / 0.75), transparent);
-    opacity: 0;
-    transform: translateY(0.75rem);
-    transition:
-      opacity 0.35s,
-      transform 0.45s var(--ease);
-  }
-  .tile a:hover .media :global(img),
-  .tile a:focus-visible .media :global(img) {
-    transform: scale(1.06);
-  }
-  .tile a:hover .crop,
-  .tile a:focus-visible .crop {
+  .glink:hover .crop,
+  .glink:focus-visible .crop {
     opacity: 1;
-    inset: 1.25rem;
+    inset: 1.6rem;
   }
-  .tile a:hover .overlay,
-  .tile a:focus-visible .overlay {
-    opacity: 1;
-    transform: none;
+  @media (hover: hover) {
+    .glink:hover :global(.px picture) {
+      scale: 1.04;
+    }
   }
-  .info {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
+
+  .ginfo {
+    display: grid;
+    gap: 0.9rem;
+    justify-items: start;
   }
   .nr {
-    font-size: clamp(2.5rem, 1.6rem + 2.5vw, 4.5rem);
+    font-size: clamp(3.5rem, 2rem + 5vw, 8rem);
     line-height: 0.8;
     color: var(--accent-vivid);
-  }
-  .txt {
-    display: grid;
-    gap: 0.5rem;
   }
   .name {
     transition: color 0.25s;
   }
-  .tile a:hover .name {
+  .glink:hover .name {
     color: var(--accent);
+  }
+  .desc {
+    font-family: var(--font-serif);
+    font-weight: 340;
+    font-size: var(--fs-lead);
+    line-height: 1.35;
+    max-width: 30ch;
+  }
+  .go {
+    margin-top: 0.5rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 2px solid currentColor;
   }
 </style>

@@ -5,7 +5,7 @@ slug: stadt-nach-regen
 date: 2026-09-12
 location: "Hamburg"
 description: "Platzhalter-Serie: Nächte, in denen der Asphalt glänzt und jedes Fenster eine Geschichte erzählt."
-layout: justified
+layout: showcase
 visibility: public
 showExif: true
 # downloadUrl: https://…

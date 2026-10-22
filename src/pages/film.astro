@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Picture from '../components/Picture.astro';
+import ParallaxImage from '../components/ParallaxImage.astro';
 import Icon from '../components/Icon.astro';
 import { useTranslations } from '../i18n';
 
@@ -12,7 +12,7 @@ const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (
 
 <BaseLayout title={t.film.title} description={`${t.film.title}: ${t.film.intro}`}>
   <section class="container container--wide head">
-    <h1 class="display display-1">{t.film.title}<sup class="count">({String(films.length).padStart(2, '0')})</sup></h1>
+    <h1 class="display display-1 drift-left">{t.film.title}<sup class="count">({String(films.length).padStart(2, '0')})</sup></h1>
     <p class="lead muted">{t.film.intro}</p>
   </section>
 
@@ -21,12 +21,18 @@ const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (
     <ol class="films" role="list">
       {
         rendered.map(({ film, Content }, i) => (
-          <li class="film reveal" id={film.id}>
-            <div class="still">
-              <Picture src={film.data.still} alt={film.data.stillAlt} sizes="(min-width: 1000px) 60vw, 100vw" loading={i === 0 ? 'eager' : 'lazy'} />
+          <li class="film" id={film.id}>
+            <ParallaxImage
+              class="still"
+              src={film.data.still}
+              alt={film.data.stillAlt}
+              sizes="(min-width: 1000px) 62vw, 100vw"
+              loading={i === 0 ? 'eager' : 'lazy'}
+              fetchpriority={i === 0 ? 'high' : undefined}
+            >
               <span class="year display" aria-hidden="true">{film.data.year}</span>
-            </div>
-            <div class="info">
+            </ParallaxImage>
+            <div class="info rise">
               <p class="label roles">{film.data.roles.join(' · ')}</p>
               <h2 class="display display-2">{film.data.title}</h2>
               <p class="label muted meta-row">
@@ -91,12 +97,12 @@ const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (
       grid-template-columns: 3fr 2fr;
       align-items: start;
     }
-    .film:nth-child(even) .still {
+    .film:nth-child(even) :global(.still) {
       order: 2;
     }
   }
-  .still {
-    position: relative;
+  .film :global(.still) {
+    width: 100%;
     background: #120d0a;
   }
   .year {

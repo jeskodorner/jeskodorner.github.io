@@ -59,7 +59,7 @@ const galleries = defineCollection({
       description: z.string().min(1, { error: 'Beschreibung fehlt.' }).max(300),
       /** Dateiname des Titelbilds; leer = erstes Bild */
       cover: z.string().optional(),
-      layout: z.enum(['masonry', 'justified']).default('masonry'),
+      layout: z.enum(['showcase', 'masonry', 'justified']).default('showcase'),
       visibility: z.enum(['public', 'unlisted']).default('public'),
       /** EXIF-Daten in Lightbox und Bildseite zeigen */
       showExif: z.boolean().default(true),

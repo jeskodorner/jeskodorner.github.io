@@ -1,0 +1,259 @@
+---
+/**
+ * „Bühne“: Jedes Foto bekommt einen eigenen, großen Auftritt mit Parallax.
+ * Die Anordnung ergibt sich automatisch aus dem Seitenverhältnis:
+ *   Querformat → abwechselnd volle Breite / breit links / breit rechts
+ *   Hochformat → abwechselnd links / rechts, Bildtext daneben
+ *   (fast) quadratisch → mittig
+ */
+import type { GalleryImage } from '../lib/galleries';
+import ParallaxImage from './ParallaxImage.astro';
+
+export interface StageItem {
+  image: GalleryImage;
+  href: string;
+  title?: string;
+  kicker?: string;
+  kickerHref?: string;
+  meta?: string;
+  /** Zusätzliche Attribute am Bild-Link (Lightbox-Daten, id) */
+  attrs?: Record<string, string | number | undefined>;
+}
+
+export interface Props {
+  items: StageItem[];
+  /** Bilder öffnen die Lightbox (Galerieseite) */
+  lightbox?: boolean;
+  /** Erstes Bild sofort laden (wenn es oben auf der Seite steht) */
+  eagerFirst?: boolean;
+  id?: string;
+  count?: number;
+}
+
+const { items, lightbox = false, eagerFirst = false, id, count } = Astro.props;
+const total = String(items.length).padStart(2, '0');
+
+let landscape = 0;
+let portrait = 0;
+const staged = items.map((item, i) => {
+  const r = item.image.src.width / item.image.src.height;
+  let variant: string;
+  if (r >= 1.25) {
+    variant = ['full', 'wide-left', 'wide-right'][landscape % 3]!;
+    landscape++;
+  } else if (r <= 0.85) {
+    variant = portrait % 2 === 0 ? 'tall-left' : 'tall-right';
+    portrait++;
+  } else {
+    variant = 'square';
+  }
+  const sizes =
+    variant === 'full'
+      ? '100vw'
+      : variant.startsWith('wide')
+        ? '(min-width: 900px) 78vw, 100vw'
+        : variant === 'square'
+          ? '(min-width: 900px) 68vw, 100vw'
+          : '(min-width: 900px) 60vw, 100vw';
+  return { ...item, variant, sizes, ratio: r, nr: String(i + 1).padStart(2, '0') };
+});
+---
+
+<ol
+  class="stages"
+  role="list"
+  id={id}
+  data-gallery={lightbox ? '' : undefined}
+  data-count={lightbox ? (count ?? items.length) : undefined}
+  data-layout="showcase"
+>
+  {
+    staged.map((s, i) => (
+      <li class:list={['stage', `stage--${s.variant}`]} style={`--r:${s.ratio.toFixed(4)}`}>
+        <ParallaxImage
+          src={s.image.src}
+          alt={s.image.alt}
+          sizes={s.sizes}
+          color={s.image.color}
+          lqip={s.image.lqip}
+          href={s.href}
+          loading={eagerFirst && i === 0 ? 'eager' : 'lazy'}
+          fetchpriority={eagerFirst && i === 0 ? 'high' : undefined}
+          class:list={['stage-frame', { ph: lightbox }]}
+          attrs={s.attrs}
+        />
+        <div class="stage-cap rise">
+          <p class="stage-nr display" aria-hidden="true">
+            {s.nr}
+            <span class="stage-total">/{total}</span>
+          </p>
+          <div class="stage-text">
+            {s.kicker &&
+              (s.kickerHref ? (
+                <a class="label stage-kicker" href={s.kickerHref}>
+                  {s.kicker}
+                </a>
+              ) : (
+                <p class="label stage-kicker">{s.kicker}</p>
+              ))}
+            {s.title && <p class="stage-title">{s.title}</p>}
+            {s.meta && <p class="label muted stage-meta">{s.meta}</p>}
+          </div>
+        </div>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .stages {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: clamp(5rem, 2rem + 12vw, 15rem);
+  }
+  .stage {
+    width: 100%;
+    max-width: 2400px;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+    display: grid;
+    gap: clamp(1rem, 2vw, 1.75rem);
+  }
+  .stage :global(.stage-frame) {
+    width: 100%;
+  }
+
+  /* Bildtext */
+  .stage-cap {
+    display: flex;
+    align-items: flex-end;
+    gap: clamp(0.9rem, 2vw, 1.75rem);
+  }
+  .stage-nr {
+    font-size: clamp(3.5rem, 1.6rem + 6vw, 9.5rem);
+    line-height: 0.78;
+    color: var(--accent-vivid);
+    display: flex;
+    align-items: flex-start;
+    flex: none;
+  }
+  .stage-total {
+    font-size: 0.24em;
+    line-height: 1;
+    margin-left: 0.25em;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+  }
+  .stage-text {
+    display: grid;
+    gap: 0.35rem;
+    padding-bottom: 0.2rem;
+    min-width: 0;
+  }
+  .stage-kicker {
+    text-decoration: none;
+    color: var(--accent);
+  }
+  a.stage-kicker:hover {
+    text-decoration: underline;
+  }
+  .stage-title {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 330;
+    font-size: clamp(1.3rem, 1rem + 1.4vw, 2.6rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    max-width: 26ch;
+  }
+
+  /* ---------- Mobil: alles groß und untereinander ---------- */
+  .stage--full {
+    padding-inline: 0;
+    max-width: none;
+  }
+  .stage--full .stage-cap {
+    padding-inline: var(--gutter);
+  }
+  .stage--full :global(.stage-frame) {
+    max-height: 100svh;
+  }
+  .stage--tall-left :global(.stage-frame),
+  .stage--tall-right :global(.stage-frame) {
+    max-height: 88svh;
+  }
+
+  /* ---------- Desktop: jedes Bild bekommt seine eigene Bühne ---------- */
+  @media (min-width: 900px) {
+    .stage--wide-left,
+    .stage--wide-right {
+      grid-template-columns: 78fr 22fr;
+      align-items: end;
+      column-gap: clamp(1.5rem, 3vw, 3.5rem);
+    }
+    .stage--wide-right {
+      grid-template-columns: 22fr 78fr;
+    }
+    .stage--wide-right :global(.stage-frame) {
+      grid-column: 2;
+      grid-row: 1;
+    }
+    .stage--wide-right .stage-cap {
+      grid-column: 1;
+      grid-row: 1;
+      justify-content: flex-end;
+      text-align: right;
+    }
+    .stage--wide-left .stage-cap,
+    .stage--wide-right .stage-cap {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .stage--wide-right .stage-cap {
+      align-items: flex-end;
+    }
+    .stage--wide-left :global(.stage-frame),
+    .stage--wide-right :global(.stage-frame) {
+      max-height: 92svh;
+    }
+
+    .stage--tall-left,
+    .stage--tall-right {
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      column-gap: clamp(2rem, 6vw, 8rem);
+    }
+    .stage--tall-right {
+      grid-template-columns: 1fr auto;
+    }
+    .stage--tall-left :global(.stage-frame),
+    .stage--tall-right :global(.stage-frame) {
+      height: min(92svh, 1300px);
+      width: auto;
+      max-height: none;
+    }
+    .stage--tall-right :global(.stage-frame) {
+      grid-column: 2;
+      grid-row: 1;
+    }
+    .stage--tall-right .stage-cap {
+      grid-column: 1;
+      grid-row: 1;
+      justify-self: end;
+      text-align: right;
+      flex-direction: row-reverse;
+    }
+    .stage--tall-left .stage-cap,
+    .stage--tall-right .stage-cap {
+      align-self: center;
+    }
+
+    .stage--square {
+      justify-items: center;
+    }
+    .stage--square :global(.stage-frame) {
+      width: min(68vw, 86svh);
+    }
+  }
+</style>

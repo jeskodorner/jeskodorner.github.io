@@ -1,12 +1,14 @@
 ---
 /**
- * Galerie-Raster. Jedes Bild ist ein normaler Link auf seine Bildseite (funktioniert ohne JS).
+ * Galerie-Darstellung: „showcase“ (Bühne, jedes Bild groß mit Parallax), „masonry“ oder „justified“.
+ * Jedes Bild ist ein normaler Link auf seine Bildseite (funktioniert ohne JS).
  * Mit JS öffnet PhotoSwipe die Lightbox; die URL bekommt #bild-N und ist teilbar.
  */
 import type { Gallery } from '../lib/galleries';
 import { responsive } from '../lib/images';
 import { exifLine } from '../lib/exif';
 import Picture from './Picture.astro';
+import Showcase, { type StageItem } from './Showcase.astro';
 
 export interface Props {
   gallery: Gallery;
@@ -26,46 +28,57 @@ const items = await Promise.all(
     return { img, set, ratio, sizes, exif: gallery.showExif ? exifLine(img.exif) : '' };
   }),
 );
+
+/** Lightbox-Daten, gemeinsam für alle Layouts */
+const pswpAttrs = (it: (typeof items)[number]) => ({
+  id: `bild-${it.img.index}`,
+  'data-pswp-src': it.set.largest.url,
+  'data-pswp-width': it.set.largest.width,
+  'data-pswp-height': it.set.largest.height,
+  'data-pswp-srcset': it.set.webp,
+  'data-index': it.img.index,
+  'data-caption': it.img.caption,
+  'data-exif': it.exif || undefined,
+  'data-original': it.img.originalUrl,
+});
+
+const stageItems: StageItem[] = items.map((it) => ({
+  image: it.img,
+  href: it.img.pageUrl,
+  title: it.img.caption,
+  meta: it.exif || undefined,
+  attrs: pswpAttrs(it),
+}));
 ---
 
-<div
-  id="gallery"
-  class:list={['grid', `grid--${layout}`]}
-  data-gallery
-  data-count={gallery.images.length}
->
-  {
-    items.map(({ img, set, ratio, sizes, exif }) => (
-      <a
-        class="ph reveal"
-        id={`bild-${img.index}`}
-        href={img.pageUrl}
-        style={`--r:${ratio.toFixed(4)}`}
-        data-pswp-src={set.largest.url}
-        data-pswp-width={set.largest.width}
-        data-pswp-height={set.largest.height}
-        data-pswp-srcset={set.webp}
-        data-index={img.index}
-        data-caption={img.caption}
-        data-exif={exif || undefined}
-        data-original={img.originalUrl}
-      >
-        <Picture
-          src={img.src}
-          alt={img.alt}
-          sizes={sizes}
-          color={img.color}
-          lqip={img.lqip}
-          loading={img.index <= 3 ? 'eager' : 'lazy'}
-          fetchpriority={img.index === 1 ? 'high' : undefined}
-        />
-        <span class="num label" aria-hidden="true">
-          {String(img.index).padStart(2, '0')}
-        </span>
-      </a>
-    ))
-  }
-</div>
+{
+  layout === 'showcase' && (
+    <Showcase items={stageItems} lightbox eagerFirst id="gallery" count={gallery.images.length} />
+  )
+}
+
+{
+  layout !== 'showcase' && (
+    <div id="gallery" class:list={['grid', `grid--${layout}`]} data-gallery data-count={gallery.images.length} data-layout={layout}>
+      {items.map((it) => (
+        <a class="ph reveal" href={it.img.pageUrl} style={`--r:${it.ratio.toFixed(4)}`} {...pswpAttrs(it)}>
+          <Picture
+            src={it.img.src}
+            alt={it.img.alt}
+            sizes={it.sizes}
+            color={it.img.color}
+            lqip={it.img.lqip}
+            loading={it.img.index <= 3 ? 'eager' : 'lazy'}
+            fetchpriority={it.img.index === 1 ? 'high' : undefined}
+          />
+          <span class="num label" aria-hidden="true">
+            {String(it.img.index).padStart(2, '0')}
+          </span>
+        </a>
+      ))}
+    </div>
+  )
+}
 
 <script>
   import { initLightbox } from '../scripts/lightbox';

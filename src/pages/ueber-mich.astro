@@ -1,7 +1,7 @@
 ---
 import { getEntry, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Picture from '../components/Picture.astro';
+import ParallaxImage from '../components/ParallaxImage.astro';
 import EmailLink from '../components/EmailLink.astro';
 import portrait from '../assets/portrait.jpg';
 import { site } from '../config/site';
@@ -34,12 +34,12 @@ const jsonLd = {
   jsonLd={jsonLd}
 >
   <section class="container container--wide head">
-    <h1 class="display display-1">Über <em>mich</em></h1>
+    <h1 class="display display-1 drift-left">Über <em>mich</em></h1>
   </section>
 
   <section class="container container--wide intro">
     <div class="portrait">
-      <Picture src={portrait} alt={portraitAlt} sizes="(min-width: 900px) 40vw, 100vw" loading="eager" fetchpriority="high" />
+      <ParallaxImage src={portrait} alt={portraitAlt} sizes="(min-width: 900px) 40vw, 100vw" ratio="4 / 5" loading="eager" fetchpriority="high" soft />
     </div>
     <div class="text">
       {data?.lead && <p class="lead" set:html={inlineMd(data.lead)} />}
@@ -60,10 +60,10 @@ const jsonLd = {
   {
     stations.length > 0 && (
       <section class="container container--wide section stations" aria-labelledby="st-h">
-        <h2 id="st-h" class="display display-2">{t.about.stations}</h2>
+        <h2 id="st-h" class="display display-2 drift-right">{t.about.stations}</h2>
         <ol role="list">
           {stations.map((s) => (
-            <li class="reveal">
+            <li class="rise">
               <span class="display yr">{s.year}</span>
               <span class="st-title">{s.title}</span>
               {s.text && <span class="muted">{s.text}</span>}
@@ -107,9 +107,8 @@ const jsonLd = {
       top: calc(var(--header-h) + 1.5rem);
     }
   }
-  .portrait :global(img) {
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
+  .portrait :global(.px) {
+    width: 100%;
   }
   .text {
     display: grid;

@@ -1,0 +1,197 @@
+/*
+ * Bewegung beim Scrollen – reines CSS (Scroll-Driven Animations), kein JavaScript.
+ * - Nur wenn der Browser es kann (@supports) UND niemand "Bewegung reduzieren" eingestellt hat.
+ * - Ohne Unterstützung (z. B. Firefox, ältere Browser) bleibt alles ruhig und vollständig sichtbar.
+ * - Immer Einzel-Eigenschaften (animation-name …) statt der Kurzschreibweise "animation":
+ *   Der CSS-Minifier würde sonst animation-timeline in eine ungültige Kurzschreibweise verschmelzen.
+ */
+
+/* ---------- Parallax-Rahmen ---------- */
+.px {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background-color: var(--sand);
+  view-timeline-name: --px;
+  view-timeline-axis: block;
+}
+.px picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transition: scale 1.2s var(--ease);
+}
+.px img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+@media (hover: hover) {
+  a.px:hover picture {
+    scale: 1.035;
+  }
+}
+a.px:focus-visible {
+  outline-offset: -4px;
+}
+
+@keyframes px-move {
+  from {
+    transform: translate3d(0, var(--px-from, -9%), 0) scale(var(--px-scale, 1.24));
+  }
+  to {
+    transform: translate3d(0, var(--px-to, 9%), 0) scale(var(--px-scale, 1.24));
+  }
+}
+@keyframes px-reveal {
+  from {
+    clip-path: inset(var(--rv-y, 14%) var(--rv-x, 9%) var(--rv-y, 14%) var(--rv-x, 9%));
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    translate: 0 4.5rem;
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+  }
+}
+@keyframes drift-in-left {
+  from {
+    translate: -12vw 0;
+    opacity: 0.2;
+  }
+  to {
+    translate: 0 0;
+    opacity: 1;
+  }
+}
+@keyframes drift-in-right {
+  from {
+    translate: 12vw 0;
+    opacity: 0.2;
+  }
+  to {
+    translate: 0 0;
+    opacity: 1;
+  }
+}
+@keyframes marquee-move {
+  from {
+    transform: translate3d(var(--mq-from, 4%), 0, 0);
+  }
+  to {
+    transform: translate3d(var(--mq-to, -42%), 0, 0);
+  }
+}
+@keyframes word-light {
+  from {
+    opacity: 0.14;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Bild wandert langsamer als die Seite → Tiefe */
+    .px img {
+      animation-name: px-move;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: --px;
+      animation-range: cover 0% cover 100%;
+      will-change: transform;
+    }
+    .px--soft {
+      --px-from: -5%;
+      --px-to: 5%;
+      --px-scale: 1.14;
+    }
+    /* Rahmen öffnet sich beim Hereinscrollen */
+    .px--reveal {
+      animation-name: px-reveal;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 85%;
+    }
+    .rise {
+      animation-name: rise;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      /* fertig, sobald das Element ganz im Bild ist – auch ganz unten auf der Seite */
+      animation-range: entry 0% entry 100%;
+    }
+    .drift-left,
+    .drift-right {
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 100%;
+    }
+    .drift-left {
+      animation-name: drift-in-left;
+    }
+    .drift-right {
+      animation-name: drift-in-right;
+    }
+    /* Großes Schriftband, das beim Scrollen seitlich durchzieht */
+    .marquee-track {
+      animation-name: marquee-move;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+    /* Satz leuchtet Wort für Wort auf (Zeitleiste des Absatzes, Versatz pro Wort) */
+    .words {
+      view-timeline-name: --words;
+    }
+    .words .w {
+      animation-name: word-light;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: --words;
+      animation-range: cover calc(12% + var(--i) * var(--step, 2.2%)) cover calc(20% + var(--i) * var(--step, 2.2%));
+    }
+  }
+}
+
+/* Schriftband (Gestaltung, unabhängig von der Bewegung) */
+.marquee {
+  overflow: hidden;
+  padding-block: clamp(1rem, 3vw, 2.5rem);
+  border-block: 2px solid var(--line-strong);
+  user-select: none;
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 0.35em;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-weight: 760;
+  text-transform: uppercase;
+  font-size: clamp(4rem, 2rem + 11vw, 15rem);
+  line-height: 0.85;
+}
+.marquee-track .o {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ink);
+}
+.marquee-track em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 330;
+  text-transform: none;
+  color: var(--accent-vivid);
+  font-size: 0.8em;
+}

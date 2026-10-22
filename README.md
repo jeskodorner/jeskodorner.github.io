@@ -6,7 +6,8 @@ Gebaut mit **Astro 7** und TypeScript und gehostet kostenlos auf **GitHub Pages*
 
 - Keine Cookies, keine Tracker, keine Google Fonts. Alle Schriften liegen lokal im Projekt.
 - Die Seiten funktionieren ohne JavaScript. JavaScript wird nur für Lightbox, Farbschema-Umschalter, Teilen und die E-Mail-Adresse verwendet.
-- Lighthouse (lokal gemessen, Mobil): Performance 96–100, Barrierefreiheit 100, Best Practices 100 und SEO 100.
+- Lighthouse (lokal gemessen, Mobil): Performance 98–100, Barrierefreiheit 100, Best Practices 100 und SEO 100.
+- Große Fotos mit Parallax und Bewegung beim Scrollen, alles reines CSS (siehe Abschnitt 7).
 
 ---
 
@@ -18,12 +19,13 @@ Gebaut mit **Astro 7** und TypeScript und gehostet kostenlos auf **GitHub Pages*
 4. [Neue Galerie anlegen](#4-neue-galerie-anlegen)
 5. [Felder einer Galerie](#5-felder-einer-galerie)
 6. [Bildübergabe: Downloads und Unlisted-Galerien](#6-bildübergabe-downloads-und-unlisted-galerien)
-7. [Optionale Funktionen](#7-optionale-funktionen)
-8. [Deployment auf GitHub Pages](#8-deployment-auf-github-pages)
-9. [Grenzen von GitHub Pages](#9-grenzen-von-github-pages)
-10. [Design: Farben und Schriften](#10-design-farben-und-schriften)
-11. [Englisch später ergänzen](#11-englisch-später-ergänzen)
-12. [Häufige Fehler](#12-häufige-fehler)
+7. [Bewegung beim Scrollen](#7-bewegung-beim-scrollen)
+8. [Optionale Funktionen](#8-optionale-funktionen)
+9. [Deployment auf GitHub Pages](#9-deployment-auf-github-pages)
+10. [Grenzen von GitHub Pages](#10-grenzen-von-github-pages)
+11. [Design: Farben und Schriften](#11-design-farben-und-schriften)
+12. [Englisch später ergänzen](#12-englisch-später-ergänzen)
+13. [Häufige Fehler](#13-häufige-fehler)
 
 ---
 
@@ -116,7 +118,7 @@ Das legt zwei Ordner an:
 - `src/content/galleries/kueste-im-oktober/index.md`, die Vorlage mit allen Feldern
 - `photos-source/kueste-im-oktober/`, für deine Originale
 
-Optionen: `--unlisted` (private Kundengalerie, siehe Abschnitt 6), `--layout justified`, `--date 2026-10-22`, `--location "Sylt"`.
+Optionen: `--unlisted` (private Kundengalerie, siehe Abschnitt 6), `--layout masonry` oder `--layout justified` (Standard ist `showcase`), `--date 2026-10-22`, `--location "Sylt"`.
 
 **Dann:**
 
@@ -169,7 +171,7 @@ und festen Seitenverhältnissen, damit beim Laden nichts springt.
 | `location` | | Ort |
 | `description` | ja | 1–2 Sätze für Kachel, Suchmaschinen und Link-Vorschau |
 | `cover` | | Dateiname des Titelbilds. Ohne Angabe wird das erste Bild genommen. |
-| `layout` | | `masonry` (Standard) oder `justified` (gleich hohe Reihen) |
+| `layout` | | `showcase` (Standard, „Bühne“), `masonry` (Raster) oder `justified` (gleich hohe Reihen). Siehe unten. |
 | `visibility` | | `public` (Standard) oder `unlisted` |
 | `showExif` | | Aufnahmedaten zeigen (Standard `true`) |
 | `downloadUrl` | | Link zum Download der ganzen Galerie (ZIP/Ordner) |
@@ -195,6 +197,17 @@ Unterhalb des Kopfbereichs kannst du optional einen längeren Text in Markdown s
 
 - **Reihenfolge** ändern: Einträge in `images:` umsortieren.
 - **Bild entfernen:** Eintrag löschen und die Datei in `images/` löschen.
+
+### Layouts
+
+| Layout | Wirkung | Gut für |
+|---|---|---|
+| `showcase` („Bühne“, Standard) | Jedes Foto bekommt einen eigenen großen Auftritt mit Parallax: Querformate abwechselnd über die volle Breite, breit links oder breit rechts. Hochformate abwechselnd links oder rechts mit Bildtext daneben. Quadrate mittig. Große Nummer und Bildunterschrift dazu. | Serien und Portfolio, bis etwa 30–40 Bilder |
+| `masonry` | kompaktes Raster in Spalten. Die Bilder laufen spaltenweise von oben nach unten. | viele Bilder, z. B. Kundengalerien |
+| `justified` | gleich hohe Reihen, ruhig und dicht | viele Querformate |
+
+Die Anordnung in der Bühne ergibt sich automatisch aus dem Seitenverhältnis und der Reihenfolge.
+Willst du ein bestimmtes Bild über die volle Breite, setze es an eine passende Stelle in der Liste.
 
 **Teilbare Bild-Links:** Jedes Bild hat eine eigene Seite (`/galerien/kueste-im-oktober/3/`) und einen Lightbox-Link
 (`/galerien/kueste-im-oktober/#bild-3`). Die Nummer entspricht der Position in der Liste. Beim Umsortieren ändern sich die Nummern.
@@ -282,7 +295,25 @@ haben keine Vor/Zurück-Navigation zu anderen Galerien und werden nicht von der 
 
 ---
 
-## 7. Optionale Funktionen
+## 7. Bewegung beim Scrollen
+
+Alle Effekte sind reines CSS, ohne JavaScript, und laufen flüssig, weil der Browser sie direkt auf der Grafikkarte berechnet:
+
+- **Parallax:** Fotos gleiten in ihrem Rahmen langsamer als die Seite, und die Rahmen öffnen sich beim Hereinscrollen.
+- **Startseite:**
+  - Das Hero-Bild bleibt zurück, während Name und Claim nach oben wegziehen.
+  - Der Satz unter dem Hero leuchtet Wort für Wort auf.
+  - Ein großes Schriftband aus der Zeile über dem Namen zieht seitlich durch.
+- **Titel und Texte:** Große Titel gleiten seitlich herein, Texte steigen auf.
+- **Galerien:** Ein Fortschrittsbalken oben zeigt, wie weit man ist. Der Header wird beim Scrollen kompakt.
+
+**Browser:** Chrome, Edge, Brave und Safari (ab Version 26) zeigen die Bewegung. Firefox hatte diese Technik
+nach meinem Stand noch nicht standardmäßig aktiviert. Dort erscheint die Seite vollständig, nur ohne Bewegung.
+Wer im System „Bewegung reduzieren“ eingestellt hat, bekommt bewusst eine ruhige Seite.
+
+Die Stärke der Effekte steht in `src/styles/motion.css`, z. B. `--px-scale` und `--px-from`/`--px-to` für Parallax.
+
+## 8. Optionale Funktionen
 
 Alles in `src/config/site.ts`:
 
@@ -306,7 +337,7 @@ Die Bilder blenden ruhig über, ohne JavaScript. Bei „Bewegung reduzieren“ b
 
 ---
 
-## 8. Deployment auf GitHub Pages
+## 9. Deployment auf GitHub Pages
 
 Einmalig, ca. 10 Minuten:
 
@@ -344,7 +375,7 @@ Schlägt etwas fehl, bleibt die alte Version online, und unter *Actions* steht d
 
 ---
 
-## 9. Grenzen von GitHub Pages
+## 10. Grenzen von GitHub Pages
 
 | Grenze | Wert | Was das für dich heißt |
 |---|---|---|
@@ -357,7 +388,7 @@ Schlägt etwas fehl, bleibt die alte Version online, und unter *Actions* steht d
 
 ---
 
-## 10. Design: Farben und Schriften
+## 11. Design: Farben und Schriften
 
 Palette „Sand & Terrakotta“, definiert in `src/styles/tokens.css`. Kontraste nach WCAG 2.x:
 
@@ -395,7 +426,7 @@ Mit Lizenz:
 
 ---
 
-## 11. Englisch später ergänzen
+## 12. Englisch später ergänzen
 
 Die Struktur ist dafür vorbereitet:
 1. `src/i18n/en.ts` mit derselben Struktur wie `de.ts` anlegen und in `src/i18n/index.ts` registrieren.
@@ -404,7 +435,7 @@ Die Struktur ist dafür vorbereitet:
 
 ---
 
-## 12. Häufige Fehler
+## 13. Häufige Fehler
 
 **Build bricht ab: „Alt-Text fehlt oder ist zu kurz“**
 In `index.md` hat ein Bild noch `alt: ""`. Die Meldung nennt Galerie und Position, z. B. `images.3.alt`. Die Zählung beginnt bei 0.

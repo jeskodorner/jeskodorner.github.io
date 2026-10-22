@@ -25,12 +25,13 @@ if (!title || flag('help')) {
     npm run new-gallery -- "Küste im Oktober"
     npm run new-gallery -- "Hochzeit Lena & Tom" --unlisted
     npm run new-gallery -- "Stadt" --layout justified --date 2026-10-01 --location "Hamburg"
+    (Layouts: showcase = Bühne [Standard], masonry, justified)
 `);
   process.exit(title ? 0 : 1);
 }
 
 const unlisted = flag('unlisted');
-const layout = option('layout') === 'justified' ? 'justified' : 'masonry';
+const layout = ['masonry', 'justified'].includes(option('layout')) ? option('layout') : 'showcase';
 const date = option('date') ?? today();
 if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
   console.log(c.red('Datum bitte im Format JJJJ-MM-TT angeben, z. B. 2026-10-22.'));

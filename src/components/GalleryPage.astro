@@ -80,9 +80,9 @@ const jsonLd = gallery.isUnlisted
         <span>{formatMonth(gallery.date)}</span>
         {gallery.location && <span>{gallery.location}</span>}
       </p>
-      <h1 class="display display-1 title" style={`view-transition-name: gt-${gallery.slug}`}>{gallery.title}</h1>
+      <h1 class="display display-1 title drift-left" style={`view-transition-name: gt-${gallery.slug}`}>{gallery.title}</h1>
 
-      <div class="intro">
+      <div class="intro rise">
         <div class="text">
           <p class="lead">{gallery.description}</p>
           {
@@ -108,7 +108,10 @@ const jsonLd = gallery.isUnlisted
       }
     </header>
 
-    <section class="container container--wide grid-wrap" aria-label={t.galleries.images(gallery.images.length)}>
+    <section
+      class:list={['grid-wrap', gallery.layout === 'showcase' ? 'grid-wrap--stage' : 'container container--wide']}
+      aria-label={t.galleries.images(gallery.images.length)}
+    >
       <GalleryGrid gallery={gallery} />
     </section>
   </article>
@@ -206,6 +209,9 @@ const jsonLd = gallery.isUnlisted
       grid-template-columns: 1.15fr 1fr;
       gap: clamp(2rem, 6vw, 7rem);
     }
+  }
+  .grid-wrap--stage {
+    padding-top: clamp(1rem, 4vw, 4rem);
   }
   .private {
     display: flex;

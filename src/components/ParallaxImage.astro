@@ -1,0 +1,60 @@
+---
+/**
+ * Bild in einem Rahmen mit Parallax (Bild bewegt sich beim Scrollen langsamer)
+ * und optionalem Öffnen des Rahmens beim Hereinscrollen. Reines CSS, siehe styles/motion.css.
+ * Mit `href` wird der Rahmen zum Link (z. B. auf die Bildseite / Lightbox).
+ */
+import type { ImageMetadata } from 'astro';
+import Picture from './Picture.astro';
+
+export interface Props {
+  src: ImageMetadata;
+  alt: string;
+  sizes: string;
+  color?: string;
+  lqip?: string;
+  loading?: 'lazy' | 'eager';
+  fetchpriority?: 'high' | 'low' | 'auto';
+  href?: string;
+  /** Seitenverhältnis des Rahmens, z. B. "4 / 5". Standard: das des Bildes */
+  ratio?: string;
+  /** Schwächere Bewegung (für kleinere Bilder) */
+  soft?: boolean;
+  /** Rahmen öffnet sich beim Hereinscrollen */
+  reveal?: boolean;
+  class?: string;
+  style?: string;
+  /** Zusätzliche Attribute für den Rahmen (z. B. data-pswp-* für die Lightbox) */
+  attrs?: Record<string, string | number | undefined>;
+}
+
+const {
+  src,
+  alt,
+  sizes,
+  color,
+  lqip,
+  loading = 'lazy',
+  fetchpriority,
+  href,
+  ratio,
+  soft = false,
+  reveal = true,
+  class: className,
+  style = '',
+  attrs = {},
+} = Astro.props;
+
+const Tag = href ? 'a' : 'div';
+const aspect = ratio ?? `${src.width} / ${src.height}`;
+---
+
+<Tag
+  href={href}
+  class:list={['px', { 'px--soft': soft, 'px--reveal': reveal }, className]}
+  style={`aspect-ratio:${aspect};${color ? `background-color:${color};` : ''}${style}`}
+  {...attrs}
+>
+  <Picture src={src} alt={alt} sizes={sizes} color={color} lqip={lqip} loading={loading} fetchpriority={fetchpriority} />
+  <slot />
+</Tag>
