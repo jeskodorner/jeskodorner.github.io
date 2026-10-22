@@ -43,7 +43,7 @@ export function initLightbox() {
     gallery: galleryEl,
     children: 'a.ph',
     pswpModule: () => import('photoswipe'),
-    bgOpacity: 0.97,
+    bgOpacity: 1,
     showHideAnimationType: reduced ? 'none' : 'zoom',
     zoomAnimationDuration: reduced ? 0 : 333,
     closeTitle: de.lightbox.close,

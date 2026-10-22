@@ -187,6 +187,8 @@ const isCurrent = (match: string[]) => match.some((m) => path.startsWith(m));
     color: var(--ink);
     background-color: var(--paper);
     background-image: var(--grain), var(--mottle);
+    background-size: auto, cover;
+    background-repeat: repeat, no-repeat;
   }
   .menu-inner {
     min-height: 100%;
@@ -246,13 +248,18 @@ const isCurrent = (match: string[]) => match.some((m) => path.startsWith(m));
   /* Kompakter Header beim Scrollen (CSS Scroll-Driven Animations) */
   @supports (animation-timeline: scroll()) {
     @media (prefers-reduced-motion: no-preference) {
+      /* Einzel-Eigenschaften statt Kurzschreibweise (Minifier würde sie sonst ungültig zusammenfassen) */
       .site-header {
-        animation: header-compact linear both;
+        animation-name: header-compact;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
         animation-timeline: scroll(root);
         animation-range: 0 180px;
       }
       .logo {
-        animation: logo-compact linear both;
+        animation-name: logo-compact;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
         animation-timeline: scroll(root);
         animation-range: 0 180px;
       }

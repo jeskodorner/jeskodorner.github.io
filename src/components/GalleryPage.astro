@@ -156,7 +156,9 @@ const jsonLd = gallery.isUnlisted
   }
   @supports (animation-timeline: scroll()) {
     .progress {
-      animation: progress linear both;
+      animation-name: progress;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
       animation-timeline: scroll(root);
     }
   }

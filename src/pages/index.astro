@@ -33,9 +33,16 @@ const jsonLd = {
 // Raster-Muster für „Ausgewählte Arbeiten“ (12-Spalten-Raster, wiederholt sich)
 const pattern = ['w7 tall', 'w5', 'w5', 'w4', 'w8', 'w6', 'w6 tall', 'w4', 'w8'];
 const duration = heroList.length * site.hero.secondsPerImage;
+// Überblend-Keyframes passend zur Bildanzahl (CSS erlaubt keine berechneten Keyframe-Prozente)
+const share = 100 / heroList.length;
+const fadePct = Math.min(share / 3, (1.5 / duration) * 100);
+const fadeCss = slideshow
+  ? `@keyframes hero-fade{0%{opacity:0}${fadePct.toFixed(2)}%{opacity:1}${share.toFixed(2)}%{opacity:1}${(share + fadePct).toFixed(2)}%{opacity:0}100%{opacity:0}}`
+  : '';
 ---
 
 <BaseLayout overlayHeader image={og} jsonLd={jsonLd}>
+  {fadeCss && <style is:inline set:html={fadeCss} slot="head" />}
   <!-- Hero -->
   <section class="hero" aria-label={site.name}>
     <div class:list={['hero-media', { 'is-slideshow': slideshow }]} style={`--n:${heroList.length};--dur:${duration}s`}>
@@ -222,12 +229,8 @@ const duration = heroList.length * site.hero.secondsPerImage;
       animation: hero-zoom 18s var(--ease) both;
     }
     .is-slideshow .slide {
-      opacity: 0;
-      animation: fade var(--dur) infinite;
-      animation-delay: calc(var(--i) * var(--dur) / var(--n));
-    }
-    .is-slideshow .slide:first-child {
-      opacity: 1;
+      animation: hero-fade var(--dur) linear infinite both;
+      animation-delay: calc(var(--i) * var(--dur) / var(--n) - 1.5s);
     }
   }
   .is-slideshow .slide:not(:first-child) {
@@ -236,16 +239,6 @@ const duration = heroList.length * site.hero.secondsPerImage;
   @keyframes hero-zoom {
     from {
       transform: scale(1.08);
-    }
-  }
-  @keyframes fade {
-    0%,
-    100% {
-      opacity: 0;
-    }
-    4%,
-    calc(100% / var(--n)) {
-      opacity: 1;
     }
   }
   .hero-shade {
@@ -377,16 +370,15 @@ const duration = heroList.length * site.hero.secondsPerImage;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: clamp(1.25rem, 3vw, 2.5rem) var(--gap);
   }
-  .m-item:nth-child(3n + 1) {
-    grid-column: span 2;
+  @media (max-width: 899px) {
+    .m-item:nth-child(3n + 1) {
+      grid-column: span 2;
+    }
   }
   @media (min-width: 900px) {
     .mosaic {
       grid-template-columns: repeat(12, minmax(0, 1fr));
       align-items: start;
-    }
-    .m-item:nth-child(3n + 1) {
-      grid-column: auto;
     }
     .w4 {
       grid-column: span 4;
@@ -421,6 +413,10 @@ const duration = heroList.length * site.hero.secondsPerImage;
   .tall .m-media {
     aspect-ratio: 4 / 5;
   }
+  .m-media :global(picture) {
+    display: block;
+    height: 100%;
+  }
   .m-media :global(img) {
     width: 100%;
     height: 100%;
@@ -437,6 +433,7 @@ const duration = heroList.length * site.hero.secondsPerImage;
   }
   .m-nr {
     color: var(--accent);
+    white-space: nowrap;
   }
   .m-title {
     font-family: var(--font-serif);
@@ -472,6 +469,7 @@ const duration = heroList.length * site.hero.secondsPerImage;
       grid-template-columns: 1.4fr 0.8fr 0.8fr auto;
     }
     .film-row .arrow {
+      grid-row: auto;
       grid-column: auto;
     }
   }

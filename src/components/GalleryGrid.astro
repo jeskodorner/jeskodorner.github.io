@@ -50,7 +50,15 @@ const items = await Promise.all(
         data-exif={exif || undefined}
         data-original={img.originalUrl}
       >
-        <Picture src={img.src} alt={img.alt} sizes={sizes} color={img.color} lqip={img.lqip} />
+        <Picture
+          src={img.src}
+          alt={img.alt}
+          sizes={sizes}
+          color={img.color}
+          lqip={img.lqip}
+          loading={img.index <= 3 ? 'eager' : 'lazy'}
+          fetchpriority={img.index === 1 ? 'high' : undefined}
+        />
         <span class="num label" aria-hidden="true">
           {String(img.index).padStart(2, '0')}
         </span>

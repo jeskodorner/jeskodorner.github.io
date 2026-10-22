@@ -33,6 +33,7 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
                   color={g.cover.color}
                   lqip={g.cover.lqip}
                   loading={i < 2 ? 'eager' : 'lazy'}
+                  fetchpriority={i === 0 ? 'high' : undefined}
                 />
                 <span class="crop" aria-hidden="true" />
                 <span class="overlay" aria-hidden="true">

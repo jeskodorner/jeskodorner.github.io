@@ -28,12 +28,22 @@ body {
   line-height: 1.6;
   color: var(--ink);
   background-color: var(--paper);
-  background-image: var(--grain), var(--mottle);
+  background-image: var(--grain);
   -webkit-font-smoothing: antialiased;
   font-kerning: normal;
   text-rendering: optimizeLegibility;
   overflow-x: clip;
 }
+/* Papier-Struktur: eine feste, nicht gekachelte Ebene (keine sichtbaren Nahtstellen) */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--mottle) center / cover no-repeat;
+}
+
 img,
 picture,
 svg,
@@ -154,11 +164,14 @@ html:not(.js) .js-only {
   letter-spacing: -0.005em;
   font-feature-settings: 'kern', 'liga';
 }
+/* Etwas Luft nach oben: Bei enger Zeilenhöhe ragen Ä/Ö/Ü-Punkte sonst in die Zeile darüber */
 .display-1 {
   font-size: var(--fs-h1);
+  padding-top: 0.1em;
 }
 .display-2 {
   font-size: var(--fs-h2);
+  padding-top: 0.08em;
 }
 .display-3 {
   font-size: var(--fs-h3);
@@ -329,8 +342,11 @@ a:hover .arrow,
 }
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
+    /* Einzel-Eigenschaften statt Kurzschreibweise: sonst verschmilzt der Minifier alles zu einer ungültigen Regel */
     .reveal {
-      animation: reveal linear both;
+      animation-name: reveal;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
       animation-timeline: view();
       animation-range: entry 0% entry 35%;
     }
