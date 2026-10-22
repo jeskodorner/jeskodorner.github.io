@@ -186,15 +186,30 @@ const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : 
     )
   }
 
-  <!-- Über mich -->
-  <section class="about container container--wide section" aria-labelledby="about-h">
-    <ParallaxImage class="about-img hang" src={portrait} alt="Jesko Dorner fotografiert mit einer Fujifilm-Kamera an einer felsigen Küste, im Hintergrund Meer und Berge" sizes="(min-width: 900px) 40vw, 100vw" ratio="4 / 5" soft />
-    <div class="about-text rise">
-      <h2 id="about-h" class="pill c-pink">{t.home.aboutTeaser}</h2>
-      {text.aboutTeaser && <p class="about-lead" set:html={inlineMd(text.aboutTeaser)} />}
-      <a class="btn" href="/ueber-mich/">{t.home.aboutMore} <span class="arrow" aria-hidden="true">→</span></a>
-    </div>
-  </section>
+  <!-- Über mich (an/aus: site.home.aboutTeaser in src/config/site.ts) -->
+  {
+    site.home.aboutTeaser && (
+      <section class="about container container--wide section" aria-labelledby="about-h">
+        <ParallaxImage
+          class="about-img hang"
+          src={portrait}
+          alt="Jesko Dorner fotografiert mit einer Fujifilm-Kamera an einer felsigen Küste, im Hintergrund Meer und Berge"
+          sizes="(min-width: 900px) 40vw, 100vw"
+          ratio="4 / 5"
+          soft
+        />
+        <div class="about-text rise">
+          <h2 id="about-h" class="pill c-pink">
+            {t.home.aboutTeaser}
+          </h2>
+          {text.aboutTeaser && <p class="about-lead" set:html={inlineMd(text.aboutTeaser)} />}
+          <a class="btn" href="/ueber-mich/">
+            {t.home.aboutMore} <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+      </section>
+    )
+  }
 
   <!-- Kontakt: Lime-Fläche -->
   <section class="cta room c-lime" aria-labelledby="cta-h">
@@ -451,6 +466,10 @@ const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : 
   .cta {
     padding-block: clamp(4rem, 9vw, 9rem);
     overflow: hidden;
+  }
+  /* Ohne „Über mich“ dazwischen: weiße Wand zwischen den beiden Farbflächen */
+  .film-room + .cta {
+    margin-top: var(--section);
   }
   .cta-title {
     display: flex;

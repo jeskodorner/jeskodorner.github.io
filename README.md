@@ -359,6 +359,9 @@ Alles in `src/config/site.ts`:
 **Hero-Slideshow:** `hero: { mode: 'slideshow' }` und bei mehreren Bildern `hero: true` setzen.
 Die Bilder blenden ruhig über, ohne JavaScript. Bei „Bewegung reduzieren“ bleibt das erste Bild stehen.
 
+**„Über mich“ auf der Startseite:** Der Abschnitt mit Porträt und Teaser ist im Moment ausgeschaltet.
+Mit `home: { aboutTeaser: true }` erscheint er wieder (zwischen Film und Kontakt). Die Seite „Über mich“ selbst bleibt immer erreichbar.
+
 **Wasserzeichen aus:** In `photos.config.json` `"watermark": { "enabled": false, … }` setzen, dann `npm run optimize -- --force`.
 
 ---

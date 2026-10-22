@@ -26,6 +26,9 @@ export const site = {
   /** Startseiten-Hero: 'image' = ein Bild, 'slideshow' = ruhige Überblendung */
   hero: { mode: 'image' as 'image' | 'slideshow', secondsPerImage: 7 },
 
+  /** Startseite: Abschnitt „Über mich“ (Porträt + Teaser) anzeigen? true = an, false = aus */
+  home: { aboutTeaser: false as boolean },
+
   /**
    * Kontaktformular (optional). Ohne Endpoint wird kein Formular angezeigt.
    * Beispiel Formspree: 'https://formspree.io/f/abcdwxyz'
