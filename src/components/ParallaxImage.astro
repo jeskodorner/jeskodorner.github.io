@@ -24,6 +24,8 @@ export interface Props {
   reveal?: boolean;
   class?: string;
   style?: string;
+  /** Wichtigster Bildbereich bei Zuschnitt, z. B. "50% 30%" */
+  focus?: string;
   /** Zusätzliche Attribute für den Rahmen (z. B. data-pswp-* für die Lightbox) */
   attrs?: Record<string, string | number | undefined>;
 }
@@ -42,6 +44,7 @@ const {
   reveal = true,
   class: className,
   style = '',
+  focus,
   attrs = {},
 } = Astro.props;
 
@@ -52,7 +55,7 @@ const aspect = ratio ?? `${src.width} / ${src.height}`;
 <Tag
   href={href}
   class:list={['px', { 'px--soft': soft, 'px--reveal': reveal }, className]}
-  style={`aspect-ratio:${aspect};${color ? `background-color:${color};` : ''}${style}`}
+  style={`aspect-ratio:${aspect};${color ? `background-color:${color};` : ''}${focus ? `--focus:${focus};` : ''}${style}`}
   {...attrs}
 >
   <Picture src={src} alt={alt} sizes={sizes} color={color} lqip={lqip} loading={loading} fetchpriority={fetchpriority} />

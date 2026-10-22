@@ -192,6 +192,7 @@ Pro Bild:
 | `featured` | | `true` = auf der Startseite unter „Ausgewählte Arbeiten“ (6–9 Bilder ideal) |
 | `hero` | | `true` = großes Bild auf der Startseite |
 | `exif` | | überschreibt ausgelesene Werte, z. B. `exif: { lens: "Helios 44-2" }` |
+| `focus` | | wichtigster Bildbereich, wenn das Foto für Vollbild beschnitten wird, z. B. `focus: "50% 30%"` (waagerecht senkrecht). Standard: Mitte |
 
 Unterhalb des Kopfbereichs kannst du optional einen längeren Text in Markdown schreiben.
 
@@ -202,7 +203,7 @@ Unterhalb des Kopfbereichs kannst du optional einen längeren Text in Markdown s
 
 | Layout | Wirkung | Gut für |
 |---|---|---|
-| `showcase` („Bühne“, Standard) | Jedes Foto bekommt einen eigenen großen Auftritt mit Parallax: Querformate abwechselnd über die volle Breite, breit links oder breit rechts. Hochformate abwechselnd links oder rechts mit Bildtext daneben. Quadrate mittig. Große Nummer und Bildunterschrift dazu. | Serien und Portfolio, bis etwa 30–40 Bilder |
+| `showcase` („Bühne“, Standard) | Jedes Foto füllt den Bildschirm. Querformate laufen randlos über den ganzen Bildschirm, mit Werkschild als weißer Karte. Hoch- und Quadratformate bekommen eine Bildschirmhälfte, die andere Hälfte ist die Raumfarbe mit großer Nummer und Werkschild, abwechselnd links und rechts. Beim Scrollen rastet die Galerie sanft Bild für Bild ein. Auf dem Handy erscheinen die Bilder in voller Breite und unbeschnitten. | Serien und Portfolio |
 | `masonry` | kompaktes Raster in Spalten. Die Bilder laufen spaltenweise von oben nach unten. | viele Bilder, z. B. Kundengalerien |
 | `justified` | gleich hohe Reihen, ruhig und dicht | viele Querformate |
 
@@ -299,16 +300,16 @@ haben keine Vor/Zurück-Navigation zu anderen Galerien und werden nicht von der 
 
 Alle Effekte sind reines CSS, ohne JavaScript, und laufen flüssig:
 
-- **Parallax:** Fotos gleiten in ihrem Rahmen langsamer als die Seite und „ploppen“ beim Hereinscrollen leicht gedreht an die Wand.
+- **Parallax:** Fotos gleiten in ihrem Rahmen etwas langsamer als die Seite und blenden beim Hereinscrollen ruhig ein.
 - **Dehnende Titel:** Große Titel (Name im Hero, „Ausgewählte Arbeiten“, „Lass uns reden!“, Footer) ziehen sich beim Scrollen von schmal auf breit.
 - **Leuchtmarker:** `*markierte*` Wörter bekommen beim Hereinscrollen einen Lime- bzw. Pink-Marker. Der Satz unter dem Hero leuchtet Wort für Wort auf.
-- **Farbbänder:** Zwei Bänder in Pink und Lime kreuzen sich und ziehen gegenläufig durch.
-- **Sticker:** Der runde Sticker im Hero dreht sich langsam.
+- **Farbbänder:** Zwei gerade Bänder in Pink und Lime ziehen gegenläufig durch.
+- **Hero:** Das Vollbild-Foto bleibt stehen, der Name zieht sich beim Scrollen in die Breite.
 - **Weitere Effekte:** Das Hero-Foto hebt beim Scrollen ab, Texte steigen auf, der Fortschrittsbalken in Galerien zeigt die Raumfarbe, und der Header wird kompakt.
 
 **Browser:** Chrome, Edge, Brave und Safari (ab Version 26) zeigen die Scroll-Bewegung. Firefox hatte diese Technik
 nach meinem Stand noch nicht standardmäßig aktiviert. Dort erscheint die Seite vollständig, nur ohne Scroll-Bewegung.
-Wer im System „Bewegung reduzieren“ eingestellt hat, bekommt bewusst eine ruhige Seite, auch ohne drehenden Sticker.
+Wer im System „Bewegung reduzieren“ eingestellt hat, bekommt bewusst eine ruhige Seite.
 
 Die Stärke der Effekte steht in `src/styles/motion.css`, z. B. `--px-scale` und `--px-from`/`--px-to` für Parallax
 oder `--stretch-from`/`--stretch-to` für die dehnenden Titel.
@@ -393,12 +394,12 @@ Schlägt etwas fehl, bleibt die alte Version online, und unter *Actions* steht d
 Look „White Cube“: weiße Galeriewände, schwarze Schrift, knallige Farbräume. Definiert in `src/styles/tokens.css`.
 Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 
-- **Fotos** hängen wie Werke an der Wand: mit Schatten, Werkschild und rundem Nummern-Sticker in der Raumfarbe.
-  Beim Überfahren springt ein harter Schatten in der Raumfarbe heraus.
+- **Fotos füllen den Bildschirm**: Querformate randlos, Hochformate neben einer Hälfte in Raumfarbe. Dazu ein Werkschild mit Nummer.
+  Nichts ist schräg gestellt. Mutig sind Farben und Schrift, nicht die Anordnung.
 - **Jede Galerie ist ein Raum** mit eigener Farbe. Die Farbe erscheint in der Übersicht, im Farbband oben auf der Galerieseite,
-  im Fortschrittsbalken, in den Nummern-Stickern und im Download-Kasten.
+  im Fortschrittsbalken, in den Bildnummern und im Download-Kasten.
   Festlegen per `color: pink | blue | lime | orange | violet` in `index.md`. Ohne Angabe wechselt die Farbe automatisch reihum.
-- **Startseite:** rotierender Sticker, zwei sich kreuzende Farbbänder, ein blauer Film-Raum und ein Lime-Raum für Kontakt.
+- **Startseite:** Vollbild-Foto mit großem Namen, Leuchtmarker, zwei gerade Farbbänder, ein blauer Film-Raum und ein Lime-Raum für Kontakt.
 
 Kontraste nach WCAG 2.x:
 

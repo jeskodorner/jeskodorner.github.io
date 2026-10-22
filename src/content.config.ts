@@ -40,6 +40,11 @@ const galleryImage = z
     featured: z.boolean().default(false),
     /** Als Hero-Bild auf der Startseite verwenden */
     hero: z.boolean().default(false),
+    /** Wichtigster Bildbereich bei Vollbild-Zuschnitt, z. B. "50% 30%" (waagerecht senkrecht). Standard: Mitte */
+    focus: z
+      .string()
+      .regex(/^\d{1,3}% \d{1,3}%$/, { error: 'focus bitte als "50% 30%" angeben (waagerecht senkrecht).' })
+      .optional(),
     exif: exifOverride.optional(),
   })
   .strict();

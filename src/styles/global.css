@@ -299,22 +299,14 @@ html:not(.js) .js-only {
   letter-spacing: 0.06em;
   text-decoration: none;
   line-height: 1.1;
-  box-shadow: 0 0 0 var(--ink);
   transition:
-    transform 0.25s var(--pop),
-    box-shadow 0.25s var(--pop),
     background-color 0.2s,
-    color 0.2s;
+    color 0.2s,
+    border-color 0.2s;
 }
 .btn:hover {
   color: var(--ink);
   background: var(--lime);
-  transform: translate(-3px, -3px);
-  box-shadow: 4px 4px 0 var(--ink);
-}
-.btn:active {
-  transform: none;
-  box-shadow: 0 0 0 var(--ink);
 }
 .btn--solid {
   background: var(--ink);

@@ -26,6 +26,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Bildausschnitt bei Vollbild: per Feld "focus" pro Bild einstellbar */
+  object-position: var(--focus, 50% 50%);
 }
 a.px:focus-visible {
   outline-offset: 4px;
@@ -39,15 +41,13 @@ a.px:focus-visible {
     transform: translate3d(0, var(--px-to, 8%), 0) scale(var(--px-scale, 1.2));
   }
 }
-/* Bild „ploppt“ an die Wand */
+/* Bild blendet beim Hereinscrollen ruhig ein */
 @keyframes px-pop {
   from {
-    scale: 0.86;
-    rotate: var(--pop-rot, -2deg);
+    opacity: 0.35;
   }
   to {
-    scale: 1;
-    rotate: 0deg;
+    opacity: 1;
   }
 }
 @keyframes rise {
@@ -110,11 +110,6 @@ a.px:focus-visible {
     opacity: 1;
   }
 }
-@keyframes spin {
-  to {
-    rotate: 360deg;
-  }
-}
 
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
@@ -134,7 +129,7 @@ a.px:focus-visible {
     .px--reveal {
       animation-name: px-pop;
       animation-timing-function: linear;
-      animation-fill-mode: forwards;
+      animation-fill-mode: both;
       animation-timeline: view();
       animation-range: entry 0% entry 90%;
     }
@@ -195,38 +190,18 @@ a.px:focus-visible {
   }
 }
 
-/* Sticker dreht sich langsam (zeitbasiert, stoppt bei „Bewegung reduzieren“) */
-@media (prefers-reduced-motion: no-preference) {
-  .spin {
-    animation: spin 18s linear infinite;
-  }
-}
-
-/* ---------- Farbbänder, die sich kreuzen ---------- */
+/* ---------- Zwei gerade Farbbänder, die gegenläufig ziehen ---------- */
 .tapes {
-  position: relative;
-  height: clamp(11rem, 7rem + 16vw, 24rem);
   overflow: hidden;
   view-timeline-name: --tapes;
   user-select: none;
 }
 .tape {
-  position: absolute;
-  left: -10%;
-  right: -10%;
-  top: 50%;
-  padding-block: clamp(0.5rem, 1.2vw, 1.1rem);
+  padding-block: clamp(0.6rem, 1.4vw, 1.2rem);
   background: var(--c);
   color: var(--on-c);
-  box-shadow: 0 10px 30px -12px rgb(0 0 0 / 0.35);
-}
-.tape:nth-child(1) {
-  translate: 0 -78%;
-  rotate: -4deg;
 }
 .tape:nth-child(2) {
-  translate: 0 -10%;
-  rotate: 3deg;
   --tape-from: -40%;
   --tape-to: 0%;
 }

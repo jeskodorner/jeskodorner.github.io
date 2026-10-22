@@ -23,22 +23,21 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
   <ol class="rooms" role="list">
     {
       galleries.map((g, i) => (
-        <li class:list={['room-item room', `c-${g.color}`, { 'room-item--flip': i % 2 === 1 }]}>
-          <a class="room-link container container--wide" href={g.url}>
-            <span class="room-art">
-              <ParallaxImage
-                class="room-cover"
-                src={g.cover.src}
-                alt={g.cover.alt}
-                sizes="(min-width: 900px) 50vw, 100vw"
-                color={g.cover.color}
-                lqip={g.cover.lqip}
-                ratio="4 / 3"
-                loading={i === 0 ? 'eager' : 'lazy'}
-                fetchpriority={i === 0 ? 'high' : undefined}
-              />
-            </span>
-            <span class="room-info rise">
+        <li class:list={['room-item', `c-${g.color}`, { 'room-item--flip': i % 2 === 1 }]}>
+          <a class="room-link" href={g.url}>
+            <ParallaxImage
+              class="room-cover"
+              src={g.cover.src}
+              alt={g.cover.alt}
+              sizes="(min-width: 900px) 55vw, 100vw"
+              color={g.cover.color}
+              lqip={g.cover.lqip}
+              focus={g.cover.focus}
+              ratio="4 / 3"
+              loading={i === 0 ? 'eager' : 'lazy'}
+              fetchpriority={i === 0 ? 'high' : undefined}
+            />
+            <span class="room-info room">
               <span class="pill room-nr">Raum {String(i + 1).padStart(2, '0')}</span>
               <span class="display display-2 name" style={`view-transition-name: gt-${g.slug}`}>
                 {g.title}
@@ -82,23 +81,41 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
     list-style: none;
     padding: 0;
     display: grid;
+    gap: clamp(0.5rem, 1vw, 0.9rem);
   }
   .room-link {
     display: grid;
-    gap: clamp(1.5rem, 3vw, 2.5rem);
-    align-items: center;
-    padding-block: clamp(3.5rem, 8vw, 8rem);
     text-decoration: none;
   }
+  .room-link :global(.room-cover) {
+    width: 100%;
+    --px-scale: 1.08;
+    --px-from: -3.5%;
+    --px-to: 3.5%;
+  }
+  .room-info {
+    display: grid;
+    gap: 1rem;
+    justify-items: start;
+    align-content: end;
+    padding: clamp(1.75rem, 4vw, 4.5rem) var(--gutter);
+  }
+
+  /* Desktop: jeder Raum füllt den Bildschirm – eine Hälfte Bild, eine Hälfte Farbe */
   @media (min-width: 900px) {
     .room-link {
       grid-template-columns: 55fr 45fr;
-      column-gap: clamp(2rem, 5vw, 6rem);
+      height: calc(100svh - var(--header-h) + 1rem);
+      min-height: 32rem;
+    }
+    .room-link :global(.room-cover) {
+      aspect-ratio: auto !important;
+      height: 100%;
     }
     .room-item--flip .room-link {
       grid-template-columns: 45fr 55fr;
     }
-    .room-item--flip .room-art {
+    .room-item--flip .room-link :global(.room-cover) {
       grid-column: 2;
       grid-row: 1;
     }
@@ -106,38 +123,15 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
       grid-column: 1;
       grid-row: 1;
     }
-  }
-  /* Titelbild als Werk mit weißem Passepartout */
-  .room-art {
-    display: block;
-    padding: clamp(0.6rem, 1.4vw, 1.4rem);
-    background: var(--wall);
-    box-shadow: var(--hang-shadow);
-    rotate: -2deg;
-    transition:
-      rotate 0.5s var(--pop),
-      translate 0.35s var(--pop),
-      box-shadow 0.35s var(--pop);
-  }
-  .room-item--flip .room-art {
-    rotate: 2deg;
-  }
-  .room-art :global(.room-cover) {
-    width: 100%;
-  }
-  .room-link:hover .room-art,
-  .room-link:focus-visible .room-art {
-    rotate: 0deg;
-    translate: -8px -8px;
-    box-shadow:
-      16px 16px 0 var(--ink),
-      var(--hang-shadow);
+    .room-info {
+      padding: clamp(2rem, 4vw, 4.5rem);
+    }
   }
 
-  .room-info {
-    display: grid;
-    gap: 1rem;
-    justify-items: start;
+  @media (hover: hover) {
+    .room-link:hover :global(.px picture) {
+      scale: 1.035;
+    }
   }
   .room-nr {
     background: var(--ink);

@@ -144,13 +144,11 @@ const isCurrent = (match: string[]) => match.some((m) => path.startsWith(m));
     text-decoration: none;
     transition:
       background-color 0.2s,
-      color 0.2s,
-      rotate 0.3s var(--pop);
+      color 0.2s;
   }
   .nav-desktop a:hover {
     background: var(--lime);
     color: var(--ink);
-    rotate: -3deg;
   }
   .nav-desktop a[aria-current='page'] {
     background: var(--ink);

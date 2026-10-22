@@ -31,6 +31,8 @@ export interface GalleryImage {
   originalUrl?: string;
   featured: boolean;
   hero: boolean;
+  /** Fokuspunkt für Vollbild-Zuschnitt (CSS object-position) */
+  focus: string;
   exif: RawExif;
   color: string;
   lqip?: string;
@@ -132,6 +134,7 @@ async function load(): Promise<Gallery[]> {
         originalUrl: img.originalUrl,
         featured: img.featured,
         hero: img.hero,
+        focus: img.focus ?? '50% 50%',
         exif: { ...(m.exif ?? {}), ...(img.exif ?? {}) },
         color: m.color ?? FALLBACK_COLOR,
         lqip: m.lqip,

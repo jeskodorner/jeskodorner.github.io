@@ -1,10 +1,11 @@
 ---
 /**
- * „Bühne“: Jedes Foto hängt wie ein Werk an der weißen Galeriewand, mit Werkschild daneben.
- * Die Anordnung ergibt sich automatisch aus dem Seitenverhältnis:
- *   Querformat → abwechselnd volle Breite / breit links / breit rechts
- *   Hochformat → abwechselnd links / rechts, Werkschild daneben
- *   (fast) quadratisch → mittig
+ * „Bühne“: Jedes Foto füllt den Bildschirm.
+ *   Querformat        → Vollbild, Werkschild als weiße Karte unten links
+ *   Hoch-/Quadratformat → Bildschirm geteilt: eine Hälfte Bild, eine Hälfte Raumfarbe mit Werkschild
+ *                       (abwechselnd links/rechts, damit Hochformate nicht stark beschnitten werden)
+ * Auf dem Handy: Bilder in voller Breite im Originalformat (kein Zuschnitt), Werkschild darunter.
+ * Ausschnitt bei Vollbild: Feld "focus" pro Bild (z. B. "50% 30%").
  */
 import type { GalleryImage, RoomColor } from '../lib/galleries';
 import ParallaxImage from './ParallaxImage.astro';
@@ -16,7 +17,7 @@ export interface StageItem {
   kicker?: string;
   kickerHref?: string;
   meta?: string;
-  /** Raumfarbe für Nummern-Sticker und Hover-Schatten */
+  /** Raumfarbe für Farbhälfte und Nummer */
   color?: RoomColor;
   /** Zusätzliche Attribute am Bild-Link (Lightbox-Daten, id) */
   attrs?: Record<string, string | number | undefined>;
@@ -28,50 +29,38 @@ export interface Props {
   lightbox?: boolean;
   /** Erstes Bild sofort laden (wenn es oben auf der Seite steht) */
   eagerFirst?: boolean;
+  /** Beim Scrollen sanft Bild für Bild einrasten (nur Desktop) */
+  snap?: boolean;
   id?: string;
   count?: number;
   color?: RoomColor;
 }
 
-const { items, lightbox = false, eagerFirst = false, id, count, color = 'pink' } = Astro.props;
+const { items, lightbox = false, eagerFirst = false, snap = false, id, count, color = 'pink' } = Astro.props;
 const total = String(items.length).padStart(2, '0');
 
-let landscape = 0;
-let portrait = 0;
+let splits = 0;
 const staged = items.map((item, i) => {
   const r = item.image.src.width / item.image.src.height;
-  let variant: string;
-  if (r >= 1.25) {
-    variant = ['full', 'wide-left', 'wide-right'][landscape % 3]!;
-    landscape++;
-  } else if (r <= 0.85) {
-    variant = portrait % 2 === 0 ? 'tall-left' : 'tall-right';
-    portrait++;
+  let variant: 'full' | 'split-left' | 'split-right';
+  if (r >= 1.2) {
+    variant = 'full';
   } else {
-    variant = 'square';
+    variant = splits % 2 === 0 ? 'split-left' : 'split-right';
+    splits++;
   }
-  const sizes =
-    variant === 'full'
-      ? '(min-width: 900px) 92vw, 100vw'
-      : variant.startsWith('wide')
-        ? '(min-width: 900px) 70vw, 100vw'
-        : variant === 'square'
-          ? '(min-width: 900px) 60vw, 100vw'
-          : '(min-width: 900px) 55vw, 100vw';
   return {
     ...item,
     variant,
-    sizes,
-    ratio: r,
+    sizes: variant === 'full' ? '100vw' : '(min-width: 900px) 50vw, 100vw',
     nr: String(i + 1).padStart(2, '0'),
-    tilt: i % 2 === 0 ? '-2.5deg' : '2deg',
     color: item.color ?? color,
   };
 });
 ---
 
 <ol
-  class="stages"
+  class:list={['stages', { 'stages--snap': snap }]}
   role="list"
   id={id}
   data-gallery={lightbox ? '' : undefined}
@@ -80,7 +69,7 @@ const staged = items.map((item, i) => {
 >
   {
     staged.map((s, i) => (
-      <li class:list={['stage', `stage--${s.variant}`, `c-${s.color}`]} style={`--r:${s.ratio.toFixed(4)};--pop-rot:${s.tilt}`}>
+      <li class:list={['stage', `stage--${s.variant}`, `c-${s.color}`]}>
         <ParallaxImage
           src={s.image.src}
           alt={s.image.alt}
@@ -88,19 +77,18 @@ const staged = items.map((item, i) => {
           color={s.image.color}
           lqip={s.image.lqip}
           href={s.href}
+          focus={s.image.focus}
           loading={eagerFirst && i === 0 ? 'eager' : 'lazy'}
           fetchpriority={eagerFirst && i === 0 ? 'high' : undefined}
-          class:list={['stage-frame hang', { ph: lightbox }]}
+          class:list={['stage-frame', { ph: lightbox }]}
           attrs={s.attrs}
         />
-        <div class="placard rise">
-          <p class="badge display" aria-hidden="true">
-            {s.nr}
+        <div class="placard">
+          <p class="pl-nr" aria-hidden="true">
+            <span class="pl-nr-big">{s.nr}</span>
+            <span class="pl-nr-total">/{total}</span>
           </p>
           <div class="pl-text">
-            <p class="label pl-count">
-              Nº {s.nr} / {total}
-            </p>
             {s.title && <p class="pl-title">{s.title}</p>}
             {s.kicker &&
               (s.kickerHref ? (
@@ -123,62 +111,61 @@ const staged = items.map((item, i) => {
     list-style: none;
     padding: 0;
     display: grid;
-    gap: clamp(5rem, 2rem + 12vw, 15rem);
+    gap: clamp(0.5rem, 1vw, 0.9rem);
+    /* Höhe einer Bühne: Bildschirm minus kompakter Header */
+    --stage-h: calc(100svh - var(--header-h) + 1rem);
   }
   .stage {
-    width: 100%;
-    max-width: 2400px;
-    margin-inline: auto;
-    padding-inline: var(--gutter);
+    position: relative;
     display: grid;
-    gap: clamp(1.25rem, 2.5vw, 2rem);
   }
+  /* Ruhigere Parallax-Bewegung bei Vollbild (weniger Zuschnitt) */
   .stage :global(.stage-frame) {
+    --px-scale: 1.08;
+    --px-from: -3.5%;
+    --px-to: 3.5%;
     width: 100%;
-    transition:
-      translate 0.35s var(--pop),
-      box-shadow 0.35s var(--pop);
-  }
-  /* Hover: harter Schatten in der Raumfarbe – das Bild springt von der Wand */
-  @media (hover: hover) {
-    .stage :global(.stage-frame:hover) {
-      translate: -10px -10px;
-      box-shadow:
-        18px 18px 0 var(--c),
-        var(--hang-shadow);
-    }
   }
 
-  /* Werkschild */
+  /* ---------- Werkschild ---------- */
   .placard {
     display: flex;
-    align-items: flex-start;
-    gap: clamp(0.9rem, 2vw, 1.4rem);
+    align-items: flex-end;
+    gap: 1rem;
+    padding: clamp(1rem, 3vw, 1.75rem) var(--gutter);
   }
-  .badge {
+  .pl-nr {
+    display: flex;
+    align-items: flex-start;
+    font-family: var(--font-display);
+    font-weight: 860;
+    font-stretch: 62%;
+    line-height: 0.8;
     flex: none;
-    display: grid;
-    place-items: center;
-    width: clamp(3.6rem, 2.6rem + 3vw, 6rem);
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: var(--c);
-    color: var(--on-c);
-    font-size: clamp(1.5rem, 1rem + 1.6vw, 2.6rem);
-    font-stretch: 70%;
-    line-height: 1;
-    padding-top: 0.08em;
-    rotate: -8deg;
+  }
+  .pl-nr-big {
+    font-size: clamp(3rem, 2rem + 4vw, 6rem);
+    color: var(--c);
+  }
+  .c-lime .pl-nr-big,
+  .c-orange .pl-nr-big,
+  .c-violet .pl-nr-big {
+    /* helle Raumfarben sind als Schrift auf Weiß zu schwach → Nummer in Schwarz mit Farbunterstrich */
+    color: var(--ink);
+    text-decoration: underline var(--c) 0.12em;
+    text-underline-offset: 0.08em;
+  }
+  .pl-nr-total {
+    font-size: 1rem;
+    margin-left: 0.2em;
+    color: var(--ink-soft);
   }
   .pl-text {
     display: grid;
     gap: 0.3rem;
     min-width: 0;
-    max-width: 30ch;
-    padding-top: 0.2rem;
-  }
-  .pl-count {
-    color: var(--ink-soft);
+    max-width: 34ch;
+    padding-bottom: 0.15rem;
   }
   .pl-title {
     font-size: clamp(1.15rem, 1rem + 0.7vw, 1.6rem);
@@ -189,7 +176,6 @@ const staged = items.map((item, i) => {
   .pl-kicker {
     font-size: var(--fs-sm);
     font-weight: 600;
-    color: var(--ink);
     text-decoration: none;
   }
   a.pl-kicker {
@@ -202,77 +188,88 @@ const staged = items.map((item, i) => {
     font-variant-numeric: tabular-nums;
   }
 
-  /* ---------- Mobil: alles groß und untereinander ---------- */
-  .stage--full :global(.stage-frame) {
-    max-height: 92svh;
-  }
-  .stage--tall-left :global(.stage-frame),
-  .stage--tall-right :global(.stage-frame) {
-    max-height: 86svh;
-  }
-
-  /* ---------- Desktop: jedes Bild bekommt seine eigene Wand ---------- */
+  /* ---------- Desktop: jedes Bild füllt den Bildschirm ---------- */
   @media (min-width: 900px) {
-    .stage--full {
-      padding-inline: clamp(2rem, 4vw, 6rem);
+    .stage {
+      height: var(--stage-h);
+      min-height: 32rem;
     }
-    .stage--wide-left,
-    .stage--wide-right {
-      grid-template-columns: 70fr 30fr;
-      align-items: end;
-      column-gap: clamp(1.5rem, 3.5vw, 4rem);
+    .stage :global(.stage-frame) {
+      aspect-ratio: auto !important;
+      height: 100%;
     }
-    .stage--wide-right {
-      grid-template-columns: 30fr 70fr;
+
+    /* Vollbild + weiße Karte */
+    .stage--full :global(.stage-frame) {
+      position: absolute;
+      inset: 0;
     }
-    .stage--wide-right :global(.stage-frame) {
+    .stage--full .placard {
+      position: absolute;
+      left: var(--gutter);
+      bottom: var(--gutter);
+      z-index: 1;
+      padding: 1rem 1.25rem;
+      background: var(--wall);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 40px -12px rgb(0 0 0 / 0.35);
+    }
+    .stage--full .pl-nr-big {
+      font-size: clamp(2.6rem, 1.8rem + 2vw, 4rem);
+    }
+
+    /* Geteilter Bildschirm: Bild + Farbhälfte */
+    .stage--split-left,
+    .stage--split-right {
+      grid-template-columns: 1fr 1fr;
+    }
+    .stage--split-right :global(.stage-frame) {
       grid-column: 2;
       grid-row: 1;
     }
-    .stage--wide-right .placard {
-      grid-column: 1;
+    .stage--split-left .placard,
+    .stage--split-right .placard {
       grid-row: 1;
-      justify-self: end;
-      flex-direction: row-reverse;
-      text-align: right;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-end;
+      gap: 1.5rem;
+      padding: clamp(2rem, 4vw, 4.5rem);
+      background: var(--c);
+      color: var(--on-c);
     }
-    .stage--wide-left :global(.stage-frame),
-    .stage--wide-right :global(.stage-frame) {
-      max-height: 90svh;
+    .stage--split-right .placard {
+      grid-column: 1;
+    }
+    .stage--split-left .pl-nr-big,
+    .stage--split-right .pl-nr-big {
+      font-size: clamp(6rem, 2rem + 9vw, 14rem);
+      color: inherit;
+      text-decoration: none;
+    }
+    .stage--split-left .pl-nr-total,
+    .stage--split-right .pl-nr-total,
+    .stage--split-left .pl-meta,
+    .stage--split-right .pl-meta {
+      color: inherit;
+    }
+    .stage--split-left .pl-title,
+    .stage--split-right .pl-title {
+      font-size: clamp(1.5rem, 1rem + 1.5vw, 2.6rem);
+      line-height: 1.1;
+    }
+    .stage--split-left a.pl-kicker,
+    .stage--split-right a.pl-kicker {
+      color: inherit;
     }
 
-    .stage--tall-left,
-    .stage--tall-right {
-      grid-template-columns: auto 1fr;
-      align-items: center;
-      column-gap: clamp(2rem, 6vw, 8rem);
+    /* Sanftes Einrasten Bild für Bild (Galerieseite) */
+    :global(html:has(.stages--snap)) {
+      scroll-snap-type: y proximity;
     }
-    .stage--tall-right {
-      grid-template-columns: 1fr auto;
-    }
-    .stage--tall-left :global(.stage-frame),
-    .stage--tall-right :global(.stage-frame) {
-      height: min(88svh, 1300px);
-      width: auto;
-      max-height: none;
-    }
-    .stage--tall-right :global(.stage-frame) {
-      grid-column: 2;
-      grid-row: 1;
-    }
-    .stage--tall-right .placard {
-      grid-column: 1;
-      grid-row: 1;
-      justify-self: end;
-      text-align: right;
-      flex-direction: row-reverse;
-    }
-
-    .stage--square {
-      justify-items: center;
-    }
-    .stage--square :global(.stage-frame) {
-      width: min(60vw, 84svh);
+    .stages--snap .stage {
+      scroll-snap-align: start;
+      scroll-margin-top: calc(var(--header-h) - 1rem);
     }
   }
 </style>
