@@ -1,0 +1,18 @@
+{
+  "sourceDir": "photos-source",
+  "galleriesDir": "src/content/galleries",
+  "maxEdge": 2400,
+  "jpegQuality": 82,
+  "minJpegQuality": 68,
+  "targetMaxKB": 600,
+  "keepGps": false,
+  "copyright": "© Jesko Dorner",
+  "artist": "Jesko Dorner",
+  "watermark": {
+    "enabled": true,
+    "text": "© Jesko Dorner",
+    "opacity": 0.5,
+    "position": "bottom-right",
+    "size": 0.016
+  }
+}

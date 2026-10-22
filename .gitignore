@@ -1,0 +1,24 @@
+# Build-Ausgabe
+dist/
+# von Astro erzeugte Typen
+.astro/
+
+# Abhängigkeiten
+node_modules/
+
+# Lokale Original-Fotos – niemals committen!
+/photos-source/
+
+# Logs
+npm-debug.log*
+
+# Umgebungsvariablen
+.env
+.env.production
+
+# macOS / Editoren
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+.claude/
