@@ -188,7 +188,7 @@ const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : 
 
   <!-- Über mich -->
   <section class="about container container--wide section" aria-labelledby="about-h">
-    <ParallaxImage class="about-img hang" src={portrait} alt="Porträt von Jesko Dorner" sizes="(min-width: 900px) 40vw, 100vw" ratio="4 / 5" />
+    <ParallaxImage class="about-img hang" src={portrait} alt="Jesko Dorner fotografiert mit einer Fujifilm-Kamera an einer felsigen Küste, im Hintergrund Meer und Berge" sizes="(min-width: 900px) 40vw, 100vw" ratio="4 / 5" soft />
     <div class="about-text rise">
       <h2 id="about-h" class="pill c-pink">{t.home.aboutTeaser}</h2>
       {text.aboutTeaser && <p class="about-lead" set:html={inlineMd(text.aboutTeaser)} />}
