@@ -20,7 +20,7 @@ const slideshow = site.hero.mode === 'slideshow' && heroes.length > 1;
 const heroList = slideshow ? heroes : heroes.slice(0, 1);
 const hero = heroes[0];
 const galleries = await getPublicGalleries();
-const films = (await getCollection('films')).sort((a, b) => a.data.order - b.data.order || b.data.year - a.data.year);
+const films = (await getCollection('films')).sort((a, b) => a.data.order - b.data.order || (b.data.year ?? 0) - (a.data.year ?? 0));
 const og = hero ? await ogImage(hero.image.src) : undefined;
 
 const jsonLd = {
@@ -168,14 +168,12 @@ const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : 
             </a>
           </div>
           <ul class="film-list" role="list">
-            {films.slice(0, 3).map((f) => (
+            {films.slice(0, 6).map((f) => (
               <li class="rise">
                 <a href={`/film/#${f.id}`} class="film-row">
                   <span class="display display-3">{f.data.title}</span>
                   <span class="label">{f.data.roles.join(' & ')}</span>
-                  <span class="label">
-                    {f.data.format} · {f.data.year}
-                  </span>
+                  <span class="label">{[f.data.format, f.data.year].filter(Boolean).join(' · ')}</span>
                   <span class="arrow" aria-hidden="true">
                     →
                   </span>

@@ -82,7 +82,7 @@ export const de = {
   },
   film: {
     title: 'Film',
-    intro: 'Kamera und Drehbuch – Arbeiten für die Leinwand.',
+    intro: 'Kurzfilme, Trailer und Videos.',
     watch: 'Ansehen',
     empty: 'Filmarbeiten folgen.',
   },

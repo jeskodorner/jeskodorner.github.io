@@ -93,12 +93,34 @@ photos.config.json          ← Einstellungen für die Bildverarbeitung (Größe
 | Texte der Startseite | `src/content/pages/startseite.md` |
 | Über mich: Text, Stationen, Ausrüstung | `src/content/pages/ueber-mich.md` |
 | Porträt | Datei `src/assets/portrait.jpg` ersetzen (Hochformat 4:5 ideal) |
-| Filmarbeiten | `src/content/films/*.md`. Pro Film eine Datei, Standbild in `src/content/films/images/` |
+| Filme und Videos | `src/content/films/*.md`. Pro Video eine Datei (siehe unten) |
 | Buttons, Beschriftungen | `src/i18n/de.ts` |
 | Impressum und Datenschutz | `src/pages/impressum.astro`, `src/pages/datenschutz.astro` |
 
 > ⚠️ **Impressum und Datenschutzerklärung sind Platzhalter** und auf der Seite deutlich so markiert.
 > Bitte vor der Veröffentlichung vervollständigen und rechtlich prüfen lassen. Das hier ist keine Rechtsberatung.
+
+**Video hinzufügen:** In `src/content/films/` eine neue Datei anlegen, z. B. `mein-video.md`. Am einfachsten kopierst du eine vorhandene:
+
+```yaml
+---
+title: "Innehalten"
+youtube: "https://youtu.be/61yE6MHDz-o"   # Link oder ID genügt
+format: "Kurzfilm"
+year: 2025
+# roles: ["Kamera", "Schnitt"]
+# still: ./images/innehalten.jpg           # eigenes Vorschaubild (optional)
+# stillAlt: "Beschreibung des Standbilds"
+color: lime                                # Farbe der Vorschau ohne Standbild
+order: 2                                   # Reihenfolge auf der Seite
+---
+
+Kurzer Text zum Video.
+```
+
+Videos werden **datensparsam per Zwei-Klick** eingebettet. Beim Seitenaufruf lädt nichts von YouTube, und es gibt keine Cookies.
+Erst ein Klick auf „Abspielen“ lädt den Player von youtube-nocookie.com. Ohne JavaScript führt der Klick zu YouTube.
+Die Datenschutzerklärung bekommt dazu automatisch einen YouTube-Abschnitt.
 
 **Leuchtmarker:** In `startseite.md` und `ueber-mich.md` wird `*Wort*` in großen Titeln mit einem Leuchtmarker hervorgehoben (erst Lime, dann Pink). Beim Scrollen wischt der Marker über das Wort.
 

@@ -1,0 +1,145 @@
+---
+/**
+ * Datensparsames YouTube-Video (Zwei-Klick-Lösung):
+ * - Beim Seitenaufruf wird NICHTS von YouTube/Google geladen (keine Cookies, keine Verbindung).
+ * - Erst beim Klick auf „Abspielen“ wird der Player von youtube-nocookie.com eingebettet.
+ * - Ohne JavaScript führt der Klick direkt zu YouTube (neuer Tab).
+ */
+import type { ImageMetadata } from 'astro';
+import Picture from './Picture.astro';
+import type { RoomColor } from '../lib/galleries';
+
+export interface Props {
+  id: string;
+  title: string;
+  still?: ImageMetadata;
+  stillAlt?: string;
+  color?: RoomColor;
+  /** Erstes Video der Seite: Vorschaubild sofort laden */
+  eager?: boolean;
+}
+
+const { id, title, still, stillAlt, color = 'pink', eager = false } = Astro.props;
+const watchUrl = `https://www.youtube.com/watch?v=${id}`;
+---
+
+<figure class:list={['yt', `c-${color}`]} data-yt={id} data-yt-title={title}>
+  <a class="yt-poster" href={watchUrl} target="_blank" rel="noopener noreferrer" aria-label={`Video „${title}“ abspielen (lädt YouTube)`}>
+    {
+      still ? (
+        <Picture src={still} alt={stillAlt ?? ''} sizes="(min-width: 1000px) 62vw, 100vw" loading={eager ? 'eager' : 'lazy'} class="yt-img" />
+      ) : (
+        <span class="yt-title display" aria-hidden="true">
+          {title}
+        </span>
+      )
+    }
+    <span class="yt-play" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="28" height="28"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
+      Abspielen
+    </span>
+  </a>
+  <figcaption class="yt-note">
+    Beim Abspielen wird das Video von YouTube (Google) geladen. <a href="/datenschutz/#youtube">Datenschutz</a>
+  </figcaption>
+</figure>
+
+<script>
+  // Zwei-Klick: Erst nach dem Klick wird der YouTube-Player (youtube-nocookie.com) eingesetzt
+  document.querySelectorAll<HTMLElement>('figure.yt[data-yt]').forEach((fig) => {
+    const poster = fig.querySelector<HTMLAnchorElement>('.yt-poster');
+    poster?.addEventListener('click', (e) => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey) return; // Neuer Tab gewünscht → normaler Link
+      e.preventDefault();
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${fig.dataset.yt}?autoplay=1&rel=0&modestbranding=1`;
+      iframe.title = fig.dataset.ytTitle ?? 'YouTube-Video';
+      iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+      iframe.allowFullscreen = true;
+      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+      iframe.className = 'yt-frame';
+      poster.replaceWith(iframe);
+      iframe.focus();
+    });
+  });
+</script>
+
+<style>
+  .yt {
+    position: relative;
+    width: 100%;
+  }
+  .yt-poster,
+  .yt :global(.yt-frame) {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 0;
+    overflow: hidden;
+    background: var(--c);
+    color: var(--on-c);
+    text-decoration: none;
+  }
+  .yt-poster :global(picture),
+  .yt-poster :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .yt-title {
+    max-width: 90%;
+    padding: 1rem;
+    text-align: center;
+    font-size: clamp(2.2rem, 1rem + 4.5vw, 6.5rem);
+    font-stretch: 62%;
+    transition: font-stretch 0.6s var(--ease);
+  }
+  .yt-play {
+    position: absolute;
+    left: 50%;
+    bottom: clamp(1rem, 4%, 2rem);
+    translate: -50% 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.7rem 1.3rem 0.7rem 1rem;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--wall);
+    font-size: var(--fs-sm);
+    font-weight: 800;
+    font-stretch: 85%;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    transition:
+      background-color 0.2s,
+      color 0.2s,
+      scale 0.3s var(--pop);
+  }
+  .yt-poster:hover .yt-play,
+  .yt-poster:focus-visible .yt-play {
+    background: var(--lime);
+    color: var(--ink);
+    scale: 1.06;
+  }
+  @media (hover: hover) {
+    .yt-poster:hover .yt-title {
+      font-stretch: 85%;
+    }
+  }
+  .yt-poster:focus-visible {
+    outline-offset: 4px;
+  }
+  .yt-note {
+    margin-top: 0.6rem;
+    font-size: var(--fs-xs);
+    color: var(--ink-soft);
+  }
+  .yt-note a {
+    color: var(--accent);
+  }
+</style>

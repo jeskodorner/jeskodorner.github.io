@@ -1,11 +1,13 @@
 ---
 import LegalPage from '../components/LegalPage.astro';
 import EmailLink from '../components/EmailLink.astro';
+import { getCollection } from 'astro:content';
 import { site } from '../config/site';
 
 // Abschnitte erscheinen automatisch, sobald der jeweilige Dienst in src/config/site.ts aktiviert ist.
 const analytics = Boolean(site.analytics.goatcounter);
 const form = Boolean(site.contactForm.endpoint);
+const youtube = (await getCollection('films')).some((f) => f.data.youtube);
 ---
 
 <LegalPage title="Datenschutz" description="Datenschutzerklärung dieser Website.">
@@ -55,6 +57,22 @@ const form = Boolean(site.contactForm.endpoint);
         <p>
           Zur anonymen Reichweitenmessung nutze ich GoatCounter. Es werden keine Cookies gesetzt und keine Nutzerprofile erstellt.
           <span class="ph">Anbieterangaben, Rechtsgrundlage und Link zur Datenschutzerklärung ergänzen.</span>
+        </p>
+      </>
+    )
+  }
+
+  {
+    youtube && (
+      <>
+        <h2 id="youtube">Eingebettete YouTube-Videos</h2>
+        <p>
+          Auf der Seite „Film“ sind Videos von YouTube (Google Ireland Limited / Google LLC) eingebunden – in einer Zwei-Klick-Lösung:
+          Beim Aufruf der Seite wird keine Verbindung zu YouTube hergestellt und es werden keine Cookies gesetzt. Erst wenn du auf
+          „Abspielen“ klickst, wird das Video über youtube-nocookie.com geladen. Dabei werden Daten wie deine IP-Adresse an Google
+          übertragen, und YouTube kann Cookies oder ähnliche Technologien einsetzen.
+          <span class="ph">Rechtsgrundlage (Einwilligung durch den Klick, Art. 6 Abs. 1 lit. a DSGVO), Drittlandübermittlung und Link zur
+          Datenschutzerklärung von Google ergänzen und prüfen.</span>
         </p>
       </>
     )

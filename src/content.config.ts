@@ -106,27 +106,49 @@ const galleries = defineCollection({
     }),
 });
 
+/** YouTube-ID aus einem Link oder einer reinen ID holen (youtu.be/…, youtube.com/watch?v=…, /shorts/…, /embed/…) */
+function youtubeId(input: string): string | undefined {
+  const s = input.trim();
+  if (/^[A-Za-z0-9_-]{11}$/.test(s)) return s;
+  const m = s.match(/(?:youtu\.be\/|[?&]v=|\/shorts\/|\/embed\/|\/live\/)([A-Za-z0-9_-]{11})/);
+  return m?.[1];
+}
+
 const films = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/films' }),
   schema: ({ image }) =>
     z
       .object({
         title: z.string(),
-        year: z.number().int(),
-        /** z. B. ["Kamera", "Drehbuch"] */
-        roles: z.array(z.string()).min(1),
+        year: z.number().int().optional(),
+        /** z. B. ["Kamera", "Schnitt"] */
+        roles: z.array(z.string()).default([]),
         format: z.string().optional(),
         runtime: z.string().optional(),
         director: z.string().optional(),
-        still: image(),
-        stillAlt: z.string().trim().min(3, { error: 'Alt-Text für das Standbild fehlt (stillAlt).' }),
-        /** Externer Link zu Trailer/Film (Vimeo, YouTube …) – wird nur verlinkt, nicht eingebettet */
+        /** YouTube-Link oder -ID – wird datensparsam per Zwei-Klick eingebettet */
+        youtube: z
+          .string()
+          .refine((v) => Boolean(youtubeId(v)), { error: 'youtube: Link oder ID nicht erkannt (z. B. https://youtu.be/abc123XYZ_-).' })
+          .transform((v) => youtubeId(v)!)
+          .optional(),
+        /** Eigenes Standbild als Vorschau (optional). Ohne Standbild: farbige Vorschau mit Titel */
+        still: image().optional(),
+        stillAlt: z.string().trim().optional(),
+        /** Farbe der Vorschau ohne Standbild */
+        color: z.enum(['pink', 'blue', 'lime', 'orange', 'violet']).optional(),
+        /** Externer Link (z. B. Vimeo), falls kein YouTube-Video eingebettet wird */
         link: z.url().optional(),
         linkLabel: z.string().optional(),
         festivals: z.array(z.string()).default([]),
         order: z.number().default(0),
       })
-      .strict(),
+      .strict()
+      .superRefine((f, ctx) => {
+        if (f.still && (!f.stillAlt || f.stillAlt.length < 3)) {
+          ctx.addIssue({ code: 'custom', path: ['stillAlt'], message: 'Alt-Text für das Standbild fehlt (stillAlt).' });
+        }
+      }),
 });
 
 /** Texte einzelner Seiten (Startseite, Über mich) – getrennt vom Code. */

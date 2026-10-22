@@ -2,11 +2,12 @@
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ParallaxImage from '../components/ParallaxImage.astro';
+import YouTube from '../components/YouTube.astro';
 import Icon from '../components/Icon.astro';
 import { useTranslations } from '../i18n';
 
 const t = useTranslations();
-const films = (await getCollection('films')).sort((a, b) => a.data.order - b.data.order || b.data.year - a.data.year);
+const films = (await getCollection('films')).sort((a, b) => a.data.order - b.data.order || (b.data.year ?? 0) - (a.data.year ?? 0));
 const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (await render(f)).Content })));
 ---
 
@@ -22,23 +23,36 @@ const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (
       {
         rendered.map(({ film, Content }, i) => (
           <li class="film" id={film.id}>
-            <ParallaxImage
-              class="still"
-              src={film.data.still}
-              alt={film.data.stillAlt}
-              sizes="(min-width: 1000px) 62vw, 100vw"
-              loading={i === 0 ? 'eager' : 'lazy'}
-              fetchpriority={i === 0 ? 'high' : undefined}
-            >
-              <span class="year display" aria-hidden="true">{film.data.year}</span>
-            </ParallaxImage>
+            <div class="media">
+              {film.data.youtube ? (
+                <YouTube
+                  id={film.data.youtube}
+                  title={film.data.title}
+                  still={film.data.still}
+                  stillAlt={film.data.stillAlt}
+                  color={film.data.color}
+                  eager={i === 0}
+                />
+              ) : (
+                film.data.still && (
+                  <ParallaxImage
+                    class="still"
+                    src={film.data.still}
+                    alt={film.data.stillAlt ?? ''}
+                    sizes="(min-width: 1000px) 62vw, 100vw"
+                    loading={i === 0 ? 'eager' : 'lazy'}
+                    fetchpriority={i === 0 ? 'high' : undefined}
+                  />
+                )
+              )}
+            </div>
             <div class="info rise">
-              <p class="label roles">{film.data.roles.join(' · ')}</p>
+              {film.data.roles.length > 0 && <p class="label roles">{film.data.roles.join(' · ')}</p>}
               <h2 class="display display-2">{film.data.title}</h2>
               <p class="label muted meta-row">
                 {film.data.format && <span>{film.data.format}</span>}
                 {film.data.runtime && <span>{film.data.runtime}</span>}
-                <span>{film.data.year}</span>
+                {film.data.year && <span>{film.data.year}</span>}
               </p>
               {film.data.director && <p class="muted credit">Regie: {film.data.director}</p>}
               <div class="prose">
@@ -51,11 +65,18 @@ const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (
                   ))}
                 </ul>
               )}
-              {film.data.link && (
-                <a class="btn" href={film.data.link} target="_blank" rel="noopener noreferrer">
-                  {film.data.linkLabel ?? t.film.watch} <Icon name="arrow-up-right" />
+              {film.data.youtube ? (
+                <a class="btn btn--small" href={`https://www.youtube.com/watch?v=${film.data.youtube}`} target="_blank" rel="noopener noreferrer">
+                  Auf YouTube ansehen <Icon name="arrow-up-right" />
                   <span class="visually-hidden">(externe Seite, neuer Tab)</span>
                 </a>
+              ) : (
+                film.data.link && (
+                  <a class="btn btn--small" href={film.data.link} target="_blank" rel="noopener noreferrer">
+                    {film.data.linkLabel ?? t.film.watch} <Icon name="arrow-up-right" />
+                    <span class="visually-hidden">(externe Seite, neuer Tab)</span>
+                  </a>
+                )
               )}
             </div>
           </li>
@@ -87,15 +108,15 @@ const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (
   }
   .film {
     display: grid;
-    gap: clamp(1.5rem, 3vw, 3rem);
+    gap: clamp(1.25rem, 3vw, 3rem);
     scroll-margin-top: calc(var(--header-h) + 1rem);
   }
   @media (min-width: 1000px) {
     .film {
       grid-template-columns: 3fr 2fr;
-      align-items: start;
+      align-items: center;
     }
-    .film:nth-child(even) :global(.still) {
+    .film:nth-child(even) .media {
       order: 2;
     }
   }
@@ -104,26 +125,16 @@ const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (
     background: #120d0a;
     box-shadow: var(--hang-shadow);
   }
-  .year {
-    position: absolute;
-    left: 0.75rem;
-    bottom: 0.25rem;
-    font-size: clamp(3rem, 2rem + 4vw, 7rem);
-    color: #fbf6ef;
-    mix-blend-mode: difference;
-    pointer-events: none;
-    line-height: 0.8;
-  }
   .info {
     display: grid;
     gap: 1rem;
     justify-items: start;
   }
-  .roles {
-    color: var(--accent);
-  }
   .info :global(.display-2) {
     font-stretch: 75%;
+  }
+  .roles {
+    color: var(--accent);
   }
   .credit {
     font-size: var(--fs-sm);
