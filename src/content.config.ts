@@ -60,6 +60,8 @@ const galleries = defineCollection({
       /** Dateiname des Titelbilds; leer = erstes Bild */
       cover: z.string().optional(),
       layout: z.enum(['showcase', 'masonry', 'justified']).default('showcase'),
+      /** Raumfarbe der Galerie. Ohne Angabe wird automatisch durchgewechselt. */
+      color: z.enum(['pink', 'blue', 'lime', 'orange', 'violet']).optional(),
       visibility: z.enum(['public', 'unlisted']).default('public'),
       /** EXIF-Daten in Lightbox und Bildseite zeigen */
       showExif: z.boolean().default(true),

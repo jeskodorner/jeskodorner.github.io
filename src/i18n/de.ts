@@ -14,7 +14,6 @@ export const de = {
     menu: 'Menü',
     close: 'Schließen',
   },
-  theme: { toggle: 'Farbschema wechseln', light: 'Hell', dark: 'Dunkel' },
   footer: {
     rights: 'Alle Rechte vorbehalten.',
     imprint: 'Impressum',

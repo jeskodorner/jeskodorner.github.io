@@ -1,12 +1,12 @@
 ---
 /**
- * „Bühne“: Jedes Foto bekommt einen eigenen, großen Auftritt mit Parallax.
+ * „Bühne“: Jedes Foto hängt wie ein Werk an der weißen Galeriewand, mit Werkschild daneben.
  * Die Anordnung ergibt sich automatisch aus dem Seitenverhältnis:
  *   Querformat → abwechselnd volle Breite / breit links / breit rechts
- *   Hochformat → abwechselnd links / rechts, Bildtext daneben
+ *   Hochformat → abwechselnd links / rechts, Werkschild daneben
  *   (fast) quadratisch → mittig
  */
-import type { GalleryImage } from '../lib/galleries';
+import type { GalleryImage, RoomColor } from '../lib/galleries';
 import ParallaxImage from './ParallaxImage.astro';
 
 export interface StageItem {
@@ -16,6 +16,8 @@ export interface StageItem {
   kicker?: string;
   kickerHref?: string;
   meta?: string;
+  /** Raumfarbe für Nummern-Sticker und Hover-Schatten */
+  color?: RoomColor;
   /** Zusätzliche Attribute am Bild-Link (Lightbox-Daten, id) */
   attrs?: Record<string, string | number | undefined>;
 }
@@ -28,9 +30,10 @@ export interface Props {
   eagerFirst?: boolean;
   id?: string;
   count?: number;
+  color?: RoomColor;
 }
 
-const { items, lightbox = false, eagerFirst = false, id, count } = Astro.props;
+const { items, lightbox = false, eagerFirst = false, id, count, color = 'pink' } = Astro.props;
 const total = String(items.length).padStart(2, '0');
 
 let landscape = 0;
@@ -49,13 +52,21 @@ const staged = items.map((item, i) => {
   }
   const sizes =
     variant === 'full'
-      ? '100vw'
+      ? '(min-width: 900px) 92vw, 100vw'
       : variant.startsWith('wide')
-        ? '(min-width: 900px) 78vw, 100vw'
+        ? '(min-width: 900px) 70vw, 100vw'
         : variant === 'square'
-          ? '(min-width: 900px) 68vw, 100vw'
-          : '(min-width: 900px) 60vw, 100vw';
-  return { ...item, variant, sizes, ratio: r, nr: String(i + 1).padStart(2, '0') };
+          ? '(min-width: 900px) 60vw, 100vw'
+          : '(min-width: 900px) 55vw, 100vw';
+  return {
+    ...item,
+    variant,
+    sizes,
+    ratio: r,
+    nr: String(i + 1).padStart(2, '0'),
+    tilt: i % 2 === 0 ? '-2.5deg' : '2deg',
+    color: item.color ?? color,
+  };
 });
 ---
 
@@ -69,7 +80,7 @@ const staged = items.map((item, i) => {
 >
   {
     staged.map((s, i) => (
-      <li class:list={['stage', `stage--${s.variant}`]} style={`--r:${s.ratio.toFixed(4)}`}>
+      <li class:list={['stage', `stage--${s.variant}`, `c-${s.color}`]} style={`--r:${s.ratio.toFixed(4)};--pop-rot:${s.tilt}`}>
         <ParallaxImage
           src={s.image.src}
           alt={s.image.alt}
@@ -79,25 +90,27 @@ const staged = items.map((item, i) => {
           href={s.href}
           loading={eagerFirst && i === 0 ? 'eager' : 'lazy'}
           fetchpriority={eagerFirst && i === 0 ? 'high' : undefined}
-          class:list={['stage-frame', { ph: lightbox }]}
+          class:list={['stage-frame hang', { ph: lightbox }]}
           attrs={s.attrs}
         />
-        <div class="stage-cap rise">
-          <p class="stage-nr display" aria-hidden="true">
+        <div class="placard rise">
+          <p class="badge display" aria-hidden="true">
             {s.nr}
-            <span class="stage-total">/{total}</span>
           </p>
-          <div class="stage-text">
+          <div class="pl-text">
+            <p class="label pl-count">
+              Nº {s.nr} / {total}
+            </p>
+            {s.title && <p class="pl-title">{s.title}</p>}
             {s.kicker &&
               (s.kickerHref ? (
-                <a class="label stage-kicker" href={s.kickerHref}>
-                  {s.kicker}
+                <a class="pl-kicker" href={s.kickerHref}>
+                  {s.kicker} <span class="arrow" aria-hidden="true">→</span>
                 </a>
               ) : (
-                <p class="label stage-kicker">{s.kicker}</p>
+                <p class="pl-kicker">{s.kicker}</p>
               ))}
-            {s.title && <p class="stage-title">{s.title}</p>}
-            {s.meta && <p class="label muted stage-meta">{s.meta}</p>}
+            {s.meta && <p class="pl-meta">{s.meta}</p>}
           </div>
         </div>
       </li>
@@ -118,104 +131,114 @@ const staged = items.map((item, i) => {
     margin-inline: auto;
     padding-inline: var(--gutter);
     display: grid;
-    gap: clamp(1rem, 2vw, 1.75rem);
+    gap: clamp(1.25rem, 2.5vw, 2rem);
   }
   .stage :global(.stage-frame) {
     width: 100%;
+    transition:
+      translate 0.35s var(--pop),
+      box-shadow 0.35s var(--pop);
+  }
+  /* Hover: harter Schatten in der Raumfarbe – das Bild springt von der Wand */
+  @media (hover: hover) {
+    .stage :global(.stage-frame:hover) {
+      translate: -10px -10px;
+      box-shadow:
+        18px 18px 0 var(--c),
+        var(--hang-shadow);
+    }
   }
 
-  /* Bildtext */
-  .stage-cap {
-    display: flex;
-    align-items: flex-end;
-    gap: clamp(0.9rem, 2vw, 1.75rem);
-  }
-  .stage-nr {
-    font-size: clamp(3.5rem, 1.6rem + 6vw, 9.5rem);
-    line-height: 0.78;
-    color: var(--accent-vivid);
+  /* Werkschild */
+  .placard {
     display: flex;
     align-items: flex-start;
+    gap: clamp(0.9rem, 2vw, 1.4rem);
+  }
+  .badge {
     flex: none;
-  }
-  .stage-total {
-    font-size: 0.24em;
-    line-height: 1;
-    margin-left: 0.25em;
-    color: var(--ink-soft);
-    letter-spacing: 0.04em;
-  }
-  .stage-text {
     display: grid;
-    gap: 0.35rem;
-    padding-bottom: 0.2rem;
+    place-items: center;
+    width: clamp(3.6rem, 2.6rem + 3vw, 6rem);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--c);
+    color: var(--on-c);
+    font-size: clamp(1.5rem, 1rem + 1.6vw, 2.6rem);
+    font-stretch: 70%;
+    line-height: 1;
+    padding-top: 0.08em;
+    rotate: -8deg;
+  }
+  .pl-text {
+    display: grid;
+    gap: 0.3rem;
     min-width: 0;
+    max-width: 30ch;
+    padding-top: 0.2rem;
   }
-  .stage-kicker {
+  .pl-count {
+    color: var(--ink-soft);
+  }
+  .pl-title {
+    font-size: clamp(1.15rem, 1rem + 0.7vw, 1.6rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .pl-kicker {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--ink);
     text-decoration: none;
-    color: var(--accent);
   }
-  a.stage-kicker:hover {
+  a.pl-kicker {
+    color: var(--accent);
     text-decoration: underline;
   }
-  .stage-title {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-weight: 330;
-    font-size: clamp(1.3rem, 1rem + 1.4vw, 2.6rem);
-    line-height: 1.15;
-    letter-spacing: -0.01em;
-    max-width: 26ch;
+  .pl-meta {
+    font-size: var(--fs-xs);
+    color: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
   }
 
   /* ---------- Mobil: alles groß und untereinander ---------- */
-  .stage--full {
-    padding-inline: 0;
-    max-width: none;
-  }
-  .stage--full .stage-cap {
-    padding-inline: var(--gutter);
-  }
   .stage--full :global(.stage-frame) {
-    max-height: 100svh;
+    max-height: 92svh;
   }
   .stage--tall-left :global(.stage-frame),
   .stage--tall-right :global(.stage-frame) {
-    max-height: 88svh;
+    max-height: 86svh;
   }
 
-  /* ---------- Desktop: jedes Bild bekommt seine eigene Bühne ---------- */
+  /* ---------- Desktop: jedes Bild bekommt seine eigene Wand ---------- */
   @media (min-width: 900px) {
+    .stage--full {
+      padding-inline: clamp(2rem, 4vw, 6rem);
+    }
     .stage--wide-left,
     .stage--wide-right {
-      grid-template-columns: 78fr 22fr;
+      grid-template-columns: 70fr 30fr;
       align-items: end;
-      column-gap: clamp(1.5rem, 3vw, 3.5rem);
+      column-gap: clamp(1.5rem, 3.5vw, 4rem);
     }
     .stage--wide-right {
-      grid-template-columns: 22fr 78fr;
+      grid-template-columns: 30fr 70fr;
     }
     .stage--wide-right :global(.stage-frame) {
       grid-column: 2;
       grid-row: 1;
     }
-    .stage--wide-right .stage-cap {
+    .stage--wide-right .placard {
       grid-column: 1;
       grid-row: 1;
-      justify-content: flex-end;
+      justify-self: end;
+      flex-direction: row-reverse;
       text-align: right;
-    }
-    .stage--wide-left .stage-cap,
-    .stage--wide-right .stage-cap {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-    .stage--wide-right .stage-cap {
-      align-items: flex-end;
     }
     .stage--wide-left :global(.stage-frame),
     .stage--wide-right :global(.stage-frame) {
-      max-height: 92svh;
+      max-height: 90svh;
     }
 
     .stage--tall-left,
@@ -229,7 +252,7 @@ const staged = items.map((item, i) => {
     }
     .stage--tall-left :global(.stage-frame),
     .stage--tall-right :global(.stage-frame) {
-      height: min(92svh, 1300px);
+      height: min(88svh, 1300px);
       width: auto;
       max-height: none;
     }
@@ -237,23 +260,19 @@ const staged = items.map((item, i) => {
       grid-column: 2;
       grid-row: 1;
     }
-    .stage--tall-right .stage-cap {
+    .stage--tall-right .placard {
       grid-column: 1;
       grid-row: 1;
       justify-self: end;
       text-align: right;
       flex-direction: row-reverse;
     }
-    .stage--tall-left .stage-cap,
-    .stage--tall-right .stage-cap {
-      align-self: center;
-    }
 
     .stage--square {
       justify-items: center;
     }
     .stage--square :global(.stage-frame) {
-      width: min(68vw, 86svh);
+      width: min(60vw, 84svh);
     }
   }
 </style>

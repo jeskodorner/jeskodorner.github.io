@@ -18,10 +18,11 @@ const text: Partial<CollectionEntry<'pages'>['data']> = (await getEntry('pages',
 const heroes = await getHeroImages();
 const slideshow = site.hero.mode === 'slideshow' && heroes.length > 1;
 const heroList = slideshow ? heroes : heroes.slice(0, 1);
+const hero = heroes[0];
 const featured = await getFeaturedImages(9);
 const galleries = await getPublicGalleries();
 const films = (await getCollection('films')).sort((a, b) => a.data.order - b.data.order || b.data.year - a.data.year);
-const og = heroes[0] ? await ogImage(heroes[0].image.src) : undefined;
+const og = hero ? await ogImage(hero.image.src) : undefined;
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -32,95 +33,131 @@ const jsonLd = {
   sameAs: [site.instagram.url],
 };
 
-// Ausgewählte Arbeiten: jedes Bild bekommt seine eigene Bühne
+// Ausgewählte Arbeiten: jedes Bild hängt an seiner eigenen Wand, Farbe = Raumfarbe seiner Galerie
 const stageItems: StageItem[] = featured.map(({ gallery, image }) => ({
   image,
   href: image.pageUrl,
   title: image.caption ?? gallery.title,
-  kicker: gallery.title + (gallery.location ? ` — ${gallery.location}` : ''),
+  kicker: gallery.title + (gallery.location ? `, ${gallery.location}` : ''),
   kickerHref: gallery.url,
+  color: gallery.color,
 }));
-// Schriftband aus der Zeile über dem Namen (z. B. „Fotografie · Kamera · Drehbuch“)
-const bandWords = (text.kicker ?? 'Fotografie · Kamera · Drehbuch').split('·').map((w) => w.trim()).filter(Boolean);
+
+// Wörter für Sticker und Farbbänder (aus der Zeile über dem Namen, z. B. „Fotografie · Kamera · Drehbuch“)
+const words = (text.kicker ?? 'Fotografie · Kamera · Drehbuch').split('·').map((w) => w.trim()).filter(Boolean);
+const stickerText = `${words.join(' ✺ ')} ✺ `.toUpperCase();
+
+// Ruhige Überblendung im Hero-Rahmen, falls mehrere Hero-Bilder (site.hero.mode = 'slideshow')
 const duration = heroList.length * site.hero.secondsPerImage;
-// Überblend-Keyframes passend zur Bildanzahl (CSS erlaubt keine berechneten Keyframe-Prozente)
 const share = 100 / heroList.length;
 const fadePct = Math.min(share / 3, (1.5 / duration) * 100);
 const fadeCss = slideshow
   ? `@keyframes hero-fade{0%{opacity:0}${fadePct.toFixed(2)}%{opacity:1}${share.toFixed(2)}%{opacity:1}${(share + fadePct).toFixed(2)}%{opacity:0}100%{opacity:0}}`
   : '';
+const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : '3 / 2';
 ---
 
-<BaseLayout overlayHeader image={og} jsonLd={jsonLd}>
+<BaseLayout image={og} jsonLd={jsonLd}>
   {fadeCss && <style is:inline set:html={fadeCss} slot="head" />}
-  <!-- Hero -->
-  <section class="hero" aria-label={site.name}>
-    <div class:list={['hero-media', { 'is-slideshow': slideshow }]} style={`--n:${heroList.length};--dur:${duration}s`}>
-      {
-        heroList.map((h, i) => (
-          <div class="slide" style={`--i:${i}`}>
-            <Picture
-              src={h.image.src}
-              alt={i === 0 ? h.image.alt : ''}
-              sizes="100vw"
-              color={h.image.color}
-              lqip={h.image.lqip}
-              loading={i === 0 ? 'eager' : 'lazy'}
-              fetchpriority={i === 0 ? 'high' : undefined}
-              class="hero-img"
-            />
-          </div>
-        ))
-      }
-    </div>
-    <div class="hero-shade" aria-hidden="true"></div>
-    <div class="hero-content container container--wide">
-      {text.kicker && <p class="label hero-kicker">{text.kicker}</p>}
-      <h1 class="display hero-title">
-        <span>Jesko</span>
-        <span>Dorner</span>
-      </h1>
-      <div class="hero-bottom">
-        <p class="hero-claim">{site.claim}</p>
-        <a class="btn hero-btn" href="/galerien/">
-          {t.home.cta} <span class="arrow" aria-hidden="true">→</span>
-        </a>
-      </div>
-    </div>
+
+  <!-- Hero: Name + erstes Werk an der Wand -->
+  <section class="hero container container--wide" aria-label={site.name}>
+    {text.kicker && <p class="label hero-kicker">{text.kicker}</p>}
+    <h1 class="hero-title display">
+      <span class="ht ht-1">Jesko</span>
+      <span class="ht ht-2">Dorner</span>
+    </h1>
+
     {
-      heroes[0] && (
-        <a class="hero-credit label" href={heroes[0].image.pageUrl}>
-          {heroes[0].gallery.title}
-          {heroes[0].gallery.location && ` — ${heroes[0].gallery.location}`}
-        </a>
+      hero && (
+        <figure class="hero-art">
+          <a
+            class:list={['px hero-frame hang', { 'is-slideshow': slideshow }]}
+            href={hero.image.pageUrl}
+            style={`aspect-ratio:${heroRatio};--n:${heroList.length};--dur:${duration}s`}
+          >
+            {heroList.map((h, i) => (
+              <div class="slide" style={`--i:${i}`}>
+                <Picture
+                  src={h.image.src}
+                  alt={i === 0 ? h.image.alt : ''}
+                  sizes="(min-width: 900px) 46vw, 100vw"
+                  color={h.image.color}
+                  lqip={h.image.lqip}
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  fetchpriority={i === 0 ? 'high' : undefined}
+                />
+              </div>
+            ))}
+          </a>
+          <div class="sticker spin" aria-hidden="true">
+            <svg viewBox="0 0 200 200">
+              <defs>
+                <path id="sticker-circle" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0" />
+              </defs>
+              <circle cx="100" cy="100" r="99" />
+              <text class="sticker-text" textLength="458" lengthAdjust="spacing">
+                <textPath href="#sticker-circle">{stickerText}</textPath>
+              </text>
+              <text class="sticker-mid" x="100" y="118" text-anchor="middle">
+                JD
+              </text>
+            </svg>
+          </div>
+          <figcaption class="hero-placard">
+            <span class="pill c-lime">Nº 01</span>
+            <span>
+              <strong>{hero.image.caption ?? hero.gallery.title}</strong>
+              <span class="muted">
+                {' '}
+                — {hero.gallery.title}
+                {hero.gallery.location && `, ${hero.gallery.location}`}
+              </span>
+            </span>
+          </figcaption>
+        </figure>
       )
     }
+
+    <div class="hero-bottom">
+      <p class="hero-claim">{site.claim}</p>
+      <div class="hero-ctas">
+        <a class="btn btn--solid" href="/galerien/">
+          {t.home.cta} <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="btn" href="/kontakt/">{t.nav.contact}</a>
+      </div>
+    </div>
   </section>
 
-  <!-- Statement -->
+  <!-- Statement mit Leuchtmarker -->
   {
     (text.statement || text.note) && (
       <section class="statement container container--wide section">
         {text.statement && <p class="display display-2 words" set:html={wordSpans(text.statement)} />}
-        {text.note && <p class="statement-note muted rise">{text.note}</p>}
+        {text.note && <p class="statement-note lead muted rise">{text.note}</p>}
       </section>
     )
   }
 
-  <!-- Schriftband, zieht beim Scrollen seitlich durch -->
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track">
-      {
-        [0, 1, 2].flatMap((r) =>
-          bandWords.map((w, i) => (
-            <>
-              <span class={(i + r) % 2 ? 'o' : ''}>{w}</span>
-              <em>&</em>
-            </>
-          )),
-        )
-      }
-    </div>
+  <!-- Zwei Farbbänder, die sich kreuzen und gegenläufig ziehen -->
+  <div class="tapes" aria-hidden="true">
+    {
+      ['c-pink', 'c-lime'].map((c) => (
+        <div class:list={['tape', c]}>
+          <div class="tape-track">
+            {[0, 1, 2, 3].flatMap(() =>
+              words.map((w) => (
+                <>
+                  <span>{w}</span>
+                  <span class="star">✺</span>
+                </>
+              )),
+            )}
+          </div>
+        </div>
+      ))
+    }
   </div>
 
   <!-- Ausgewählte Arbeiten -->
@@ -128,11 +165,11 @@ const fadeCss = slideshow
     featured.length > 0 && (
       <section class="selected" aria-labelledby="sel-h">
         <div class="sec-head container container--wide">
-          <h2 id="sel-h" class="display display-2 drift-left">
-            {t.home.selected}
-            <sup class="count">({String(featured.length).padStart(2, '0')})</sup>
+          <h2 id="sel-h" class="display display-2 sec-title">
+            <span class="stretch">{t.home.selected.split(' ')[0]}</span>
+            <span class="stretch">{t.home.selected.split(' ').slice(1).join(' ')}</span>
           </h2>
-          <a class="more label" href="/galerien/">
+          <a class="btn btn--small" href="/galerien/">
             {t.home.allGalleries} ({galleries.length}) <span class="arrow" aria-hidden="true">→</span>
           </a>
         </div>
@@ -141,59 +178,60 @@ const fadeCss = slideshow
     )
   }
 
-  <!-- Film -->
+  <!-- Film: blauer Raum -->
   {
     films.length > 0 && (
-      <section class="film-teaser container container--wide section" aria-labelledby="film-h">
-        <div class="sec-head">
-          <h2 id="film-h" class="display display-2 drift-right">
-            {t.home.filmTeaser.split(' ').slice(0, -1).join(' ')} <em>{t.home.filmTeaser.split(' ').slice(-1)}</em>
-          </h2>
-          <a class="more label" href="/film/">
-            {t.home.filmMore} <span class="arrow" aria-hidden="true">→</span>
-          </a>
+      <section class="film-room room c-blue" aria-labelledby="film-h">
+        <div class="container container--wide section">
+          <div class="sec-head">
+            <h2 id="film-h" class="display display-2" set:html={inlineMd('Auch in *Bewegung*')} />
+            <a class="btn btn--small" href="/film/">
+              {t.home.filmMore} <span class="arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+          <ul class="film-list" role="list">
+            {films.slice(0, 3).map((f) => (
+              <li class="rise">
+                <a href={`/film/#${f.id}`} class="film-row">
+                  <span class="display display-3">{f.data.title}</span>
+                  <span class="label">{f.data.roles.join(' & ')}</span>
+                  <span class="label">
+                    {f.data.format} · {f.data.year}
+                  </span>
+                  <span class="arrow" aria-hidden="true">
+                    →
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
-        <ul class="film-list" role="list">
-          {films.slice(0, 3).map((f) => (
-            <li class="rise">
-              <a href={`/film/#${f.id}`} class="film-row">
-                <span class="display display-3">{f.data.title}</span>
-                <span class="label muted">{f.data.roles.join(' & ')}</span>
-                <span class="label muted">
-                  {f.data.format} · {f.data.year}
-                </span>
-                <span class="arrow" aria-hidden="true">
-                  →
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
       </section>
     )
   }
 
   <!-- Über mich -->
   <section class="about container container--wide section" aria-labelledby="about-h">
-    <ParallaxImage class="about-img" src={portrait} alt="Porträt von Jesko Dorner" sizes="(min-width: 900px) 40vw, 100vw" ratio="4 / 5" />
+    <ParallaxImage class="about-img hang" src={portrait} alt="Porträt von Jesko Dorner" sizes="(min-width: 900px) 40vw, 100vw" ratio="4 / 5" />
     <div class="about-text rise">
-      <h2 id="about-h" class="label muted">{t.home.aboutTeaser}</h2>
-      {text.aboutTeaser && <p class="lead" set:html={inlineMd(text.aboutTeaser)} />}
+      <h2 id="about-h" class="pill c-pink">{t.home.aboutTeaser}</h2>
+      {text.aboutTeaser && <p class="about-lead" set:html={inlineMd(text.aboutTeaser)} />}
       <a class="btn" href="/ueber-mich/">{t.home.aboutMore} <span class="arrow" aria-hidden="true">→</span></a>
     </div>
   </section>
 
-  <!-- Kontakt -->
-  <section class="cta" aria-labelledby="cta-h">
+  <!-- Kontakt: Lime-Raum -->
+  <section class="cta room c-lime" aria-labelledby="cta-h">
     <div class="container container--wide">
-      <h2 id="cta-h" class="display mega cta-title">
-        <span class="drift-left">Lass uns</span> <em class="drift-right">reden.</em>
+      <h2 id="cta-h" class="display cta-title">
+        <span class="stretch">Lass uns</span>
+        <span class="stretch">reden!</span>
       </h2>
       <div class="cta-row">
         <p class="lead">{t.home.contactText}</p>
         <div class="cta-actions">
-          <EmailLink class="btn btn--solid cta-btn" text="E-Mail schreiben" />
-          <a class="btn cta-btn-ghost" href={site.instagram.url} rel="me noopener" target="_blank">
+          <EmailLink class="btn btn--solid" text="E-Mail schreiben" />
+          <a class="btn" href={site.instagram.url} rel="me noopener" target="_blank">
             <Icon name="instagram" /> @{site.instagram.handle}
           </a>
         </div>
@@ -206,179 +244,217 @@ const fadeCss = slideshow
   /* ---------- Hero ---------- */
   .hero {
     position: relative;
-    min-height: 100svh;
-    display: flex;
-    align-items: flex-end;
-    color: #fbf6ef;
-    background: #1c130e;
-    overflow: hidden;
-    isolation: isolate;
-  }
-  .hero-media,
-  .slide {
-    position: absolute;
-    inset: 0;
-    z-index: -2;
-  }
-  .hero-media :global(picture),
-  .hero-media :global(.hero-img) {
-    width: 100%;
-    height: 100%;
-  }
-  .hero-media :global(.hero-img) {
-    object-fit: cover;
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    .hero-media :global(.hero-img) {
-      animation: hero-zoom 18s var(--ease) both;
-    }
-    .is-slideshow .slide {
-      animation: hero-fade var(--dur) linear infinite both;
-      animation-delay: calc(var(--i) * var(--dur) / var(--n) - 1.5s);
-    }
-  }
-  .is-slideshow .slide:not(:first-child) {
-    opacity: 0;
-  }
-  @keyframes hero-zoom {
-    from {
-      transform: scale(1.08);
-    }
-  }
-  /* Beim Scrollen: Bild gleitet langsamer (Parallax), Titel hebt sich schneller und blendet aus */
-  @supports (animation-timeline: scroll()) {
-    @media (prefers-reduced-motion: no-preference) {
-      .hero-media {
-        animation-name: hero-parallax;
-        animation-timing-function: linear;
-        animation-fill-mode: both;
-        animation-timeline: scroll(root);
-        animation-range: 0 100svh;
-      }
-      .hero-content {
-        animation-name: hero-lift;
-        animation-timing-function: linear;
-        animation-fill-mode: both;
-        animation-timeline: scroll(root);
-        animation-range: 0 55svh;
-      }
-      .hero-credit {
-        animation-name: hero-lift;
-        animation-timing-function: linear;
-        animation-fill-mode: both;
-        animation-timeline: scroll(root);
-        animation-range: 0 60svh;
-      }
-    }
-  }
-  @keyframes hero-parallax {
-    to {
-      transform: translate3d(0, 32%, 0) scale(1.06);
-    }
-  }
-  @keyframes hero-lift {
-    to {
-      transform: translate3d(0, -22vh, 0);
-      opacity: 0;
-    }
-  }
-  .hero-shade {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background:
-      linear-gradient(to top, rgb(var(--scrim) / 0.82) 0%, rgb(var(--scrim) / 0.35) 45%, transparent 70%),
-      linear-gradient(to bottom, rgb(var(--scrim) / 0.45), transparent 22%);
-  }
-  .hero-content {
-    padding-top: calc(var(--header-h) + 3rem);
+    display: grid;
+    gap: clamp(1.25rem, 3vw, 2rem);
+    padding-top: clamp(1.5rem, 4vw, 3.5rem);
     padding-bottom: clamp(2rem, 5vw, 4rem);
   }
   .hero-kicker {
-    color: #f3e3cf;
+    color: var(--ink-soft);
   }
   .hero-title {
     display: flex;
     flex-direction: column;
-    font-size: clamp(5.5rem, 1rem + 21vw, 26rem);
-    line-height: 0.78;
-    margin-top: 0.75rem;
-    margin-left: -0.04em;
+    font-size: clamp(4.6rem, 0.6rem + 20vw, 25rem);
+    line-height: 0.8;
+    margin-left: -0.03em;
+    position: relative;
+    z-index: 1;
   }
-  .hero-title span:last-child {
-    color: #f09566;
+  .ht {
+    white-space: nowrap;
+    font-stretch: 58%;
+  }
+  .ht-2 {
+    color: var(--pink);
+  }
+  .hero-art {
+    position: relative;
+    z-index: 2;
+  }
+  .hero-frame {
+    rotate: 2deg;
+    transition: rotate 0.5s var(--pop);
+  }
+  .hero-frame:hover {
+    rotate: 0deg;
+  }
+  .hero-frame .slide {
+    position: absolute;
+    inset: 0;
+  }
+  .hero-frame .slide :global(picture),
+  .hero-frame .slide :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .is-slideshow .slide:not(:first-child) {
+    opacity: 0;
   }
   @media (prefers-reduced-motion: no-preference) {
-    .hero-title span {
-      animation: rise 1.1s var(--ease) both;
+    .is-slideshow .slide {
+      animation: hero-fade var(--dur) linear infinite both;
+      animation-delay: calc(var(--i) * var(--dur) / var(--n) - 1.5s);
     }
-    .hero-title span:last-child {
-      animation-delay: 0.12s;
+    .ht,
+    .hero-art,
+    .hero-bottom {
+      animation: hero-in 0.9s var(--ease) both;
+    }
+    .ht-2 {
+      animation-delay: 0.08s;
+    }
+    .hero-art {
+      animation-delay: 0.18s;
     }
     .hero-bottom {
-      animation: rise 1.1s 0.3s var(--ease) both;
+      animation-delay: 0.3s;
     }
   }
-  @keyframes rise {
+  @keyframes hero-in {
     from {
       opacity: 0;
-      transform: translateY(0.35em);
+      translate: 0 2rem;
     }
   }
+
+  .sticker {
+    position: absolute;
+    width: clamp(6.5rem, 4rem + 9vw, 12rem);
+    aspect-ratio: 1;
+    top: calc(clamp(6.5rem, 4rem + 9vw, 12rem) * -0.45);
+    left: calc(clamp(6.5rem, 4rem + 9vw, 12rem) * -0.3);
+    z-index: 3;
+    filter: drop-shadow(0 8px 18px rgb(0 0 0 / 0.22));
+  }
+  .sticker circle {
+    fill: var(--pink);
+  }
+  .sticker-text {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-stretch: 80%;
+    font-size: 19px;
+    fill: var(--ink);
+  }
+  .sticker-mid {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-stretch: 60%;
+    font-size: 52px;
+    fill: var(--ink);
+  }
+
+  /* Mobil: Foto unter dem Namen, Sticker rechts oben am Foto */
+  @media (max-width: 899px) {
+    .hero-art {
+      margin-top: 1.75rem;
+    }
+    .sticker {
+      left: auto;
+      right: -0.4rem;
+      top: calc(clamp(6.5rem, 4rem + 9vw, 12rem) * -0.55);
+    }
+  }
+  .hero-placard {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 1.1rem;
+    font-size: var(--fs-sm);
+  }
+
   .hero-bottom {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-end;
     justify-content: space-between;
     gap: 1.25rem 2rem;
-    margin-top: clamp(1.25rem, 3vw, 2.25rem);
-    padding-top: clamp(1rem, 2vw, 1.5rem);
-    border-top: 1.5px solid rgb(251 246 239 / 0.5);
   }
   .hero-claim {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-weight: 330;
-    font-size: clamp(1.4rem, 1rem + 1.6vw, 2.6rem);
-    line-height: 1.15;
-    max-width: 22ch;
+    font-size: clamp(1.35rem, 1rem + 1.4vw, 2.4rem);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    max-width: 20ch;
   }
-  .hero-btn {
-    color: #fbf6ef;
+  .hero-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
   }
-  .hero-btn:hover {
-    background: #fbf6ef;
-    border-color: #fbf6ef;
-    color: #1c130e;
-  }
-  .hero-credit {
-    position: absolute;
-    right: var(--gutter);
-    top: calc(var(--header-h) + 1.25rem);
-    color: #f3e3cf;
-    text-decoration: none;
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    display: none;
-  }
+
   @media (min-width: 900px) {
-    .hero-credit {
-      display: block;
+    .hero {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-template-rows: auto auto auto;
+      min-height: calc(100svh - var(--header-h));
+      align-content: center;
+      column-gap: var(--gap);
+    }
+    .hero-kicker {
+      grid-column: 1 / -1;
+      grid-row: 1;
+    }
+    .hero-title {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      align-self: center;
+    }
+    .hero-art {
+      grid-column: 8 / -1;
+      grid-row: 2 / 4;
+      align-self: end;
+      margin-bottom: clamp(-4rem, -3vw, -1rem);
+    }
+    .hero-bottom {
+      grid-column: 1 / 7;
+      grid-row: 3;
+      align-self: end;
+    }
+  }
+
+  /* Name zieht sich beim Scrollen in die Breite, das Bild hebt schneller ab */
+  @supports (animation-timeline: scroll()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .ht {
+        animation-name: hero-in, ht-stretch;
+        animation-duration: 0.9s, auto;
+        animation-timing-function: var(--ease), linear;
+        animation-fill-mode: both, both;
+        animation-timeline: auto, scroll(root);
+        animation-range: normal, 0 70svh;
+      }
+      .hero-art {
+        animation-name: hero-in, art-lift;
+        animation-duration: 0.9s, auto;
+        animation-timing-function: var(--ease), linear;
+        animation-fill-mode: both, both;
+        animation-timeline: auto, scroll(root);
+        animation-range: normal, 0 100svh;
+      }
+    }
+  }
+  @keyframes ht-stretch {
+    to {
+      font-stretch: 100%;
+    }
+  }
+  @keyframes art-lift {
+    to {
+      transform: translate3d(0, -14vh, 0) rotate(-4deg);
     }
   }
 
   /* ---------- Statement ---------- */
-  .statement p.display {
-    max-width: 18ch;
+  .statement .words {
+    max-width: 16ch;
   }
   .statement-note {
     margin-top: clamp(1.5rem, 3vw, 2.5rem);
-    max-width: 48ch;
+    max-width: 44ch;
     margin-left: auto;
-    font-size: var(--fs-lead);
-    font-family: var(--font-serif);
-    font-weight: 340;
-    line-height: 1.4;
   }
 
   /* ---------- Abschnittsköpfe ---------- */
@@ -388,34 +464,29 @@ const fadeCss = slideshow
     align-items: flex-end;
     justify-content: space-between;
     gap: 1rem 2rem;
-    padding-bottom: clamp(1.25rem, 3vw, 2rem);
-    margin-bottom: clamp(1.5rem, 4vw, 3rem);
-    border-bottom: 2px solid var(--line-strong);
+    margin-bottom: clamp(3rem, 8vw, 7rem);
   }
-  .count {
-    font-size: 0.3em;
-    vertical-align: top;
-    color: var(--accent);
-    margin-left: 0.15em;
-  }
-  .more {
-    text-decoration: none;
-    white-space: nowrap;
+  .sec-title {
+    display: flex;
+    flex-direction: column;
+    --stretch-from: 50%;
+    --stretch-to: 84%;
   }
   .selected {
     padding-top: var(--section);
   }
-  .selected .sec-head {
-    margin-bottom: clamp(3rem, 8vw, 8rem);
-  }
-  .statement .words {
-    max-width: 18ch;
-  }
 
-  /* ---------- Film-Teaser ---------- */
+  /* ---------- Film-Raum ---------- */
+  .film-room {
+    margin-top: var(--section);
+  }
+  .film-room .sec-head :global(.btn) {
+    border-color: var(--wall);
+  }
   .film-list {
     list-style: none;
     padding: 0;
+    border-top: 2.5px solid currentColor;
   }
   .film-row {
     display: grid;
@@ -423,11 +494,12 @@ const fadeCss = slideshow
     gap: 0.4rem 1.5rem;
     align-items: baseline;
     padding-block: clamp(1rem, 2.5vw, 1.75rem);
-    border-bottom: 1px solid var(--line);
+    border-bottom: 2.5px solid currentColor;
     text-decoration: none;
+    transition: padding 0.35s var(--pop);
   }
   .film-row .arrow {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     grid-row: 1;
     grid-column: 2;
   }
@@ -440,11 +512,9 @@ const fadeCss = slideshow
       grid-column: auto;
     }
   }
-  .film-row:hover .display {
-    color: var(--accent);
-  }
-  .film-row:hover .arrow {
-    transform: translateX(0.4rem);
+  .film-row:hover {
+    padding-left: 1rem;
+    color: var(--lime);
   }
 
   /* ---------- Über mich ---------- */
@@ -458,40 +528,36 @@ const fadeCss = slideshow
       grid-template-columns: 5fr 7fr;
     }
   }
-  .about-img {
+  .about :global(.about-img) {
     width: 100%;
-    max-width: 36rem;
+    max-width: 34rem;
+    rotate: -2deg;
   }
   .about-text {
     display: grid;
     gap: 1.5rem;
     justify-items: start;
   }
-  .about-text .lead {
-    font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.75rem);
-    line-height: 1.2;
-    max-width: 24ch;
+  .about-lead {
+    font-size: clamp(1.6rem, 1.1rem + 2vw, 3.2rem);
+    font-weight: 650;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    max-width: 22ch;
   }
 
-  /* ---------- Kontakt-CTA ---------- */
+  /* ---------- Kontakt-Raum ---------- */
   .cta {
-    margin-top: var(--section);
     padding-block: clamp(4rem, 9vw, 9rem);
-    background: var(--accent-vivid);
-    color: var(--on-accent);
+    overflow: hidden;
   }
   .cta-title {
-    font-size: clamp(4.5rem, 1rem + 15vw, 19rem);
-  }
-  .cta-title em {
-    color: inherit;
-  }
-  .cta-title span,
-  .cta-title em {
-    display: inline-block;
-  }
-  .cta {
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    font-size: clamp(4rem, 0.6rem + 15vw, 19rem);
+    line-height: 0.8;
+    --stretch-from: 50%;
+    --stretch-to: 96%;
   }
   .cta-row {
     display: flex;
@@ -500,30 +566,10 @@ const fadeCss = slideshow
     align-items: flex-end;
     gap: 1.5rem 3rem;
     margin-top: clamp(1.5rem, 4vw, 3rem);
-    padding-top: 1.5rem;
-    border-top: 2px solid currentColor;
   }
   .cta-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
-  }
-  .cta :global(.cta-btn) {
-    background: var(--on-accent);
-    border-color: var(--on-accent);
-    color: var(--accent-vivid);
-  }
-  .cta :global(.cta-btn:hover) {
-    background: var(--ink);
-    border-color: var(--ink);
-    color: var(--paper);
-  }
-  .cta-btn-ghost {
-    color: var(--on-accent);
-  }
-  .cta-btn-ghost:hover {
-    background: var(--on-accent);
-    border-color: var(--on-accent);
-    color: var(--accent-vivid);
   }
 </style>

@@ -1,5 +1,5 @@
 ---
-# Texte der Startseite. *Sternchen* = kursiver Akzent in Terrakotta.
+# Texte der Startseite. *Sternchen* = Wort mit Leuchtmarker (erst Lime, dann Pink).
 kicker: "Fotografie · Kamera · Drehbuch"
 statement: "Platzhalter: Ein *kurzer,* starker Satz über deine *Arbeit.*"
 note: "Platzhalter: ein, zwei Sätze, was du machst und wofür man dich buchen kann."

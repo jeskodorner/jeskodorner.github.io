@@ -12,47 +12,45 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
 
 <BaseLayout title={t.galleries.title} description={`${t.galleries.title}: ${t.galleries.intro}`} image={og}>
   <section class="container container--wide head">
-    <h1 class="display display-1 drift-left">
-      {t.galleries.title}<sup class="count">({String(galleries.length).padStart(2, '0')})</sup>
+    <h1 class="display display-1 head-title">
+      <span class="stretch">{t.galleries.title}</span>
     </h1>
-    <p class="lead muted rise">{t.galleries.intro}</p>
+    <p class="lead muted rise">{t.galleries.intro} <span class="pill c-lime">{galleries.length} Räume</span></p>
   </section>
 
   {galleries.length === 0 && <p class="container">{t.galleries.empty}</p>}
 
-  <ol class="glist" role="list">
+  <ol class="rooms" role="list">
     {
       galleries.map((g, i) => (
-        <li class:list={['gitem', { 'gitem--flip': i % 2 === 1 }]}>
-          <a class="glink" href={g.url}>
-            <ParallaxImage
-              class="gcover"
-              src={g.cover.src}
-              alt={g.cover.alt}
-              sizes="(min-width: 900px) 62vw, 100vw"
-              color={g.cover.color}
-              lqip={g.cover.lqip}
-              ratio="4 / 3"
-              loading={i === 0 ? 'eager' : 'lazy'}
-              fetchpriority={i === 0 ? 'high' : undefined}
-            >
-              <span class="crop" aria-hidden="true" />
-            </ParallaxImage>
-            <span class="ginfo rise">
-              <span class="nr display" aria-hidden="true">
-                {String(i + 1).padStart(2, '0')}
-              </span>
+        <li class:list={['room-item room', `c-${g.color}`, { 'room-item--flip': i % 2 === 1 }]}>
+          <a class="room-link container container--wide" href={g.url}>
+            <span class="room-art">
+              <ParallaxImage
+                class="room-cover"
+                src={g.cover.src}
+                alt={g.cover.alt}
+                sizes="(min-width: 900px) 50vw, 100vw"
+                color={g.cover.color}
+                lqip={g.cover.lqip}
+                ratio="4 / 3"
+                loading={i === 0 ? 'eager' : 'lazy'}
+                fetchpriority={i === 0 ? 'high' : undefined}
+              />
+            </span>
+            <span class="room-info rise">
+              <span class="pill room-nr">Raum {String(i + 1).padStart(2, '0')}</span>
               <span class="display display-2 name" style={`view-transition-name: gt-${g.slug}`}>
                 {g.title}
               </span>
-              <span class="label muted meta-row">
+              <span class="label meta-row">
                 <span>{t.galleries.images(g.images.length)}</span>
                 <span>{formatMonth(g.date)}</span>
                 {g.location && <span>{g.location}</span>}
               </span>
               <span class="desc">{g.description}</span>
-              <span class="go label">
-                Galerie ansehen <span class="arrow" aria-hidden="true">→</span>
+              <span class="go">
+                Raum betreten <span class="arrow" aria-hidden="true">→</span>
               </span>
             </span>
           </a>
@@ -64,117 +62,116 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
 
 <style>
   .head {
-    padding-top: clamp(2.5rem, 6vw, 5rem);
-    padding-bottom: clamp(3rem, 8vw, 7rem);
+    padding-top: clamp(2rem, 5vw, 4.5rem);
+    padding-bottom: clamp(2.5rem, 6vw, 5.5rem);
   }
-  .count {
-    font-size: 0.28em;
-    vertical-align: top;
-    margin-left: 0.15em;
-    color: var(--accent);
-    letter-spacing: 0.02em;
+  .head-title {
+    --stretch-from: 50%;
+    --stretch-to: 100%;
+    font-size: clamp(4rem, 0.5rem + 16vw, 20rem);
   }
   .lead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
     margin-top: 1rem;
   }
 
-  .glist {
+  .rooms {
     list-style: none;
     padding: 0;
     display: grid;
-    gap: clamp(5rem, 2rem + 11vw, 14rem);
   }
-  .gitem {
-    width: 100%;
-    max-width: 2400px;
-    margin-inline: auto;
-    padding-inline: var(--gutter);
-  }
-  .glink {
+  .room-link {
     display: grid;
-    gap: clamp(1.25rem, 3vw, 2.5rem);
-    text-decoration: none;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
     align-items: center;
+    padding-block: clamp(3.5rem, 8vw, 8rem);
+    text-decoration: none;
   }
   @media (min-width: 900px) {
-    .glink {
-      grid-template-columns: 62fr 38fr;
+    .room-link {
+      grid-template-columns: 55fr 45fr;
       column-gap: clamp(2rem, 5vw, 6rem);
     }
-    .gitem--flip .glink {
-      grid-template-columns: 38fr 62fr;
+    .room-item--flip .room-link {
+      grid-template-columns: 45fr 55fr;
     }
-    .gitem--flip :global(.gcover) {
+    .room-item--flip .room-art {
       grid-column: 2;
       grid-row: 1;
     }
-    .gitem--flip .ginfo {
+    .room-item--flip .room-info {
       grid-column: 1;
       grid-row: 1;
     }
   }
-  .glink :global(.gcover) {
+  /* Titelbild als Werk mit weißem Passepartout */
+  .room-art {
+    display: block;
+    padding: clamp(0.6rem, 1.4vw, 1.4rem);
+    background: var(--wall);
+    box-shadow: var(--hang-shadow);
+    rotate: -2deg;
+    transition:
+      rotate 0.5s var(--pop),
+      translate 0.35s var(--pop),
+      box-shadow 0.35s var(--pop);
+  }
+  .room-item--flip .room-art {
+    rotate: 2deg;
+  }
+  .room-art :global(.room-cover) {
     width: 100%;
   }
-
-  /* Schnittmarken wie auf einem Kontaktbogen */
-  .crop {
-    position: absolute;
-    inset: 1rem;
-    pointer-events: none;
-    opacity: 0;
-    transition:
-      opacity 0.4s,
-      inset 0.6s var(--ease);
-    --c: #fbf6ef;
-    background:
-      linear-gradient(var(--c), var(--c)) top left / 26px 2px,
-      linear-gradient(var(--c), var(--c)) top left / 2px 26px,
-      linear-gradient(var(--c), var(--c)) top right / 26px 2px,
-      linear-gradient(var(--c), var(--c)) top right / 2px 26px,
-      linear-gradient(var(--c), var(--c)) bottom left / 26px 2px,
-      linear-gradient(var(--c), var(--c)) bottom left / 2px 26px,
-      linear-gradient(var(--c), var(--c)) bottom right / 26px 2px,
-      linear-gradient(var(--c), var(--c)) bottom right / 2px 26px;
-    background-repeat: no-repeat;
-  }
-  .glink:hover .crop,
-  .glink:focus-visible .crop {
-    opacity: 1;
-    inset: 1.6rem;
-  }
-  @media (hover: hover) {
-    .glink:hover :global(.px picture) {
-      scale: 1.04;
-    }
+  .room-link:hover .room-art,
+  .room-link:focus-visible .room-art {
+    rotate: 0deg;
+    translate: -8px -8px;
+    box-shadow:
+      16px 16px 0 var(--ink),
+      var(--hang-shadow);
   }
 
-  .ginfo {
+  .room-info {
     display: grid;
-    gap: 0.9rem;
+    gap: 1rem;
     justify-items: start;
   }
-  .nr {
-    font-size: clamp(3.5rem, 2rem + 5vw, 8rem);
-    line-height: 0.8;
-    color: var(--accent-vivid);
+  .room-nr {
+    background: var(--ink);
+    color: var(--c);
   }
-  .name {
-    transition: color 0.25s;
-  }
-  .glink:hover .name {
-    color: var(--accent);
+  .c-blue .room-nr {
+    background: var(--wall);
+    color: var(--blue);
   }
   .desc {
-    font-family: var(--font-serif);
-    font-weight: 340;
     font-size: var(--fs-lead);
-    line-height: 1.35;
+    font-weight: 500;
+    line-height: 1.3;
     max-width: 30ch;
   }
   .go {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
     margin-top: 0.5rem;
-    padding-bottom: 0.3rem;
-    border-bottom: 2px solid currentColor;
+    padding: 0.7em 1.3em;
+    border-radius: 999px;
+    border: 2.5px solid currentColor;
+    font-size: var(--fs-sm);
+    font-weight: 800;
+    font-stretch: 85%;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+  }
+  .room-link:hover .go {
+    background: var(--on-c);
+    color: var(--c);
   }
 </style>

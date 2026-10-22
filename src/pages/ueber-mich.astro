@@ -34,7 +34,7 @@ const jsonLd = {
   jsonLd={jsonLd}
 >
   <section class="container container--wide head">
-    <h1 class="display display-1 drift-left">Über <em>mich</em></h1>
+    <h1 class="display display-1">Über <em>mich</em></h1>
   </section>
 
   <section class="container container--wide intro">
@@ -109,6 +109,8 @@ const jsonLd = {
   }
   .portrait :global(.px) {
     width: 100%;
+    box-shadow: var(--hang-shadow);
+    rotate: -1.5deg;
   }
   .text {
     display: grid;
@@ -128,13 +130,15 @@ const jsonLd = {
     list-style: none;
     padding: 0;
     margin-top: clamp(1.5rem, 4vw, 3rem);
-    border-top: 2px solid var(--line-strong);
+    display: grid;
+    gap: 0.75rem;
   }
   .stations li {
     display: grid;
     gap: 0.25rem 2rem;
-    padding-block: 1.25rem;
-    border-bottom: 1px solid var(--line);
+    padding: 1.25rem 1.5rem;
+    background: var(--wall-2);
+    border-radius: var(--radius);
   }
   @media (min-width: 760px) {
     .stations li {

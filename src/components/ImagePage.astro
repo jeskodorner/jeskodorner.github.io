@@ -157,17 +157,18 @@ const jsonLd = gallery.isUnlisted
   figure {
     margin-top: 1.25rem;
   }
+  /* Das Bild hängt frei an der weißen Wand */
   .frame {
     display: grid;
     place-items: center;
-    padding: clamp(0.5rem, 2vw, 2rem);
-    background: var(--paper-2);
+    padding: clamp(0.5rem, 3vw, 3rem) 0;
   }
   .frame :global(.main-img) {
     width: auto;
     max-width: 100%;
     max-height: calc(100svh - var(--header-h) - 9rem);
     object-fit: contain;
+    box-shadow: var(--hang-shadow);
   }
   figcaption {
     margin-top: 1.25rem;
@@ -178,8 +179,9 @@ const jsonLd = gallery.isUnlisted
     display: grid;
     gap: 2rem;
     margin-top: 2rem;
-    padding-top: 1.5rem;
-    border-top: 2px solid var(--line-strong);
+    padding: clamp(1.25rem, 3vw, 2rem);
+    background: var(--wall-2);
+    border-radius: var(--radius);
   }
   @media (min-width: 900px) {
     .details {
@@ -202,7 +204,8 @@ const jsonLd = gallery.isUnlisted
   .exif dd {
     font-family: var(--font-display);
     font-size: 1.6rem;
-    font-weight: 650;
+    font-weight: 800;
+    font-stretch: 70%;
     line-height: 1.1;
     font-variant-numeric: tabular-nums;
   }

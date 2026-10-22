@@ -12,7 +12,7 @@ const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (
 
 <BaseLayout title={t.film.title} description={`${t.film.title}: ${t.film.intro}`}>
   <section class="container container--wide head">
-    <h1 class="display display-1 drift-left">{t.film.title}<sup class="count">({String(films.length).padStart(2, '0')})</sup></h1>
+    <h1 class="display display-1"><span class="stretch">{t.film.title}</span><sup class="count">({String(films.length).padStart(2, '0')})</sup></h1>
     <p class="lead muted">{t.film.intro}</p>
   </section>
 
@@ -88,8 +88,6 @@ const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (
   .film {
     display: grid;
     gap: clamp(1.5rem, 3vw, 3rem);
-    padding-top: clamp(1.5rem, 3vw, 2.5rem);
-    border-top: 2px solid var(--line-strong);
     scroll-margin-top: calc(var(--header-h) + 1rem);
   }
   @media (min-width: 1000px) {
@@ -104,6 +102,7 @@ const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (
   .film :global(.still) {
     width: 100%;
     background: #120d0a;
+    box-shadow: var(--hang-shadow);
   }
   .year {
     position: absolute;
@@ -122,6 +121,9 @@ const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (
   }
   .roles {
     color: var(--accent);
+  }
+  .info :global(.display-2) {
+    font-stretch: 75%;
   }
   .credit {
     font-size: var(--fs-sm);

@@ -20,7 +20,7 @@ const details = [size, format].filter(Boolean).join(' · ');
 ---
 
 <div class="download">
-  <a class="btn btn--accent" href={url} target="_blank" rel="noopener noreferrer">
+  <a class="btn" href={url} target="_blank" rel="noopener noreferrer">
     <Icon name="download" />
     {t.download.gallery}
     <span class="visually-hidden">{t.download.external}</span>
@@ -36,11 +36,9 @@ const details = [size, format].filter(Boolean).join(' · ');
     align-items: center;
     gap: 0.75rem 1.25rem;
     padding: clamp(1rem, 2.5vw, 1.5rem);
-    border: 2px solid var(--line-strong);
-    background: var(--paper-2);
-  }
-  .details {
-    color: var(--ink);
+    border-radius: var(--radius);
+    background: var(--c, var(--lime));
+    color: var(--on-c, var(--ink));
   }
   .note {
     flex-basis: 100%;
@@ -48,7 +46,7 @@ const details = [size, format].filter(Boolean).join(' · ');
     gap: 0.5em;
     align-items: baseline;
     font-size: var(--fs-sm);
-    color: var(--ink-soft);
+    font-weight: 500;
   }
   .note :global(svg) {
     flex: none;

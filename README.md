@@ -5,7 +5,7 @@ Gebaut mit **Astro 7** und TypeScript und gehostet kostenlos auf **GitHub Pages*
 **https://jeskodor.github.io**.
 
 - Keine Cookies, keine Tracker, keine Google Fonts. Alle Schriften liegen lokal im Projekt.
-- Die Seiten funktionieren ohne JavaScript. JavaScript wird nur für Lightbox, Farbschema-Umschalter, Teilen und die E-Mail-Adresse verwendet.
+- Die Seiten funktionieren ohne JavaScript. JavaScript wird nur für Lightbox, Teilen und die E-Mail-Adresse verwendet.
 - Lighthouse (lokal gemessen, Mobil): Performance 98–100, Barrierefreiheit 100, Best Practices 100 und SEO 100.
 - Große Fotos mit Parallax und Bewegung beim Scrollen, alles reines CSS (siehe Abschnitt 7).
 
@@ -81,7 +81,7 @@ photos.config.json          ← Einstellungen für die Bildverarbeitung (Größe
 .github/workflows/deploy.yml← automatisches Deployment
 ```
 
-**Warum eigenes CSS statt Tailwind?** Die Seite lebt von wenigen, gezielt gesetzten Design-Werten und zwei Farbschemata. CSS Custom Properties bilden das direkt ab: Der Wechsel zwischen hell und dunkel ist nur ein Attribut, das HTML bleibt lesbar, und Astro begrenzt die Styles pro Komponente. Tailwind würde vor allem bei vielen generischen Oberflächen helfen, die es hier nicht gibt.
+**Warum eigenes CSS statt Tailwind?** Die Seite lebt von wenigen, gezielt gesetzten Design-Werten: Wandweiß, Schwarz und fünf Raumfarben. CSS Custom Properties bilden das direkt ab: Eine Klasse wie `c-pink` färbt einen ganzen Raum ein, das HTML bleibt lesbar, und Astro begrenzt die Styles pro Komponente. Tailwind würde vor allem bei vielen generischen Oberflächen helfen, die es hier nicht gibt.
 
 ---
 
@@ -100,7 +100,7 @@ photos.config.json          ← Einstellungen für die Bildverarbeitung (Größe
 > ⚠️ **Impressum und Datenschutzerklärung sind Platzhalter** und auf der Seite deutlich so markiert.
 > Bitte vor der Veröffentlichung vervollständigen und rechtlich prüfen lassen. Das hier ist keine Rechtsberatung.
 
-**Kursive Akzente:** In `startseite.md` und `ueber-mich.md` wird `*Wort*` als kursives Terrakotta-Wort dargestellt.
+**Leuchtmarker:** In `startseite.md` und `ueber-mich.md` wird `*Wort*` in großen Titeln mit einem Leuchtmarker hervorgehoben (erst Lime, dann Pink). Beim Scrollen wischt der Marker über das Wort.
 
 **Platzhalter entfernen:** Die Beispielgalerien liegen in `src/content/galleries/` (Ordner `kueste-im-oktober`,
 `stadt-nach-regen`, `sommerfest-beispiel-q7m4zt`) und die Beispielfilme in `src/content/films/`. Ordner bzw. Dateien
@@ -297,21 +297,21 @@ haben keine Vor/Zurück-Navigation zu anderen Galerien und werden nicht von der 
 
 ## 7. Bewegung beim Scrollen
 
-Alle Effekte sind reines CSS, ohne JavaScript, und laufen flüssig, weil der Browser sie direkt auf der Grafikkarte berechnet:
+Alle Effekte sind reines CSS, ohne JavaScript, und laufen flüssig:
 
-- **Parallax:** Fotos gleiten in ihrem Rahmen langsamer als die Seite, und die Rahmen öffnen sich beim Hereinscrollen.
-- **Startseite:**
-  - Das Hero-Bild bleibt zurück, während Name und Claim nach oben wegziehen.
-  - Der Satz unter dem Hero leuchtet Wort für Wort auf.
-  - Ein großes Schriftband aus der Zeile über dem Namen zieht seitlich durch.
-- **Titel und Texte:** Große Titel gleiten seitlich herein, Texte steigen auf.
-- **Galerien:** Ein Fortschrittsbalken oben zeigt, wie weit man ist. Der Header wird beim Scrollen kompakt.
+- **Parallax:** Fotos gleiten in ihrem Rahmen langsamer als die Seite und „ploppen“ beim Hereinscrollen leicht gedreht an die Wand.
+- **Dehnende Titel:** Große Titel (Name im Hero, „Ausgewählte Arbeiten“, „Lass uns reden!“, Footer) ziehen sich beim Scrollen von schmal auf breit.
+- **Leuchtmarker:** `*markierte*` Wörter bekommen beim Hereinscrollen einen Lime- bzw. Pink-Marker. Der Satz unter dem Hero leuchtet Wort für Wort auf.
+- **Farbbänder:** Zwei Bänder in Pink und Lime kreuzen sich und ziehen gegenläufig durch.
+- **Sticker:** Der runde Sticker im Hero dreht sich langsam.
+- **Weitere Effekte:** Das Hero-Foto hebt beim Scrollen ab, Texte steigen auf, der Fortschrittsbalken in Galerien zeigt die Raumfarbe, und der Header wird kompakt.
 
-**Browser:** Chrome, Edge, Brave und Safari (ab Version 26) zeigen die Bewegung. Firefox hatte diese Technik
-nach meinem Stand noch nicht standardmäßig aktiviert. Dort erscheint die Seite vollständig, nur ohne Bewegung.
-Wer im System „Bewegung reduzieren“ eingestellt hat, bekommt bewusst eine ruhige Seite.
+**Browser:** Chrome, Edge, Brave und Safari (ab Version 26) zeigen die Scroll-Bewegung. Firefox hatte diese Technik
+nach meinem Stand noch nicht standardmäßig aktiviert. Dort erscheint die Seite vollständig, nur ohne Scroll-Bewegung.
+Wer im System „Bewegung reduzieren“ eingestellt hat, bekommt bewusst eine ruhige Seite, auch ohne drehenden Sticker.
 
-Die Stärke der Effekte steht in `src/styles/motion.css`, z. B. `--px-scale` und `--px-from`/`--px-to` für Parallax.
+Die Stärke der Effekte steht in `src/styles/motion.css`, z. B. `--px-scale` und `--px-from`/`--px-to` für Parallax
+oder `--stretch-from`/`--stretch-to` für die dehnenden Titel.
 
 ## 8. Optionale Funktionen
 
@@ -390,32 +390,34 @@ Schlägt etwas fehl, bleibt die alte Version online, und unter *Actions* steht d
 
 ## 11. Design: Farben und Schriften
 
-Palette „Sand & Terrakotta“, definiert in `src/styles/tokens.css`.
+Look „White Cube“: weiße Galeriewände, schwarze Schrift, knallige Farbräume. Definiert in `src/styles/tokens.css`.
+Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 
-**Hintergrund:** ein weicher Lichtverlauf wie Licht auf Film, mit hellem Band, dunkleren Rändern und kräftigem Filmkorn.
-Er liegt fest hinter dem Inhalt, die Lichtwolken wandern beim Scrollen langsam mit.
-Er ist reines CSS (Verläufe und SVG-Rauschen), also ohne Bilddatei.
+- **Fotos** hängen wie Werke an der Wand: mit Schatten, Werkschild und rundem Nummern-Sticker in der Raumfarbe.
+  Beim Überfahren springt ein harter Schatten in der Raumfarbe heraus.
+- **Jede Galerie ist ein Raum** mit eigener Farbe. Die Farbe erscheint in der Übersicht, im Farbband oben auf der Galerieseite,
+  im Fortschrittsbalken, in den Nummern-Stickern und im Download-Kasten.
+  Festlegen per `color: pink | blue | lime | orange | violet` in `index.md`. Ohne Angabe wechselt die Farbe automatisch reihum.
+- **Startseite:** rotierender Sticker, zwei sich kreuzende Farbbänder, ein blauer Film-Raum und ein Lime-Raum für Kontakt.
 
-Die Schatten sind bewusst nicht so tief wie auf einem reinen Stimmungsbild: Text muss an **jeder** Stelle lesbar bleiben.
-Alle Textfarben sind gegen die ungünstigste Stelle des Hintergrunds geprüft (WCAG 2.x):
+Kontraste nach WCAG 2.x:
 
-| Rolle | Hell | Dunkel | Kontrast an der ungünstigsten Stelle (hell / dunkel) |
+| Farbe | Hex | Textfarbe darauf | Kontrast |
 |---|---|---|---|
-| Hintergrund: hellste Stelle | `#FDF8EE` | `#45382F` | – |
-| Hintergrund: Grundton | `#DDD2C1` | `#1A1410` | – |
-| Hintergrund: dunkelste Stelle | `#C9BCA9` | `#0B0806` | – |
-| Text | `#1C130E` | `#F6EDE2` | 9,8 : 1 / 9,7 : 1 |
-| Nebentext | `#554232` | `#BFAB98` | 5,1 : 1 / 5,1 : 1 |
-| Akzent Terrakotta (Links, kleine Schrift, Buttons) | `#85311A` | `#F09566` | 4,6 : 1 / 4,9 : 1 |
-| Akzent kräftig (nur große Schrift ab 24 px, Flächen) | `#A8401C` | `#F09566` | 3,3 : 1 |
+| Wand | `#FFFFFF` | Schwarz `#0B0B0B` / Nebentext `#5C5C5C` | 19,6 : 1 / 6,7 : 1 |
+| Links, kleine Akzente | Blau `#2B3BFF` auf Weiß | – | 6,6 : 1 |
+| Pink | `#FF3D8B` | Schwarz | 5,9 : 1 |
+| Blau | `#2B3BFF` | Weiß | 6,6 : 1 |
+| Lime | `#D4FF3A` | Schwarz | 17,0 : 1 |
+| Orange | `#FF5A1F` | Schwarz | 6,3 : 1 |
+| Violett | `#7C5CFF` | Schwarz | 4,5 : 1 |
 
-Wenn du die Schatten (`--bg-shadow`) dunkler machst, musst du diese Werte neu prüfen.
-Der Hell- oder Dunkelmodus folgt der Systemeinstellung. Eine manuelle Wahl über den Umschalter wird gespeichert.
+Pink als Textfarbe auf Weiß (3,3 : 1) nur für große Schrift ab 24 px, z. B. „Dorner“ im Hero und den Footer-Schriftzug.
 
 **Schriften** (lokal, über Fontsource, Lizenz OFL):
-- **Sofia Sans Extra Condensed**: große, schmale Display-Titel
-- **Fraunces** (kursiv): Serifen-Akzente, Claims, Bildunterschriften
-- **Sofia Sans**: Fließtext
+- **Anybody**: große Titel. Die Schrift ist stufenlos von extrem schmal (50 %) bis sehr breit (150 %) einstellbar.
+  Deshalb können sich Titel beim Scrollen in die Breite ziehen.
+- **Archivo**: Fließtext, Beschriftungen und Werkschilder
 
 **Extenda einsetzen:** Extenda (Zetafonts) ist eine kommerzielle Schrift. Fürs Web brauchst du eine passende Lizenz.
 Mit Lizenz:
@@ -429,7 +431,8 @@ Mit Lizenz:
      font-display: swap;
    }
    ```
-3. In `src/styles/tokens.css` `--font-display: 'Extenda', 'Sofia Sans Extra Condensed Variable', sans-serif;` setzen.
+3. In `src/styles/tokens.css` `--font-display: 'Extenda', 'Anybody Variable', sans-serif;` setzen.
+   Hinweis: Der Dehn-Effekt beim Scrollen braucht eine Schrift mit Breitenachse. Extenda hat einzelne Breiten-Schnitte statt einer Achse, mit Extenda bleiben die Titel deshalb fest in einer Breite.
 4. Optional in `src/components/BaseHead.astro` die Preload-Zeile auf die neue Datei umstellen.
 
 ---

@@ -40,8 +40,13 @@ export interface GalleryImage {
   hashUrl: string;
 }
 
+export const ROOM_COLORS = ['pink', 'blue', 'lime', 'orange', 'violet'] as const;
+export type RoomColor = (typeof ROOM_COLORS)[number];
+
 export interface Gallery {
   id: string;
+  /** Raumfarbe (CSS-Klasse c-<farbe>) */
+  color: RoomColor;
   folder: string;
   slug: string;
   title: string;
@@ -146,6 +151,7 @@ async function load(): Promise<Gallery[]> {
       location: d.location,
       description: d.description,
       layout: d.layout,
+      color: d.color ?? 'pink',
       visibility: d.visibility,
       isUnlisted: d.visibility === 'unlisted',
       showExif: d.showExif,
@@ -160,7 +166,12 @@ async function load(): Promise<Gallery[]> {
     } satisfies Gallery;
   });
 
-  return galleries.sort((a, b) => b.date.getTime() - a.date.getTime());
+  galleries.sort((a, b) => b.date.getTime() - a.date.getTime());
+  // Galerien ohne eigene Farbe bekommen reihum eine Raumfarbe (in Reihenfolge der Übersicht)
+  galleries.forEach((g, i) => {
+    if (!g.entry.data.color) g.color = ROOM_COLORS[i % ROOM_COLORS.length]!;
+  });
+  return galleries;
 }
 
 /** Nur öffentliche Galerien – für Übersicht, Startseite, Sitemap. */

@@ -1,9 +1,10 @@
 /*
  * Bewegung beim Scrollen – reines CSS (Scroll-Driven Animations), kein JavaScript.
  * - Nur wenn der Browser es kann (@supports) UND niemand "Bewegung reduzieren" eingestellt hat.
- * - Ohne Unterstützung (z. B. Firefox, ältere Browser) bleibt alles ruhig und vollständig sichtbar.
+ * - Ohne Unterstützung (z. B. Firefox) bleibt alles ruhig und vollständig sichtbar.
  * - Immer Einzel-Eigenschaften (animation-name …) statt der Kurzschreibweise "animation":
  *   Der CSS-Minifier würde sonst animation-timeline in eine ungültige Kurzschreibweise verschmelzen.
+ * - fill-mode "forwards" bei Einblendungen: Vor dem Hereinscrollen bleibt alles normal sichtbar.
  */
 
 /* ---------- Parallax-Rahmen ---------- */
@@ -11,7 +12,7 @@
   position: relative;
   display: block;
   overflow: hidden;
-  background-color: var(--sand);
+  background-color: var(--wall-3);
   view-timeline-name: --px;
   view-timeline-axis: block;
 }
@@ -26,35 +27,33 @@
   height: 100%;
   object-fit: cover;
 }
-@media (hover: hover) {
-  a.px:hover picture {
-    scale: 1.035;
-  }
-}
 a.px:focus-visible {
-  outline-offset: -4px;
+  outline-offset: 4px;
 }
 
 @keyframes px-move {
   from {
-    transform: translate3d(0, var(--px-from, -9%), 0) scale(var(--px-scale, 1.24));
+    transform: translate3d(0, var(--px-from, -8%), 0) scale(var(--px-scale, 1.2));
   }
   to {
-    transform: translate3d(0, var(--px-to, 9%), 0) scale(var(--px-scale, 1.24));
+    transform: translate3d(0, var(--px-to, 8%), 0) scale(var(--px-scale, 1.2));
   }
 }
-@keyframes px-reveal {
+/* Bild „ploppt“ an die Wand */
+@keyframes px-pop {
   from {
-    clip-path: inset(var(--rv-y, 14%) var(--rv-x, 9%) var(--rv-y, 14%) var(--rv-x, 9%));
+    scale: 0.86;
+    rotate: var(--pop-rot, -2deg);
   }
   to {
-    clip-path: inset(0 0 0 0);
+    scale: 1;
+    rotate: 0deg;
   }
 }
 @keyframes rise {
   from {
     opacity: 0;
-    translate: 0 4.5rem;
+    translate: 0 4rem;
   }
   to {
     opacity: 1;
@@ -63,44 +62,62 @@ a.px:focus-visible {
 }
 @keyframes drift-in-left {
   from {
-    translate: -12vw 0;
-    opacity: 0.2;
+    translate: -14vw 0;
   }
   to {
     translate: 0 0;
-    opacity: 1;
   }
 }
 @keyframes drift-in-right {
   from {
-    translate: 12vw 0;
-    opacity: 0.2;
+    translate: 14vw 0;
   }
   to {
     translate: 0 0;
-    opacity: 1;
   }
 }
-@keyframes marquee-move {
+/* Schrift zieht sich in die Breite */
+@keyframes stretch {
   from {
-    transform: translate3d(var(--mq-from, 4%), 0, 0);
+    font-stretch: var(--stretch-from, 50%);
   }
   to {
-    transform: translate3d(var(--mq-to, -42%), 0, 0);
+    font-stretch: var(--stretch-to, 100%);
+  }
+}
+/* Leuchtmarker wischt über das Wort */
+@keyframes mark {
+  from {
+    background-size: 0% 88%;
+  }
+  to {
+    background-size: 100% 88%;
+  }
+}
+@keyframes tape-move {
+  from {
+    transform: translate3d(var(--tape-from, 0%), 0, 0);
+  }
+  to {
+    transform: translate3d(var(--tape-to, -40%), 0, 0);
   }
 }
 @keyframes word-light {
   from {
-    opacity: 0.14;
+    opacity: 0.12;
   }
   to {
     opacity: 1;
+  }
+}
+@keyframes spin {
+  to {
+    rotate: 360deg;
   }
 }
 
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    /* Bild wandert langsamer als die Seite → Tiefe */
     .px img {
       animation-name: px-move;
       animation-timing-function: linear;
@@ -112,25 +129,21 @@ a.px:focus-visible {
     .px--soft {
       --px-from: -5%;
       --px-to: 5%;
-      --px-scale: 1.14;
+      --px-scale: 1.12;
     }
-    /* Rahmen öffnet sich beim Hereinscrollen */
     .px--reveal {
-      animation-name: px-reveal;
-      animation-timing-function: linear;
-      animation-fill-mode: both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 85%;
-    }
-    /* fill-mode forwards: Vor dem Hereinscrollen bleibt alles normal sichtbar,
-       die Animation beginnt erst, wenn das Element den Bildschirmrand erreicht. */
-    .rise {
-      animation-name: rise;
+      animation-name: px-pop;
       animation-timing-function: linear;
       animation-fill-mode: forwards;
       animation-timeline: view();
-      /* fertig, sobald das Element ganz im Bild ist – auch ganz unten auf der Seite */
-      animation-range: entry 0% entry 100%;
+      animation-range: entry 0% entry 90%;
+    }
+    .rise {
+      animation-name: rise;
+      animation-timing-function: ease-out;
+      animation-fill-mode: forwards;
+      animation-timeline: view();
+      animation-range: entry 0% entry 45%;
     }
     .drift-left,
     .drift-right {
@@ -145,19 +158,33 @@ a.px:focus-visible {
     .drift-right {
       animation-name: drift-in-right;
     }
-    /* Großes Schriftband, das beim Scrollen seitlich durchzieht */
-    .marquee-track {
-      animation-name: marquee-move;
+    /* Breiten-Animation nur für einzeilige Titel (nowrap) – so verschiebt sich nichts drumherum */
+    .stretch {
+      white-space: nowrap;
+      animation-name: stretch;
       animation-timing-function: linear;
       animation-fill-mode: both;
       animation-timeline: view();
+      animation-range: entry 10% cover 55%;
+    }
+    /* Marker: vor dem Hereinscrollen noch nicht gezogen (Schrift bleibt schwarz auf weiß lesbar) */
+    .display em {
+      animation-name: mark;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: entry 40% cover 45%;
+    }
+    .tape-track {
+      animation-name: tape-move;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: --tapes;
       animation-range: cover 0% cover 100%;
     }
-    /* Satz leuchtet Wort für Wort auf (Zeitleiste des Absatzes, Versatz pro Wort) */
     .words {
       view-timeline-name: --words;
     }
-    /* Alle Wörter starten gedimmt, sobald der Satz hereinkommt, und leuchten nacheinander auf */
     .words .w {
       animation-name: word-light;
       animation-timing-function: ease-in;
@@ -168,54 +195,53 @@ a.px:focus-visible {
   }
 }
 
-/* Schriftband (Gestaltung, unabhängig von der Bewegung) */
-.marquee {
-  overflow: hidden;
-  padding-block: clamp(1rem, 3vw, 2.5rem);
-  border-block: 2px solid var(--line-strong);
-  user-select: none;
-}
-.marquee-track {
-  display: flex;
-  width: max-content;
-  gap: 0.35em;
-  white-space: nowrap;
-  font-family: var(--font-display);
-  font-weight: 760;
-  text-transform: uppercase;
-  font-size: clamp(4rem, 2rem + 11vw, 15rem);
-  line-height: 0.85;
-}
-.marquee-track .o {
-  color: transparent;
-  -webkit-text-stroke: 1.5px var(--ink);
-}
-.marquee-track em {
-  font-family: var(--font-serif);
-  font-style: italic;
-  font-weight: 330;
-  text-transform: none;
-  color: var(--accent-vivid);
-  font-size: 0.8em;
+/* Sticker dreht sich langsam (zeitbasiert, stoppt bei „Bewegung reduzieren“) */
+@media (prefers-reduced-motion: no-preference) {
+  .spin {
+    animation: spin 18s linear infinite;
+  }
 }
 
-/* ---------- Hintergrund: Lichtwolken wandern beim Scrollen ---------- */
-@keyframes bg-drift {
-  from {
-    transform: translate3d(-3%, -4%, 0) rotate(-4deg) scale(1.04);
-  }
-  to {
-    transform: translate3d(4%, 5%, 0) rotate(5deg) scale(1.16);
-  }
+/* ---------- Farbbänder, die sich kreuzen ---------- */
+.tapes {
+  position: relative;
+  height: clamp(11rem, 7rem + 16vw, 24rem);
+  overflow: hidden;
+  view-timeline-name: --tapes;
+  user-select: none;
 }
-@supports (animation-timeline: scroll()) {
-  @media (prefers-reduced-motion: no-preference) {
-    body::before {
-      animation-name: bg-drift;
-      animation-timing-function: linear;
-      animation-fill-mode: both;
-      animation-timeline: scroll(root);
-      will-change: transform;
-    }
-  }
+.tape {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  top: 50%;
+  padding-block: clamp(0.5rem, 1.2vw, 1.1rem);
+  background: var(--c);
+  color: var(--on-c);
+  box-shadow: 0 10px 30px -12px rgb(0 0 0 / 0.35);
+}
+.tape:nth-child(1) {
+  translate: 0 -78%;
+  rotate: -4deg;
+}
+.tape:nth-child(2) {
+  translate: 0 -10%;
+  rotate: 3deg;
+  --tape-from: -40%;
+  --tape-to: 0%;
+}
+.tape-track {
+  display: flex;
+  width: max-content;
+  gap: 0.5em;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-stretch: 100%;
+  text-transform: uppercase;
+  font-size: clamp(2.2rem, 1rem + 5vw, 6.5rem);
+  line-height: 1;
+}
+.tape-track .star {
+  font-stretch: 50%;
 }

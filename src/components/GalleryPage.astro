@@ -64,24 +64,28 @@ const jsonLd = gallery.isUnlisted
   noReferrer={gallery.isUnlisted}
   jsonLd={jsonLd}
 >
-  <div class="progress" aria-hidden="true"></div>
+  <div class:list={['progress', `c-${gallery.color}`]} aria-hidden="true"></div>
 
-  <article>
-    <header class="g-head container container--wide">
-      {
-        !gallery.isUnlisted && (
-          <a class="back label" href="/galerien/">
-            <Icon name="arrow-left" /> {t.galleries.back}
-          </a>
-        )
-      }
-      <p class="label meta-row muted">
-        <span>{t.galleries.images(gallery.images.length)}</span>
-        <span>{formatMonth(gallery.date)}</span>
-        {gallery.location && <span>{gallery.location}</span>}
-      </p>
-      <h1 class="display display-1 title drift-left" style={`view-transition-name: gt-${gallery.slug}`}>{gallery.title}</h1>
+  <article class={`c-${gallery.color}`}>
+    <header class="g-band room">
+      <div class="container container--wide">
+        {
+          !gallery.isUnlisted && (
+            <a class="back btn btn--small" href="/galerien/">
+              <Icon name="arrow-left" /> {t.galleries.back}
+            </a>
+          )
+        }
+        <p class="label meta-row">
+          <span>{t.galleries.images(gallery.images.length)}</span>
+          <span>{formatMonth(gallery.date)}</span>
+          {gallery.location && <span>{gallery.location}</span>}
+        </p>
+        <h1 class="display display-1 title" style={`view-transition-name: gt-${gallery.slug}`}>{gallery.title}</h1>
+      </div>
+    </header>
 
+    <div class="g-head container container--wide">
       <div class="intro rise">
         <div class="text">
           <p class="lead">{gallery.description}</p>
@@ -106,7 +110,7 @@ const jsonLd = gallery.isUnlisted
           </p>
         )
       }
-    </header>
+    </div>
 
     <section
       class:list={['grid-wrap', gallery.layout === 'showcase' ? 'grid-wrap--stage' : 'container container--wide']}
@@ -150,9 +154,9 @@ const jsonLd = gallery.isUnlisted
   .progress {
     position: fixed;
     inset: 0 0 auto;
-    height: 3px;
+    height: 6px;
     z-index: 60;
-    background: var(--accent-vivid);
+    background: var(--c);
     transform-origin: 0 50%;
     transform: scaleX(0);
     pointer-events: none;
@@ -171,27 +175,25 @@ const jsonLd = gallery.isUnlisted
     }
   }
 
-  .g-head {
-    padding-top: clamp(2rem, 5vw, 4.5rem);
-    padding-bottom: clamp(2rem, 5vw, 4rem);
+  /* Farbband in der Raumfarbe */
+  .g-band {
+    padding-block: clamp(1.5rem, 4vw, 3.5rem) clamp(2.5rem, 6vw, 5rem);
   }
   .back {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5em;
-    text-decoration: none;
     margin-bottom: clamp(1.5rem, 4vw, 3rem);
   }
   .title {
     margin-top: 0.75rem;
-    max-width: 14ch;
+    max-width: 13ch;
+    font-stretch: 70%;
+  }
+  .g-head {
+    padding-top: clamp(2rem, 5vw, 4rem);
+    padding-bottom: clamp(1rem, 3vw, 2rem);
   }
   .intro {
     display: grid;
     gap: 2rem;
-    margin-top: clamp(1.75rem, 4vw, 3.5rem);
-    padding-top: clamp(1.25rem, 3vw, 2rem);
-    border-top: 2px solid var(--line-strong);
   }
   .text {
     max-width: 52ch;
@@ -220,7 +222,8 @@ const jsonLd = gallery.isUnlisted
     margin-top: 2rem;
     padding: 0.9rem 1.1rem;
     background: var(--ink);
-    color: var(--paper);
+    color: var(--wall);
+    border-left: 10px solid var(--c);
     font-size: var(--fs-sm);
     font-weight: 600;
   }
@@ -233,8 +236,6 @@ const jsonLd = gallery.isUnlisted
     display: grid;
     gap: 1rem;
     margin-top: var(--section);
-    padding-top: 2rem;
-    border-top: 2px solid var(--line-strong);
   }
   @media (min-width: 760px) {
     .neighbours {

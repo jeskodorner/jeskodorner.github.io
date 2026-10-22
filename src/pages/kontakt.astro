@@ -11,7 +11,7 @@ const t = useTranslations();
 
 <BaseLayout title={t.contact.title} description={`Kontakt zu ${site.name}: E-Mail und Instagram.`}>
   <section class="container container--wide head">
-    <h1 class="display display-1 drift-left">{t.contact.title}</h1>
+    <h1 class="display display-1"><span class="stretch">{t.contact.title}</span></h1>
     <p class="lead muted">{t.contact.intro}</p>
   </section>
 
@@ -46,8 +46,6 @@ const t = useTranslations();
   .grid {
     display: grid;
     gap: clamp(2.5rem, 6vw, 6rem);
-    padding-top: clamp(1.5rem, 3vw, 2.5rem);
-    border-top: 2px solid var(--line-strong);
   }
   @media (min-width: 1000px) {
     .grid.has-form {
@@ -74,7 +72,13 @@ const t = useTranslations();
     align-items: baseline;
     gap: 0.2em;
   }
+  .channels :global(.channel) {
+    font-stretch: 70%;
+    background: linear-gradient(var(--lime), var(--lime)) no-repeat 0 100% / 100% 0.18em;
+    transition: background-size 0.3s var(--pop);
+  }
   .channels :global(.channel:hover) {
-    color: var(--accent);
+    color: var(--ink);
+    background-size: 100% 100%;
   }
 </style>

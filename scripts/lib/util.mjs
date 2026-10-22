@@ -80,6 +80,8 @@ ${location ? `location: ${JSON.stringify(location)}` : '# location: "Ort"'}
 description: "Kurze Beschreibung der Galerie."
 # showcase = Bühne (jedes Bild groß, Parallax) · masonry = Raster · justified = gleich hohe Reihen
 layout: ${layout}
+# Raumfarbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
+# color: pink
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex
 visibility: ${visibility}
 # Aufnahmedaten (Kamera, Blende …) anzeigen
