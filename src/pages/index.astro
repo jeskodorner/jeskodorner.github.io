@@ -37,8 +37,9 @@ const jsonLd = {
 const stageItems: StageItem[] = featured.map(({ gallery, image }) => ({
   image,
   href: image.pageUrl,
+  // Ohne Bildunterschrift: Galerie-Name als Titel, darunter nur der Link (sonst stünde der Name doppelt da)
   title: image.caption ?? gallery.title,
-  kicker: gallery.title + (gallery.location ? `, ${gallery.location}` : ''),
+  kicker: image.caption ? gallery.title + (gallery.location ? `, ${gallery.location}` : '') : 'Galerie ansehen',
   kickerHref: gallery.url,
   color: gallery.color,
 }));

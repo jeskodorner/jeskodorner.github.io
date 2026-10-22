@@ -1,0 +1,68 @@
+{
+  "images": {
+    "love-exercise-jesko-dorner-01.jpg": {
+      "source": "Love Exercise-Jesko Dorner-01.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#47351d",
+      "lqip": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAADwAwCdASoYABAAPt1apkyopSOiMAgBEBuJZACdABY09LKu+oBhHDJQAP6g0gycTB8PT3Lgn40mEafDcuwQV0vTCmIQ29/KxhJ9BKu/ctNmHAqt6BqTn21Z1E3c5SXwCLbPFzre5WLQSaAA",
+      "exif": {}
+    },
+    "love-exercise-jesko-dorner-08.jpg": {
+      "source": "Love Exercise-Jesko Dorner-08.jpg",
+      "width": 1800,
+      "height": 2400,
+      "color": "#6f4626",
+      "lqip": "data:image/webp;base64,UklGRpgAAABXRUJQVlA4IIwAAABQBQCdASoSABgAPt1gp04opaMiKA1REBuJZACdL2uA7ZTbboS+04AxeUYQBTCLF9EwoQAA/t1xQAKnnL7jycrZYILntKzG5VQurfNlKPJwPCIxzOcdW8cNCin6Iln9ZnrNqd8e/pi3SOF+za7gsso7xjlRN7mtP+HGfKNeuQIKAoQi8MHMO9vC/cIAAA==",
+      "exif": {}
+    },
+    "love-exercise-jesko-dorner-17.jpg": {
+      "source": "Love Exercise-Jesko Dorner-17.jpg",
+      "width": 1600,
+      "height": 2400,
+      "color": "#563d2b",
+      "lqip": "data:image/webp;base64,UklGRoYAAABXRUJQVlA4IHoAAACQBACdASoQABgAPt1cpkyopSOiMAgBEBuJZACdMoADVGDevyC2qeCbp4ihDNAA/tFAps9FduFpXH1SAwoyY46rPKOC1zpvOrPPR89rM9xcTNXvdEOa0W10sGA9mHy2s+x8BHJJ3IZvgIsIdwSfZMz3q5iaYvLB5IAAAA==",
+      "exif": {}
+    },
+    "love-exercise-jesko-dorner-29.jpg": {
+      "source": "Love Exercise-Jesko Dorner-29.jpg",
+      "width": 2400,
+      "height": 1920,
+      "color": "#444444",
+      "lqip": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAABwBACdASoYABMAPt1eqU0opSQlqA1REBuJaQAAJdtekUCGVT1JWCimbukgAAD+8t0HjbUewnYgvQajEF3QD33wyxVY0qxixFxziUdH67B/6Xb+uNKifPxHaxhV/99wvHHH5OoFAAAAAA==",
+      "exif": {}
+    },
+    "love-exercise-jesko-dorner-33.jpg": {
+      "source": "Love Exercise-Jesko Dorner-33.jpg",
+      "width": 1920,
+      "height": 2400,
+      "color": "#544a39",
+      "lqip": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAAAwBQCdASoTABgAPt1UpUyopCOiN/VYARAbiWUAxvQN0gqU6ZPoYAghD7+gY8w2WYOYAAD+672shteAhzlYJuKZUpbfrsKnfSNxACkJDhlicSYeqVDE9l0edXPjpKwY+nwhL2FUKcA+kLAA",
+      "exif": {}
+    },
+    "love-exercise-jesko-dorner-39.jpg": {
+      "source": "Love Exercise-Jesko Dorner-39.jpg",
+      "width": 2400,
+      "height": 1200,
+      "color": "#3e3e3e",
+      "lqip": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAAAQBACdASoYAAwAPt1cpkyopSOiMAgBEBuJaQAGy3kxC8HMNQj5K/DAAADifn3eXlllZLT5W3Ac6iblB+rFgykkBT8j85Bhee+lZ+UzddU0f/RU3517tOvT8pCx8HZxP/wlYL4AAAA=",
+      "exif": {}
+    },
+    "love-exercise-jesko-dorner-45.jpg": {
+      "source": "Love Exercise-Jesko Dorner-45.jpg",
+      "width": 2400,
+      "height": 1800,
+      "color": "#625039",
+      "lqip": "data:image/webp;base64,UklGRqwAAABXRUJQVlA4IKAAAACwBQCdASoYABIAPt1aqE6opKOiMBgIARAbiUAU5qRH/wBWcM220I5NXMNtIcm24X6vGy6xbAAA94B84W5qyhOwYoQwz3c/Pg4u+yff1Rq2+jf6bl372RKqFe5NYypCrwrHaIK5MKQpXrSBfuA86wXNWO9FxuxGfTsE7msbz6QVN1LBEthPeJ1ArPUVMKBntCGJoGN6x8xEIa9CGr9xCQAA",
+      "exif": {}
+    },
+    "love-exercise-jesko-dorner-52.jpg": {
+      "source": "Love Exercise-Jesko Dorner-52.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#7b664c",
+      "lqip": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAABQBACdASoYABAAPt1apkyopSOiMAgBEBuJQBOgBCqpZj1oZLlS5PgBVIgAAPYn+N8N7LjzIzmIS4gjxgCVWLG6ys4ieNv+P51o4wmQ+nrsIdzmE6uB26UTdjzUkZ9KX4sQy5gJWsf4bOb5T1Ia1PYGL5+kAAAA",
+      "exif": {}
+    }
+  }
+}

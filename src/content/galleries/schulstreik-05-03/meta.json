@@ -1,0 +1,109 @@
+{
+  "images": {
+    "p3050049.jpg": {
+      "source": "P3050049.jpg",
+      "width": 2400,
+      "height": 1800,
+      "color": "#38352c",
+      "lqip": "data:image/webp;base64,UklGRpAAAABXRUJQVlA4IIQAAADQBACdASoYABIAPt1aqE6opKOiMBgIARAbiWcAyNQITHjcNQfH3iqj76gw1+8IAAD+7R7SRaDPcJ0sD9Ow6hYeIPrzPrJACoOgqEWUcxopSOw8Xi5p7lHkzV/o8jN3J0SDnEznnq3B80/PHj27jM9r9pK2qYqNDBlKdg7dwmCjIQGwAAA=",
+      "exif": {
+        "camera": "Olympus SH-1",
+        "aperture": 8.7,
+        "shutter": "1/320",
+        "iso": 125,
+        "focalLength": 5,
+        "date": "2026-03-05T10:16:47"
+      }
+    },
+    "p3050060.jpg": {
+      "source": "P3050060.jpg",
+      "width": 2400,
+      "height": 1800,
+      "color": "#818e99",
+      "lqip": "data:image/webp;base64,UklGRpoAAABXRUJQVlA4II4AAAAwBQCdASoYABIAPt1irE8opSQiKAqpEBuJYwC7ABEYO5rXhIuCwhiiBprw535qglk6wAD+5yNsFziyjrrsZQ4HBEIdx2qfOa1jGwEIpfwDgbOgE/dWs8azC4DNDz8IUheeMZ07v0QgUVUG4fb2TJGEjNDhKxjmEiotnlCv/Zqh55Z69K4erzKJEEFagAAA",
+      "exif": {
+        "camera": "Olympus SH-1",
+        "aperture": 4.5,
+        "shutter": "1/640",
+        "iso": 125,
+        "focalLength": 13,
+        "date": "2026-03-05T10:24:22"
+      }
+    },
+    "p3050088.jpg": {
+      "source": "P3050088.jpg",
+      "width": 1800,
+      "height": 2400,
+      "color": "#826d89",
+      "lqip": "data:image/webp;base64,UklGRq4AAABXRUJQVlA4IKIAAACQBACdASoSABgAPtlaoEyoJSMiMAwBABsJbAAAYbgK94iQBkopz+wtO3BwBQAA/A7p1aGqQt03g69SUsD0WzkZqTzvf7/2ylpn9x3WPy///HbyZYvvJOl6uHpXBGhugHnwKj1+QhdE6TUB4CuOpVIIElTrMC0CvovfVT2o2HRkl+7cruC7mXxEC0cczqjOfWh8zv0ifC18yvkQkn5hTMiAAAA=",
+      "exif": {
+        "camera": "Olympus SH-1",
+        "aperture": 8.7,
+        "shutter": "1/200",
+        "iso": 125,
+        "focalLength": 5,
+        "date": "2026-03-05T10:34:04"
+      }
+    },
+    "p3050122.jpg": {
+      "source": "P3050122.jpg",
+      "width": 2400,
+      "height": 1800,
+      "color": "#5f4b57",
+      "lqip": "data:image/webp;base64,UklGRpwAAABXRUJQVlA4IJAAAAAwBQCdASoYABIAPt1cpkyopSOiMAgBEBuJZgC06B9gthSoWWYktPfXbtCVxsU3/tjVYAD+sr87c1s9HxAaSSdfesRgPNu+lm1wVe1Hmq5OwaOu+DXQBkUJzRgdmARyPWuW+oyCqUZdgLc+NE1OyG54laj+7Y82eOvAwX12upXmXcbEvq53QBj1gKsY4uycAAA=",
+      "exif": {
+        "camera": "Olympus SH-1",
+        "aperture": 8.7,
+        "shutter": "1/640",
+        "iso": 125,
+        "focalLength": 5,
+        "date": "2026-03-05T10:52:24"
+      }
+    },
+    "p3050128.jpg": {
+      "source": "P3050128.jpg",
+      "width": 2400,
+      "height": 1800,
+      "color": "#5b5253",
+      "lqip": "data:image/webp;base64,UklGRrQAAABXRUJQVlA4IKgAAACwBQCdASoYABIAPtVcoUyoJaMiMAwBABqJZACdITYC92vBR43VOfyf8iXj/O9r7T+0U+zc+1AAzfNfxabejeN9HsHiufvpP/E+TiE99/LjPgKBj/kU0zsFugMFfArPyvwnKSoqzy8E1r8X1UeblmTphTJCqgFzHx8tI4zocEqNsPGAmn4YeKw3MrPcTbSvYwo81RAY8LIwOnSo2R+yUL54m/yv3J30AAA=",
+      "exif": {
+        "camera": "Olympus SH-1",
+        "aperture": 3,
+        "shutter": "1/800",
+        "iso": 125,
+        "focalLength": 5,
+        "date": "2026-03-05T10:59:19"
+      }
+    },
+    "p3050182.jpg": {
+      "source": "P3050182.jpg",
+      "width": 2400,
+      "height": 1800,
+      "color": "#726b79",
+      "lqip": "data:image/webp;base64,UklGRrwAAABXRUJQVlA4ILAAAACwBQCdASoYABIAPt1ipk4opaMiMBgIARAbiWYAnTMbPCAeFeMTI2XuU1Rwmj57bRfcBa51XwAA/d3Inbl7JS8A5/nJdjLJ2F1pIAoYUnIQ85zKAkv6maU4hlCBVfk7R3rQo+GkgZYJgY7ah1c23RIWlp94J17ZVO8X9bd7Bnnq432AjMBIpighfjCzBmwNxM9raCrarzqUQG/u0mh7rW7OiFg2AQc+k/dyklzJHLgAAA==",
+      "exif": {
+        "camera": "Olympus SH-1",
+        "aperture": 8.7,
+        "shutter": "1/200",
+        "iso": 125,
+        "focalLength": 5,
+        "date": "2026-03-05T11:47:59"
+      }
+    },
+    "p3050204.jpg": {
+      "source": "P3050204.jpg",
+      "width": 2400,
+      "height": 1800,
+      "color": "#666972",
+      "lqip": "data:image/webp;base64,UklGRqYAAABXRUJQVlA4IJoAAABwBQCdASoYABIAPt1YpE2opKMiMBgMARAbiUAX7Wq4OJZan7mRlHL4qhcA/v2Dr4a47U+AAP7zkJr4C94/KKWFrkT/Su1MmHrO7YQuYH07L7GYnu2U3ImRywhI8Wevg0Ai8LHLAlapbI30GDuwM8Yxk4ezCpZO5V+RYY35Z64Cp50ALjdyCibRhfBg+gq6sFI65WoXb/3gsAAA",
+      "exif": {
+        "camera": "Olympus SH-1",
+        "aperture": 8.7,
+        "shutter": "1/400",
+        "iso": 125,
+        "focalLength": 5,
+        "date": "2026-03-05T12:14:41"
+      }
+    }
+  }
+}

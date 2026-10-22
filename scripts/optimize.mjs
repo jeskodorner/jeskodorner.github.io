@@ -269,7 +269,7 @@ async function renderWebVersion(file, cfg) {
 
   let quality = cfg.jpegQuality;
   let buffer = await make(quality);
-  while (buffer.length / 1024 > cfg.targetMaxKB && quality > cfg.minJpegQuality) {
+  while (buffer.length / 1024 > cfg.targetMaxKB && quality - 4 >= cfg.minJpegQuality) {
     quality -= 4;
     buffer = await make(quality);
   }

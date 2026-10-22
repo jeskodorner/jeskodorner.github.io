@@ -1,0 +1,116 @@
+{
+  "images": {
+    "dsc01387.jpg": {
+      "source": "DSC01387.jpg",
+      "width": 2400,
+      "height": 1920,
+      "color": "#6f6b6a",
+      "lqip": "data:image/webp;base64,UklGRp4AAABXRUJQVlA4IJIAAADwBACdASoYABMAPtVYoEyoJSMiMAwBABqJZgC+SBhzxTs283fjmZP3chueU0l0UrAA/l1pHJid8Pn1mtXvu3schFk+Az7lxkobYJyktoW5HwDoTj+Xd3FiF19HDwagvft0Lt+y1VZVkm0hb8CqOu7DOv/eoNQz5MELF+vMzs+StLHnOXcPejmBV6AozhtBxFkIAA==",
+      "exif": {
+        "camera": "Sony ILCE-6000",
+        "lens": "Sony E PZ 16-50mm f/3.5-5.6 OSS",
+        "aperture": 3.5,
+        "shutter": "1/60",
+        "iso": 200,
+        "focalLength": 16,
+        "date": "2026-01-18T19:41:12"
+      }
+    },
+    "dsc01421.jpg": {
+      "source": "DSC01421.jpg",
+      "width": 2400,
+      "height": 1920,
+      "color": "#37282b",
+      "lqip": "data:image/webp;base64,UklGRpgAAABXRUJQVlA4IIwAAABQBQCdASoYABMAPt1orFCopaQiqAgBEBuJZADE5iMwFQJSW7IQ2XkAX78LmeITk1xddlAA/vV1HcNpxzbSa46BItSUyuDabBedsPjqKp9m+jj+zqmpVs3MRvxAmAfAPNThMpJAyNdBSxJEqloMtVd/46BYyu1MPTzyWf4Jz0oPZA2D4MhIciI1c/8QAA==",
+      "exif": {
+        "camera": "Sony ILCE-6000",
+        "lens": "Sony E PZ 16-50mm f/3.5-5.6 OSS",
+        "aperture": 3.5,
+        "shutter": "1/60",
+        "iso": 250,
+        "focalLength": 16,
+        "date": "2026-01-18T19:45:19"
+      }
+    },
+    "dsc01438.jpg": {
+      "source": "DSC01438.jpg",
+      "width": 2400,
+      "height": 1920,
+      "color": "#2e3034",
+      "lqip": "data:image/webp;base64,UklGRrIAAABXRUJQVlA4IKYAAADQBACdASoYABMAPt1mrFEopSQiqAgBEBuJYwC7ABEI83wZrtWu7+ssTX8JJsgwAAD+9W/HAwo9fY8th7bSmOLuoLC4wIR6PtHvM2hzFFIeyFwjadXI80TqvlwVLrosAKoa2VqHP8mUXx7Y7uMDnIT7LdlftsnUCbj54+WPPPZHRtibbyYDN6qPb0W3WRl4bUlhTpwmT/7iYy9W+hTnB6kDM+SOBAAA",
+      "exif": {
+        "camera": "Sony ILCE-6000",
+        "lens": "Sony E PZ 16-50mm f/3.5-5.6 OSS",
+        "aperture": 3.5,
+        "shutter": "1/60",
+        "iso": 320,
+        "focalLength": 16,
+        "date": "2026-01-18T19:46:50"
+      }
+    },
+    "dsc01443.jpg": {
+      "source": "DSC01443.jpg",
+      "width": 2400,
+      "height": 1920,
+      "color": "#3c1c21",
+      "lqip": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAADQBACdASoYABMAPtVao0yoJaMiMAwBABqJbACdMw6DAOXDnB1q9TIP5cPALWb3FAD+7ERR9a+Xk189RMkaj4GLMXEeWUU8xC+BZx6ZNCbfWsWl/pxzwZvKq8KKxQ2JMZrgBfcHLP9UHE0LCAshFy7PdLOasAxCYS2KqmtwgAA=",
+      "exif": {
+        "camera": "Sony ILCE-6000",
+        "lens": "Sony E PZ 16-50mm f/3.5-5.6 OSS",
+        "aperture": 3.5,
+        "shutter": "1/20",
+        "iso": 800,
+        "focalLength": 16,
+        "date": "2026-01-18T19:47:20"
+      }
+    },
+    "dsc01452.jpg": {
+      "source": "DSC01452.jpg",
+      "width": 2400,
+      "height": 1920,
+      "color": "#37303b",
+      "lqip": "data:image/webp;base64,UklGRq4AAABXRUJQVlA4IKIAAACwBACdASoYABMAPt1Wp0yopCOiMBgMARAbiWoAuwAQ8AA7Vv8CCbMtlnOvTUKAAP7zNPGMjUVy82soKcV5GphvxNG82srkn0ze2ILFZBufi0H7RvUxWZj9m9n10R4QfPqj634wCMmIYUevpGZCMHiOGEDPHMcvhkLSSEfgFeSKOAmZc15Yb0ONnzHY+XALovq+O4TxQR3kXJTcyDwKwY8gAAA=",
+      "exif": {
+        "camera": "Sony ILCE-6000",
+        "lens": "Sony E PZ 16-50mm f/3.5-5.6 OSS",
+        "aperture": 3.5,
+        "shutter": "1/60",
+        "iso": 200,
+        "focalLength": 16,
+        "date": "2026-01-18T19:48:30"
+      }
+    },
+    "dsc01454.jpg": {
+      "source": "DSC01454.jpg",
+      "width": 2400,
+      "height": 1920,
+      "color": "#47415a",
+      "lqip": "data:image/webp;base64,UklGRrYAAABXRUJQVlA4IKoAAACQBQCdASoYABMAPt1co00opSMiMBgMARAbiWwAw2aEeBgVLuRhOnDng00lK3omDLus5EfyAAD+9Ccg1SEshfHxi2Iy+oZegl/EZKXb2ATNTjFizZM7YMYqJzFJjgFFULaenOzlOCUX0e8PIXm9Q2i44s5DaiJ6e9UiJtax6/l+K9OMySsxA2KoYm5pefhTECOwRMez9PVt4nkJCz0mFMDNB93cSghhPQAAAA==",
+      "exif": {
+        "camera": "Sony ILCE-6000",
+        "lens": "Sony E PZ 16-50mm f/3.5-5.6 OSS",
+        "aperture": 3.5,
+        "shutter": "1/60",
+        "iso": 250,
+        "focalLength": 16,
+        "date": "2026-01-18T19:48:50"
+      }
+    },
+    "dsc01465.jpg": {
+      "source": "DSC01465.jpg",
+      "width": 1920,
+      "height": 2400,
+      "color": "#465058",
+      "lqip": "data:image/webp;base64,UklGRrgAAABXRUJQVlA4IKwAAACwBQCdASoTABgAPt1iqE4opaOiMBgIARAbiWYAv1kgAYGglrTjwC8KkaYIqZ6gOxOFYCzHsdAA/upCG3K5zCM5qphUTtSQzmF79cWUhHqWYxf5UkG32yNVCx8Ry2h4YFprLslIE3eIQvN9Ec9pH8j9SQ49OVy3LmGmHHMHgGj5MkP83C5V+ZoTXSv6wHKm5valguXRV90feyimnZRwTI124Olh/Xy4oTxFdGAA",
+      "exif": {
+        "camera": "Sony ILCE-6000",
+        "lens": "Sony E PZ 16-50mm f/3.5-5.6 OSS",
+        "aperture": 3.5,
+        "shutter": "1/60",
+        "iso": 400,
+        "focalLength": 16,
+        "date": "2026-01-18T19:50:15"
+      }
+    }
+  }
+}

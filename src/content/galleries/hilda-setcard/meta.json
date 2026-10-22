@@ -1,0 +1,84 @@
+{
+  "images": {
+    "hilda-setcard-gesicht.jpg": {
+      "source": "Hilda Setcard – Gesicht.jpg",
+      "width": 1600,
+      "height": 2400,
+      "color": "#926249",
+      "lqip": "data:image/webp;base64,UklGRpAAAABXRUJQVlA4IIQAAAAQBQCdASoQABgAPt1cpkyopSOiMAgBEBuJQBOmUI7k0DEKwJ3H+6pi3M+lAW/6L2JEAP7L+8PS27ri52NxOQCq/arIM8tXKugDB7PzQP6vjvD0hu0wHZH75muJHrm9SZ8ttJX57gYiLavhlIwyVterHNWV6MEoubuRPYnUZnWwwwaAAAA=",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 6.4,
+        "shutter": "1/1000",
+        "iso": 640,
+        "focalLength": 55,
+        "date": "2026-09-07T14:36:17"
+      }
+    },
+    "hilda-setcard-koerper-1.jpg": {
+      "source": "Hilda Setcard – Körper 1.jpg",
+      "width": 1600,
+      "height": 2400,
+      "color": "#3e332d",
+      "lqip": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAADQAwCdASoQABgAPt1cp0yopSOiMAgBEBuJQBOmUABWW/tqeja95gAA/p7UcCGHzaZDHiN42GunXbtJt7D1kjr0U6Y6eHk00RmX+Okgvdh+QWUZN+dPdw1gyuf9z6XAAAA=",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 5.6,
+        "shutter": "1/1000",
+        "iso": 640,
+        "focalLength": 55,
+        "date": "2026-09-07T14:29:47"
+      }
+    },
+    "hilda-setcard-oberkoerper-1.jpg": {
+      "source": "Hilda Setcard – Oberkörper 1.jpg",
+      "width": 1600,
+      "height": 2400,
+      "color": "#3a2e29",
+      "lqip": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAADwAwCdASoQABgAPt1cpkyopSOiMAgBEBuJYgCdMoMYADov53UOM4bAAP5xmGyeVkyTGaofFx5AbRRyw7f6774fL3YlyAGa8qT22yG2fVItzqGKrrcOx70nyDQ2qDnN4mYNn/TuAp4HnNzgAAA=",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 5.6,
+        "shutter": "1/1000",
+        "iso": 640,
+        "focalLength": 46,
+        "date": "2026-09-07T14:39:18"
+      }
+    },
+    "hilda-setcard-oberkoerper-2.jpg": {
+      "source": "Hilda Setcard – Oberkörper 2.jpg",
+      "width": 1600,
+      "height": 2400,
+      "color": "#4f3527",
+      "lqip": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAACQBACdASoQABgAPt1apkyopSOiMAgBEBuJZgCdMoRwACP+S3ypYCGtblfenAAA/hzqywVdYBYfsH6ul3AjKXdrde1GRSdmU8NKGpV6WCv8+7IA0V3HgAFxDpG4NauixRnXNmsYAb8CPswyRl4JXdkCpxSvD+AA",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 4.5,
+        "shutter": "1/1000",
+        "iso": 640,
+        "focalLength": 32,
+        "date": "2026-09-07T14:06:05"
+      }
+    },
+    "hilda-setcard-profil.jpg": {
+      "source": "Hilda Setcard – Profil.jpg",
+      "width": 1600,
+      "height": 2400,
+      "color": "#583727",
+      "lqip": "data:image/webp;base64,UklGRogAAABXRUJQVlA4IHwAAAAwBACdASoQABgAPt1cp00opSOiMAgBEBuJZgCdMoABcAyuBmVy4ONr75AA/hWtvMtjS4aLrw6oSaWKt2darVpPFVqQhj75X8vVihvc9WTfk7I21Y4gae5px3zDqs5kWKDQFGybW4BWaHLDbXzMrQkY5j5E8plwIVt+fgAA",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 5.6,
+        "shutter": "1/1000",
+        "iso": 640,
+        "focalLength": 37,
+        "date": "2026-09-07T14:32:47"
+      }
+    }
+  }
+}
