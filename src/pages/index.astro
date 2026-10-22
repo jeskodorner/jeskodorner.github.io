@@ -4,7 +4,7 @@ import { inlineMd, wordSpans } from '../lib/text';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Picture from '../components/Picture.astro';
 import ParallaxImage from '../components/ParallaxImage.astro';
-import Showcase, { type StageItem } from '../components/Showcase.astro';
+import Hanging, { type WorkItem } from '../components/Hanging.astro';
 import Icon from '../components/Icon.astro';
 import EmailLink from '../components/EmailLink.astro';
 import portrait from '../assets/portrait.jpg';
@@ -33,12 +33,10 @@ const jsonLd = {
 };
 
 // Ausgewählte Arbeiten: jede öffentliche Galerie einmal, mit ihrem Vorschaubild (Feld "cover", sonst das erste Bild)
-const stageItems: StageItem[] = galleries.map((g) => ({
+const works: WorkItem[] = galleries.map((g) => ({
   image: g.cover,
   href: g.url,
   title: g.title,
-  kicker: 'Galerie ansehen',
-  kickerHref: g.url,
   meta: [t.galleries.images(g.images.length), formatMonth(g.date), g.location].filter(Boolean).join(' · '),
   color: g.color,
 }));
@@ -140,7 +138,7 @@ const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : 
 
   <!-- Ausgewählte Arbeiten -->
   {
-    stageItems.length > 0 && (
+    works.length > 0 && (
       <section class="selected" aria-labelledby="sel-h">
         <div class="sec-head container container--wide">
           <h2 id="sel-h" class="display display-2 sec-title">
@@ -151,7 +149,9 @@ const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : 
             {t.home.allGalleries} ({galleries.length}) <span class="arrow" aria-hidden="true">→</span>
           </a>
         </div>
-        <Showcase items={stageItems} />
+        <div class="container container--wide">
+          <Hanging items={works} />
+        </div>
       </section>
     )
   }

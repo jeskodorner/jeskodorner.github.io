@@ -192,7 +192,7 @@ und festen Seitenverhältnissen, damit beim Laden nichts springt.
 | `date` | ja | `2026-10-22`. Die Übersicht sortiert danach, neueste zuerst. |
 | `location` | | Ort |
 | `description` | ja | 1–2 Sätze für Kachel, Suchmaschinen und Link-Vorschau |
-| `cover` | | Dateiname des Vorschaubilds. Es erscheint in der Galerie-Übersicht und auf der Startseite unter „Ausgewählte Arbeiten“ (jede Galerie einmal). Ohne Angabe wird das erste Bild genommen. |
+| `cover` | | Dateiname des Vorschaubilds. Es erscheint in der Galerie-Übersicht und auf der Startseite unter „Ausgewählte Arbeiten“ (jede Galerie einmal, unbeschnitten mit kleinem Schild und Link „Zum Album“). Ohne Angabe wird das erste Bild genommen. |
 | `layout` | | `showcase` (Standard, „Bühne“), `masonry` (Raster) oder `justified` (gleich hohe Reihen). Siehe unten. |
 | `visibility` | | `public` (Standard) oder `unlisted` |
 | `showExif` | | Aufnahmedaten zeigen (Standard `true`) |
@@ -446,7 +446,9 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 - **Jede Galerie hat eine eigene Farbe.** Die Farbe erscheint in der Übersicht, im Farbband oben auf der Galerieseite,
   im Fortschrittsbalken, und im Download-Kasten.
   Festlegen per `color: pink | blue | lime | orange | violet` in `index.md`. Ohne Angabe wechselt die Farbe automatisch reihum.
-- **Startseite:** Vollbild-Foto mit großem Namen, Leuchtmarker, zwei gerade Farbbänder, ein blauer Film-Bereich und ein Lime-Bereich für Kontakt.
+- **Startseite:** Vollbild-Foto mit großem Namen, Leuchtmarker, zwei gerade Farbbänder, „Ausgewählte Arbeiten“ als Hängung
+  (jedes Foto unbeschnitten an der weißen Wand, abwechselnd links/rechts, kleines Schild mit Link zum Album),
+  ein blauer Film-Bereich und ein Lime-Bereich für Kontakt.
 
 Kontraste nach WCAG 2.x:
 

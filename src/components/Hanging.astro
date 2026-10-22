@@ -1,0 +1,144 @@
+---
+/**
+ * „Hängung“ (Startseite): Jedes Foto hängt unbeschnitten in seinem Originalformat an der weißen Wand,
+ * mit viel Platz daneben und einem kleinen Schild mit Verweis auf sein Album.
+ *   Desktop: so groß, dass es ganz auf den Bildschirm passt; abwechselnd links und rechts, Schild daneben.
+ *   Handy:   volle Breite, Schild darunter.
+ */
+import type { GalleryImage, RoomColor } from '../lib/galleries';
+import Picture from './Picture.astro';
+
+export interface WorkItem {
+  image: GalleryImage;
+  /** Album, zu dem das Foto gehört */
+  href: string;
+  title: string;
+  meta?: string;
+  color?: RoomColor;
+}
+
+export interface Props {
+  items: WorkItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<ol class="hanging" role="list">
+  {
+    items.map((it) => {
+      const r = it.image.src.width / it.image.src.height;
+      return (
+        <li class:list={['work', { 'work--portrait': r < 1 }, it.color && `c-${it.color}`]} style={`--r:${r.toFixed(4)}`}>
+          <a class="work-media reveal" href={it.href} tabindex="-1">
+            <Picture
+              src={it.image.src}
+              alt={it.image.alt}
+              sizes={r < 1.2 ? '(min-width: 900px) 45vw, 100vw' : '(min-width: 900px) 62vw, 100vw'}
+              color={it.image.color}
+              lqip={it.image.lqip}
+              class="work-img"
+            />
+          </a>
+          <div class="work-label">
+            <p class="work-title">
+              <span class="work-dot" aria-hidden="true" />
+              {it.title}
+            </p>
+            {it.meta && <p class="work-meta">{it.meta}</p>}
+            <a class="work-link" href={it.href}>
+              Zum Album<span class="visually-hidden"> „{it.title}“</span> <span class="arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </li>
+      );
+    })
+  }
+</ol>
+
+<style>
+  .hanging {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: clamp(3.5rem, 2rem + 9vw, 11rem);
+    /* Höchstens so hoch, dass das ganze Foto auf den Bildschirm passt */
+    --work-h: max(20rem, calc(100svh - var(--header-h) - 7rem));
+  }
+  .work {
+    display: grid;
+    gap: 1rem;
+  }
+  .work-media {
+    display: block;
+    justify-self: start;
+  }
+  .work :global(.work-img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    box-shadow: var(--hang-shadow);
+  }
+
+  /* ---------- Schild ---------- */
+  .work-label {
+    display: grid;
+    gap: 0.25rem;
+    justify-items: start;
+    max-width: 20rem;
+  }
+  .work-title {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.3rem);
+    font-weight: 700;
+    line-height: 1.25;
+  }
+  .work-dot {
+    flex: none;
+    width: 0.7em;
+    height: 0.7em;
+    border-radius: 50%;
+    background: var(--c, var(--ink));
+  }
+  .work-meta {
+    font-size: var(--fs-xs);
+    color: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
+  }
+  .work-link {
+    margin-top: 0.35rem;
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  /* ---------- Desktop: Foto in voller Höhe, abwechselnd links/rechts, Schild unten daneben ---------- */
+  @media (min-width: 900px) {
+    .work {
+      display: flex;
+      align-items: flex-end;
+      gap: clamp(1.5rem, 3vw, 3.5rem);
+    }
+    .work:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+    .work:nth-child(even) .work-label {
+      justify-items: end;
+      text-align: right;
+    }
+    .work:nth-child(even) .work-title {
+      flex-direction: row-reverse;
+    }
+    .work-media {
+      flex: none;
+      /* Breite aus dem Seitenverhältnis: nie höher als der Bildschirm, nie breiter als 62 % */
+      width: min(62vw, calc(var(--work-h) * var(--r)));
+    }
+    .work-label {
+      flex: 0 1 20rem;
+      padding-bottom: 0.25rem;
+    }
+  }
+</style>
