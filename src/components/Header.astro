@@ -91,9 +91,11 @@ const isCurrent = (match: string[]) => match.some((m) => path.startsWith(m));
     justify-content: space-between;
     gap: 1.5rem;
   }
+  /* Punkt und Großbuchstaben gleich hoch: Der Punkt ist 1cap (Höhe der Großbuchstaben)
+     und steht mit seiner Unterkante auf der Schriftlinie (align-items: baseline). */
   .logo {
     display: inline-flex;
-    align-items: center;
+    align-items: baseline;
     gap: 0.5rem;
     text-decoration: none;
     white-space: nowrap;
@@ -101,7 +103,7 @@ const isCurrent = (match: string[]) => match.some((m) => path.startsWith(m));
     font-weight: 900;
     font-stretch: 75%;
     text-transform: uppercase;
-    font-size: clamp(1.35rem, 1.1rem + 0.9vw, 1.9rem);
+    font-size: clamp(1.6rem, 1.3rem + 1.07vw, 2.25rem);
     line-height: 1;
     letter-spacing: -0.01em;
   }
@@ -109,13 +111,21 @@ const isCurrent = (match: string[]) => match.some((m) => path.startsWith(m));
     color: var(--ink);
   }
   .logo-dot {
-    width: 0.8em;
-    height: 0.8em;
+    flex-shrink: 0;
+    width: 1cap;
+    height: 1cap;
     border-radius: 50%;
     background: var(--pink);
     transition:
       background-color 0.3s,
       scale 0.4s var(--pop);
+  }
+  /* Ältere Browser ohne cap-Einheit: Großbuchstabenhöhe von Anybody */
+  @supports not (height: 1cap) {
+    .logo-dot {
+      width: 0.675em;
+      height: 0.675em;
+    }
   }
   .logo:hover .logo-dot {
     background: var(--lime);
