@@ -147,7 +147,7 @@ html:not(.js) .js-only {
   display: none !important;
 }
 
-/* Farbraum: Hintergrund in der Raumfarbe, Text in der passenden Kontrastfarbe */
+/* Farbfläche: Hintergrund in der Galeriefarbe, Text in der passenden Kontrastfarbe */
 .room {
   background: var(--c, var(--lime));
   color: var(--on-c, var(--ink));

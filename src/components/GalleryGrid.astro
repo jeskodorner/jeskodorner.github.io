@@ -71,9 +71,6 @@ const stageItems: StageItem[] = items.map((it) => ({
             loading={it.img.index <= 3 ? 'eager' : 'lazy'}
             fetchpriority={it.img.index === 1 ? 'high' : undefined}
           />
-          <span class="num label" aria-hidden="true">
-            {String(it.img.index).padStart(2, '0')}
-          </span>
         </a>
       ))}
     </div>
@@ -102,31 +99,10 @@ const stageItems: StageItem[] = items.map((it) => ({
       transform 0.9s var(--ease),
       filter 0.6s;
   }
-  .num {
-    position: absolute;
-    left: 0.6rem;
-    bottom: 0.5rem;
-    padding: 0.2rem 0.45rem;
-    color: #fbf6ef;
-    background: rgb(var(--scrim) / 0.72);
-    opacity: 0;
-    transform: translateY(0.4rem);
-    transition:
-      opacity 0.3s,
-      transform 0.4s var(--ease);
-  }
   @media (hover: hover) {
     .ph:hover :global(img) {
       transform: scale(1.035);
     }
-    .ph:hover .num {
-      opacity: 1;
-      transform: none;
-    }
-  }
-  .ph:focus-visible .num {
-    opacity: 1;
-    transform: none;
   }
 
   /* Masonry: CSS-Spalten, kein JavaScript */

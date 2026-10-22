@@ -6,7 +6,7 @@ date: 2026-09-07
 description: "Setcard-Fotos von Hilda vor einer rostigen Wand."
 # showcase = Bühne (Vollbild) · masonry = Raster · justified = gleich hohe Reihen
 layout: showcase
-# Raumfarbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
+# Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
 # color: pink
 visibility: public
 showExif: true

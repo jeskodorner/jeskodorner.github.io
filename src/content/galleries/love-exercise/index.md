@@ -6,7 +6,7 @@ date: 2026-01-15
 description: "Set-Fotografie bei „Love Exercise“: Szenen und Blicke hinter die Kamera."
 # showcase = Bühne (Vollbild) · masonry = Raster · justified = gleich hohe Reihen
 layout: showcase
-# Raumfarbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
+# Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
 # color: pink
 visibility: public
 showExif: true

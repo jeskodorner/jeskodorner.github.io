@@ -15,7 +15,7 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
     <h1 class="display display-1 head-title">
       <span class="stretch">{t.galleries.title}</span>
     </h1>
-    <p class="lead muted rise">{t.galleries.intro} <span class="pill c-lime">{galleries.length} Räume</span></p>
+    <p class="lead muted rise">{t.galleries.intro} <span class="pill c-lime">{galleries.length} {galleries.length === 1 ? 'Galerie' : 'Galerien'}</span></p>
   </section>
 
   {galleries.length === 0 && <p class="container">{t.galleries.empty}</p>}
@@ -38,7 +38,6 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
               fetchpriority={i === 0 ? 'high' : undefined}
             />
             <span class="room-info room">
-              <span class="pill room-nr">Raum {String(i + 1).padStart(2, '0')}</span>
               <span class="display display-2 name" style={`view-transition-name: gt-${g.slug}`}>
                 {g.title}
               </span>
@@ -49,7 +48,7 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
               </span>
               <span class="desc">{g.description}</span>
               <span class="go">
-                Raum betreten <span class="arrow" aria-hidden="true">→</span>
+                Galerie ansehen <span class="arrow" aria-hidden="true">→</span>
               </span>
             </span>
           </a>
@@ -101,7 +100,7 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
     padding: clamp(1.75rem, 4vw, 4.5rem) var(--gutter);
   }
 
-  /* Desktop: jeder Raum füllt den Bildschirm – eine Hälfte Bild, eine Hälfte Farbe */
+  /* Desktop: jede Galerie füllt den Bildschirm – eine Hälfte Bild, eine Hälfte Farbe */
   @media (min-width: 900px) {
     .room-link {
       grid-template-columns: 55fr 45fr;
@@ -132,14 +131,6 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
     .room-link:hover :global(.px picture) {
       scale: 1.035;
     }
-  }
-  .room-nr {
-    background: var(--ink);
-    color: var(--c);
-  }
-  .c-blue .room-nr {
-    background: var(--wall);
-    color: var(--blue);
   }
   .desc {
     font-size: var(--fs-lead);

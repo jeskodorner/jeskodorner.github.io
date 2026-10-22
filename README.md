@@ -81,7 +81,7 @@ photos.config.json          ← Einstellungen für die Bildverarbeitung (Größe
 .github/workflows/deploy.yml← automatisches Deployment
 ```
 
-**Warum eigenes CSS statt Tailwind?** Die Seite lebt von wenigen, gezielt gesetzten Design-Werten: Wandweiß, Schwarz und fünf Raumfarben. CSS Custom Properties bilden das direkt ab: Eine Klasse wie `c-pink` färbt einen ganzen Raum ein, das HTML bleibt lesbar, und Astro begrenzt die Styles pro Komponente. Tailwind würde vor allem bei vielen generischen Oberflächen helfen, die es hier nicht gibt.
+**Warum eigenes CSS statt Tailwind?** Die Seite lebt von wenigen, gezielt gesetzten Design-Werten: Wandweiß, Schwarz und fünf Galeriefarben. CSS Custom Properties bilden das direkt ab: Eine Klasse wie `c-pink` färbt eine ganze Fläche ein, das HTML bleibt lesbar, und Astro begrenzt die Styles pro Komponente. Tailwind würde vor allem bei vielen generischen Oberflächen helfen, die es hier nicht gibt.
 
 ---
 
@@ -224,7 +224,7 @@ Unterhalb des Kopfbereichs kannst du optional einen längeren Text in Markdown s
 
 | Layout | Wirkung | Gut für |
 |---|---|---|
-| `showcase` („Bühne“, Standard) | Jedes Foto füllt den Bildschirm. Querformate laufen randlos über den ganzen Bildschirm, mit Werkschild als weißer Karte. Hoch- und Quadratformate bekommen eine Bildschirmhälfte, die andere Hälfte ist die Raumfarbe mit großer Nummer und Werkschild, abwechselnd links und rechts. Beim Scrollen rastet die Galerie sanft Bild für Bild ein. Auf dem Handy erscheinen die Bilder in voller Breite und unbeschnitten. | Serien und Portfolio |
+| `showcase` („Bühne“, Standard) | Jedes Foto füllt den Bildschirm. Querformate laufen randlos über den ganzen Bildschirm, mit Werkschild als weißer Karte. Hoch- und Quadratformate stehen unbeschnitten in voller Höhe mittig, links und rechts füllt die Galeriefarbe den Bildschirm. Hat ein Hochformat eine Bildunterschrift (`caption`), wird der Bildschirm geteilt: eine Hälfte Bild, eine Hälfte Galeriefarbe mit der Bildunterschrift in großer Schrift. Beim Scrollen rastet die Galerie sanft Bild für Bild ein. Auf dem Handy erscheinen die Bilder in voller Breite und unbeschnitten. | Serien und Portfolio |
 | `masonry` | kompaktes Raster in Spalten. Die Bilder laufen spaltenweise von oben nach unten. | viele Bilder, z. B. Kundengalerien |
 | `justified` | gleich hohe Reihen, ruhig und dicht | viele Querformate |
 
@@ -326,7 +326,7 @@ Alle Effekte sind reines CSS, ohne JavaScript, und laufen flüssig:
 - **Leuchtmarker:** `*markierte*` Wörter bekommen beim Hereinscrollen einen Lime- bzw. Pink-Marker. Der Satz unter dem Hero leuchtet Wort für Wort auf.
 - **Farbbänder:** Zwei gerade Bänder in Pink und Lime ziehen gegenläufig durch.
 - **Hero:** Das Vollbild-Foto bleibt stehen, der Name zieht sich beim Scrollen in die Breite.
-- **Weitere Effekte:** Das Hero-Foto hebt beim Scrollen ab, Texte steigen auf, der Fortschrittsbalken in Galerien zeigt die Raumfarbe, und der Header wird kompakt.
+- **Weitere Effekte:** Das Hero-Foto hebt beim Scrollen ab, Texte steigen auf, der Fortschrittsbalken in Galerien zeigt die Galeriefarbe, und der Header wird kompakt.
 
 **Browser:** Chrome, Edge, Brave und Safari (ab Version 26) zeigen die Scroll-Bewegung. Firefox hatte diese Technik
 nach meinem Stand noch nicht standardmäßig aktiviert. Dort erscheint die Seite vollständig, nur ohne Scroll-Bewegung.
@@ -434,15 +434,15 @@ Danach weiter mit Schritt 4 und 5 von oben.
 
 ## 11. Design: Farben und Schriften
 
-Look „White Cube“: weiße Galeriewände, schwarze Schrift, knallige Farbräume. Definiert in `src/styles/tokens.css`.
+Look „White Cube“: weiße Galeriewände, schwarze Schrift, knallige Farbflächen. Definiert in `src/styles/tokens.css`.
 Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 
-- **Fotos füllen den Bildschirm**: Querformate randlos, Hochformate neben einer Hälfte in Raumfarbe. Dazu ein Werkschild mit Nummer.
+- **Fotos füllen den Bildschirm**: Querformate randlos, Hochformate neben einer Hälfte in Galeriefarbe. Dazu ein Werkschild.
   Nichts ist schräg gestellt. Mutig sind Farben und Schrift, nicht die Anordnung.
-- **Jede Galerie ist ein Raum** mit eigener Farbe. Die Farbe erscheint in der Übersicht, im Farbband oben auf der Galerieseite,
-  im Fortschrittsbalken, in den Bildnummern und im Download-Kasten.
+- **Jede Galerie hat eine eigene Farbe.** Die Farbe erscheint in der Übersicht, im Farbband oben auf der Galerieseite,
+  im Fortschrittsbalken, und im Download-Kasten.
   Festlegen per `color: pink | blue | lime | orange | violet` in `index.md`. Ohne Angabe wechselt die Farbe automatisch reihum.
-- **Startseite:** Vollbild-Foto mit großem Namen, Leuchtmarker, zwei gerade Farbbänder, ein blauer Film-Raum und ein Lime-Raum für Kontakt.
+- **Startseite:** Vollbild-Foto mit großem Namen, Leuchtmarker, zwei gerade Farbbänder, ein blauer Film-Bereich und ein Lime-Bereich für Kontakt.
 
 Kontraste nach WCAG 2.x:
 

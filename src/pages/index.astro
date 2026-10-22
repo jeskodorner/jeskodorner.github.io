@@ -99,7 +99,7 @@ const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : 
           {
             hero && (
               <a class="hero-credit" href={hero.image.pageUrl}>
-                Nº 01 — {hero.image.caption ?? hero.gallery.title}
+                {hero.image.caption ?? hero.gallery.title} <span aria-hidden="true">→</span>
               </a>
             )
           }
@@ -156,7 +156,7 @@ const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : 
     )
   }
 
-  <!-- Film: blauer Raum -->
+  <!-- Film: blaue Fläche -->
   {
     films.length > 0 && (
       <section class="film-room room c-blue" aria-labelledby="film-h">
@@ -196,7 +196,7 @@ const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : 
     </div>
   </section>
 
-  <!-- Kontakt: Lime-Raum -->
+  <!-- Kontakt: Lime-Fläche -->
   <section class="cta room c-lime" aria-labelledby="cta-h">
     <div class="container container--wide">
       <h2 id="cta-h" class="display cta-title">
@@ -378,7 +378,7 @@ const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : 
     padding-top: var(--section);
   }
 
-  /* ---------- Film-Raum ---------- */
+  /* ---------- Film-Bereich ---------- */
   .film-room {
     margin-top: var(--section);
   }
@@ -447,7 +447,7 @@ const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : 
     max-width: 22ch;
   }
 
-  /* ---------- Kontakt-Raum ---------- */
+  /* ---------- Kontakt-Bereich ---------- */
   .cta {
     padding-block: clamp(4rem, 9vw, 9rem);
     overflow: hidden;

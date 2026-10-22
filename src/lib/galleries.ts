@@ -46,7 +46,7 @@ export type RoomColor = (typeof ROOM_COLORS)[number];
 
 export interface Gallery {
   id: string;
-  /** Raumfarbe (CSS-Klasse c-<farbe>) */
+  /** Galeriefarbe (CSS-Klasse c-<farbe>) */
   color: RoomColor;
   folder: string;
   slug: string;
@@ -168,7 +168,7 @@ async function load(): Promise<Gallery[]> {
   });
 
   galleries.sort((a, b) => b.date.getTime() - a.date.getTime());
-  // Galerien ohne eigene Farbe bekommen reihum eine Raumfarbe (in Reihenfolge der Übersicht)
+  // Galerien ohne eigene Farbe bekommen reihum eine Galeriefarbe (in Reihenfolge der Übersicht)
   galleries.forEach((g, i) => {
     if (!g.entry.data.color) g.color = ROOM_COLORS[i % ROOM_COLORS.length]!;
   });

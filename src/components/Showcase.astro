@@ -2,8 +2,9 @@
 /**
  * „Bühne“: Jedes Foto füllt den Bildschirm.
  *   Querformat        → Vollbild, Werkschild als weiße Karte unten links
- *   Hoch-/Quadratformat → Bildschirm geteilt: eine Hälfte Bild, eine Hälfte Raumfarbe mit Werkschild
- *                       (abwechselnd links/rechts, damit Hochformate nicht stark beschnitten werden)
+ *   Hoch-/Quadratformat mit Titel → Bildschirm geteilt: eine Hälfte Bild, eine Hälfte Galeriefarbe mit großem Titel
+ *                       (abwechselnd links/rechts)
+ *   Hoch-/Quadratformat ohne Titel → Bild unbeschnitten in voller Höhe mittig, Galeriefarbe füllt links und rechts
  * Auf dem Handy: Bilder in voller Breite im Originalformat (kein Zuschnitt), Werkschild darunter.
  * Ausschnitt bei Vollbild: Feld "focus" pro Bild (z. B. "50% 30%").
  */
@@ -17,7 +18,7 @@ export interface StageItem {
   kicker?: string;
   kickerHref?: string;
   meta?: string;
-  /** Raumfarbe für Farbhälfte und Nummer */
+  /** Galeriefarbe für die Farbhälfte */
   color?: RoomColor;
   /** Zusätzliche Attribute am Bild-Link (Lightbox-Daten, id) */
   attrs?: Record<string, string | number | undefined>;
@@ -37,14 +38,15 @@ export interface Props {
 }
 
 const { items, lightbox = false, eagerFirst = false, snap = false, id, count, color = 'pink' } = Astro.props;
-const total = String(items.length).padStart(2, '0');
 
 let splits = 0;
 const staged = items.map((item, i) => {
   const r = item.image.src.width / item.image.src.height;
-  let variant: 'full' | 'split-left' | 'split-right';
+  let variant: 'full' | 'center' | 'split-left' | 'split-right';
   if (r >= 1.2) {
     variant = 'full';
+  } else if (!item.title) {
+    variant = 'center';
   } else {
     variant = splits % 2 === 0 ? 'split-left' : 'split-right';
     splits++;
@@ -52,8 +54,7 @@ const staged = items.map((item, i) => {
   return {
     ...item,
     variant,
-    sizes: variant === 'full' ? '100vw' : '(min-width: 900px) 50vw, 100vw',
-    nr: String(i + 1).padStart(2, '0'),
+    sizes: variant === 'full' ? '100vw' : variant === 'center' ? '(min-width: 900px) 60vw, 100vw' : '(min-width: 900px) 50vw, 100vw',
     color: item.color ?? color,
   };
 });
@@ -69,7 +70,7 @@ const staged = items.map((item, i) => {
 >
   {
     staged.map((s, i) => (
-      <li class:list={['stage', `stage--${s.variant}`, `c-${s.color}`]}>
+      <li class:list={['stage', `stage--${s.variant}`, `c-${s.color}`]} style={`--r:${(s.image.src.width / s.image.src.height).toFixed(4)}`}>
         <ParallaxImage
           src={s.image.src}
           alt={s.image.alt}
@@ -84,10 +85,6 @@ const staged = items.map((item, i) => {
           attrs={s.attrs}
         />
         <div class="placard">
-          <p class="pl-nr" aria-hidden="true">
-            <span class="pl-nr-big">{s.nr}</span>
-            <span class="pl-nr-total">/{total}</span>
-          </p>
           <div class="pl-text">
             {s.title && <p class="pl-title">{s.title}</p>}
             {s.kicker &&
@@ -133,32 +130,6 @@ const staged = items.map((item, i) => {
     align-items: flex-end;
     gap: 1rem;
     padding: clamp(1rem, 3vw, 1.75rem) var(--gutter);
-  }
-  .pl-nr {
-    display: flex;
-    align-items: flex-start;
-    font-family: var(--font-display);
-    font-weight: 860;
-    font-stretch: 62%;
-    line-height: 0.8;
-    flex: none;
-  }
-  .pl-nr-big {
-    font-size: clamp(3rem, 2rem + 4vw, 6rem);
-    color: var(--c);
-  }
-  .c-lime .pl-nr-big,
-  .c-orange .pl-nr-big,
-  .c-violet .pl-nr-big {
-    /* helle Raumfarben sind als Schrift auf Weiß zu schwach → Nummer in Schwarz mit Farbunterstrich */
-    color: var(--ink);
-    text-decoration: underline var(--c) 0.12em;
-    text-underline-offset: 0.08em;
-  }
-  .pl-nr-total {
-    font-size: 1rem;
-    margin-left: 0.2em;
-    color: var(--ink-soft);
   }
   .pl-text {
     display: grid;
@@ -214,8 +185,28 @@ const staged = items.map((item, i) => {
       border-radius: var(--radius);
       box-shadow: 0 10px 40px -12px rgb(0 0 0 / 0.35);
     }
-    .stage--full .pl-nr-big {
-      font-size: clamp(2.6rem, 1.8rem + 2vw, 4rem);
+
+    /* Hochformat ohne Titel: unbeschnitten mittig, Galeriefarbe füllt den Rest */
+    .stage--center {
+      background: var(--c);
+      color: var(--on-c);
+      justify-items: center;
+    }
+    .stage--center :global(.stage-frame) {
+      aspect-ratio: var(--r) !important;
+      width: auto;
+      height: 100%;
+      max-width: 100%;
+    }
+    .stage--center .placard {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      padding: var(--gutter);
+    }
+    .stage--center .pl-meta,
+    .stage--center a.pl-kicker {
+      color: inherit;
     }
 
     /* Geteilter Bildschirm: Bild + Farbhälfte */
@@ -241,22 +232,31 @@ const staged = items.map((item, i) => {
     .stage--split-right .placard {
       grid-column: 1;
     }
-    .stage--split-left .pl-nr-big,
-    .stage--split-right .pl-nr-big {
-      font-size: clamp(6rem, 2rem + 9vw, 14rem);
-      color: inherit;
-      text-decoration: none;
-    }
-    .stage--split-left .pl-nr-total,
-    .stage--split-right .pl-nr-total,
     .stage--split-left .pl-meta,
     .stage--split-right .pl-meta {
       color: inherit;
     }
     .stage--split-left .pl-title,
     .stage--split-right .pl-title {
-      font-size: clamp(1.5rem, 1rem + 1.5vw, 2.6rem);
-      line-height: 1.1;
+      font-family: var(--font-display);
+      font-weight: 860;
+      font-stretch: 62%;
+      text-transform: uppercase;
+      font-size: clamp(3rem, 1rem + 4.5vw, 7.5rem);
+      line-height: 0.88;
+      letter-spacing: -0.01em;
+      padding-top: 0.08em;
+    }
+    .stage--split-left .pl-text,
+    .stage--split-right .pl-text {
+      max-width: 36rem;
+      gap: 0.75rem;
+    }
+    .stage--split-left .pl-kicker,
+    .stage--split-left .pl-meta,
+    .stage--split-right .pl-kicker,
+    .stage--split-right .pl-meta {
+      font-size: var(--fs-sm);
     }
     .stage--split-left a.pl-kicker,
     .stage--split-right a.pl-kicker {

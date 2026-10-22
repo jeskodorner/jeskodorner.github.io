@@ -1,5 +1,5 @@
 /*
- * Design-Tokens – „White Cube“: weiße Galeriewände, schwarze Schrift, knallige Farbräume.
+ * Design-Tokens – „White Cube“: weiße Galeriewände, schwarze Schrift, knallige Farbflächen.
  *
  * Kontraste (WCAG 2.x):
  *   Text #0B0B0B auf Weiß 19,6:1 · Nebentext #5C5C5C 6,7:1 · Links/Blau #2B3BFF 6,6:1
@@ -24,7 +24,7 @@
   --line: rgb(11 11 11 / 0.12);
   --line-strong: #0b0b0b;
 
-  /* Pop-Farben (Galerie-Räume) und ihre Textfarben */
+  /* Pop-Farben (Galerien) und ihre Textfarben */
   --pink: #ff3d8b;
   --on-pink: #0b0b0b;
   --blue: #2b3bff;
@@ -80,7 +80,7 @@
   }
 }
 
-/* Raumfarben: Klasse c-pink, c-blue … setzt --c (Farbe) und --on-c (passende Textfarbe) */
+/* Galeriefarben: Klasse c-pink, c-blue … setzt --c (Farbe) und --on-c (passende Textfarbe) */
 .c-pink {
   --c: var(--pink);
   --on-c: var(--on-pink);
