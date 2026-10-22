@@ -85,6 +85,8 @@ let cache: Promise<Gallery[]> | undefined;
 
 /** Alle Galerien (öffentlich + unlisted), neueste zuerst. */
 export function getAllGalleries(): Promise<Gallery[]> {
+  // Im Dev-Server nicht zwischenspeichern, damit Änderungen an index.md sofort sichtbar sind.
+  if (!import.meta.env.PROD) return load();
   cache ??= load();
   return cache;
 }
