@@ -1,0 +1,15 @@
+---
+import ImagePage from '../../../components/ImagePage.astro';
+import { getAllGalleries, type Gallery, type GalleryImage } from '../../../lib/galleries';
+
+export async function getStaticPaths() {
+  const galleries = (await getAllGalleries()).filter((g) => g.isUnlisted);
+  return galleries.flatMap((gallery) =>
+    gallery.images.map((image) => ({ params: { slug: gallery.slug, n: String(image.index) }, props: { gallery, image } })),
+  );
+}
+
+const { gallery, image } = Astro.props as { gallery: Gallery; image: GalleryImage };
+---
+
+<ImagePage gallery={gallery} image={image} />

@@ -1,0 +1,33 @@
+---
+import LegalPage from '../components/LegalPage.astro';
+import EmailLink from '../components/EmailLink.astro';
+---
+
+<LegalPage title="Impressum" description="Impressum und Anbieterkennzeichnung.">
+  <h2>Angaben gemäß § 5 DDG</h2>
+  <p>
+    <span class="ph">Vorname Nachname</span><br />
+    <span class="ph">Straße Hausnummer</span><br />
+    <span class="ph">PLZ Ort</span><br />
+    Deutschland
+  </p>
+
+  <h2>Kontakt</h2>
+  <p>E-Mail: <EmailLink icon={false} /></p>
+  <p><span class="ph">Telefon (optional)</span></p>
+
+  <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
+  <p><span class="ph">Vorname Nachname, Anschrift wie oben</span></p>
+
+  <h2>Umsatzsteuer</h2>
+  <p><span class="ph">Nur falls vorhanden: USt-IdNr. bzw. Hinweis auf Kleinunternehmerregelung</span></p>
+
+  <h2>Urheberrecht</h2>
+  <p>
+    Alle Fotos, Filme und Texte auf dieser Website sind urheberrechtlich geschützt (© Jesko Dorner). Jede Nutzung außerhalb der
+    Grenzen des Urheberrechts bedarf der vorherigen schriftlichen Zustimmung.
+  </p>
+
+  <h2>Haftung für Links</h2>
+  <p><span class="ph">Platzhalter – Text rechtlich prüfen lassen.</span></p>
+</LegalPage>

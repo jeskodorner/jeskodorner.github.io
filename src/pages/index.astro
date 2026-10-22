@@ -1,0 +1,560 @@
+---
+import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
+import { inlineMd } from '../lib/text';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Picture from '../components/Picture.astro';
+import Icon from '../components/Icon.astro';
+import EmailLink from '../components/EmailLink.astro';
+import portrait from '../assets/portrait.jpg';
+import { site } from '../config/site';
+import { useTranslations } from '../i18n';
+import { getFeaturedImages, getHeroImages, getPublicGalleries } from '../lib/galleries';
+import { ogImage } from '../lib/images';
+
+const t = useTranslations();
+const text: Partial<CollectionEntry<'pages'>['data']> = (await getEntry('pages', 'startseite'))?.data ?? {};
+const heroes = await getHeroImages();
+const slideshow = site.hero.mode === 'slideshow' && heroes.length > 1;
+const heroList = slideshow ? heroes : heroes.slice(0, 1);
+const featured = await getFeaturedImages(9);
+const galleries = await getPublicGalleries();
+const films = (await getCollection('films')).sort((a, b) => a.data.order - b.data.order || b.data.year - a.data.year);
+const og = heroes[0] ? await ogImage(heroes[0].image.src) : undefined;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: site.name,
+  url: site.url,
+  jobTitle: site.jobTitle,
+  sameAs: [site.instagram.url],
+};
+
+// Raster-Muster für „Ausgewählte Arbeiten“ (12-Spalten-Raster, wiederholt sich)
+const pattern = ['w7 tall', 'w5', 'w5', 'w4', 'w8', 'w6', 'w6 tall', 'w4', 'w8'];
+const duration = heroList.length * site.hero.secondsPerImage;
+---
+
+<BaseLayout overlayHeader image={og} jsonLd={jsonLd}>
+  <!-- Hero -->
+  <section class="hero" aria-label={site.name}>
+    <div class:list={['hero-media', { 'is-slideshow': slideshow }]} style={`--n:${heroList.length};--dur:${duration}s`}>
+      {
+        heroList.map((h, i) => (
+          <div class="slide" style={`--i:${i}`}>
+            <Picture
+              src={h.image.src}
+              alt={i === 0 ? h.image.alt : ''}
+              sizes="100vw"
+              color={h.image.color}
+              lqip={h.image.lqip}
+              loading={i === 0 ? 'eager' : 'lazy'}
+              fetchpriority={i === 0 ? 'high' : undefined}
+              class="hero-img"
+            />
+          </div>
+        ))
+      }
+    </div>
+    <div class="hero-shade" aria-hidden="true"></div>
+    <div class="hero-content container container--wide">
+      {text.kicker && <p class="label hero-kicker">{text.kicker}</p>}
+      <h1 class="display hero-title">
+        <span>Jesko</span>
+        <span>Dorner</span>
+      </h1>
+      <div class="hero-bottom">
+        <p class="hero-claim">{site.claim}</p>
+        <a class="btn hero-btn" href="/galerien/">
+          {t.home.cta} <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+    {
+      heroes[0] && (
+        <a class="hero-credit label" href={heroes[0].image.pageUrl}>
+          {heroes[0].gallery.title}
+          {heroes[0].gallery.location && ` — ${heroes[0].gallery.location}`}
+        </a>
+      )
+    }
+  </section>
+
+  <!-- Statement -->
+  {
+    (text.statement || text.note) && (
+      <section class="statement container container--wide section">
+        {text.statement && <p class="display display-2 reveal" set:html={inlineMd(text.statement)} />}
+        {text.note && <p class="statement-note muted">{text.note}</p>}
+      </section>
+    )
+  }
+
+  <!-- Ausgewählte Arbeiten -->
+  {
+    featured.length > 0 && (
+      <section class="selected container container--wide" aria-labelledby="sel-h">
+        <div class="sec-head">
+          <h2 id="sel-h" class="display display-2">
+            {t.home.selected}
+            <sup class="count">({String(featured.length).padStart(2, '0')})</sup>
+          </h2>
+          <a class="more label" href="/galerien/">
+            {t.home.allGalleries} ({galleries.length}) <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+        <ul class="mosaic" role="list">
+          {featured.map(({ gallery, image }, i) => (
+            <li class:list={['m-item reveal', ...(pattern[i % pattern.length] ?? 'w6').split(' ')]}>
+              <a href={image.pageUrl}>
+                <span class="m-media">
+                  <Picture
+                    src={image.src}
+                    alt={image.alt}
+                    sizes="(min-width: 900px) 60vw, 100vw"
+                    color={image.color}
+                    lqip={image.lqip}
+                  />
+                </span>
+                <span class="m-cap">
+                  <span class="label m-nr">Nº {String(i + 1).padStart(2, '0')}</span>
+                  <span class="m-title">{image.caption ?? gallery.title}</span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <!-- Film -->
+  {
+    films.length > 0 && (
+      <section class="film-teaser container container--wide section" aria-labelledby="film-h">
+        <div class="sec-head">
+          <h2 id="film-h" class="display display-2">
+            {t.home.filmTeaser.split(' ').slice(0, -1).join(' ')} <em>{t.home.filmTeaser.split(' ').slice(-1)}</em>
+          </h2>
+          <a class="more label" href="/film/">
+            {t.home.filmMore} <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </div>
+        <ul class="film-list" role="list">
+          {films.slice(0, 3).map((f) => (
+            <li class="reveal">
+              <a href={`/film/#${f.id}`} class="film-row">
+                <span class="display display-3">{f.data.title}</span>
+                <span class="label muted">{f.data.roles.join(' & ')}</span>
+                <span class="label muted">
+                  {f.data.format} · {f.data.year}
+                </span>
+                <span class="arrow" aria-hidden="true">
+                  →
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <!-- Über mich -->
+  <section class="about container container--wide section" aria-labelledby="about-h">
+    <div class="about-img reveal">
+      <Picture src={portrait} alt="Porträt von Jesko Dorner" sizes="(min-width: 900px) 40vw, 100vw" />
+    </div>
+    <div class="about-text">
+      <h2 id="about-h" class="label muted">{t.home.aboutTeaser}</h2>
+      {text.aboutTeaser && <p class="lead" set:html={inlineMd(text.aboutTeaser)} />}
+      <a class="btn" href="/ueber-mich/">{t.home.aboutMore} <span class="arrow" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <!-- Kontakt -->
+  <section class="cta" aria-labelledby="cta-h">
+    <div class="container container--wide">
+      <h2 id="cta-h" class="display mega cta-title">
+        Lass uns <em>reden.</em>
+      </h2>
+      <div class="cta-row">
+        <p class="lead">{t.home.contactText}</p>
+        <div class="cta-actions">
+          <EmailLink class="btn btn--solid cta-btn" text="E-Mail schreiben" />
+          <a class="btn cta-btn-ghost" href={site.instagram.url} rel="me noopener" target="_blank">
+            <Icon name="instagram" /> @{site.instagram.handle}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: flex-end;
+    color: #fbf6ef;
+    background: #1c130e;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .hero-media,
+  .slide {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+  }
+  .hero-media :global(picture),
+  .hero-media :global(.hero-img) {
+    width: 100%;
+    height: 100%;
+  }
+  .hero-media :global(.hero-img) {
+    object-fit: cover;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-media :global(.hero-img) {
+      animation: hero-zoom 18s var(--ease) both;
+    }
+    .is-slideshow .slide {
+      opacity: 0;
+      animation: fade var(--dur) infinite;
+      animation-delay: calc(var(--i) * var(--dur) / var(--n));
+    }
+    .is-slideshow .slide:first-child {
+      opacity: 1;
+    }
+  }
+  .is-slideshow .slide:not(:first-child) {
+    opacity: 0;
+  }
+  @keyframes hero-zoom {
+    from {
+      transform: scale(1.08);
+    }
+  }
+  @keyframes fade {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    4%,
+    calc(100% / var(--n)) {
+      opacity: 1;
+    }
+  }
+  .hero-shade {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      linear-gradient(to top, rgb(var(--scrim) / 0.82) 0%, rgb(var(--scrim) / 0.35) 45%, transparent 70%),
+      linear-gradient(to bottom, rgb(var(--scrim) / 0.45), transparent 22%);
+  }
+  .hero-content {
+    padding-top: calc(var(--header-h) + 3rem);
+    padding-bottom: clamp(2rem, 5vw, 4rem);
+  }
+  .hero-kicker {
+    color: #f3e3cf;
+  }
+  .hero-title {
+    display: flex;
+    flex-direction: column;
+    font-size: clamp(5.5rem, 1rem + 21vw, 26rem);
+    line-height: 0.78;
+    margin-top: 0.75rem;
+    margin-left: -0.04em;
+  }
+  .hero-title span:last-child {
+    color: #f09566;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-title span {
+      animation: rise 1.1s var(--ease) both;
+    }
+    .hero-title span:last-child {
+      animation-delay: 0.12s;
+    }
+    .hero-bottom {
+      animation: rise 1.1s 0.3s var(--ease) both;
+    }
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(0.35em);
+    }
+  }
+  .hero-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.25rem 2rem;
+    margin-top: clamp(1.25rem, 3vw, 2.25rem);
+    padding-top: clamp(1rem, 2vw, 1.5rem);
+    border-top: 1.5px solid rgb(251 246 239 / 0.5);
+  }
+  .hero-claim {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 330;
+    font-size: clamp(1.4rem, 1rem + 1.6vw, 2.6rem);
+    line-height: 1.15;
+    max-width: 22ch;
+  }
+  .hero-btn {
+    color: #fbf6ef;
+  }
+  .hero-btn:hover {
+    background: #fbf6ef;
+    border-color: #fbf6ef;
+    color: #1c130e;
+  }
+  .hero-credit {
+    position: absolute;
+    right: var(--gutter);
+    top: calc(var(--header-h) + 1.25rem);
+    color: #f3e3cf;
+    text-decoration: none;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    display: none;
+  }
+  @media (min-width: 900px) {
+    .hero-credit {
+      display: block;
+    }
+  }
+
+  /* ---------- Statement ---------- */
+  .statement p.display {
+    max-width: 18ch;
+  }
+  .statement-note {
+    margin-top: clamp(1.5rem, 3vw, 2.5rem);
+    max-width: 48ch;
+    margin-left: auto;
+    font-size: var(--fs-lead);
+    font-family: var(--font-serif);
+    font-weight: 340;
+    line-height: 1.4;
+  }
+
+  /* ---------- Abschnittsköpfe ---------- */
+  .sec-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    padding-bottom: clamp(1.25rem, 3vw, 2rem);
+    margin-bottom: clamp(1.5rem, 4vw, 3rem);
+    border-bottom: 2px solid var(--line-strong);
+  }
+  .count {
+    font-size: 0.3em;
+    vertical-align: top;
+    color: var(--accent-vivid);
+    margin-left: 0.15em;
+  }
+  .more {
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  /* ---------- Mosaik ---------- */
+  .mosaic {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.25rem, 3vw, 2.5rem) var(--gap);
+  }
+  .m-item:nth-child(3n + 1) {
+    grid-column: span 2;
+  }
+  @media (min-width: 900px) {
+    .mosaic {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      align-items: start;
+    }
+    .m-item:nth-child(3n + 1) {
+      grid-column: auto;
+    }
+    .w4 {
+      grid-column: span 4;
+    }
+    .w5 {
+      grid-column: span 5;
+    }
+    .w6 {
+      grid-column: span 6;
+    }
+    .w7 {
+      grid-column: span 7;
+    }
+    .w8 {
+      grid-column: span 8;
+    }
+    .m-item:nth-child(even) {
+      margin-top: clamp(2rem, 6vw, 7rem);
+    }
+  }
+  .m-item a {
+    display: grid;
+    gap: 0.75rem;
+    text-decoration: none;
+  }
+  .m-media {
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    background: var(--sand);
+  }
+  .tall .m-media {
+    aspect-ratio: 4 / 5;
+  }
+  .m-media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 1.1s var(--ease);
+  }
+  .m-item a:hover .m-media :global(img) {
+    transform: scale(1.05);
+  }
+  .m-cap {
+    display: flex;
+    gap: 0.9rem;
+    align-items: baseline;
+  }
+  .m-nr {
+    color: var(--accent);
+  }
+  .m-title {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 340;
+    font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.35rem);
+  }
+  .m-item a:hover .m-title {
+    color: var(--accent);
+  }
+
+  /* ---------- Film-Teaser ---------- */
+  .film-list {
+    list-style: none;
+    padding: 0;
+  }
+  .film-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.4rem 1.5rem;
+    align-items: baseline;
+    padding-block: clamp(1rem, 2.5vw, 1.75rem);
+    border-bottom: 1px solid var(--line);
+    text-decoration: none;
+  }
+  .film-row .arrow {
+    font-size: 1.5rem;
+    grid-row: 1;
+    grid-column: 2;
+  }
+  @media (min-width: 760px) {
+    .film-row {
+      grid-template-columns: 1.4fr 0.8fr 0.8fr auto;
+    }
+    .film-row .arrow {
+      grid-column: auto;
+    }
+  }
+  .film-row:hover .display {
+    color: var(--accent);
+  }
+  .film-row:hover .arrow {
+    transform: translateX(0.4rem);
+  }
+
+  /* ---------- Über mich ---------- */
+  .about {
+    display: grid;
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+  }
+  @media (min-width: 900px) {
+    .about {
+      grid-template-columns: 5fr 7fr;
+    }
+  }
+  .about-img {
+    max-width: 34rem;
+  }
+  .about-img :global(img) {
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+  .about-text {
+    display: grid;
+    gap: 1.5rem;
+    justify-items: start;
+  }
+  .about-text .lead {
+    font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.75rem);
+    line-height: 1.2;
+    max-width: 24ch;
+  }
+
+  /* ---------- Kontakt-CTA ---------- */
+  .cta {
+    margin-top: var(--section);
+    padding-block: clamp(4rem, 9vw, 9rem);
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+  .cta-title {
+    font-size: clamp(4.5rem, 1rem + 15vw, 19rem);
+  }
+  .cta-title em {
+    color: inherit;
+  }
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1.5rem 3rem;
+    margin-top: clamp(1.5rem, 4vw, 3rem);
+    padding-top: 1.5rem;
+    border-top: 2px solid currentColor;
+  }
+  .cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .cta :global(.cta-btn) {
+    background: var(--on-accent);
+    border-color: var(--on-accent);
+    color: var(--accent);
+  }
+  .cta :global(.cta-btn:hover) {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper);
+  }
+  .cta-btn-ghost {
+    color: var(--on-accent);
+  }
+  .cta-btn-ghost:hover {
+    background: var(--on-accent);
+    border-color: var(--on-accent);
+    color: var(--accent);
+  }
+</style>

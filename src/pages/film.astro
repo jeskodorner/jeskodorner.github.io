@@ -1,0 +1,135 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Picture from '../components/Picture.astro';
+import Icon from '../components/Icon.astro';
+import { useTranslations } from '../i18n';
+
+const t = useTranslations();
+const films = (await getCollection('films')).sort((a, b) => a.data.order - b.data.order || b.data.year - a.data.year);
+const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (await render(f)).Content })));
+---
+
+<BaseLayout title={t.film.title} description={`${t.film.title}: ${t.film.intro}`}>
+  <section class="container container--wide head">
+    <h1 class="display display-1">{t.film.title}<sup class="count">({String(films.length).padStart(2, '0')})</sup></h1>
+    <p class="lead muted">{t.film.intro}</p>
+  </section>
+
+  <section class="container container--wide">
+    {films.length === 0 && <p>{t.film.empty}</p>}
+    <ol class="films" role="list">
+      {
+        rendered.map(({ film, Content }, i) => (
+          <li class="film reveal" id={film.id}>
+            <div class="still">
+              <Picture src={film.data.still} alt={film.data.stillAlt} sizes="(min-width: 1000px) 60vw, 100vw" loading={i === 0 ? 'eager' : 'lazy'} />
+              <span class="year display" aria-hidden="true">{film.data.year}</span>
+            </div>
+            <div class="info">
+              <p class="label roles">{film.data.roles.join(' · ')}</p>
+              <h2 class="display display-2">{film.data.title}</h2>
+              <p class="label muted meta-row">
+                {film.data.format && <span>{film.data.format}</span>}
+                {film.data.runtime && <span>{film.data.runtime}</span>}
+                <span>{film.data.year}</span>
+              </p>
+              {film.data.director && <p class="muted credit">Regie: {film.data.director}</p>}
+              <div class="prose">
+                <Content />
+              </div>
+              {film.data.festivals.length > 0 && (
+                <ul class="festivals" role="list">
+                  {film.data.festivals.map((fest) => (
+                    <li class="label">{fest}</li>
+                  ))}
+                </ul>
+              )}
+              {film.data.link && (
+                <a class="btn" href={film.data.link} target="_blank" rel="noopener noreferrer">
+                  {film.data.linkLabel ?? t.film.watch} <Icon name="arrow-up-right" />
+                  <span class="visually-hidden">(externe Seite, neuer Tab)</span>
+                </a>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+</BaseLayout>
+
+<style>
+  .head {
+    padding-top: clamp(2.5rem, 6vw, 5rem);
+    padding-bottom: clamp(2rem, 5vw, 4rem);
+  }
+  .count {
+    font-size: 0.28em;
+    vertical-align: top;
+    margin-left: 0.15em;
+    color: var(--accent-vivid);
+  }
+  .lead {
+    margin-top: 1rem;
+  }
+  .films {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: clamp(3.5rem, 8vw, 8rem);
+  }
+  .film {
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 3rem);
+    padding-top: clamp(1.5rem, 3vw, 2.5rem);
+    border-top: 2px solid var(--line-strong);
+    scroll-margin-top: calc(var(--header-h) + 1rem);
+  }
+  @media (min-width: 1000px) {
+    .film {
+      grid-template-columns: 3fr 2fr;
+      align-items: start;
+    }
+    .film:nth-child(even) .still {
+      order: 2;
+    }
+  }
+  .still {
+    position: relative;
+    background: #120d0a;
+  }
+  .year {
+    position: absolute;
+    left: 0.75rem;
+    bottom: 0.25rem;
+    font-size: clamp(3rem, 2rem + 4vw, 7rem);
+    color: #fbf6ef;
+    mix-blend-mode: difference;
+    pointer-events: none;
+    line-height: 0.8;
+  }
+  .info {
+    display: grid;
+    gap: 1rem;
+    justify-items: start;
+  }
+  .roles {
+    color: var(--accent);
+  }
+  .credit {
+    font-size: var(--fs-sm);
+  }
+  .festivals {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .festivals li {
+    padding: 0.4rem 0.7rem;
+    border: 1.5px solid var(--line-strong);
+    border-radius: 999px;
+  }
+</style>

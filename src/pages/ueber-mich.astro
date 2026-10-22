@@ -1,0 +1,159 @@
+---
+import { getEntry, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Picture from '../components/Picture.astro';
+import EmailLink from '../components/EmailLink.astro';
+import portrait from '../assets/portrait.jpg';
+import { site } from '../config/site';
+import { useTranslations } from '../i18n';
+import { ogImage } from '../lib/images';
+import { inlineMd } from '../lib/text';
+
+const t = useTranslations();
+// Texte: src/content/pages/ueber-mich.md · Porträt: src/assets/portrait.jpg
+const entry = await getEntry('pages', 'ueber-mich');
+const data = entry?.data;
+const Content = entry ? (await render(entry)).Content : null;
+const stations = data?.stations ?? [];
+const gear = data?.gear ?? [];
+const portraitAlt = data?.portraitAlt ?? `Porträt von ${site.name}`;
+const og = await ogImage(portrait);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  mainEntity: { '@type': 'Person', name: site.name, url: site.url, jobTitle: site.jobTitle, sameAs: [site.instagram.url] },
+};
+---
+
+<BaseLayout
+  title={t.about.title}
+  description={data?.lead ?? `Über ${site.name}`}
+  image={{ ...og, alt: portraitAlt }}
+  type="profile"
+  jsonLd={jsonLd}
+>
+  <section class="container container--wide head">
+    <h1 class="display display-1">Über <em>mich</em></h1>
+  </section>
+
+  <section class="container container--wide intro">
+    <div class="portrait">
+      <Picture src={portrait} alt={portraitAlt} sizes="(min-width: 900px) 40vw, 100vw" loading="eager" fetchpriority="high" />
+    </div>
+    <div class="text">
+      {data?.lead && <p class="lead" set:html={inlineMd(data.lead)} />}
+      {
+        Content && (
+          <div class="prose">
+            <Content />
+          </div>
+        )
+      }
+      <p class="actions">
+        <EmailLink class="btn btn--solid" text="Schreib mir" />
+        <a class="btn" href="/galerien/">{t.home.cta}</a>
+      </p>
+    </div>
+  </section>
+
+  {
+    stations.length > 0 && (
+      <section class="container container--wide section stations" aria-labelledby="st-h">
+        <h2 id="st-h" class="display display-2">{t.about.stations}</h2>
+        <ol role="list">
+          {stations.map((s) => (
+            <li class="reveal">
+              <span class="display yr">{s.year}</span>
+              <span class="st-title">{s.title}</span>
+              {s.text && <span class="muted">{s.text}</span>}
+            </li>
+          ))}
+        </ol>
+      </section>
+    )
+  }
+
+  {
+    gear.length > 0 && (
+      <section class="container container--wide gear" aria-labelledby="gear-h">
+        <h2 id="gear-h" class="label muted">{t.about.gear}</h2>
+        <ul role="list">
+          {gear.map((g) => (
+            <li>{g}</li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</BaseLayout>
+
+<style>
+  .head {
+    padding-top: clamp(2.5rem, 6vw, 5rem);
+    padding-bottom: clamp(2rem, 4vw, 3.5rem);
+  }
+  .intro {
+    display: grid;
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+  @media (min-width: 900px) {
+    .intro {
+      grid-template-columns: 5fr 7fr;
+      align-items: start;
+    }
+    .portrait {
+      position: sticky;
+      top: calc(var(--header-h) + 1.5rem);
+    }
+  }
+  .portrait :global(img) {
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+  .text {
+    display: grid;
+    gap: 2rem;
+    align-content: start;
+  }
+  .text .lead {
+    font-size: clamp(1.6rem, 1.1rem + 1.8vw, 3rem);
+    line-height: 1.18;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .stations ol {
+    list-style: none;
+    padding: 0;
+    margin-top: clamp(1.5rem, 4vw, 3rem);
+    border-top: 2px solid var(--line-strong);
+  }
+  .stations li {
+    display: grid;
+    gap: 0.25rem 2rem;
+    padding-block: 1.25rem;
+    border-bottom: 1px solid var(--line);
+  }
+  @media (min-width: 760px) {
+    .stations li {
+      grid-template-columns: 8rem 1fr 1fr;
+      align-items: baseline;
+    }
+  }
+  .yr {
+    font-size: 2.25rem;
+    color: var(--accent-vivid);
+    line-height: 1;
+  }
+  .st-title {
+    font-weight: 700;
+    font-size: 1.15em;
+  }
+  .gear ul {
+    margin-top: 0.75rem;
+    columns: 2 16rem;
+  }
+</style>

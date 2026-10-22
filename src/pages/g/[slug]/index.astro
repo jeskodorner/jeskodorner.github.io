@@ -1,0 +1,13 @@
+---
+import GalleryPage from '../../../components/GalleryPage.astro';
+import { getAllGalleries, type Gallery } from '../../../lib/galleries';
+
+export async function getStaticPaths() {
+  const galleries = (await getAllGalleries()).filter((g) => g.isUnlisted);
+  return galleries.map((gallery) => ({ params: { slug: gallery.slug }, props: { gallery } }));
+}
+
+const { gallery } = Astro.props as { gallery: Gallery };
+---
+
+<GalleryPage gallery={gallery} />

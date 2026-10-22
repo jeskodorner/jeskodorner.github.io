@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EmailLink from '../components/EmailLink.astro';
+import ContactForm from '../components/ContactForm.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../config/site';
+import { useTranslations } from '../i18n';
+
+const t = useTranslations();
+---
+
+<BaseLayout title={t.contact.title} description={`Kontakt zu ${site.name}: E-Mail und Instagram.`}>
+  <section class="container container--wide head">
+    <h1 class="display display-1">{t.contact.title}</h1>
+    <p class="lead muted">{t.contact.intro}</p>
+  </section>
+
+  <section class="container container--wide grid">
+    <dl class="channels">
+      <div id="email">
+        <dt class="label muted">{t.contact.email}</dt>
+        <dd><EmailLink class="channel" icon={false} subject="Anfrage über die Website" /></dd>
+      </div>
+      <div>
+        <dt class="label muted">{t.contact.instagram}</dt>
+        <dd>
+          <a class="channel" href={site.instagram.url} rel="me noopener" target="_blank">
+            @{site.instagram.handle} <Icon name="arrow-up-right" size="0.6em" />
+          </a>
+        </dd>
+      </div>
+    </dl>
+    <ContactForm />
+  </section>
+</BaseLayout>
+
+<style>
+  .head {
+    padding-top: clamp(2.5rem, 6vw, 5rem);
+    padding-bottom: clamp(2rem, 4vw, 3.5rem);
+  }
+  .lead {
+    margin-top: 1rem;
+    max-width: 40ch;
+  }
+  .grid {
+    display: grid;
+    gap: clamp(2.5rem, 6vw, 6rem);
+    padding-top: clamp(1.5rem, 3vw, 2.5rem);
+    border-top: 2px solid var(--line-strong);
+  }
+  @media (min-width: 1000px) {
+    .grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .channels {
+    display: grid;
+    gap: 2rem;
+    align-content: start;
+  }
+  .channels dd {
+    margin-top: 0.4rem;
+  }
+  .channels :global(.channel) {
+    font-family: var(--font-display);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: clamp(2rem, 1rem + 4.5vw, 5rem);
+    line-height: 0.95;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.2em;
+  }
+  .channels :global(.channel:hover) {
+    color: var(--accent);
+  }
+</style>
