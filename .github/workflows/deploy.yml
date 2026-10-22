@@ -1,0 +1,70 @@
+# Baut die Website bei jedem Push auf "main" und veröffentlicht sie auf GitHub Pages.
+# Einmalig nötig: GitHub → Repo → Settings → Pages → Build and deployment → Source: "GitHub Actions"
+name: Deploy auf GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # manuell starten: Actions → "Deploy auf GitHub Pages" → Run workflow
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Nur ein Deployment gleichzeitig; laufende Deployments werden nicht abgebrochen.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code auschecken
+        uses: actions/checkout@v7
+
+      - name: Node.js einrichten
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - name: Abhängigkeiten installieren
+        run: npm ci
+
+      # Bereits erzeugte AVIF/WebP-Varianten wiederverwenden – spart bei vielen Bildern viele Minuten.
+      - name: Bild-Cache wiederherstellen
+        uses: actions/cache@v6
+        with:
+          path: node_modules/.astro/assets
+          key: astro-images-${{ hashFiles('src/content/**/*.jpg', 'src/content/**/*.jpeg', 'src/content/**/*.png', 'src/content/**/*.webp', 'src/assets/**', 'src/lib/images.ts') }}
+          restore-keys: astro-images-
+
+      - name: Typen und Inhalte prüfen
+        run: npm run check
+
+      - name: Website bauen
+        run: npm run build
+
+      - name: Links und Unlisted-Regeln prüfen
+        run: npm run check-links
+
+      - name: Pages konfigurieren
+        uses: actions/configure-pages@v6
+
+      - name: Build hochladen
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Auf GitHub Pages veröffentlichen
+        id: deployment
+        uses: actions/deploy-pages@v5

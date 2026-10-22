@@ -157,10 +157,10 @@ const allImages = await sizeOf(galleriesRoot);
 console.log(`\n${c.bold('Fertig.')} ${totalNew} erzeugt, ${totalSkipped} unverändert übersprungen.`);
 console.log(
   c.dim(
-    `Web-Versionen im Repo: ${(allImages / 1024 / 1024).toFixed(1)} MB. Beim Build entstehen daraus AVIF/WebP in mehreren Größen (grob ×2–2,5).`,
+    `Web-Versionen im Repo: ${(allImages / 1024 / 1024).toFixed(1)} MB. Beim Build entstehen daraus AVIF/WebP in mehreren Größen (grob ×2–3, echter Wert: npm run check-links).`,
   ),
 );
-if (allImages > 380 * 1024 * 1024) {
+if (allImages > 330 * 1024 * 1024) {
   console.log(c.yellow('Achtung: Die Bilder nähern sich dem 1-GB-Limit von GitHub Pages (inkl. erzeugter Größen). Siehe README.'));
 }
 if (missingAlt.length) {
