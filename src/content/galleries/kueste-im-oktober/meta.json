@@ -1,0 +1,164 @@
+{
+  "images": {
+    "kueste-01.jpg": {
+      "source": "kueste-01.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#70504a",
+      "lqip": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAADQAwCdASoYABAAPt1gp00opaOiMAgBEBuJYgCdACHcVHUne7hU7I4A/tq+sYPU3vmnBHOIwSa+Kwg1RqmEYtOTV1V3/ECG8zDRGoA+XApl1fgdhlKxYlxDOAA=",
+      "exif": {
+        "camera": "Fujifilm X-T5",
+        "lens": "XF35mmF1.4 R",
+        "aperture": 1.4,
+        "shutter": "1/500",
+        "iso": 200,
+        "focalLength": 35,
+        "date": "2026-10-04T17:10:00"
+      }
+    },
+    "kueste-02.jpg": {
+      "source": "kueste-02.jpg",
+      "width": 1600,
+      "height": 2400,
+      "color": "#5f4940",
+      "lqip": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAACwAwCdASoQABgAPt1ep00opSOiMAgBEBuJZAC7ACHWvej/MocbAAD+6TtVK+pXyWESQ8i+xjOhc9hSZPE0yC09tc/tfH50MDpoAA==",
+      "exif": {
+        "camera": "Sony ILCE-7M4",
+        "lens": "FE 24-70mm F2.8 GM II",
+        "aperture": 2.8,
+        "shutter": "1/60",
+        "iso": 3200,
+        "focalLength": 50,
+        "date": "2026-10-04T18:13:00"
+      }
+    },
+    "kueste-03.jpg": {
+      "source": "kueste-03.jpg",
+      "width": 1920,
+      "height": 2400,
+      "color": "#816855",
+      "lqip": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAACQBACdASoTABgAPt1YpkyopSOisBgMARAbiUAVgAIdxrKFgPGlo9lZsAuxgAAA/sAo8CiHielNOe5kY7lgMn/OmUzR3si9SEP8orid3mpgciNBjVdWcCP0u4unaJcgsEOGJrgA",
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF85mm F2 MACRO IS STM",
+        "aperture": 2,
+        "shutter": "1/500",
+        "iso": 800,
+        "focalLength": 85,
+        "date": "2026-10-04T19:16:00"
+      }
+    },
+    "kueste-04.jpg": {
+      "source": "kueste-04.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#a3a19d",
+      "lqip": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAABQAwCdASoYABAALqVut1ujKKioiICkSygFp0Idmjx4mooLIADN7WD3YdXdIpUMJratn0McllFqmUVAAHw/ylnbOEyAAA==",
+      "exif": {
+        "camera": "Fujifilm X-T5",
+        "lens": "XF35mmF1.4 R",
+        "aperture": 1.4,
+        "shutter": "1/30",
+        "iso": 100,
+        "focalLength": 35,
+        "date": "2026-10-04T20:19:00"
+      }
+    },
+    "kueste-05.jpg": {
+      "source": "kueste-05.jpg",
+      "width": 2400,
+      "height": 1350,
+      "color": "#66625f",
+      "lqip": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAAAwAgCdASoYAA0AAwBSJZQAAucQk95lwcfhAAD+5Gamay58y7sV5znHU2JkqlD4FM9xAuHDO68uHCHljwAAAA==",
+      "exif": {
+        "camera": "Sony ILCE-7M4",
+        "lens": "FE 24-70mm F2.8 GM II",
+        "aperture": 2.8,
+        "shutter": "1/60",
+        "iso": 100,
+        "focalLength": 50,
+        "date": "2026-10-04T21:22:00"
+      }
+    },
+    "kueste-06.jpg": {
+      "source": "kueste-06.jpg",
+      "width": 1600,
+      "height": 2400,
+      "color": "#4d3b37",
+      "lqip": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAACwAwCdASoQABgAPt1cp0yopSOiMAgBEBuJQBdgBDrTmiyt0MaqwAD+6TtaAPspayYRBOlzjlueIl6jNkAkWiaZBSsIbaKLW2LEWJYAAAA=",
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF85mm F2 MACRO IS STM",
+        "aperture": 2,
+        "shutter": "1/60",
+        "iso": 400,
+        "focalLength": 85,
+        "date": "2026-10-04T17:25:00"
+      }
+    },
+    "kueste-07.jpg": {
+      "source": "kueste-07.jpg",
+      "width": 2400,
+      "height": 2400,
+      "color": "#78554c",
+      "lqip": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAACQBACdASoYABgAPt1ap0yopSOiMBgMARAbiUAWHYIda9+y7BK/vQ8ShSqifwAA/uk6zYWSiJC16oDAd7wjdl8MpjuiaZBae2rzNfJHAH0x/5rNqfzKTI31ntkbgZYNTfln6oAA",
+      "exif": {
+        "camera": "Fujifilm X-T5",
+        "lens": "XF35mmF1.4 R",
+        "aperture": 1.4,
+        "shutter": "1/500",
+        "iso": 800,
+        "focalLength": 35,
+        "date": "2026-10-04T18:28:00"
+      }
+    },
+    "kueste-08.jpg": {
+      "source": "kueste-08.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#5c5956",
+      "lqip": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAABwAwCdASoYABAALqVut1ujKKioiICkSygFp0IdxqhITQmUnkIA/uld5utD63OTzvAl2F5cfE80CYRACDRw4fGdJ8KcCa6YnSAAAA==",
+      "exif": {
+        "camera": "Sony ILCE-7M4",
+        "lens": "FE 24-70mm F2.8 GM II",
+        "aperture": 2.8,
+        "shutter": "1/125",
+        "iso": 400,
+        "focalLength": 50,
+        "date": "2026-10-04T19:31:00"
+      }
+    },
+    "kueste-09.jpg": {
+      "source": "kueste-09.jpg",
+      "width": 1920,
+      "height": 2400,
+      "color": "#908b86",
+      "lqip": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAACwBACdASoTABgAPt1cp0yopSOiMBgMARAbiWcAxvQQ8OhCNMxV9U/P2aphX/rAAPYs7R5jf/HoHoooW/KKZ+04FkEqRsItQZzB9Iba+jlSUPBTNudoQPrdEOiukwn35MAAAA==",
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF85mm F2 MACRO IS STM",
+        "aperture": 2,
+        "shutter": "1/250",
+        "iso": 400,
+        "focalLength": 85,
+        "date": "2026-10-04T20:34:00"
+      }
+    },
+    "kueste-10.jpg": {
+      "source": "kueste-10.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#625f5b",
+      "lqip": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAACQAwCdASoYABAALqVut1ujKKioiICkSzgGJsIdxUZScG5h3zVgAP7sVcNXy4UFAE3+bsS89oJxhl+Uz9LyuywHMgZwMte2EygAAA==",
+      "exif": {
+        "camera": "Fujifilm X-T5",
+        "lens": "XF35mmF1.4 R",
+        "aperture": 1.4,
+        "shutter": "1/30",
+        "iso": 100,
+        "focalLength": 35,
+        "date": "2026-10-04T21:37:00"
+      }
+    }
+  }
+}

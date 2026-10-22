@@ -1,0 +1,132 @@
+{
+  "images": {
+    "sommerfest-01.jpg": {
+      "source": "sommerfest-01.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#674735",
+      "lqip": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAABQBACdASoYABAAPt1cpkyopSOiMAgBEBuJYwCdACHh0eZt7s5jqrHWf4OAAP7r7iwuHyYy+tDlZI3Wojr50CSX7egdZQCnMKudjVUcWFHhiIN7P6tlX/BZBtf7AkZv5aEddietliVVZMLqogIAmS4gHgoVAAAA",
+      "exif": {
+        "camera": "Fujifilm X-T5",
+        "lens": "XF35mmF1.4 R",
+        "aperture": 1.4,
+        "shutter": "1/250",
+        "iso": 100,
+        "focalLength": 35,
+        "date": "2026-08-22T17:10:00"
+      }
+    },
+    "sommerfest-02.jpg": {
+      "source": "sommerfest-02.jpg",
+      "width": 1600,
+      "height": 2400,
+      "color": "#35231a",
+      "lqip": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAADwAwCdASoQABgAPt1apkyopSOiMAgBEBuJYgCdMoC4AAZYG1K6oPeAAP7p/dhIqdSHjcEBbXcDenYQh4uoTkYm9eJhtWR9xf9wFBNqFnwm+VnTTgUzK3vYfID2Ce6ndeq6hrpOkjLE3vwA",
+      "exif": {
+        "camera": "Sony ILCE-7M4",
+        "lens": "FE 24-70mm F2.8 GM II",
+        "aperture": 2.8,
+        "shutter": "1/30",
+        "iso": 200,
+        "focalLength": 50,
+        "date": "2026-08-22T18:13:00"
+      }
+    },
+    "sommerfest-03.jpg": {
+      "source": "sommerfest-03.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#56392b",
+      "lqip": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAAAwBACdASoYABAAPt1cpkyopSOiMAgBEBuJQBOmUGYwBmCGRB5Mzff5/AAA/u7eAuuNAQqEVqWv9AWHpUHMFACkDsr4k3ehPak8Jbzt5WkE3ee70BI0dEF6C+0biLVkMspS6/GBSjRJqO2Dqn4DJ8kKA4gAAA==",
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF85mm F2 MACRO IS STM",
+        "aperture": 2,
+        "shutter": "1/60",
+        "iso": 1600,
+        "focalLength": 85,
+        "date": "2026-08-22T19:16:00"
+      }
+    },
+    "sommerfest-04.jpg": {
+      "source": "sommerfest-04.jpg",
+      "width": 1920,
+      "height": 2400,
+      "color": "#54372a",
+      "lqip": "data:image/webp;base64,UklGRqAAAABXRUJQVlA4IJQAAAAQBQCdASoTABgAPt1gp04opaOiKA1REBuJYwCdM0xBRSPUhMq/KtAVCnfKCE2Jc1LAAP7cmSjSAOLYoAwkVtcCjw/c1C4KL8zREKDrKcoJJsHcKrtQQYV9DU5QyDdnkOJV6b3lrKas8MIe85yc5BlsULu4AvGZCY950WJpwkY1+dj8bAwIaPxT3vv2711tTn5D4AAA",
+      "exif": {
+        "camera": "Fujifilm X-T5",
+        "lens": "XF35mmF1.4 R",
+        "aperture": 1.4,
+        "shutter": "1/60",
+        "iso": 100,
+        "focalLength": 35,
+        "date": "2026-08-22T20:19:00"
+      }
+    },
+    "sommerfest-05.jpg": {
+      "source": "sommerfest-05.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#4f3125",
+      "lqip": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAACQBACdASoYABAAPt1apkyopSOiMAgBEBuJQBOmUGSxiM+2TdHUKbrdF64IWVwA/uy8294fs0DkMhyfOrIRb/nV7Ch0x9/8DkpFePIRoX+RCdOUcgvPNDzhVn1CPSmLMFyP2wGtVOpdGOm4qkDoxuIVyfSgEAAA",
+      "exif": {
+        "camera": "Sony ILCE-7M4",
+        "lens": "FE 24-70mm F2.8 GM II",
+        "aperture": 2.8,
+        "shutter": "1/60",
+        "iso": 800,
+        "focalLength": 50,
+        "date": "2026-08-22T21:22:00"
+      }
+    },
+    "sommerfest-06.jpg": {
+      "source": "sommerfest-06.jpg",
+      "width": 1600,
+      "height": 2400,
+      "color": "#39251b",
+      "lqip": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAADwAwCdASoQABgAPt1apkyopSOiMAgBEBuJQBOmUI4ABRDnSWRXvM2IAP7pWGVVPk3a/YrBUYwSR1iAq4QzaUHOThkTnYFuQr53TOpA55wVK6OrXOJ3qtpxHNWjy9JXLnSNsDgFkhU9YrjsLKkAAA==",
+      "exif": {
+        "camera": "Canon EOS R6m2",
+        "lens": "RF85mm F2 MACRO IS STM",
+        "aperture": 2,
+        "shutter": "1/30",
+        "iso": 1600,
+        "focalLength": 85,
+        "date": "2026-08-22T17:25:00"
+      }
+    },
+    "sommerfest-07.jpg": {
+      "source": "sommerfest-07.jpg",
+      "width": 2400,
+      "height": 1350,
+      "color": "#614131",
+      "lqip": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAAAQBACdASoYAA0APt1apkyopSOiMAgBEBuJQBOmUABNarZX4dY13K1OAAD+zFmtzjwXdu7DZwmEI/phJN6zuG22NXTu+i+iZ86s737RPsy7nrwiJWkz9//R3niyEi1np1hj5XIX3qLvZ86mWR0cS6DA5bBwAA==",
+      "exif": {
+        "camera": "Fujifilm X-T5",
+        "lens": "XF35mmF1.4 R",
+        "aperture": 1.4,
+        "shutter": "1/250",
+        "iso": 1600,
+        "focalLength": 35,
+        "date": "2026-08-22T18:28:00"
+      }
+    },
+    "sommerfest-08.jpg": {
+      "source": "sommerfest-08.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#5e3d2d",
+      "lqip": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAACQBACdASoYABAAPt1cpkyopSOiMAgBEBuJYwCdACP6y4Z5t/hhQRX7sl7clIAA/tql+Sky3SyqgChaab+xPUKpUqP0byjSDEReGbJ4hsmpnZsv/7OrZsx6qCEGYCPZuXz8KqcH3H2ceatelaQAAA==",
+      "exif": {
+        "camera": "Sony ILCE-7M4",
+        "lens": "FE 24-70mm F2.8 GM II",
+        "aperture": 2.8,
+        "shutter": "1/250",
+        "iso": 3200,
+        "focalLength": 50,
+        "date": "2026-08-22T19:31:00"
+      }
+    }
+  }
+}
