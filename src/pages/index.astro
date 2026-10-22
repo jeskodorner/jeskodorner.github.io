@@ -9,8 +9,8 @@ import Icon from '../components/Icon.astro';
 import EmailLink from '../components/EmailLink.astro';
 import portrait from '../assets/portrait.jpg';
 import { site } from '../config/site';
-import { useTranslations } from '../i18n';
-import { getFeaturedImages, getHeroImages, getPublicGalleries } from '../lib/galleries';
+import { useTranslations, formatMonth } from '../i18n';
+import { getHeroImages, getPublicGalleries } from '../lib/galleries';
 import { ogImage } from '../lib/images';
 
 const t = useTranslations();
@@ -19,7 +19,6 @@ const heroes = await getHeroImages();
 const slideshow = site.hero.mode === 'slideshow' && heroes.length > 1;
 const heroList = slideshow ? heroes : heroes.slice(0, 1);
 const hero = heroes[0];
-const featured = await getFeaturedImages(9);
 const galleries = await getPublicGalleries();
 const films = (await getCollection('films')).sort((a, b) => a.data.order - b.data.order || b.data.year - a.data.year);
 const og = hero ? await ogImage(hero.image.src) : undefined;
@@ -33,19 +32,19 @@ const jsonLd = {
   sameAs: [site.instagram.url],
 };
 
-// Ausgewählte Arbeiten: jedes Bild hängt an seiner eigenen Wand, Farbe = Raumfarbe seiner Galerie
-const stageItems: StageItem[] = featured.map(({ gallery, image }) => ({
-  image,
-  href: image.pageUrl,
-  // Ohne Bildunterschrift: Galerie-Name als Titel, darunter nur der Link (sonst stünde der Name doppelt da)
-  title: image.caption ?? gallery.title,
-  kicker: image.caption ? gallery.title + (gallery.location ? `, ${gallery.location}` : '') : 'Galerie ansehen',
-  kickerHref: gallery.url,
-  color: gallery.color,
+// Ausgewählte Arbeiten: jede öffentliche Galerie einmal, mit ihrem Vorschaubild (Feld "cover", sonst das erste Bild)
+const stageItems: StageItem[] = galleries.map((g) => ({
+  image: g.cover,
+  href: g.url,
+  title: g.title,
+  kicker: 'Galerie ansehen',
+  kickerHref: g.url,
+  meta: [t.galleries.images(g.images.length), formatMonth(g.date), g.location].filter(Boolean).join(' · '),
+  color: g.color,
 }));
 
-// Wörter für Sticker und Farbbänder (aus der Zeile über dem Namen, z. B. „Fotografie · Kamera · Drehbuch“)
-const words = (text.kicker ?? 'Fotografie · Kamera · Drehbuch').split('·').map((w) => w.trim()).filter(Boolean);
+// Wörter für die Farbbänder (aus der Zeile über dem Namen, z. B. „Fotografie · Kamera · Film“)
+const words = (text.kicker ?? 'Fotografie · Kamera · Film').split('·').map((w) => w.trim()).filter(Boolean);
 
 // Ruhige Überblendung im Hero-Rahmen, falls mehrere Hero-Bilder (site.hero.mode = 'slideshow')
 const duration = heroList.length * site.hero.secondsPerImage;
@@ -141,7 +140,7 @@ const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : 
 
   <!-- Ausgewählte Arbeiten -->
   {
-    featured.length > 0 && (
+    stageItems.length > 0 && (
       <section class="selected" aria-labelledby="sel-h">
         <div class="sec-head container container--wide">
           <h2 id="sel-h" class="display display-2 sec-title">

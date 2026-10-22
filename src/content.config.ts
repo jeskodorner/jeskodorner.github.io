@@ -36,8 +36,6 @@ const galleryImage = z
     caption: z.string().optional(),
     /** Link zum hochauflösenden Original beim externen Anbieter */
     originalUrl: z.url({ error: 'originalUrl muss eine vollständige URL sein (https://…).' }).optional(),
-    /** Auf der Startseite unter „Ausgewählte Arbeiten“ zeigen */
-    featured: z.boolean().default(false),
     /** Als Hero-Bild auf der Startseite verwenden */
     hero: z.boolean().default(false),
     /** Wichtigster Bildbereich bei Vollbild-Zuschnitt, z. B. "50% 30%" (waagerecht senkrecht). Standard: Mitte */

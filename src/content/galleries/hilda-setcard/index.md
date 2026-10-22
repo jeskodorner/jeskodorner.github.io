@@ -15,7 +15,6 @@ cover: hilda-setcard-gesicht.jpg
 images:
   - file: hilda-setcard-gesicht.jpg
     alt: "Frontales Porträt von Hilda mit ernstem Blick vor einer rostigen Wand."
-    featured: true
     focus: "50% 30%"
   - file: hilda-setcard-koerper-1.jpg
     alt: "Ganzkörperaufnahme: Hilda in schwarzem Trägertop und gestreifter Jeans vor einer rostigen Wand."

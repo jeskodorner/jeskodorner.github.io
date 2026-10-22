@@ -29,7 +29,6 @@ export interface GalleryImage {
   alt: string;
   caption?: string;
   originalUrl?: string;
-  featured: boolean;
   hero: boolean;
   /** Fokuspunkt für Vollbild-Zuschnitt (CSS object-position) */
   focus: string;
@@ -132,7 +131,6 @@ async function load(): Promise<Gallery[]> {
         alt: img.alt,
         caption: img.caption,
         originalUrl: img.originalUrl,
-        featured: img.featured,
         hero: img.hero,
         focus: img.focus ?? '50% 50%',
         exif: { ...(m.exif ?? {}), ...(img.exif ?? {}) },
@@ -188,18 +186,6 @@ export async function getNeighbours(gallery: Gallery) {
   const list = await getPublicGalleries();
   const i = list.findIndex((g) => g.slug === gallery.slug);
   return { prev: list[i - 1], next: list[i + 1] };
-}
-
-/** Ausgewählte Arbeiten für die Startseite (max. 9). */
-export async function getFeaturedImages(limit = 9) {
-  const galleries = await getPublicGalleries();
-  const picked = galleries.flatMap((g) => g.images.filter((i) => i.featured).map((image) => ({ gallery: g, image })));
-  if (picked.length >= 6) return picked.slice(0, limit);
-  // Fallback: Titelbilder ergänzen
-  const covers = galleries
-    .map((g) => ({ gallery: g, image: g.cover }))
-    .filter((c) => !picked.some((p) => p.image === c.image));
-  return [...picked, ...covers].slice(0, limit);
 }
 
 /** Hero-Bilder für die Startseite. */

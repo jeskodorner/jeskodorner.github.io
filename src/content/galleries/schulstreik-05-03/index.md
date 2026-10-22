@@ -25,7 +25,6 @@ images:
     alt: "Demonstrierende am Potsdamer Platz, ein Schild mit der Aufschrift „Schulstreik gegen Wehrpflicht“."
   - file: p3050182.jpg
     alt: "Person mit rotem Schirm voller Schilder, darauf „Meine Enkelkinder bekommt ihr nicht!“ und „Nein zur Wehrpflicht“."
-    featured: true
   - file: p3050204.jpg
     alt: "Demonstrierende mit Transparenten und Schildern, darunter „Stoppt den Iran-Krieg“."
 ---

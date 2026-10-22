@@ -17,10 +17,8 @@ images:
     alt: "Person in Kostüm mit Tüllrock, roten Puffärmeln und gelben Stulpen, von hinten gesehen in einem dunklen Durchgang mit Metallgeländer."
   - file: dscf7189.jpg
     alt: "Model in bemaltem Oberteil mit roten Puffärmeln blickt nach oben, dahinter eine runde Betonöffnung und eine vorbeigehende Person."
-    featured: true
   - file: dscf7235.jpg
     alt: "Model im Kostüm mit gelben Stulpen schreitet über eine Laderampe mit schwarz-gelber Warnmarkierung vor grauer Fassade."
-    featured: true
   - file: dscf7265.jpg
     alt: "Model steht frontal auf einer Laderampe vor einer dunklen Metalltür, darunter schwarz-gelbe Warnstreifen."
   - file: dscf7270.jpg

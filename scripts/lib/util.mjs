@@ -96,7 +96,7 @@ showExif: true
 # downloadNote: Link gültig bis 31.12.2026 – Passwort bekommst du separat.
 
 # Bilder: werden von "npm run optimize" automatisch ergänzt.
-# Pro Bild Pflicht: alt (Bildbeschreibung). Optional: caption, originalUrl, featured, hero, exif
+# Pro Bild Pflicht: alt (Bildbeschreibung). Optional: caption, originalUrl, hero, focus, exif
 images: []
 ---
 `;

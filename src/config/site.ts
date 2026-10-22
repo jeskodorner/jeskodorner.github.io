@@ -12,7 +12,7 @@ export const site = {
   claim: 'Fotografie, Kamera und Geschichten.',
   /** Standard-Beschreibung für Suchmaschinen. PLATZHALTER */
   description:
-    'Jesko Dorner – Fotografie, Kamera und Drehbuch. Portfolio mit Galerien, Filmarbeiten und Kontakt.',
+    'Jesko Dorner – Fotografie, Kamera und Film. Portfolio mit Galerien, Filmarbeiten und Kontakt.',
   /** Berufsbezeichnung für strukturierte Daten (Schema.org Person) */
   jobTitle: 'Fotograf',
 

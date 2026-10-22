@@ -20,12 +20,10 @@ images:
     focus: "50% 30%"
   - file: dsc01438.jpg
     alt: "Person im roten Hoodie sitzt nachts auf einem Fahrrad, im Hintergrund Leuchtreklamen."
-    featured: true
     hero: true
     focus: "50% 15%"
   - file: dsc01443.jpg
     alt: "In rotes Licht getaucht: Person mit Kapuze und hochgezogenem Kragen auf einer nächtlichen Straße."
-    featured: true
   - file: dsc01452.jpg
     alt: "Zwei Personen auf einem Fahrrad bei Nacht, vorne die Person im roten Hoodie, dahinter jemand in blauer Trainingsjacke."
   - file: dsc01454.jpg

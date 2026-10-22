@@ -170,7 +170,7 @@ und festen Seitenverhältnissen, damit beim Laden nichts springt.
 | `date` | ja | `2026-10-22`. Die Übersicht sortiert danach, neueste zuerst. |
 | `location` | | Ort |
 | `description` | ja | 1–2 Sätze für Kachel, Suchmaschinen und Link-Vorschau |
-| `cover` | | Dateiname des Titelbilds. Ohne Angabe wird das erste Bild genommen. |
+| `cover` | | Dateiname des Vorschaubilds. Es erscheint in der Galerie-Übersicht und auf der Startseite unter „Ausgewählte Arbeiten“ (jede Galerie einmal). Ohne Angabe wird das erste Bild genommen. |
 | `layout` | | `showcase` (Standard, „Bühne“), `masonry` (Raster) oder `justified` (gleich hohe Reihen). Siehe unten. |
 | `visibility` | | `public` (Standard) oder `unlisted` |
 | `showExif` | | Aufnahmedaten zeigen (Standard `true`) |
@@ -189,7 +189,6 @@ Pro Bild:
 | `alt` | ja | Was ist zu sehen? Für Screenreader und Suchmaschinen. Ohne Alt-Text bricht der Build bewusst ab. |
 | `caption` | | Bildunterschrift (Lightbox und Bildseite) |
 | `originalUrl` | | Link zum Original. Dann erscheint „Original herunterladen“. |
-| `featured` | | `true` = auf der Startseite unter „Ausgewählte Arbeiten“ (6–9 Bilder ideal) |
 | `hero` | | `true` = großes Bild auf der Startseite |
 | `exif` | | überschreibt ausgelesene Werte, z. B. `exif: { lens: "Helios 44-2" }` |
 | `focus` | | wichtigster Bildbereich, wenn das Foto für Vollbild beschnitten wird, z. B. `focus: "50% 30%"` (waagerecht senkrecht). Standard: Mitte |

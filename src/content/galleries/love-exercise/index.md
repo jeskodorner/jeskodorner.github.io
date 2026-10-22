@@ -20,7 +20,6 @@ images:
     focus: "50% 30%"
   - file: love-exercise-jesko-dorner-17.jpg
     alt: "Nahaufnahme eines Mannes mit dunklen Locken und weißem Hemd im warmen Licht."
-    featured: true
     focus: "50% 35%"
   - file: love-exercise-jesko-dorner-29.jpg
     alt: "Schwarzweiß: Mann im weißen Hemd, die Hand am Kinn, blickt nachdenklich zum Fenster."
@@ -31,7 +30,6 @@ images:
     alt: "Schwarzweiß: Silhouette einer Frau, die sich vor einem hellen Fenster nach vorn streckt."
   - file: love-exercise-jesko-dorner-45.jpg
     alt: "Hinter den Kulissen: Kameramann mit Kappe an einer Filmkamera, daneben ein Schauspieler im farbverschmierten Hemd und ein Scheinwerfer."
-    featured: true
   - file: love-exercise-jesko-dorner-52.jpg
     alt: "Filmset im Atelier: Kamera, Scheinwerfer und ein Mann, der am Boden an einem großen bunten Gemälde arbeitet."
 ---
