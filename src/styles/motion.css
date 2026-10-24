@@ -94,14 +94,6 @@ a.px:focus-visible {
     background-size: 100% 88%;
   }
 }
-@keyframes tape-move {
-  from {
-    transform: translate3d(var(--tape-from, 0%), 0, 0);
-  }
-  to {
-    transform: translate3d(var(--tape-to, -40%), 0, 0);
-  }
-}
 @keyframes word-light {
   from {
     opacity: 0.12;
@@ -170,13 +162,6 @@ a.px:focus-visible {
       animation-timeline: view();
       animation-range: entry 40% cover 45%;
     }
-    .tape-track {
-      animation-name: tape-move;
-      animation-timing-function: linear;
-      animation-fill-mode: both;
-      animation-timeline: --tapes;
-      animation-range: cover 0% cover 100%;
-    }
     .words {
       view-timeline-name: --words;
     }
@@ -188,35 +173,4 @@ a.px:focus-visible {
       animation-range: entry 0% cover calc(30% + var(--i) * var(--step, 3%));
     }
   }
-}
-
-/* ---------- Zwei gerade Farbbänder, die gegenläufig ziehen ---------- */
-.tapes {
-  overflow: hidden;
-  view-timeline-name: --tapes;
-  user-select: none;
-}
-.tape {
-  padding-block: clamp(0.6rem, 1.4vw, 1.2rem);
-  background: var(--c);
-  color: var(--on-c);
-}
-.tape:nth-child(2) {
-  --tape-from: -40%;
-  --tape-to: 0%;
-}
-.tape-track {
-  display: flex;
-  width: max-content;
-  gap: 0.5em;
-  white-space: nowrap;
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-stretch: 100%;
-  text-transform: uppercase;
-  font-size: clamp(2.2rem, 1rem + 5vw, 6.5rem);
-  line-height: 1;
-}
-.tape-track .star {
-  font-stretch: 50%;
 }

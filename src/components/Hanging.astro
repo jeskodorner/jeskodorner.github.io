@@ -4,17 +4,21 @@
  * mit viel Platz daneben und einem kleinen Schild mit Verweis auf sein Album.
  *   Desktop: so groß, dass es ganz auf den Bildschirm passt; abwechselnd links und rechts, Schild daneben.
  *   Handy:   volle Breite, Schild darunter.
+ * Schild: Hat das Foto einen eigenen Namen (Showroom), steht er als Titel da und darunter „Aus dem Album …“.
+ *         Sonst ist der Album-Name der Titel und darunter „Zum Album“.
  */
-import type { GalleryImage, RoomColor } from '../lib/galleries';
+import type { GalleryImage } from '../lib/galleries';
 import Picture from './Picture.astro';
 
 export interface WorkItem {
   image: GalleryImage;
-  /** Album, zu dem das Foto gehört */
+  /** Link zum Album, zu dem das Foto gehört */
   href: string;
-  title: string;
+  /** Name des Albums */
+  album: string;
+  /** Eigener Name des Fotos (optional) */
+  name?: string;
   meta?: string;
-  color?: RoomColor;
 }
 
 export interface Props {
@@ -29,7 +33,7 @@ const { items } = Astro.props;
     items.map((it) => {
       const r = it.image.src.width / it.image.src.height;
       return (
-        <li class:list={['work', { 'work--portrait': r < 1 }, it.color && `c-${it.color}`]} style={`--r:${r.toFixed(4)}`}>
+        <li class:list={['work', { 'work--portrait': r < 1 }]} style={`--r:${r.toFixed(4)}`}>
           <a class="work-media reveal" href={it.href} tabindex="-1">
             <Picture
               src={it.image.src}
@@ -41,13 +45,19 @@ const { items } = Astro.props;
             />
           </a>
           <div class="work-label">
-            <p class="work-title">
-              <span class="work-dot" aria-hidden="true" />
-              {it.title}
-            </p>
+            <p class="work-title">{it.name ?? it.album}</p>
             {it.meta && <p class="work-meta">{it.meta}</p>}
             <a class="work-link" href={it.href}>
-              Zum Album<span class="visually-hidden"> „{it.title}“</span> <span class="arrow" aria-hidden="true">→</span>
+              {it.name ? (
+                <>Aus dem Album „{it.album}“</>
+              ) : (
+                <>
+                  Zum Album<span class="visually-hidden"> „{it.album}“</span>
+                </>
+              )}{' '}
+              <span class="arrow" aria-hidden="true">
+                →
+              </span>
             </a>
           </div>
         </li>
@@ -88,19 +98,9 @@ const { items } = Astro.props;
     max-width: 20rem;
   }
   .work-title {
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
     font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.3rem);
     font-weight: 700;
     line-height: 1.25;
-  }
-  .work-dot {
-    flex: none;
-    width: 0.7em;
-    height: 0.7em;
-    border-radius: 50%;
-    background: var(--c, var(--ink));
   }
   .work-meta {
     font-size: var(--fs-xs);
@@ -127,9 +127,6 @@ const { items } = Astro.props;
     .work:nth-child(even) .work-label {
       justify-items: end;
       text-align: right;
-    }
-    .work:nth-child(even) .work-title {
-      flex-direction: row-reverse;
     }
     .work-media {
       flex: none;

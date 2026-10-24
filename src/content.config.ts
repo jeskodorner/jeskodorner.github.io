@@ -157,6 +157,18 @@ const pages = defineCollection({
   schema: z
     .object({
       kicker: z.string().optional(),
+      /** Startseite „Ausgewählte Arbeiten“: welche Fotos hängen, mit optionalem eigenem Namen */
+      showroom: z
+        .array(
+          z
+            .object({
+              galerie: z.string().min(1),
+              bild: z.string().optional(),
+              name: z.string().optional(),
+            })
+            .strict(),
+        )
+        .default([]),
       statement: z.string().optional(),
       note: z.string().optional(),
       aboutTeaser: z.string().optional(),

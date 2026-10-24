@@ -26,10 +26,10 @@ export const de = {
     allGalleries: 'Alle Galerien',
     aboutTeaser: 'Über mich',
     aboutMore: 'Mehr über mich',
-    filmTeaser: 'Auch in Bewegung',
+    filmTeaser: 'Bewegte Bilder',
     filmMore: 'Zu den Filmarbeiten',
-    contactTitle: 'Lass uns reden',
-    contactText: 'Für Aufträge, Kooperationen oder einfach Hallo.',
+    contactTitle: 'Projekt anfragen',
+    contactText: 'Für Fotoaufträge, Kameraarbeit und Filmprojekte. Schreib mir kurz, worum es geht, wann und wo.',
   },
   galleries: {
     title: 'Galerie',

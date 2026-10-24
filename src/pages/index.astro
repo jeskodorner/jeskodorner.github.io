@@ -10,7 +10,7 @@ import EmailLink from '../components/EmailLink.astro';
 import portrait from '../assets/portrait.jpg';
 import { site } from '../config/site';
 import { useTranslations, formatMonth } from '../i18n';
-import { getHeroImages, getPublicGalleries } from '../lib/galleries';
+import { getHeroImages, getPublicGalleries, type Gallery, type GalleryImage } from '../lib/galleries';
 import { ogImage } from '../lib/images';
 
 const t = useTranslations();
@@ -32,16 +32,36 @@ const jsonLd = {
   sameAs: [site.instagram.url],
 };
 
-// Ausgewählte Arbeiten: jede öffentliche Galerie einmal, mit ihrem Vorschaubild (Feld "cover", sonst das erste Bild)
-const works: WorkItem[] = galleries.map((g) => ({
-  image: g.cover,
+// Ausgewählte Arbeiten („Showroom“): Liste "showroom" in src/content/pages/startseite.md –
+// welche Fotos in welcher Reihenfolge hängen, jeweils mit optionalem eigenem Namen.
+// Leere Liste: jede öffentliche Galerie einmal mit ihrem Vorschaubild.
+const workFor = (g: Gallery, image: GalleryImage = g.cover, name?: string): WorkItem => ({
+  image,
   href: g.url,
-  title: g.title,
-  meta: [t.galleries.images(g.images.length), formatMonth(g.date), g.location].filter(Boolean).join(' · '),
-  color: g.color,
-}));
+  album: g.title,
+  name,
+  meta: (name ? [formatMonth(g.date), g.location] : [t.galleries.images(g.images.length), formatMonth(g.date), g.location])
+    .filter(Boolean)
+    .join(' · '),
+});
+const showroomError = (msg: string) => new Error(`startseite.md → showroom: ${msg}`);
+const works: WorkItem[] = text.showroom?.length
+  ? text.showroom.map((s) => {
+      const g = galleries.find((x) => x.slug === s.galerie || x.id === s.galerie);
+      if (!g) {
+        throw showroomError(
+          `Galerie „${s.galerie}“ gibt es nicht oder sie ist nicht öffentlich. Möglich: ${galleries.map((x) => x.slug).join(', ')}`,
+        );
+      }
+      const image = s.bild ? g.images.find((i) => i.file === s.bild) : g.cover;
+      if (!image) {
+        throw showroomError(`Bild „${s.bild}“ gibt es in „${s.galerie}“ nicht. Möglich: ${g.images.map((i) => i.file).join(', ')}`);
+      }
+      return workFor(g, image, s.name?.trim() || undefined);
+    })
+  : galleries.map((g) => workFor(g));
 
-// Wörter für die Farbbänder (aus der Zeile über dem Namen, z. B. „Fotografie · Kamera · Film“)
+// Wörter für die schlichte Zeile unter dem Statement (aus der Zeile über dem Namen, z. B. „Fotografie · Kamera · Film“)
 const words = (text.kicker ?? 'Fotografie · Kamera · Film').split('·').map((w) => w.trim()).filter(Boolean);
 
 // Ruhige Überblendung im Hero-Rahmen, falls mehrere Hero-Bilder (site.hero.mode = 'slideshow')
@@ -116,22 +136,14 @@ const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : 
     )
   }
 
-  <!-- Zwei Farbbänder, die sich kreuzen und gegenläufig ziehen -->
-  <div class="tapes" aria-hidden="true">
+  <!-- Schlichte Zeile: Fotografie —— Kamera —— Film (Wörter aus der Zeile über dem Namen) -->
+  <div class="disciplines container container--wide" aria-hidden="true">
     {
-      ['c-pink', 'c-lime'].map((c) => (
-        <div class:list={['tape', c]}>
-          <div class="tape-track">
-            {[0, 1, 2, 3].flatMap(() =>
-              words.map((w) => (
-                <>
-                  <span>{w}</span>
-                  <span class="star">✺</span>
-                </>
-              )),
-            )}
-          </div>
-        </div>
+      words.map((w, i) => (
+        <>
+          {i > 0 && <span class="disc-line" />}
+          <span class="disc-word">{w}</span>
+        </>
       ))
     }
   </div>
@@ -162,7 +174,7 @@ const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : 
       <section class="film-room room c-blue" aria-labelledby="film-h">
         <div class="container container--wide section">
           <div class="sec-head">
-            <h2 id="film-h" class="display display-2" set:html={inlineMd('Auch in *Bewegung*')} />
+            <h2 id="film-h" class="display display-2" set:html={inlineMd(t.home.filmTeaser.replace(/(\S+)$/, '*$1*'))} />
             <a class="btn btn--small" href="/film/">
               {t.home.filmMore} <span class="arrow" aria-hidden="true">→</span>
             </a>
@@ -215,8 +227,9 @@ const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : 
   <section class="cta room c-lime" aria-labelledby="cta-h">
     <div class="container container--wide">
       <h2 id="cta-h" class="display cta-title">
-        <span class="stretch">Lass uns</span>
-        <span class="stretch">reden!</span>
+        {t.home.contactTitle.split(' ').map((w) => (
+          <span class="stretch">{w}</span>
+        ))}
       </h2>
       <div class="cta-row">
         <p class="lead">{t.home.contactText}</p>
@@ -372,6 +385,26 @@ const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : 
     margin-top: clamp(1.5rem, 3vw, 2.5rem);
     max-width: 44ch;
     margin-left: auto;
+  }
+
+  /* ---------- Schlichte Zeile: Fotografie —— Kamera —— Film ---------- */
+  .disciplines {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.75rem, 2vw, 1.5rem);
+    font-size: clamp(0.75rem, 0.68rem + 0.3vw, 0.95rem);
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .disc-word {
+    flex: none;
+  }
+  .disc-line {
+    flex: 1;
+    min-width: 1.25rem;
+    height: 1.5px;
+    background: var(--ink);
   }
 
   /* ---------- Abschnittsköpfe ---------- */

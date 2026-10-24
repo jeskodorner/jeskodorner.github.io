@@ -91,6 +91,7 @@ photos.config.json          ← Einstellungen für die Bildverarbeitung (Größe
 |---|---|
 | Claim, Beschreibung für Suchmaschinen, Instagram, E-Mail | `src/config/site.ts` |
 | Texte der Startseite | `src/content/pages/startseite.md` |
+| Showroom „Ausgewählte Arbeiten“: welche Fotos, Reihenfolge, eigene Namen | `src/content/pages/startseite.md`, Liste `showroom` (siehe unten) |
 | Über mich: Text, Stationen, Ausrüstung | `src/content/pages/ueber-mich.md` |
 | Porträt | Datei `src/assets/portrait.jpg` ersetzen (Hochformat 4:5 ideal) |
 | Filme und Videos | `src/content/films/*.md`. Pro Video eine Datei (siehe unten) |
@@ -99,6 +100,20 @@ photos.config.json          ← Einstellungen für die Bildverarbeitung (Größe
 
 > ⚠️ **Impressum und Datenschutzerklärung sind Platzhalter** und auf der Seite deutlich so markiert.
 > Bitte vor der Veröffentlichung vervollständigen und rechtlich prüfen lassen. Das hier ist keine Rechtsberatung.
+
+**Showroom auf der Startseite:** In `startseite.md` legt die Liste `showroom` fest, welche Fotos unter „Ausgewählte Arbeiten“
+hängen, in welcher Reihenfolge und unter welchem Namen:
+
+```yaml
+showroom:
+  - galerie: drama-queen          # Ordnername in src/content/galleries/
+    bild: dscf7235.jpg            # ohne Angabe: Vorschaubild der Galerie
+    name: "Beton und Rüschen"     # ohne Angabe: Name der Galerie
+```
+
+Mit Namen zeigt das Schild den Namen, das Datum und den Link „Aus dem Album …“. Ohne Namen zeigt es den Namen der Galerie, die Bildanzahl und „Zum Album“.
+Neue Galerien erscheinen dort nicht automatisch. Mit `showroom: []` kommt jede öffentliche Galerie einmal mit ihrem Vorschaubild.
+Ein Tippfehler bei `galerie` oder `bild` bricht den Build mit einer Meldung ab, welche Namen möglich sind.
 
 **Video hinzufügen:** In `src/content/films/` eine neue Datei anlegen, z. B. `mein-video.md`. Am einfachsten kopierst du eine vorhandene:
 
@@ -192,7 +207,7 @@ und festen Seitenverhältnissen, damit beim Laden nichts springt.
 | `date` | ja | `2026-10-22`. Die Übersicht sortiert danach, neueste zuerst. |
 | `location` | | Ort |
 | `description` | ja | 1–2 Sätze für Kachel, Suchmaschinen und Link-Vorschau |
-| `cover` | | Dateiname des Vorschaubilds. Es erscheint in der Galerie-Übersicht und auf der Startseite unter „Ausgewählte Arbeiten“ (jede Galerie einmal, unbeschnitten mit kleinem Schild und Link „Zum Album“). Ohne Angabe wird das erste Bild genommen. |
+| `cover` | | Dateiname des Vorschaubilds. Es erscheint in der Galerie-Übersicht und auf der Startseite im Showroom, wenn dort kein `bild` angegeben ist. Ohne Angabe wird das erste Bild genommen. |
 | `layout` | | `showcase` (Standard, „Bühne“), `masonry` (Raster) oder `justified` (gleich hohe Reihen). Siehe unten. |
 | `visibility` | | `public` (Standard) oder `unlisted` |
 | `showExif` | | Aufnahmedaten zeigen (Standard `true`) |
@@ -326,9 +341,8 @@ haben keine Vor/Zurück-Navigation zu anderen Galerien und werden nicht von der 
 Alle Effekte sind reines CSS, ohne JavaScript, und laufen flüssig:
 
 - **Parallax:** Fotos gleiten in ihrem Rahmen etwas langsamer als die Seite und blenden beim Hereinscrollen ruhig ein.
-- **Dehnende Titel:** Große Titel (Name im Hero, „Ausgewählte Arbeiten“, „Lass uns reden!“, Footer) ziehen sich beim Scrollen von schmal auf breit.
+- **Dehnende Titel:** Große Titel (Name im Hero, „Ausgewählte Arbeiten“, „Projekt anfragen“, Footer) ziehen sich beim Scrollen von schmal auf breit.
 - **Leuchtmarker:** `*markierte*` Wörter bekommen beim Hereinscrollen einen Lime- bzw. Pink-Marker. Der Satz unter dem Hero leuchtet Wort für Wort auf.
-- **Farbbänder:** Zwei gerade Bänder in Pink und Lime ziehen gegenläufig durch.
 - **Hero:** Das Vollbild-Foto bleibt stehen, der Name zieht sich beim Scrollen in die Breite.
 - **Weitere Effekte:** Das Hero-Foto hebt beim Scrollen ab, Texte steigen auf, der Fortschrittsbalken in Galerien zeigt die Galeriefarbe, und der Header wird kompakt.
 
@@ -449,9 +463,9 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 - **Jede Galerie hat eine eigene Farbe.** Die Farbe erscheint in der Übersicht, im Farbband oben auf der Galerieseite,
   im Fortschrittsbalken, und im Download-Kasten.
   Festlegen per `color: pink | blue | lime | orange | violet` in `index.md`. Ohne Angabe wechselt die Farbe automatisch reihum.
-- **Startseite:** Vollbild-Foto mit großem Namen, Leuchtmarker, zwei gerade Farbbänder, „Ausgewählte Arbeiten“ als Hängung
-  (jedes Foto unbeschnitten an der weißen Wand, abwechselnd links/rechts, kleines Schild mit Link zum Album),
-  ein blauer Film-Bereich und ein Lime-Bereich für Kontakt.
+- **Startseite:** Vollbild-Foto mit großem Namen, Leuchtmarker, eine schlichte Zeile „Fotografie — Kamera — Film“,
+  „Ausgewählte Arbeiten“ als Showroom (jedes Foto unbeschnitten an der weißen Wand, abwechselnd links/rechts,
+  kleines Schild mit Name und Link zum Album), ein blauer Bereich „Bewegte Bilder“ und ein Lime-Bereich „Projekt anfragen“.
 
 Kontraste nach WCAG 2.x:
 
