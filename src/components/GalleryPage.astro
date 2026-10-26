@@ -5,6 +5,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import GalleryGrid from './GalleryGrid.astro';
 import ShareBox from './ShareBox.astro';
 import DownloadBox from './DownloadBox.astro';
+import AlbumRequest from './AlbumRequest.astro';
 import Icon from './Icon.astro';
 import Picture from './Picture.astro';
 import { getNeighbours, type Gallery } from '../lib/galleries';
@@ -98,7 +99,13 @@ const jsonLd = gallery.isUnlisted
           }
         </div>
         <div class="side">
-          {gallery.download && <DownloadBox {...gallery.download} />}
+          {
+            gallery.albumRequest ? (
+              <AlbumRequest title={gallery.title} url={gallery.download?.url} note={gallery.download?.note} />
+            ) : (
+              gallery.download && <DownloadBox {...gallery.download} />
+            )
+          }
           <ShareBox url={absUrl} title={gallery.title} template={gallery.shareText} />
         </div>
       </div>

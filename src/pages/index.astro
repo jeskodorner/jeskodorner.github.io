@@ -103,7 +103,6 @@ const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : 
     }
     <div class="hero-shade" aria-hidden="true"></div>
     <div class="hero-content container container--wide">
-      {text.kicker && <p class="pill c-lime hero-kicker">{text.kicker}</p>}
       <h1 class="hero-title display">
         <span class="ht">Jesko</span>
         <span class="ht ht-2">Dorner</span>
@@ -283,8 +282,7 @@ const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : 
       animation-delay: calc(var(--i) * var(--dur) / var(--n) - 1.5s);
     }
     .ht,
-    .hero-bottom,
-    .hero-kicker {
+    .hero-bottom {
       animation: hero-in 0.9s var(--ease) both;
     }
     .ht-2 {

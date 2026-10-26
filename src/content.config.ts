@@ -73,6 +73,11 @@ const galleries = defineCollection({
       downloadFormat: z.string().optional(),
       /** Hinweiszeile, z. B. Nutzungsrechte, Gültigkeit, Passworthinweis */
       downloadNote: z.string().optional(),
+      /**
+       * Kasten „Ganzes Album anfordern“ (Code per E-Mail anfordern). Standard: an bei öffentlichen, aus bei Unlisted-Galerien.
+       * Mit downloadUrl erscheint zusätzlich „Album öffnen“ – das Passwort setzt du beim Anbieter, nie hier.
+       */
+      albumRequest: z.boolean().optional(),
       /** Eigener Teilen-Text; {title} und {url} werden ersetzt */
       shareText: z.string().optional(),
       images: z.array(galleryImage).min(1, { error: 'Die Galerie braucht mindestens ein Bild.' }),

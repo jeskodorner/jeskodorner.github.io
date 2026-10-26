@@ -1,0 +1,71 @@
+---
+/**
+ * „Ganzes Album anfordern“ (öffentliche Galerien): Besucher fordern per E-Mail einen Zugangscode an.
+ * - „Code anfordern“ öffnet eine vorformulierte E-Mail (Betreff + Frage nach dem Anlass).
+ * - Ist downloadUrl gesetzt, führt „Album öffnen“ zum Anbieter; dort fragt der Anbieter nach dem Code.
+ * Wichtig: Das Passwort steht nie auf dieser Seite oder im Repository – es wird nur beim Anbieter gesetzt
+ * und per E-Mail weitergegeben. Diese statische Seite selbst kann nichts schützen.
+ */
+import EmailLink from './EmailLink.astro';
+import Icon from './Icon.astro';
+import { useTranslations } from '../i18n';
+import { site } from '../config/site';
+
+export interface Props {
+  title: string;
+  /** Link zum Album beim Anbieter (passwortgeschützt) */
+  url?: string;
+  note?: string;
+}
+
+const { title, url, note } = Astro.props;
+const t = useTranslations();
+const firstName = site.name.split(' ')[0];
+---
+
+<div class="album">
+  <p class="album-title"><Icon name="lock" size="1em" /> {t.album.title}</p>
+  <p class="album-text">{t.album.text}</p>
+  <div class="album-actions">
+    <EmailLink class="btn" text={t.album.request} subject={t.album.subject(title)} body={t.album.body(title, firstName)} />
+    {
+      url && (
+        <a class="btn" href={url} target="_blank" rel="noopener noreferrer">
+          {t.album.open} <Icon name="arrow-up-right" />
+          <span class="visually-hidden">{t.download.external}</span>
+        </a>
+      )
+    }
+  </div>
+  {note && <p class="album-note">{note}</p>}
+</div>
+
+<style>
+  .album {
+    display: grid;
+    gap: 0.6rem;
+    justify-items: start;
+    padding: clamp(1rem, 2.5vw, 1.5rem);
+    border-radius: var(--radius);
+    background: var(--c, var(--lime));
+    color: var(--on-c, var(--ink));
+  }
+  .album-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-weight: 800;
+    font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.25rem);
+  }
+  .album-text,
+  .album-note {
+    font-size: var(--fs-sm);
+    max-width: 46ch;
+  }
+  .album-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.35rem;
+  }
+</style>

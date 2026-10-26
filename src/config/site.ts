@@ -9,7 +9,7 @@ export const site = {
   ogLocale: 'de_DE',
 
   /** Kurzer Claim unter dem Namen (Startseite). PLATZHALTER */
-  claim: 'Fotografie, Kamera und Geschichten.',
+  claim: 'Fotografie, Kamera und Film.',
   /** Standard-Beschreibung für Suchmaschinen. PLATZHALTER */
   description:
     'Jesko Dorner – Fotografie, Kamera und Film. Portfolio mit Galerien, Filmarbeiten und Kontakt.',

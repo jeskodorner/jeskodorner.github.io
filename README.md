@@ -215,6 +215,7 @@ und festen Seitenverhältnissen, damit beim Laden nichts springt.
 | `downloadSize` | | z. B. `1,2 GB` |
 | `downloadFormat` | | z. B. `ZIP · JPG in voller Auflösung` |
 | `downloadNote` | | Hinweiszeile, z. B. Nutzungsrechte, Gültigkeit, Passworthinweis |
+| `albumRequest` | | Kasten „Ganzes Album anfordern“ mit Button „Code anfordern“. Standard: an bei öffentlichen, aus bei Unlisted-Galerien. `false` blendet ihn aus. Siehe Abschnitt 6. |
 | `shareText` | | eigener Teilen-Text, `{title}` und `{url}` werden ersetzt |
 | `images` | ja | Liste der Bilder (siehe unten) |
 
@@ -322,6 +323,29 @@ images:
 
 Ohne `downloadUrl` bzw. `originalUrl` erscheint kein Download-Button. Alle Download-Links öffnen in einem neuen Tab
 mit `rel="noopener noreferrer"`.
+
+### „Ganzes Album anfordern“ (Zugangscode)
+
+Auf öffentlichen Galerien steht neben der Beschreibung der Kasten **„Ganzes Album anfordern“**:
+„Hier siehst du eine Auswahl. Das ganze Album in voller Auflösung gibt es mit Zugangscode.“
+
+- **Code anfordern** öffnet eine vorformulierte E-Mail an dich: Betreff mit dem Albumnamen und die Bitte,
+  kurz zu schreiben, wer man ist und wofür man die Fotos braucht.
+- Ist `downloadUrl` eingetragen, erscheint zusätzlich **Album öffnen**. Der Link führt zum Anbieter, und dort fragt der
+  Anbieter nach dem Passwort. Das Passwort ist der „Code“.
+
+So pflegst du das pro Album:
+
+1. Originale beim Anbieter hochladen (ein Ordner pro Album).
+2. Freigabelink mit **Passwort** erstellen, optional mit Ablaufdatum. Das Passwort ist der Code.
+3. Den Link als `downloadUrl` in die `index.md` der Galerie eintragen. **Das Passwort niemals eintragen**,
+   denn das Repository ist öffentlich.
+4. Kommt eine Anfrage per E-Mail: prüfen (z. B. ob die Person auf den Fotos ist) und den Code als Antwort schicken.
+5. Zugang entziehen: beim Anbieter das Passwort ändern oder den Link löschen. Auf der Website musst du nichts ändern,
+   solange der Link gleich bleibt.
+
+Ohne `downloadUrl` gibt es nur „Code anfordern“. Dann schickst du Link und Code zusammen per E-Mail.
+Mit `albumRequest: false` verschwindet der Kasten für diese Galerie.
 
 ### Kundengalerie (unlisted) anlegen
 

@@ -28,7 +28,9 @@ const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : 
       </nav>
     </div>
 
-    <p class="wordmark display stretch" aria-hidden="true">Jesko Dorner</p>
+    <div class="wordmark-wrap">
+      <p class="wordmark display stretch" aria-hidden="true">Jesko Dorner</p>
+    </div>
 
     <p class="copy label">
       <small>© {years} {site.name}. {t.footer.rights}</small>
@@ -84,12 +86,19 @@ const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : 
   .legal a {
     text-decoration: none;
   }
+  /* Der Schriftzug füllt genau die Breite des Inhaltsbereichs (cqi = 1 % davon).
+     Bei font-stretch 92 % ist „JESKO DORNER“ 7,26 × so breit wie die Schriftgröße → / 7.4 lässt etwas Luft.
+     So passt er auch ohne Scroll-Animation (Firefox, „Bewegung reduzieren“) und auf dem Handy. */
+  .wordmark-wrap {
+    container-type: inline-size;
+  }
   .wordmark {
     --stretch-from: 50%;
     --stretch-to: 92%;
     margin-top: clamp(2.5rem, 6vw, 5rem);
     white-space: nowrap;
-    font-size: clamp(3.4rem, 0.2rem + 13.6vw, 21rem);
+    font-size: clamp(3rem, 7.4vw, 21rem);
+    font-size: calc(100cqi / 7.4);
     line-height: 0.82;
     font-stretch: 92%;
     color: var(--pink);

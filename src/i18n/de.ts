@@ -68,6 +68,15 @@ export const de = {
     linkLabel: 'Link zur Galerie',
     imageShare: 'Bild teilen',
   },
+  album: {
+    title: 'Ganzes Album anfordern',
+    text: 'Hier siehst du eine Auswahl. Das ganze Album in voller Auflösung gibt es mit Zugangscode – kontaktiere mich dafür kurz.',
+    request: 'Code anfordern',
+    open: 'Album öffnen',
+    subject: (title: string) => `Zugangscode für das Album „${title}“`,
+    body: (title: string, name: string) =>
+      `Hallo ${name},\n\nich möchte das ganze Album „${title}“ in voller Auflösung anfordern.\n\nKurz zu mir und wofür ich die Fotos brauche:\n\n`,
+  },
   download: {
     gallery: 'Galerie herunterladen',
     original: 'Original herunterladen',
@@ -89,7 +98,7 @@ export const de = {
   about: { title: 'Über mich', stations: 'Stationen', gear: 'Ausrüstung' },
   contact: {
     title: 'Kontakt',
-    intro: 'Schreib mir – ich melde mich in der Regel innerhalb von ein paar Tagen.',
+    intro: 'Schreib mir – ich melde mich so schnell wie möglich und freue mich über jede Anfrage und Nachricht.',
     email: 'E-Mail',
     instagram: 'Instagram',
     emailFallback: 'jesko.dorner [at] gmail [punkt] com',

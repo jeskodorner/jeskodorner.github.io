@@ -1,8 +1,9 @@
 ---
 # Texte der Startseite. *Sternchen* = Wort mit Leuchtmarker (erst Lime, dann Pink).
+# kicker: Wörter für die schlichte Zeile unter dem Statement (mit · getrennt)
 kicker: "Fotografie · Kamera · Film"
-statement: "Platzhalter: Ein *kurzer,* starker Satz über deine *Arbeit.*"
-note: "Platzhalter: ein, zwei Sätze, was du machst und wofür man dich buchen kann."
+statement: "Fotografie, die *Bewegung* einfängt."
+note: "Porträts, Events, Setcards, Hochzeiten und Alltagsfotografie – Bilder, die Geschichten erzählen."
 aboutTeaser: "Platzhalter: kurzer Teaser-Text über dich."
 
 # Showroom „Ausgewählte Arbeiten“: Diese Fotos hängen auf der Startseite, in dieser Reihenfolge.

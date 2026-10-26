@@ -62,6 +62,8 @@ export interface Gallery {
   cover: GalleryImage;
   images: GalleryImage[];
   download?: { url: string; size?: string; format?: string; note?: string };
+  /** Kasten „Ganzes Album anfordern“ zeigen */
+  albumRequest: boolean;
   shareText: string;
   entry: CollectionEntry<'galleries'>;
 }
@@ -162,6 +164,7 @@ async function load(): Promise<Gallery[]> {
       download: d.downloadUrl
         ? { url: d.downloadUrl, size: d.downloadSize, format: d.downloadFormat, note: d.downloadNote }
         : undefined,
+      albumRequest: d.albumRequest ?? d.visibility !== 'unlisted',
       shareText: d.shareText ?? site.shareText,
       entry,
     } satisfies Gallery;

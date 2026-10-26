@@ -14,9 +14,11 @@ export interface Props {
   text?: string;
   icon?: boolean;
   subject?: string;
+  /** Vorformulierter Text der E-Mail */
+  body?: string;
 }
 
-const { class: className, text, icon = true, subject } = Astro.props;
+const { class: className, text, icon = true, subject, body } = Astro.props;
 const t = useTranslations();
 const rev = (s: string) => [...s].reverse().join('');
 ---
@@ -27,6 +29,7 @@ const rev = (s: string) => [...s].reverse().join('');
   data-u={rev(site.email.user)}
   data-d={rev(site.email.domain)}
   data-subject={subject}
+  data-body={body}
   data-text={text}
 >
   {icon && <Icon name="mail" size="0.9em" />}
@@ -37,8 +40,11 @@ const rev = (s: string) => [...s].reverse().join('');
   document.querySelectorAll<HTMLAnchorElement>('a.email-link[data-u]').forEach((a) => {
     const rev = (s = '') => [...s].reverse().join('');
     const address = `${rev(a.dataset.u)}@${rev(a.dataset.d)}`;
-    const subject = a.dataset.subject ? `?subject=${encodeURIComponent(a.dataset.subject)}` : '';
-    a.href = `mailto:${address}${subject}`;
+    const params = [
+      a.dataset.subject && `subject=${encodeURIComponent(a.dataset.subject)}`,
+      a.dataset.body && `body=${encodeURIComponent(a.dataset.body)}`,
+    ].filter(Boolean);
+    a.href = `mailto:${address}${params.length ? `?${params.join('&')}` : ''}`;
     if (!a.dataset.text) {
       const span = a.querySelector('.email-text');
       if (span) span.textContent = address;
