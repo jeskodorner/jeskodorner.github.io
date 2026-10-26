@@ -1,0 +1,696 @@
+{
+  "images": {
+    "cimg0291.jpg": {
+      "source": "CIMG0291.jpg",
+      "width": 2034,
+      "height": 1336,
+      "color": "#263835",
+      "lqip": "data:image/webp;base64,UklGRowAAABXRUJQVlA4IIAAAAAwBACdASoYABAAPt1apkyopSOiMAgBEBuJZACsAB6Rocdusut2JAgzBwAA/u9Ihb12+0ZDqLO3n1nXuG3Zv1+0oqn3J+NqFWNa8oO2J3/hPSSOTaEQ4CvfW+tIiAdsBXICxjaP8azhLXhdI6yKdL+zF8PaGy4CYdzijLZE2gAAAA==",
+      "exif": {
+        "camera": "Casio computer EX-Z30",
+        "aperture": 2.6,
+        "shutter": "1/60",
+        "focalLength": 6,
+        "date": "2024-12-07T12:06:44"
+      }
+    },
+    "dsc00041.jpg": {
+      "source": "DSC00041.jpg",
+      "width": 2400,
+      "height": 1603,
+      "color": "#2c242f",
+      "lqip": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAADwAwCdASoYABAAPt1cpkyopSOiMAgBEBuJbACdAB6sYxO8Kjz30LsAAP6lMbXOz7QbturkrwT+OSVpz0xleVeJUDT8UOsl8LyAg9KlT5cB0cDlSQjfYjMAnKozuSpdErPPCb2MpKntWYdPauegAA==",
+      "exif": {
+        "camera": "Sony ILME-FX3",
+        "lens": "FE 24-70mm F2.8 GM",
+        "aperture": 4.5,
+        "shutter": "1/30",
+        "iso": 800,
+        "focalLength": 24,
+        "date": "2024-12-13T20:34:47"
+      }
+    },
+    "dsc01257.jpg": {
+      "source": "DSC01257.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#020005",
+      "lqip": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAACQAwCdASoYABAAPt1apkyopSOiMAgBEBuJbACw7CHcpUpPk2oAAP7xEJFy6A9+kw8So0ZHTOyL4n6scwA+GP1sDTYUatlY1ci384R8YQWWMNB6IDnL3zeC9754NL5rCpBB6VhQAAA=",
+      "exif": {}
+    },
+    "dsc01279.jpg": {
+      "source": "DSC01279.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#450e0d",
+      "lqip": "data:image/webp;base64,UklGRpIAAABXRUJQVlA4IIYAAACQBACdASoYABAAPt1apkyopSOiMAgBEBuJaAC7MoADTq8UsWqsFl2TPM/BV3AA/vaIi6fqkEHDr5gLJ4zT4Mi++8C5tqgJq7oTd8FaFg8E9duFcAUqMqhgdY1fxEkEj+br+pBL2o9TVscnNCj515a/4/6+/vO/duW3JlaeP+1d2swbCMAAAA==",
+      "exif": {}
+    },
+    "dsc05176.jpg": {
+      "source": "DSC05176.jpg",
+      "width": 2400,
+      "height": 1028,
+      "color": "#545045",
+      "lqip": "data:image/webp;base64,UklGRnwAAABXRUJQVlA4IHAAAADwAwCdASoYAAoAPt1apkyopSOiMAgBEBuJYwC7ABZP9fDD4L/WprAAAP6C2Rle5q1TPlRTB6K5tZu+sbBr7u+//R3Iljt8u9cru6RyuygETj6Kmqd0/9S3jFnKPZ98fwM7d4owC6M0qd4ETSTMgAAA",
+      "exif": {
+        "camera": "Sony ILCE-6000",
+        "lens": "E PZ 16-50mm F3.5-5.6 OSS",
+        "aperture": 3.5,
+        "shutter": "1/160",
+        "iso": 2500,
+        "focalLength": 16,
+        "date": "2024-12-08T14:55:33"
+      }
+    },
+    "dsc09009.jpg": {
+      "source": "DSC09009.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#ababab",
+      "lqip": "data:image/webp;base64,UklGRpAAAABXRUJQVlA4IIQAAACwAwCdASoYABAAPt1ap0yopSOiMAgBEBuJaQAAW9DTLbZfjxBMAAD+82/8ZuXLG+XFoQwmNnHPsO8La4Qlr8VtUVvDGUMz0Wbk9KMmCHXFcmt+grspZsrYqd2I+GXQZXr2yq9N8Yap2y91MvAGmaSv3ewyFUpk8ixut1VVkiBFk7gAAAA=",
+      "exif": {
+        "camera": "Sony ILCE-6000",
+        "lens": "----",
+        "shutter": "1/60",
+        "iso": 100,
+        "date": "2025-02-14T15:48:33"
+      }
+    },
+    "dscf0039.jpg": {
+      "source": "DSCF0039.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#4b3e23",
+      "lqip": "data:image/webp;base64,UklGRowAAABXRUJQVlA4IIAAAABwBACdASoYABAAPt1apkyopSOiMAgBEBuJagCdMoR3BSAA1npL8PUf2m35QAD+RTq0VPb+mg2fA+mMns62GNQgC0MQGrSNw7h4k22ie9iV5bJUCHDkeol7PNM2PafGn6NtIjZN1FmWCCqGuJ/WqafFrXifvMhAW0yp8tJsKsAAAA==",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 2.8,
+        "shutter": "1/60",
+        "iso": 640,
+        "focalLength": 18,
+        "date": "2025-06-17T11:30:01"
+      }
+    },
+    "dscf0114.jpg": {
+      "source": "DSCF0114.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#3f3a35",
+      "lqip": "data:image/webp;base64,UklGRpYAAABXRUJQVlA4IIoAAABQBACdASoYABAAPt1iqUyopiQiMAgBEBuJYwDG9GlgCu9vnVfa43nGep6wAP7+n/VkPqz3z0vZbWKUKel2iwBFa7UE3UhqEWi28iBoKaO+oYmQ6bCJkoLVIr5eFlrm1yKkXpnA5TEZGx7iaC2Yc7Yhs49utMuIwdfVH2g4XqKhm2XJGAJ7TqwQAAA=",
+      "exif": {}
+    },
+    "dscf0137.jpg": {
+      "source": "DSCF0137.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#2c2420",
+      "lqip": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAAAwBACdASoYABAAPt1apkyopSOiMAgBEBuJZgCxDMgDANyPq40Bzwd1wSAA/uWRdefpKEvfQrbKEUwCaOFRTZO/1IATAjaaNw9ImyWdfK89TwnBASFynubNRLeP335cK5+RoZZ/Ftd91i+i/P/AAA==",
+      "exif": {}
+    },
+    "dscf0256.jpg": {
+      "source": "DSCF0256.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#35190e",
+      "lqip": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAACwAwCdASoYABAAPt1kqU2opaQiMAgBEBuJYgCdACHf/RkRcECcAAD+8MgnbiwGrge4P47Jeiyzvn+26HcmP3AgL7r/jaFLXqEgQ6drjI1hKza2dvPQAA==",
+      "exif": {}
+    },
+    "dscf1178.jpg": {
+      "source": "DSCF1178.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#212121",
+      "lqip": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAACQAwCdASoYABAAPt1apkyopSOiMAgBEBuJaQAAW7kEni1vQ2EAAP7y97F0nnjvdIuJes54qwRDzpmegZJz/8m2xkCLQGel3wqZZTtF/R0zMhR63pZ7T6+xg5UgAA==",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF35mmF1.4 R",
+        "aperture": 5.6,
+        "shutter": "1/15",
+        "iso": 1600,
+        "focalLength": 35,
+        "date": "2025-01-05T16:40:08"
+      }
+    },
+    "dscf1277.jpg": {
+      "source": "DSCF1277.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#322b27",
+      "lqip": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAAAwBACdASoYABAAPt1ep00opSOiMAgBEBuJZQCo9CK5WUEfWZAkqObdGEAA/tjqezK3IFKd0Y3JBLgzdsayOCcklLYtdGF33IaWqzduut6sfi4jW+hAEnWAGQOQlTUCPwk2iuha4SHxbCDGIAAAAA==",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF35mmF1.4 R",
+        "aperture": 3.2,
+        "shutter": "1/60",
+        "iso": 2000,
+        "focalLength": 35,
+        "date": "2025-01-11T16:13:14"
+      }
+    },
+    "dscf1545.jpg": {
+      "source": "DSCF1545.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#477192",
+      "lqip": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAABQAwCdASoYABAAPt1cpkyopSOiMAgBEBuJQBOmUACM4jeekAD+3qGHJs1lwI9D1Vp0v+qKRP4aUG27JFbM9CHAAAA=",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF35mmF1.4 R",
+        "aperture": 4.5,
+        "shutter": "1/60",
+        "iso": 2500,
+        "focalLength": 35,
+        "date": "2025-01-11T16:24:19"
+      }
+    },
+    "dscf1780.jpg": {
+      "source": "DSCF1780.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#2c2c2c",
+      "lqip": "data:image/webp;base64,UklGRnwAAABXRUJQVlA4IHAAAADwAwCdASoYABAAPt1apkyopSOiMAgBEBuJaQAAW+/epOmEO2MNlJ7AAP71cygdC/wBhilyxEFJmWDFkPnnAr0H1t5JYcPy2OJEfre5nt9/AGoVue8AXeKlTH2x/lHoABjN1dv0ybGe2YeDm6giAAAA",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 2.8,
+        "shutter": "1/60",
+        "iso": 2500,
+        "focalLength": 18,
+        "date": "2026-04-18T22:44:14"
+      }
+    },
+    "dscf1860.jpg": {
+      "source": "DSCF1860.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#090f10",
+      "lqip": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADQAgCdASoYABAAPt1apkyopSOiMAgBEBuJZwAAifQAAP7w2DI7YQBuCER2aPO014f69IMYUAA=",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF35mmF1.4 R",
+        "aperture": 2.8,
+        "shutter": "1/15",
+        "iso": 2000,
+        "focalLength": 35,
+        "date": "2025-01-11T17:26:31"
+      }
+    },
+    "dscf2573.jpg": {
+      "source": "DSCF2573.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#22221d",
+      "lqip": "data:image/webp;base64,UklGRqYAAABXRUJQVlA4IJoAAAAQBACdASoYABAAPt1apkyopSOiMAgBEBuJQBadBHwe+VjYTNIVwKMzQAD+9C8bvjXb6TSVUrohXJ8nOTjZySm48yESfF3GmVc2O3UusTQhFI5Xkpzc7voBWi/Y3vnDIhdQZhm/7QyV8uVA/1TbOInbRQmKfh8xEVqu6suqF0jeeQHIIyrK7cj3vwc2Ae3D2tP3R3C1ST2OwAAA",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 5,
+        "shutter": "1/60",
+        "iso": 3200,
+        "focalLength": 30,
+        "date": "2025-01-22T17:07:01"
+      }
+    },
+    "dscf2819.jpg": {
+      "source": "DSCF2819.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#181818",
+      "lqip": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAACQAwCdASoYABAAPt1kqU2opaQiMAgBEBuJaQAAUYAAVLvBonHAAP7pK+6MtShqp4genTiKGs5Y6rPNMJP9AKgJmoWCAAAA",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 11,
+        "shutter": "1/30",
+        "iso": 2500,
+        "focalLength": 18,
+        "date": "2025-01-23T18:51:58"
+      }
+    },
+    "dscf2828.jpg": {
+      "source": "DSCF2828.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#5b5b5b",
+      "lqip": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAADwAwCdASoYABAAPt1ep00opSOiMAgBEBuJaQAAUqgAvX+/bvsVdKsAAP6fQdeIKFqmRihJiIbAemrY30/wzI226yIESiq9rManbEtmjflhvcMPPGyeBoWjXqGEcYVPeKTR/VcAswAAAA==",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "21.0 mm",
+        "aperture": 1,
+        "shutter": "1/30",
+        "iso": 2500,
+        "focalLength": 21,
+        "date": "2025-01-24T20:42:48"
+      }
+    },
+    "dscf2876.jpg": {
+      "source": "DSCF2876.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#5a5a3a",
+      "lqip": "data:image/webp;base64,UklGRpYAAABXRUJQVlA4IIoAAACwBACdASoYABAAPt1cpkyopSOiMAgBEBuJYgC7MoKOOPoAfiynpoykpC1oBEHgAP54zTju1c5BTbwg71cE0l7/WSJdIwgQ84RfsTczWJWdVcSsIoqf2RZun1NVd+9+quzxIzm6qU/ruoCEDAJE8CEljIkKWXxk59uNB7WYoEhHIBECbY3bsuAWQAA=",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "21.0 mm",
+        "aperture": 1,
+        "shutter": "1/250",
+        "iso": 640,
+        "focalLength": 21,
+        "date": "2025-01-25T15:28:05"
+      }
+    },
+    "dscf4435.jpg": {
+      "source": "DSCF4435.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#5f5959",
+      "lqip": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAAAQBACdASoYABAAPt1cpkyopSOiMAgBEBuJYgCdACIAEWGUvLFvW8oNIAD+uk+MPxjfRxZUAixELhC/pMv9Jsb5KgbO4eVBL1jAJkY06hiP+vt8Kbac8ee58zz5cvZ4jhDlA4abU+C7UCtPwJf+k47Tz/VAAA==",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 6.4,
+        "shutter": "1/125",
+        "iso": 640,
+        "focalLength": 30,
+        "date": "2025-02-10T15:52:14"
+      }
+    },
+    "dscf4506.jpg": {
+      "source": "DSCF4506.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#7c7b7b",
+      "lqip": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAADwAwCdASoYABAAPt1qqU4opqQiMAgBEBuJZwAAW+mnkP/mGLHmzZ0AAP0Cdwy6VYqyWfWQVKm59MYN4HzI/1FXkmdgObDk8jYqeiY3X/5suhLDUu852EDC3+QM3H6sM7284G4rCwzXAAAA",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "28.0 mm",
+        "aperture": 1,
+        "shutter": "1/125",
+        "iso": 160,
+        "focalLength": 28,
+        "date": "2025-02-13T11:33:05"
+      }
+    },
+    "dscf5160.jpg": {
+      "source": "DSCF5160.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#9bbec0",
+      "lqip": "data:image/webp;base64,UklGRnwAAABXRUJQVlA4IHAAAACQBACdASoYABAAPt1apkyopSOiMAgBEBuJYgCdMoMxgEQ0rSsD/YZAzCU6GIAA/ujfkq3tOf5gJeShJ2jKE8Y8gE3NGSszL7jJB88rqwer9uZgYcZvWSJdwI2eV2cqUbqE1UX+1epKQSjFmP4UAAAA",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 2.8,
+        "shutter": "1/2900",
+        "iso": 640,
+        "focalLength": 18,
+        "date": "2024-09-30T16:37:32"
+      }
+    },
+    "dscf5202.jpg": {
+      "source": "DSCF5202.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#620903",
+      "lqip": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAADQBACdASoYABAAPt1cpkyopSOiMAgBEBuJbACdMoR4Lf/gPN92Vy5AKClYT8SkMAD+8qgjZVysW3FOmmJQ8+r5lXOkRnUkhWZtWeWyMcteyA2wLokKFT0i9lkDOg43VkNkwdFbPX8EAE0XaIFi+VXruhE6AJ6fGC09gxHvAAA=",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 3.6,
+        "shutter": "1/30",
+        "iso": 6400,
+        "focalLength": 37,
+        "date": "2025-02-23T15:05:37"
+      }
+    },
+    "dscf5212.jpg": {
+      "source": "DSCF5212.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#524936",
+      "lqip": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAACwAwCdASoYABAAPt1cp0yopSOiMAgBEBuJZQAAQvfIpQxYq8FAAAD+8a/7rcmqOJibcKsEAj7ZC+zHlNYx/hG+AWq7lmcqbJpHfjjVT+UHrb+4dMmwrbetJ9kYXyjopZ5Xo5msZgY8gAAA",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 3.6,
+        "shutter": "1/1000",
+        "iso": 800,
+        "focalLength": 30,
+        "date": "2025-02-24T08:21:43"
+      }
+    },
+    "dscf5258.jpg": {
+      "source": "DSCF5258.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#32312f",
+      "lqip": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADQAwCdASoYABAAPt1cpkyopSOiMAgBEBuJZwAATudm+la9dL/2eMgA/vLc2XThfoa6jaedVVDvEA1w04MuGky5+wInLm0672eQ38xfQlueTmzQAAA=",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 5.6,
+        "shutter": "1/1000",
+        "iso": 640,
+        "focalLength": 18,
+        "date": "2025-02-25T15:47:44"
+      }
+    },
+    "dscf5648.jpg": {
+      "source": "DSCF5648.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#23130b",
+      "lqip": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAABwAwCdASoYABAAPt1apkyopSOiMAgBEBuJQAALfVQkEsObxcAA/vVtuO7jaHcacMH6dB/YD/86mlarRijxRdG42F6lqclxEqykW9wqHTwAAA==",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 3.6,
+        "shutter": "1/250",
+        "iso": 3200,
+        "focalLength": 28,
+        "date": "2025-03-05T18:18:25"
+      }
+    },
+    "dscf5867-horrorfilm-schauen.jpg": {
+      "source": "DSCF5867-horrorfilm schauen.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#6a230a",
+      "lqip": "data:image/webp;base64,UklGRowAAABXRUJQVlA4IIAAAACQBACdASoYABAAPt1cpkyopSOiMAgBEBuJbACdMoMYAEiYybZMSdj6s4ZwqL4A/tlTB8sdmhdOIKNDgs32MwTg6JpdsolME4MnAgjvuOq2tueIhEFuAGf9h5WT3XdvY7k3zScJWeW7qJ7cXdE01+nPofrunEuJW44qjl7s4JoAAA==",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "28.0 mm",
+        "aperture": 1,
+        "shutter": "1/8",
+        "iso": 6400,
+        "focalLength": 28,
+        "date": "2026-07-24T00:01:38"
+      }
+    },
+    "dscf5963.jpg": {
+      "source": "DSCF5963.jpg",
+      "width": 2400,
+      "height": 2400,
+      "color": "#2f2f2f",
+      "lqip": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAABwBACdASoYABgAPtFYpkyoJSOiMAwBABoJaQAAW+nu5VhnO8O88kR49jwN4AD+8phcb2xmPUjNOZaw1xcF42S5KYcjoaOfeeDcI2m+KWwfsqSpibIY5gbcGYh6NZLAMhaRikAA",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 13,
+        "shutter": "1/2000",
+        "iso": 640,
+        "focalLength": 18,
+        "date": "2025-04-03T17:44:51"
+      }
+    },
+    "dscf6048.jpg": {
+      "source": "DSCF6048.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#5a542e",
+      "lqip": "data:image/webp;base64,UklGRqIAAABXRUJQVlA4IJYAAACwBACdASoYABAAPt1apkyopSOiMAgBEBuJbACdMoR4GCTlZRDxkXzC5cQ435kAAP7MZntyRijwBJ0jQ0TmSf0fYGQKg7ZhLC3q7QSOrJnci0+FgUPpTPi6GhiQqlC60q4woqCYPSrK8KTPBuuBdgbG9oRRiaOpDGOH9P9z1CubEpX/VfBeUfVSEU7Fko4DXp3AGRYQwAA=",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 14,
+        "shutter": "1/15",
+        "iso": 800,
+        "focalLength": 46,
+        "date": "2025-07-24T20:38:04"
+      }
+    },
+    "dscf7034.jpg": {
+      "source": "DSCF7034.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#4a4b35",
+      "lqip": "data:image/webp;base64,UklGRogAAABXRUJQVlA4IHwAAAAwBACdASoYABAAPt1kqU2opaQiMAgBEBuJZQC7ACIGnvhflP4IJIwN36AA/rkzVD1aJuEJruNzPIBgPwDSqXcq6XazkkmqN/mh7S+itcB1PjEbfbT6f/R+wkXVnhE9CptIpzc23Ei7e76F3omeJbCM3XhoGmojgm35wAAA",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "21.0 mm",
+        "aperture": 1,
+        "shutter": "1/60",
+        "iso": 640,
+        "focalLength": 21,
+        "date": "2024-10-31T17:05:40"
+      }
+    },
+    "dscf7044.jpg": {
+      "source": "DSCF7044.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#4e4c4b",
+      "lqip": "data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAAAQBACdASoYABAAPt1ep00opSOiMAgBEBuJYwDImCGvwxYiG9aX8SSvsAD+9NFc95KsxPMrBlO1CXrKTgCW79fjdZncr8Pqh9uR8F92pmbtwPP/l9itD0gvmVgMVXjwPG5+VmkACm3DHkKklb28MCkcAAA=",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "21.0 mm",
+        "aperture": 1,
+        "shutter": "1/4",
+        "iso": 640,
+        "focalLength": 21,
+        "date": "2024-10-31T17:07:47"
+      }
+    },
+    "dscf7094.jpg": {
+      "source": "DSCF7094.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#71684f",
+      "lqip": "data:image/webp;base64,UklGRoYAAABXRUJQVlA4IHoAAAAwBACdASoYABAAPt1cpkyopSOiMAgBEBuJZACdACF4x7Rs8WPMYfEdcUAA/oSin5R/fvZdTp9x87DQPrSb/uOURS5VEsk3ad96S6zNT9dBWp09xw++ah0VcmL4xDRKvyAMmCwQ9o1pWSzPrW8REqbtGsV/AuIs2gdQAA==",
+      "exif": {}
+    },
+    "dscf7096.jpg": {
+      "source": "DSCF7096.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#6d4830",
+      "lqip": "data:image/webp;base64,UklGRqQAAABXRUJQVlA4IJgAAABwBACdASoYABAAPt1cpkyopSOiMAgBEBuJagCdMoADg498y0Re3ZHcaT1gAAD+3bUoDcfP6FlRfxz+Xz8BhPSIr63M9UsFMx3JmgwGh2Zs3PcGQnLqHuuALTDXUGEarXV73TYIJKgxjuL7uESssJ4nPCWpmBOKRi1mM8JrZkqPdhZ5lnuHur8hyL4Cm5UsXA0br5HS2nAAAA==",
+      "exif": {}
+    },
+    "dscf7099.jpg": {
+      "source": "DSCF7099.jpg",
+      "width": 2400,
+      "height": 1800,
+      "color": "#422e1c",
+      "lqip": "data:image/webp;base64,UklGRq4AAABXRUJQVlA4IKIAAAAQBQCdASoYABIAPt1kp1AopSMiqAqpEBuJQBYhkygwWus0nVCXmcj0RI1Qk6jFjSLAAP71b9OcGO2i8SXQNY0aP9iPqfDBJwgKQzQN7coL6DL0H9k1PxEC0UzOphQa2QXF7cy837Q2i1cieuV+NbQaSLWat8vZA0owXGyI8VTSylx+tmNfii/FAIf7wwHXxbwKENqEcHEK3+bZsLYHuv3JgAA=",
+      "exif": {}
+    },
+    "dscf7433.jpg": {
+      "source": "DSCF7433.jpg",
+      "width": 2400,
+      "height": 1614,
+      "color": "#503e1c",
+      "lqip": "data:image/webp;base64,UklGRpwAAABXRUJQVlA4IJAAAACwBACdASoYABAAPt1apkyopSOiMAgBEBuJbACdL1EMgmf8DHtF4euLY5gO9ekgAP7SabYaLoYZZWerqlkds6FysuTwqiBHbQcVNl9MofyV61nhrPt2zVGrKtCBwPNXJp9lECenogsc3pvAQKd24vZxfj2bSyFXEPQwO9qxuMUz6tTRdspKAwWh+2WRKkEAAAA=",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 3.2,
+        "shutter": "1/250",
+        "iso": 5000,
+        "focalLength": 25,
+        "date": "2024-11-16T17:17:47"
+      }
+    },
+    "dscf7564.jpg": {
+      "source": "DSCF7564.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#c9c7b7",
+      "lqip": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAAAQBACdASoYABAAPt1ep00opSOiMAgBEBuJYwCdAGWaCi2eLllRbwFVAAD+/YjGr7hbiEPVy45fAEAMVjSV306/bMCzXKhyzZ6eBsVmk+7MzxxSHlxjgAAA",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 2.8,
+        "shutter": "1/40",
+        "iso": 6400,
+        "focalLength": 18,
+        "date": "2024-11-16T21:17:06"
+      }
+    },
+    "dscf8463.jpg": {
+      "source": "DSCF8463.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#454770",
+      "lqip": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAAAwBACdASoYABAAPt1apkyopSOiMAgBEBuJYgCdMoADTZSVIBQySl4wdCAA/uvp4teOA2vPZdmvKSWaRCKudDP0PCKLdGdyhMvECAAA",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 3.6,
+        "shutter": "1/60",
+        "iso": 10000,
+        "focalLength": 34,
+        "date": "2025-05-10T14:09:15"
+      }
+    },
+    "dscf8468.jpg": {
+      "source": "DSCF8468.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#1c1e3e",
+      "lqip": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAABQAwCdASoYABAAPt1apkyopSOiMAgBEBuJYwAAUrVbjgzkAAD+cbXkb8knnW1fbI1NX/WJ1OOlcs7MlBx+Fb8paAAAAA==",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 4,
+        "shutter": "1/30",
+        "iso": 4000,
+        "focalLength": 41,
+        "date": "2025-05-10T14:11:18"
+      }
+    },
+    "dscf8526.jpg": {
+      "source": "DSCF8526.jpg",
+      "width": 2400,
+      "height": 2400,
+      "color": "#4d4d4d",
+      "lqip": "data:image/webp;base64,UklGRpoAAABXRUJQVlA4II4AAABQBQCdASoYABgAPt1iq08opSQiKAqpEBuJaQAALj6N+n7ljs7r15M4p7ENBGaBVYbbkRAA/ulT4ZN0DfigzHTY5lMgY1QugaCwbT0EyrG685Vry+iHPLbh/gMBZTq9Q2dRm+b6rYfPdn3vR8HY2oS5mNCvXa5/NNJsFQsnbiOm0DPd5KVj6PvK/ROlVoAA",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 3.2,
+        "shutter": "1/15",
+        "iso": 3200,
+        "focalLength": 21,
+        "date": "2024-12-06T19:23:13"
+      }
+    },
+    "dscf9954.jpg": {
+      "source": "DSCF9954.jpg",
+      "width": 1600,
+      "height": 2400,
+      "color": "#633e21",
+      "lqip": "data:image/webp;base64,UklGRowAAABXRUJQVlA4IIAAAAAQBACdASoQABgAPt1cqE0opSQiMAgBEBuJagCdMoRwAA8Fxid2KQsWAADNMuRcdQJcFSVeGFe/QP2MZ6gUypr19cBQvibxga2PAT2KkyNIcl11s+FetmqcJq3Uwt+7G+ueQe6kQ9JYSoATeqgEouYL/Bu2ZR2qUmuzCxgiQW+gAA==",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 2.8,
+        "shutter": "1/80",
+        "iso": 1600,
+        "focalLength": 18,
+        "date": "2025-06-06T21:34:59"
+      }
+    },
+    "p1070583.jpg": {
+      "source": "P1070583.jpg",
+      "width": 1800,
+      "height": 2400,
+      "color": "#312835",
+      "lqip": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAABwBACdASoSABgAPt1iqk8opSOpqAqpMBuJZAC7M47BqhrPcgbMsisGpuNz8AD+7o1hf4tBdb04sksfSidrztpjdfzZeoepP5IxC/j+efl8BOBDOLUYMN6igZis5HkV0XGXmpT0/4sAgrXxhOHwoV1Mc+AAAA==",
+      "exif": {
+        "camera": "Panasonic DMC-LX3",
+        "aperture": 2,
+        "shutter": "1/30",
+        "iso": 800,
+        "focalLength": 5,
+        "date": "2026-05-13T21:29:07"
+      }
+    },
+    "p1070776.jpg": {
+      "source": "P1070776.jpg",
+      "width": 2400,
+      "height": 1800,
+      "color": "#484746",
+      "lqip": "data:image/webp;base64,UklGRpIAAABXRUJQVlA4IIYAAADwBACdASoYABIAPt1mrFCopSQiqAgBEBuJZQDE2BEcngfG4RCnl2UlgXxCNNhIU0AA/u8cE2rTRzzirPqS4IkHJhFWpsRBhMgKAz/YI+gYkgndDG5t7WqkfRfhRjPv4+843py9F15AfhCBpNtSdrGsp8lf8U2sUDvHR9zwYA/GoBtMKAAAAA==",
+      "exif": {
+        "camera": "Panasonic DMC-LX3",
+        "aperture": 2.2,
+        "shutter": "1/125",
+        "iso": 100,
+        "focalLength": 7,
+        "date": "2026-05-19T21:11:40"
+      }
+    },
+    "p1070910.jpg": {
+      "source": "P1070910.jpg",
+      "width": 2400,
+      "height": 1800,
+      "color": "#615755",
+      "lqip": "data:image/webp;base64,UklGRrIAAABXRUJQVlA4IKYAAAAwBQCdASoYABIAPt1cqU6opKOiMBgIARAbiUATpmmIJqt/a5OzvYIiM4+Qbf6IJs67AAD+8rQrnLuS81izp5VUAKZHCdOwGXxT/IFQKnwYpKE2F+/oJkZeO8eNRzK/TarT1W3BwUq0+GnIBT9PuR327LdfZveiw1q6Q1vO38yXxNthYl0kE31aKMRedqAhdc1XUazwQJ5Nz4qovFQ7Az9rYsQowAAA",
+      "exif": {
+        "camera": "Panasonic DMC-LX3",
+        "aperture": 5,
+        "shutter": "1/125",
+        "iso": 125,
+        "focalLength": 5,
+        "date": "2026-05-25T17:28:42"
+      }
+    },
+    "p1070948.jpg": {
+      "source": "P1070948.jpg",
+      "width": 2400,
+      "height": 1800,
+      "color": "#1e1b1b",
+      "lqip": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAADwAwCdASoYABIAPt1irE8opSSiKAqpEBuJZQDGfBEc3VlG07iIRj0AAP71Z56QXG6DsEvKs5HwEi/2AStcGazc2B/NaQzCz9XcOVUsbOb8nme9v+TVEo8W5x1g14UkSAA=",
+      "exif": {
+        "camera": "Panasonic DMC-LX3",
+        "aperture": 2,
+        "shutter": "1/30",
+        "iso": 320,
+        "focalLength": 5,
+        "date": "2026-06-04T18:21:39"
+      }
+    },
+    "p1080229.jpg": {
+      "source": "P1080229.jpg",
+      "width": 2400,
+      "height": 1800,
+      "color": "#673734",
+      "lqip": "data:image/webp;base64,UklGRtwAAABXRUJQVlA4INAAAACwBQCdASoYABIAPt1mqlCopSOiqAgBEBuJbACdMzQ8mtYxSQB4ViYBenHIiuRrarC7F9dC+gAA/tu3Bl1NzhYhqGabRDN+ezFuBezDlLC7uRxMTYH0jaZiCf4L55LCXOQcuuDczzJYuzzVmIcUjqKkYi7yZw9JvJWb/ecN4eZyL7Fa/ldNTNzBjbqvsK23GESNYtYjS9WkoJKId3aEELl/Qr3YPyOTgSIUHAQtVKF8/g1G1uSXg1G4Agjmsbuwe7qOAeYQigMhSKL61pdP0wAA",
+      "exif": {
+        "camera": "Panasonic DMC-LX3",
+        "aperture": 2.4,
+        "shutter": "1/200",
+        "iso": 100,
+        "focalLength": 8,
+        "date": "2026-06-20T21:41:08"
+      }
+    },
+    "p1080237-als-titelbild.jpg": {
+      "source": "P1080237-als titelbild.jpg",
+      "width": 2400,
+      "height": 1800,
+      "color": "#938575",
+      "lqip": "data:image/webp;base64,UklGRpQAAABXRUJQVlA4IIgAAADQBACdASoYABIAPt1mp0+opaMiKAqpEBuJYwC7ABDOW6A5C0G9vXm6F8fJ3o4toAD+6oUwy9U+To/Jx+18KLJL0llhn4tzobGxZ/itfN3MbQ5Ya2VvAe2691Na+ysLjEKvHGG1jVmBxSixrvhETk0vqa4F8wYRtjECukczpleV2phmf0Y8AoAA",
+      "exif": {
+        "camera": "Panasonic DMC-LX3",
+        "aperture": 2.4,
+        "shutter": "1/50",
+        "iso": 400,
+        "focalLength": 8,
+        "date": "2026-06-21T01:37:21"
+      }
+    },
+    "p1090505.jpg": {
+      "source": "P1090505.jpg",
+      "width": 1800,
+      "height": 2400,
+      "color": "#3e3d2b",
+      "lqip": "data:image/webp;base64,UklGRpAAAABXRUJQVlA4IIQAAAAQBACdASoSABgAPt1cqU6opKOiMBgIARAbiWUAzNAQNln92QwIMujwAADyl//UMAXGNfLD0XV8QdC2/B6rk98AFW9NRnHqqQv/AoQM6libKZwJOCJu+zV6vITm+qjfM8BumSPUDh/1nCvGlrBBhusiEXTQFnuRJnDXSH137W6gaNpwAAA=",
+      "exif": {
+        "camera": "Panasonic DMC-LX3",
+        "aperture": 2.8,
+        "shutter": "1/250",
+        "iso": 80,
+        "focalLength": 13,
+        "date": "2026-07-29T19:19:24"
+      }
+    },
+    "p1090553.jpg": {
+      "source": "P1090553.jpg",
+      "width": 2400,
+      "height": 1800,
+      "color": "#777777",
+      "lqip": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAABQBACdASoYABIAPt1cpU0opSOiMBgMARAbiWkAACmAo51WAPJOiM/jq5AAAP6Qmk4/7L5zJspcUMsCdOj6YNKURRK4iWNONC3555OToJPa5C/kR1zZhj786W5Jd7ZxDZYrm6I8EAAAAA==",
+      "exif": {
+        "camera": "Panasonic DMC-LX3",
+        "aperture": 5,
+        "shutter": "1/1000",
+        "iso": 80,
+        "focalLength": 5,
+        "date": "2026-07-31T14:47:36"
+      }
+    }
+  }
+}

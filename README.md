@@ -106,9 +106,9 @@ hängen, in welcher Reihenfolge und unter welchem Namen:
 
 ```yaml
 showroom:
-  - galerie: drama-queen          # Ordnername in src/content/galleries/
-    bild: dscf7235.jpg            # ohne Angabe: Vorschaubild der Galerie
-    name: "Beton und Rüschen"     # ohne Angabe: Name der Galerie
+  - galerie: hilda-setcard        # Ordnername in src/content/galleries/
+    bild: hilda-setcard-gesicht.jpg   # ohne Angabe: Vorschaubild der Galerie
+    name: "Hilda"                 # ohne Angabe: Name der Galerie
 ```
 
 Mit Namen zeigt das Schild den Namen, das Datum und den Link „Aus dem Album …“. Ohne Namen zeigt es den Namen der Galerie, die Bildanzahl und „Zum Album“.
@@ -271,20 +271,27 @@ darunter). Mit der Tastatur geht es per **←** und **→** weiter, **Esc** füh
 
 ### Welcher Speicher für die Originale?
 
-Die Website braucht nur einen Link. Den Anbieter kannst du also jederzeit wechseln. Stand Oktober 2026, bitte vor der Entscheidung selbst prüfen:
+Die Website braucht nur einen Link. Den Anbieter kannst du also jederzeit wechseln.
+Preise geprüft am 26.10.2026 auf den Seiten der Anbieter, inkl. MwSt. Bitte vor der Entscheidung selbst nachsehen:
 
-| Anbieter | Passwort | Ablaufdatum | Kosten | Für wen |
-|---|---|---|---|---|
-| **Nextcloud** (gehostet, z. B. Hetzner Storage Share, oder selbst betrieben) | ✅ | ✅ | kostenpflichtig (gehostet) | **Kunden**: Ordner als ZIP, „Download verbergen“, Hosting in Deutschland |
-| **Proton Drive** | ✅ | ✅ | Gratis-Speicher klein, mehr kostet | Kunden, Datenschutz |
-| **Google Drive** (privates Konto) | ❌ | ❌ (bei „Jeder mit dem Link“) | 15 GB frei (geteilt mit Gmail) | **Freunde**, Unkritisches |
-| **Backblaze B2** | ❌ | nur signierte Links (max. ca. 7 Tage) | 10 GB frei | technisch, günstig bei viel Volumen |
-| **Cloudflare R2** | ❌ | nur signierte Links (max. 7 Tage) | 10 GB frei, Download gratis | sinnvoll erst mit eigener Domain; `r2.dev`-Links sind nach meinem Stand gedrosselt und nicht für den Dauerbetrieb gedacht |
-| **GitHub Releases** | ❌ | ❌ | gratis, max. 2 GiB pro Datei | nur Öffentliches. Bei öffentlichem Repo sieht jeder die Releases. |
+| Anbieter | Gratis | Günstigster passender Tarif | Passwort / Ablauf | Originale | Server |
+|---|---|---|---|---|---|
+| **Pixieset** | 3 GB | Basic ca. 8 $/Monat (jährlich), 10 GB | Galerie-Passwort **und** 4-stellige Download-PIN, Ablauf | gratis nur bis 3600 px lange Kante | nicht angegeben |
+| **ente** | 10 GB | 50 GB für 2,49 $/Monat | Passwort, Ablauf, Download an/aus | ja | EU (Amsterdam, Frankfurt, Paris), Ende-zu-Ende-verschlüsselt |
+| **Proton Drive** | 5 GB | 200 GB für 4,99 €/Monat | Passwort, Ablauf | ja, ohne Konto | Schweiz/Deutschland/Norwegen, verschlüsselt |
+| **Hetzner Storage Share** (Nextcloud) | – | 1 TB für ca. 5,11 €/Monat, monatlich kündbar | Passwort, Ablauf, „Download verbergen“ | ja, Ordner als ZIP | Deutschland |
+| **SwissTransfer** | bis 50 GB pro Versand, max. 30 Tage | – | Passwort, Download-Limit | ja, als ZIP | Schweiz |
+| Google Drive | 15 GB | – | ❌ keine Link-Passwörter | ja | – |
+| Dropbox Plus | 2 GB | Plus hat **keine** Link-Passwörter, erst „Standard“ | – | ja | – |
 
-**Meine Empfehlung für dich:** Für Freunde und Unkritisches reicht **Google Drive**, das hast du schon.
-Sobald Kunden oder sensible Bilder dazukommen, nimm einen Anbieter mit **Passwort und Ablaufdatum**,
-z. B. **Nextcloud** (gehostet) oder **Proton Drive**. Die Entscheidung liegt bei dir.
+**Empfehlung:**
+- **Zum Start: Pixieset Free.** Galerie-Passwort plus Download-PIN passt genau zu „Code anfordern“, und es ist gratis.
+  Grenzen: 3 GB, Downloads gratis nur bis 3600 px. Volle Originale gibt es ab Basic (ca. 96 $/Jahr). Wo die Server stehen,
+  gibt Pixieset nicht an.
+- **Datenschutz zuerst: ente.** 10 GB gratis, Server in der EU, verschlüsselt, Links mit Passwort und Ablauf.
+- **Wenn es viel wird: Hetzner Storage Share.** Rund 5 €/Monat für 1 TB in Deutschland, Nextcloud-Links mit Passwort und Ablauf.
+- **Einzelne Übergaben: SwissTransfer.**
+- **Nicht geeignet für Codes:** Google Drive und Dropbox Plus, denn dort gibt es keine Link-Passwörter.
 
 ### Links erzeugen
 
@@ -461,6 +468,20 @@ gh repo create jeskodorner/jeskodorner.github.io --public --source . --push
 ```
 
 Danach weiter mit Schritt 4 und 5 von oben.
+
+### Eigene Domain (z. B. jeskodorner.de)
+
+GitHub Pages bleibt auch mit eigener Domain kostenlos, inklusive HTTPS. Stand 26.10.2026:
+
+- **Anbieter:** **INWX** (deutsch, .de ab 5,97 € im ersten Jahr, danach 4,65 €/Jahr, DNSSEC inklusive) oder **netcup** (ca. 5 €/Jahr,
+  12 Monate Mindestlaufzeit). Vorsicht bei Lockpreisen, die im zweiten Jahr deutlich teurer werden (IONOS, Strato, United Domains:
+  12–19 €/Jahr). Cloudflare bietet .de nicht an.
+- **DNS beim Anbieter eintragen:** vier A-Einträge `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`,
+  vier AAAA-Einträge `2606:50c0:8000::153` bis `2606:50c0:8003::153` und für `www` einen CNAME auf `jeskodorner.github.io`.
+- **Auf GitHub:** Domain unter *Settings → Pages → Custom domain* eintragen, später *Enforce HTTPS* anhaken.
+  Am besten die Domain vorher unter *Settings → Pages → Verified domains* bestätigen.
+- **Im Projekt:** `url` in `src/config/site.ts` und `site` in `astro.config.mjs` auf die neue Adresse ändern
+  (sonst stimmen Sitemap und Vorschaubilder für Social Media nicht).
 
 ---
 

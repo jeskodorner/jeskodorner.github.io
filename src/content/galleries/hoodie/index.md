@@ -10,24 +10,34 @@ layout: showcase
 # color: pink
 visibility: public
 showExif: true
-cover: dsc01443.jpg
 # downloadUrl: https://…
 images:
-  - file: dsc01387.jpg
-    alt: "Person in rot gemustertem Hoodie mit Kapuze im Hausflur mit Schachbrettboden, daneben ein Fahrrad."
   - file: dsc01421.jpg
-    alt: "Nahaufnahme bei Nacht: Person mit roter Strickkapuze zieht den Kragen ihres Hoodies hoch."
+    alt: "Nahaufnahme bei Nacht: Person mit roter Strickkapuze zieht den Kragen
+      ihres Hoodies hoch."
     focus: "50% 30%"
   - file: dsc01438.jpg
-    alt: "Person im roten Hoodie sitzt nachts auf einem Fahrrad, im Hintergrund Leuchtreklamen."
+    alt: "Person im roten Hoodie sitzt nachts auf einem Fahrrad, im Hintergrund
+      Leuchtreklamen."
     hero: true
     focus: "50% 15%"
-  - file: dsc01443.jpg
-    alt: "In rotes Licht getaucht: Person mit Kapuze und hochgezogenem Kragen auf einer nächtlichen Straße."
-  - file: dsc01452.jpg
-    alt: "Zwei Personen auf einem Fahrrad bei Nacht, vorne die Person im roten Hoodie, dahinter jemand in blauer Trainingsjacke."
-  - file: dsc01454.jpg
-    alt: "Person im roten Hoodie mit verhülltem Gesicht schaut in die Kamera, daneben ein blauer Jackenärmel."
-  - file: dsc01465.jpg
-    alt: "Drei Personen in Winterjacken stehen nachts zusammen auf der Straße und lachen."
+  - file: dsc01413.jpg
+    alt: "Zwei Personen nachts auf einem Fahrrad: vorn eine verwischt in rotem
+      Licht, dahinter eine im Profil."
+  - file: dsc01423.jpg
+    alt: "Person mit roter Strickkapuze und bunt verziertem rotem Hoodie blickt
+      nachts in die Kamera, dahinter ein Straßenschild."
+  - file: dsc01447.jpg
+    alt: "Verwischte Nachtaufnahme: Person in rotem Hoodie und Strickkapuze an einer
+      Straßenecke mit Leuchtreklamen."
+  - file: dsc01453-1.jpg
+    alt: "Person mit roter Strickkapuze und rotem Hoodie, rechts angeschnitten
+      jemand in blauer Trainingsjacke, nachts auf der Straße."
+  - file: dsc01453.jpg
+    alt: "Person mit roter Strickkapuze blickt nachts in die Kamera, rechts eine
+      zweite Person in blauer Trainingsjacke."
+  - file: dsc01457.jpg
+    alt: "Verwischte Nachtszene: Person mit roter Strickkapuze streckt den Arm zu
+      jemandem in blauer Jacke, dahinter Straßenlaternen."
+cover: dsc01438.jpg
 ---

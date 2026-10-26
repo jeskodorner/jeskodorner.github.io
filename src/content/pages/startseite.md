@@ -14,14 +14,15 @@ aboutTeaser: "Platzhalter: kurzer Teaser-Text über dich."
 # Neue Galerien erscheinen hier NICHT automatisch – einfach einen Eintrag ergänzen.
 # Leere Liste (showroom: []) = jede öffentliche Galerie einmal mit ihrem Vorschaubild.
 showroom:
-  - galerie: drama-queen
-    bild: dscf7235.jpg
+  # aus „ausgewählte arbeiten“
+  - galerie: einzelbilder
+    bild: dscf4376.jpg
   - galerie: hilda-setcard
     bild: hilda-setcard-gesicht.jpg
   - galerie: schulstreik-05-03
-    bild: p3050182.jpg
+    bild: p3050211.jpg
   - galerie: hoodie
-    bild: dsc01443.jpg
+    bild: dsc01423.jpg
   - galerie: love-exercise
-    bild: love-exercise-jesko-dorner-45.jpg
+    bild: love-exercise-jesko-dorner-31.jpg
 ---

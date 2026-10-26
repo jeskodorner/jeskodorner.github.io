@@ -16,8 +16,8 @@
         "date": "2026-09-07T14:36:17"
       }
     },
-    "hilda-setcard-koerper-1.jpg": {
-      "source": "Hilda Setcard – Körper 1.jpg",
+    "hilda-setcard-korper-1.jpg": {
+      "source": "Hilda Setcard – Körper 1.jpg",
       "width": 1600,
       "height": 2400,
       "color": "#3e332d",
@@ -32,8 +32,24 @@
         "date": "2026-09-07T14:29:47"
       }
     },
-    "hilda-setcard-oberkoerper-1.jpg": {
-      "source": "Hilda Setcard – Oberkörper 1.jpg",
+    "hilda-setcard-korper-2.jpg": {
+      "source": "Hilda Setcard – Körper 2.jpg",
+      "width": 1600,
+      "height": 2400,
+      "color": "#4d3b32",
+      "lqip": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAAAQBACdASoQABgAPt1apkyopSOiMAgBEBuJYgCdMoRwACRYokU7LQ21wADJ5PopxKUPGlw4qZg4hTllFmRUvDAnuHvkObvbb5i1oT2aDx/jCaxpddjnyyk4bST9jzM48VtfwAAA",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 5.6,
+        "shutter": "1/1000",
+        "iso": 640,
+        "focalLength": 55,
+        "date": "2026-09-07T14:24:33"
+      }
+    },
+    "hilda-setcard-oberkorper-1.jpg": {
+      "source": "Hilda Setcard – Oberkörper 1.jpg",
       "width": 1600,
       "height": 2400,
       "color": "#3a2e29",
@@ -48,8 +64,8 @@
         "date": "2026-09-07T14:39:18"
       }
     },
-    "hilda-setcard-oberkoerper-2.jpg": {
-      "source": "Hilda Setcard – Oberkörper 2.jpg",
+    "hilda-setcard-oberkorper-2.jpg": {
+      "source": "Hilda Setcard – Oberkörper 2.jpg",
       "width": 1600,
       "height": 2400,
       "color": "#4f3527",

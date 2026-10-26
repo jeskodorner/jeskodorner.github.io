@@ -1,0 +1,20 @@
+{
+  "images": {
+    "dscf4376.jpg": {
+      "source": "DSCF4376.jpg",
+      "width": 2400,
+      "height": 1579,
+      "color": "#816c59",
+      "lqip": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAADwAwCdASoYABAAPt1eqU2opSQiMAgBEBuJQBOmUABpDZ6bqvoRr3GAAP3Ll+sR5K8tUBrFPIPXQQk1SrrG0gipujS0KweDs/ZVLWsPt7gei6VkrCCVON1714Y8p4jbcHOqRhFDtPwqKZZIAAA=",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 2.8,
+        "shutter": "1/125",
+        "iso": 2500,
+        "focalLength": 18,
+        "date": "2025-02-10T14:28:42"
+      }
+    }
+  }
+}

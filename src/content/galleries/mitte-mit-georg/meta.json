@@ -1,0 +1,20 @@
+{
+  "images": {
+    "dscf1990.jpg": {
+      "source": "DSCF1990.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#31332d",
+      "lqip": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAAAwBACdASoYABAAPt1eqU2opSQiMAgBEBuJZQDA3Gol+QHQqWFhutxroAAA/vvzCltfH+HY01H0/luptn8D3PpmtnEEPljAe96EAaKR2kQBnzQ1P4EOo2PsLUTnxJjvZALjgAAA",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF16mmF2.8 R WR",
+        "aperture": 6.4,
+        "shutter": "1/800",
+        "iso": 3200,
+        "focalLength": 16,
+        "date": "2026-05-10T16:35:52"
+      }
+    }
+  }
+}

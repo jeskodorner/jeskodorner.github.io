@@ -1,0 +1,184 @@
+{
+  "images": {
+    "p1090091.jpg": {
+      "source": "P1090091.jpg",
+      "width": 2400,
+      "height": 2400,
+      "color": "#6f6d63",
+      "lqip": "data:image/webp;base64,UklGRuIAAABXRUJQVlA4INYAAACQBQCdASoYABgAPt1orFEopaQiqAgBEBuJaACdMoSA2Alt6BejSgFlDD81qz5YChvrILdwwAD942AZLCkiDS7tyMZTuOU1TQqDSQdojCyQlk4/Upzcaxuc/8Gf67nza6Yex7qV+Gz8XnrTrILyOmr20R3Oxhitn+OikfHD1xgRDLxWwm4lZbnRSAVyJFJ8r57ZbFoAt6FSisqPP03QboZmfDffnQtwlX2IJulLN6xCrfZ4CIZTjaV3Y5Ze2qRN+dEA3jNg/ba+Cn6CU9Ut+/SmooioAAAA",
+      "exif": {
+        "camera": "Panasonic DMC-LX3",
+        "aperture": 4,
+        "shutter": "1/800",
+        "iso": 80,
+        "focalLength": 5,
+        "date": "2026-07-17T14:36:51"
+      }
+    },
+    "p1090113.jpg": {
+      "source": "P1090113.jpg",
+      "width": 2400,
+      "height": 1800,
+      "color": "#716b5b",
+      "lqip": "data:image/webp;base64,UklGRpgAAABXRUJQVlA4IIwAAADwBACdASoYABIAPt1iq08opSQiKAqpEBuJYwC7AAryJvwSsvEgUiF2F8bRbgE9kAAA+RA12fQ+HWHmqX29nIZXDPGf9HcR8tT2cj8rAAzBYbXXyPL4soyA/Zr90o8lRYLyq/4dmcTZPWb6Ztdn/gPZrGgPQOEFmEBfB5mwYhcT0SpmoEmGEtHNDgAAAA==",
+      "exif": {
+        "camera": "Panasonic DMC-LX3",
+        "aperture": 6.3,
+        "shutter": "1/1000",
+        "iso": 80,
+        "focalLength": 7,
+        "date": "2026-07-17T16:20:38"
+      }
+    },
+    "p1090117.jpg": {
+      "source": "P1090117.jpg",
+      "width": 2400,
+      "height": 1800,
+      "color": "#a8aaa8",
+      "lqip": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAAAQBQCdASoYABIAPt1mqU+opaOiKA1REBuJYwCdMwHv/gfJL7fY5tYEmjcZ87zbkUgAAP7TRp13gyuOeuNgJEhZHyldtoiiKio6L49IlkkgX7zt2i3IIPLLiz1ucBEKjhrfaIZ9pZOHywqoMaovsHMT2+akgAAA",
+      "exif": {
+        "camera": "Panasonic DMC-LX3",
+        "aperture": 4.5,
+        "shutter": "1/1000",
+        "iso": 80,
+        "focalLength": 13,
+        "date": "2026-07-17T16:28:27"
+      }
+    },
+    "p1090185.jpg": {
+      "source": "P1090185.jpg",
+      "width": 2400,
+      "height": 1800,
+      "color": "#646f77",
+      "lqip": "data:image/webp;base64,UklGRpAAAABXRUJQVlA4IIQAAABQBQCdASoYABIAPt1kp04opaOiMBgIARAbiWUAvVgRXB4d+aqznqFiGc/ic7GQdFYMe6AA/sMi8AQZqdoxmJszSSaBmeZ+3d6o93BEdo666/c2HbLIZlOGaXAOqZ3/jvNjfeX9VvZM/vJPkAWjLLQZgE9gji0LGr8gYAbAXBZv4qVAAAA=",
+      "exif": {
+        "camera": "Panasonic DMC-LX3",
+        "aperture": 4,
+        "shutter": "1/1000",
+        "iso": 80,
+        "focalLength": 7,
+        "date": "2026-07-18T10:25:20"
+      }
+    },
+    "p1090283.jpg": {
+      "source": "P1090283.jpg",
+      "width": 2400,
+      "height": 1800,
+      "color": "#5b554b",
+      "lqip": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAADwBACdASoYABIAPt1kqE2opaOiMBgIARAbiWcAxvQQ/+LxW8gAPTT45WGol4t8tpgA/sYHKlxF1QX8ED7HP/Ntym27RpW7OIAPXgfnNyWrsHtqn6HdjwtKYAN1SwyR/yOG5uq6PU473PSmPldXxtbfxgAAAA==",
+      "exif": {
+        "camera": "Panasonic DMC-LX3",
+        "aperture": 8,
+        "shutter": "1/125",
+        "iso": 100,
+        "focalLength": 13,
+        "date": "2026-07-18T18:41:19"
+      }
+    },
+    "p1090298.jpg": {
+      "source": "P1090298.jpg",
+      "width": 2400,
+      "height": 2400,
+      "color": "#b2a391",
+      "lqip": "data:image/webp;base64,UklGRowAAABXRUJQVlA4IIAAAADwBACdASoYABgAPt1orFEopaQiqAgBEBuJYwCsAA3yn2HFpbF0Ef3nk3Xzym0dDoAA/fsBI5UnMs2zbQqk8wlIhKyTBeCWY8U5eMRH/1DIyhEyOkSCQ+Lnp+WrufLdtmA6UD6apw7E06AlmdwSWvsLsMo60ReTE0fekkUnnAAAAA==",
+      "exif": {
+        "camera": "Panasonic DMC-LX3",
+        "aperture": 2,
+        "shutter": "1/30",
+        "iso": 200,
+        "focalLength": 5,
+        "date": "2026-07-19T14:22:25"
+      }
+    },
+    "p1090301.jpg": {
+      "source": "P1090301.jpg",
+      "width": 2400,
+      "height": 2400,
+      "color": "#a49a8c",
+      "lqip": "data:image/webp;base64,UklGRqQAAABXRUJQVlA4IJgAAABQBQCdASoYABgAPt1mq1CopSOiqAgBEBuJYgCsAA5FQKj1AAKs4fq6RqckP2VNI2olNgAA/u/X+vYmTUulg7gvsifg1Zp/1FfdaTaxHdB0nQ1K/6G33rBqUGZcShA3L4SgKRcT7PvsfhLF9vuQFz16fKRKPuq5u88mIRQxfTs2uI89SKOF6TdIDYlamxatE2Riqb77ClsAAA==",
+      "exif": {
+        "camera": "Panasonic DMC-LX3",
+        "aperture": 2.8,
+        "shutter": "1/80",
+        "iso": 800,
+        "focalLength": 13,
+        "date": "2026-07-19T14:23:17"
+      }
+    },
+    "p1090315.jpg": {
+      "source": "P1090315.jpg",
+      "width": 2306,
+      "height": 2312,
+      "color": "#7b7975",
+      "lqip": "data:image/webp;base64,UklGRrIAAABXRUJQVlA4IKYAAACQBQCdASoYABgAPt1eqU2opSQiKA1REBuJZQDCgA0kXzUwtftoMuH0gWoPvvjH9VShornkAAD9stmxiX8mVxLnOpZzdUbTcGGYYioUC1gCLXPNG0lrY5ZQYHimsjL14xLZoWxsG2YsV4X1v6H81SPqXv4t3+6I8fFq2hS0wR28xcKbFKtqnycxvLcLZ/XzXEIgEuMmt9GRBCfP4tZD8YeeJkw/vgAA",
+      "exif": {
+        "camera": "Panasonic DMC-LX3",
+        "aperture": 4,
+        "shutter": "1/800",
+        "iso": 80,
+        "focalLength": 5,
+        "date": "2026-07-19T15:22:31"
+      }
+    },
+    "p1090333.jpg": {
+      "source": "P1090333.jpg",
+      "width": 2400,
+      "height": 1800,
+      "color": "#29231f",
+      "lqip": "data:image/webp;base64,UklGRpgAAABXRUJQVlA4IIwAAAAwBQCdASoYABIAPt1cqE6opKOiMBgIARAbiUAXYAaN/GMzgjTPj5iVwFFq709FNiWKAAD+9aE//oFD/tOhSNqUtiLEfMYI9j9dC1HZXVFnhiQqQ2YrcA1cLDT9gpy6eCCkeY6QsXMb7nG+OdycoyGvRvdFv8GhftKGoZkyfgJgLjs5k0Z7ccpnPAAAAA==",
+      "exif": {
+        "camera": "Panasonic DMC-LX3",
+        "aperture": 2,
+        "shutter": "1/20",
+        "iso": 400,
+        "focalLength": 5,
+        "date": "2026-07-19T16:03:37"
+      }
+    },
+    "p1090393.jpg": {
+      "source": "P1090393.jpg",
+      "width": 2400,
+      "height": 1800,
+      "color": "#4a4941",
+      "lqip": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAAAQBACdASoYABIAPt1cpkyopSOiMAgBEBuJZwDI1B6g7zveopR2rER1gAD+6klKzmbOIBc7iA+aTOIXzPlfUZSahJ9OthfG+fpAe879so2c0QHGoBxJ7P3wGuYAAA==",
+      "exif": {
+        "camera": "Panasonic DMC-LX3",
+        "aperture": 2.8,
+        "shutter": "1/50",
+        "iso": 400,
+        "focalLength": 13,
+        "date": "2026-07-19T16:45:03"
+      }
+    },
+    "p1090410.jpg": {
+      "source": "P1090410.jpg",
+      "width": 2400,
+      "height": 1200,
+      "color": "#525438",
+      "lqip": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADwAwCdASoYAAwAPt1cp0yopSOiMAgBEBuJYwC7AB9FYNzJgIfZ2pgAAP7zNA0yB2RhvG0Wyyiqx/RyVKCDGZkr580cmkYIeBLDAyGtItNBAAAA",
+      "exif": {
+        "camera": "Panasonic DMC-LX3",
+        "aperture": 4.5,
+        "shutter": "1/1000",
+        "iso": 80,
+        "focalLength": 13,
+        "date": "2026-07-20T17:09:26"
+      }
+    },
+    "p1090423.jpg": {
+      "source": "P1090423.jpg",
+      "width": 2400,
+      "height": 1350,
+      "color": "#847865",
+      "lqip": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAAAQBACdASoYAA0APt1cp0yopSOiMAgBEBuJQBOgA3YXfrqWWDKizmOgAAD+zMtzH804TnzzdhgPjhwtlTGNua7P8R0YaxqjopWKr9I5Gh/TAHJD63SggS8sZErZo6h2h6biui+GcNoXUu84m0AAAA==",
+      "exif": {
+        "camera": "Panasonic DMC-LX3",
+        "aperture": 4.5,
+        "shutter": "1/1000",
+        "iso": 80,
+        "focalLength": 12,
+        "date": "2026-07-20T17:32:25"
+      }
+    }
+  }
+}

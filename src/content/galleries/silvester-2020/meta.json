@@ -1,0 +1,20 @@
+{
+  "images": {
+    "dsc00171.jpg": {
+      "source": "DSC00171.jpg",
+      "width": 1800,
+      "height": 2400,
+      "color": "#212726",
+      "lqip": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAACQBACdASoSABgAPtFWpkyoJKOiMAwBABoJYwCw7CHfxtfmclFx+X6WOmvuXugA/vQZ0vWAvpkvcSc9E4fPTljqA3lo1m06cDLGVEOO07446NRY7LaCkDdiDcImdrSLLHWmdlwAAAA=",
+      "exif": {
+        "camera": "Sony ILCE-6000",
+        "lens": "30mm F1.4 DC DN | Contemporary 016",
+        "aperture": 1.4,
+        "shutter": "1/50",
+        "iso": 6400,
+        "focalLength": 30,
+        "date": "2020-12-31T23:27:00"
+      }
+    }
+  }
+}

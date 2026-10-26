@@ -193,9 +193,14 @@ async function readExif(file) {
   } catch {
     data = {};
   }
+  // Standardtexte, die Kameras selbst in die Bildbeschreibung schreiben – keine echte Bildunterschrift
+  const CAMERA_DEFAULTS = /^(OLYMPUS DIGITAL CAMERA|SONY DSC|DIGITAL CAMERA|KODAK.*DIGITAL CAMERA|DCIM|Default|Image|Picture|SAMSUNG|LEICA|NIKON|CANON|PENTAX|Photo)$/i;
   const text = (v) => {
     if (!v) return undefined;
-    if (typeof v === 'string') return v.trim() || undefined;
+    if (typeof v === 'string') {
+      const s = v.trim();
+      return s && !CAMERA_DEFAULTS.test(s) ? s : undefined;
+    }
     if (Array.isArray(v)) return text(v[0]);
     if (typeof v === 'object' && 'value' in v) return text(v.value);
     return undefined;

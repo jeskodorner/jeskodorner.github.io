@@ -1,0 +1,164 @@
+{
+  "images": {
+    "dscf0046.jpg": {
+      "source": "DSCF0046.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#0d0804",
+      "lqip": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAABQAwCdASoYABAAPt1apkyopSOiMAgBEBuJYwAAW+qsMeNA9gD+9oJNdkGp9JPAUdSgiRy07s1snPjgn5VE51q6muaMv/MAAAA=",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF35mmF1.4 R",
+        "aperture": 1.4,
+        "shutter": "1/50",
+        "iso": 3200,
+        "focalLength": 35,
+        "date": "2024-04-30T21:54:38"
+      }
+    },
+    "dscf0276.jpg": {
+      "source": "DSCF0276.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#878787",
+      "lqip": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAABwBACdASoYABAAPt1ep00opSOiMAgBEBuJaQAIEAPcVHcOlbjTSOQPmE6WwAD+9CUk512ctvtLMq8KL9Xe42Atcxz6+p7fxms46H97uOMj6Ljak0ZnmosTM5ThfI46m2VvdEnd7QC3X9yBatQFcHvGdhzjLx75YXJMYXt6AAA=",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 2.8,
+        "shutter": "1/75",
+        "iso": 3200,
+        "focalLength": 18,
+        "date": "2024-05-05T21:25:16"
+      }
+    },
+    "dscf0313.jpg": {
+      "source": "DSCF0313.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#85a9ab",
+      "lqip": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAAAwBACdASoYABAAPt1apkyopSOiMAgBEBuJagCxDDfJ/gPIJcvhTEDK3hAA96QPpZN9tXyXNgsjuAHIEXysa3GW47hgq3Q/7OPg3ciaSB2IngLOUn3hsnaB0Gh5bFVMnAQWqstDXLYAAA==",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 9,
+        "shutter": "1/1250",
+        "iso": 640,
+        "focalLength": 27,
+        "date": "2024-05-09T15:02:09"
+      }
+    },
+    "dscf0860.jpg": {
+      "source": "DSCF0860.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#668c8e",
+      "lqip": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAQBACdASoYABAAPt1cpkyopSOiMAgBEBuJZgCdMoADTceCuG+sDHOrAAD+dnP2Ht6mE0C80H5sXzDJb/6nNsqQk9NtxI39Yf2rQTft2ThoEkBhrAodlgDIAAA=",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 3.6,
+        "shutter": "1/680",
+        "iso": 320,
+        "focalLength": 18,
+        "date": "2024-05-17T16:04:37"
+      }
+    },
+    "dscf1137.jpg": {
+      "source": "DSCF1137.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#bbafa1",
+      "lqip": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAAAQBACdASoYABAAPt1gqU2opaQiMAgBEBuJQBOj+ABgcCYkO1PEp/T4lAD+3tpSKTaYij4ULcfxUfw1OR3a8cZX1iBxZe03jOGngAmsmVs3I7IAAAA=",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 4,
+        "shutter": "1/550",
+        "iso": 640,
+        "focalLength": 55,
+        "date": "2024-05-17T20:43:55"
+      }
+    },
+    "dscf1185.jpg": {
+      "source": "DSCF1185.jpg",
+      "width": 1600,
+      "height": 2400,
+      "color": "#49403a",
+      "lqip": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAADwAwCdASoQABgAPt1eqE0opSQiMAgBEBuJYwCw7B6V3NIbzCACmOVIAPGxmobRrDKecjIIgyH7Y67bFLy3B8KH81tW4mDTJtK4w+ChgqYGSNgAAAA=",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 3.6,
+        "shutter": "1/80",
+        "iso": 800,
+        "focalLength": 30,
+        "date": "2024-05-17T21:24:40"
+      }
+    },
+    "dscf2176.jpg": {
+      "source": "DSCF2176.jpg",
+      "width": 1600,
+      "height": 2400,
+      "color": "#ad8550",
+      "lqip": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAADwAwCdASoQABgAPt1cp00opSOiMAgBEBuJYgCdABuepxx+SLz/oM1QAP7l7gK7fX8prXGi+MFyfS1cinwW1vWt50l04t2Wfks47w3NjW/nD8e2wR5scgHp3vndXON0Z5y/u4Um8wAAAA==",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 2.8,
+        "shutter": "1/800",
+        "iso": 500,
+        "focalLength": 18,
+        "date": "2024-06-15T13:11:11"
+      }
+    },
+    "dscf2236-2.jpg": {
+      "source": "DSCF2236-2.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#c8c8c8",
+      "lqip": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACQAwCdASoYABAAPt1eqU2opSQiMAgBEBuJaQAAW+owzDVhGOXgAP7q1aURhHI9vIKze3QkQeG1Wu3+cX0TrpHm5oveCA0AAAA=",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 4,
+        "shutter": "1/800",
+        "iso": 320,
+        "focalLength": 55,
+        "date": "2024-06-17T17:06:44"
+      }
+    },
+    "dscf2261.jpg": {
+      "source": "DSCF2261.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#bababa",
+      "lqip": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAADQAwCdASoYABAAPt1cp00opSOiMAgBEBuJaQAAYf5vhhaAITU+MQAA/lmKtj+O8rxEvkGJKstai1Q75uYF4KWtuBx4tBxxAcxMCqnlN8h5P/OGs538Ji8NfqYdclS9QAAAAA==",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF18-55mmF2.8-4 R LM OIS",
+        "aperture": 3.6,
+        "shutter": "1/2000",
+        "iso": 320,
+        "focalLength": 18,
+        "date": "2024-06-17T17:22:39"
+      }
+    },
+    "dscf9065.jpg": {
+      "source": "DSCF9065.jpg",
+      "width": 2400,
+      "height": 1600,
+      "color": "#8e7254",
+      "lqip": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAAAwBACdASoYABAAPt1apkyopSOiMAgBEBuJaACdMoMYACvBfVI/bjXtAAAA/rVjIWGRZOV+4bdxFx1pTzkm1L1A8j0B7bzRYGr5bkcnbwn/KOfF09Zt/nYtS1Apg80LuaoOiO6TYENTUaAAAAA=",
+      "exif": {
+        "camera": "Fujifilm X-T3",
+        "lens": "XF35mmF1.4 R",
+        "aperture": 2.8,
+        "shutter": "1/2900",
+        "iso": 320,
+        "focalLength": 35,
+        "date": "2024-04-23T13:38:13"
+      }
+    }
+  }
+}

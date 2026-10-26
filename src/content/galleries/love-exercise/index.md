@@ -10,26 +10,34 @@ layout: showcase
 # color: pink
 visibility: public
 showExif: true
-cover: love-exercise-jesko-dorner-45.jpg
 # downloadUrl: https://…
 images:
-  - file: love-exercise-jesko-dorner-01.jpg
-    alt: "Zwei Personen sitzen in schwarzen Ledersesseln in einem warm beleuchteten Atelier voller Bilder und Kisten."
-  - file: love-exercise-jesko-dorner-08.jpg
-    alt: "Junge Frau in weißem Oberteil beugt sich konzentriert nach vorn, warmes Licht im Atelier."
-    focus: "50% 30%"
-  - file: love-exercise-jesko-dorner-17.jpg
-    alt: "Nahaufnahme eines Mannes mit dunklen Locken und weißem Hemd im warmen Licht."
-    focus: "50% 35%"
-  - file: love-exercise-jesko-dorner-29.jpg
-    alt: "Schwarzweiß: Mann im weißen Hemd, die Hand am Kinn, blickt nachdenklich zum Fenster."
-  - file: love-exercise-jesko-dorner-33.jpg
-    alt: "Junge Frau mit hochgestecktem Haar blickt im Gegenlicht zur Seite."
-    focus: "50% 35%"
-  - file: love-exercise-jesko-dorner-39.jpg
-    alt: "Schwarzweiß: Silhouette einer Frau, die sich vor einem hellen Fenster nach vorn streckt."
-  - file: love-exercise-jesko-dorner-45.jpg
-    alt: "Hinter den Kulissen: Kameramann mit Kappe an einer Filmkamera, daneben ein Schauspieler im farbverschmierten Hemd und ein Scheinwerfer."
   - file: love-exercise-jesko-dorner-52.jpg
-    alt: "Filmset im Atelier: Kamera, Scheinwerfer und ein Mann, der am Boden an einem großen bunten Gemälde arbeitet."
+    alt: "Filmset im Atelier: Kamera, Scheinwerfer und ein Mann, der am Boden an
+      einem großen bunten Gemälde arbeitet."
+  - file: love-exercise-jesko-dorner-03.jpg
+    alt: "Mann in farbbeklecktem weißem Hemd rührt im warmen Licht Farbe in einer
+      Metalldose an."
+  - file: love-exercise-jesko-dorner-06.jpg
+    alt: "Schwarzweiß: Mann hockt mit angespanntem Gesicht vor einer Leinwand am
+      Boden und malt, hinten schauen Personen zu."
+  - file: love-exercise-jesko-dorner-07.jpg
+    alt: "Frau in schulterfreiem weißem Oberteil beugt sich konzentriert über einen
+      Tisch, in der Hand eine Farbdose."
+  - file: love-exercise-jesko-dorner-10.jpg
+    alt: "Dreharbeiten: Blick an Crew und Kamera vorbei auf eine kniende Frau in
+      Weiß und einen Mann am Tisch."
+  - file: love-exercise-jesko-dorner-27.jpg
+    alt: "Person hält eine Schachuhr, im Hintergrund kniet eine Frau in Weiß auf
+      Packpapier zwischen Farbdosen."
+  - file: love-exercise-jesko-dorner-31.jpg
+    alt: "Am Set: junger Mann hockt nachdenklich mit Schutzbrille im Haar, um ihn
+      Crew, Scheinwerfer und Stative."
+  - file: love-exercise-jesko-dorner-37.jpg
+    alt: "Silhouette einer Frau in Weiß, die sich mit Pinsel und Farbpalette über
+      eine Leinwand beugt."
+  - file: love-exercise-jesko-dorner-55.jpg
+    alt: "Schwarzweiß: Hände mit Spachtel und Fingern malen auf großem Papier am
+      Boden, daneben Farbdosen und Farbroller."
+cover: love-exercise-jesko-dorner-31.jpg
 ---
