@@ -1,12 +1,12 @@
 ---
 # Titel der Galerie
-title: "Fusion 2026 – Keramik von Julia Bulik"
-# URL-Teil: /galerien/fusion-2026-keramik-julia-bulik/
-slug: fusion-2026-keramik-julia-bulik
+title: "Fusion 2025 – Keramik von Julia Bulik"
+# URL-Teil: /galerien/fusion-2025-keramik-julia-bulik/
+slug: fusion-2025-keramik-julia-bulik
 date: 2025-06-25
 # location: "Ort"
 # Kurzbeschreibung (1–2 Sätze) – erscheint auf der Kachel und in Link-Vorschauen
-description: "Keramikbrunnen und Skulpturen von Julia Bulik auf der Fusion 2026:
+description: "Keramikbrunnen und Skulpturen von Julia Bulik auf der Fusion 2025:
   Figuren, fließendes Wasser und leuchtende Glasuren zwischen Bäumen und
   Holzbauten."
 # showcase = Bühne (jedes Bild groß, Parallax) · masonry = Raster · justified = gleich hohe Reihen
