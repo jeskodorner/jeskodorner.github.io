@@ -120,7 +120,7 @@ const jsonLd = gallery.isUnlisted
     </div>
 
     <section
-      class:list={['grid-wrap', gallery.layout === 'showcase' ? 'grid-wrap--stage' : 'container container--wide']}
+      class:list={['grid-wrap', { 'grid-wrap--stage': gallery.layout === 'showcase' }]}
       aria-label={t.galleries.images(gallery.images.length)}
     >
       <GalleryGrid gallery={gallery} />
@@ -220,7 +220,7 @@ const jsonLd = gallery.isUnlisted
     }
   }
   .grid-wrap--stage {
-    padding-top: clamp(1rem, 4vw, 4rem);
+    padding-top: clamp(0.5rem, 2.5vw, 2.5rem);
   }
   .private {
     display: flex;

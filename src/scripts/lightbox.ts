@@ -33,18 +33,26 @@ async function shareOrCopy(url: string, title: string): Promise<string | undefin
   }
 }
 
+/** Bild-Link der großen Ansicht: trägt alle Lightbox-Daten (data-pswp-*, Bildunterschrift, EXIF) */
+const mainLink = (index: number) => document.getElementById(`bild-${index + 1}`);
+
 export function initLightbox() {
   const galleryEl = document.querySelector<HTMLElement>('[data-gallery]');
   if (!galleryEl) return;
+  // Übersicht (Kacheln): eigene Links, die Daten kommen aus der großen Ansicht
+  const tilesEl = document.querySelector<HTMLElement>('[data-tiles]');
+  const viewRoot = galleryEl.closest<HTMLElement>('.gview');
+  const inTiles = () => viewRoot?.dataset.view === 'tiles';
   const count = Number(galleryEl.dataset.count ?? 0);
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const lightbox = new PhotoSwipeLightbox({
-    gallery: galleryEl,
+    gallery: tilesEl ? [galleryEl, tilesEl] : galleryEl,
     children: 'a.ph',
     pswpModule: () => import('photoswipe'),
     bgOpacity: 1,
     // Bühne: Bilder sind per Parallax verschoben → sanft überblenden statt aus dem Vorschaubild zoomen
+    // (wird in beforeOpen je nach Ansicht gesetzt)
     showHideAnimationType: reduced ? 'none' : galleryEl.dataset.layout === 'showcase' ? 'fade' : 'zoom',
     zoomAnimationDuration: reduced ? 0 : 333,
     closeTitle: de.lightbox.close,
@@ -57,6 +65,29 @@ export function initLightbox() {
       viewport.x < 700
         ? { top: 56, bottom: 96, left: 0, right: 0 }
         : { top: 72, bottom: 104, left: 72, right: 72 },
+  });
+
+  // Kachel → Daten vom passenden Bild der großen Ansicht übernehmen
+  lightbox.addFilter('domItemData', (item, _el, link) => {
+    if (!link || link.dataset.pswpSrc) return item;
+    const main = mainLink(Number(link.dataset.index) - 1);
+    if (!main) return item;
+    const d = main.dataset;
+    item.src = d.pswpSrc ?? item.src;
+    item.srcset = d.pswpSrcset;
+    item.width = Number(d.pswpWidth);
+    item.height = Number(d.pswpHeight);
+    item.w = item.width;
+    item.h = item.height;
+    return item;
+  });
+
+  // Aus den Kacheln heraus zoomen, auf der Bühne überblenden
+  lightbox.on('beforeOpen', () => {
+    const pswp = lightbox.pswp;
+    if (!pswp || reduced) return;
+    const fromTiles = pswp.options.dataSource && 'gallery' in pswp.options.dataSource && pswp.options.dataSource.gallery === tilesEl;
+    pswp.options.showHideAnimationType = fromTiles || galleryEl.dataset.layout !== 'showcase' ? 'zoom' : 'fade';
   });
 
   lightbox.on('uiRegister', () => {
@@ -73,7 +104,7 @@ export function initLightbox() {
       onInit: (el, pswp) => {
         el.setAttribute('aria-live', 'polite');
         const render = (status?: string) => {
-          const a = pswp.currSlide?.data.element as HTMLElement | undefined;
+          const a = mainLink(pswp.currIndex);
           el.replaceChildren();
           if (!a) return;
           const caption = a.dataset.caption;
@@ -130,7 +161,7 @@ export function initLightbox() {
         a.target = '_blank';
         a.rel = 'noopener noreferrer';
         pswp.on('change', () => {
-          const url = (pswp.currSlide?.data.element as HTMLElement | undefined)?.dataset.original;
+          const url = mainLink(pswp.currIndex)?.dataset.original;
           if (url) {
             a.href = url;
             a.hidden = false;
@@ -151,6 +182,12 @@ export function initLightbox() {
   });
   lightbox.on('close', () => {
     history.replaceState(history.state, '', location.pathname + location.search);
+    // Zuletzt angesehenes Bild auf der Seite zeigen (sonst zoomt die Lightbox ins Leere)
+    const el = lightbox.pswp?.currSlide?.data.element;
+    if (el instanceof HTMLElement) {
+      const r = el.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > window.innerHeight) el.scrollIntoView({ block: 'center', behavior: 'instant' });
+    }
   });
 
   lightbox.init();
@@ -160,7 +197,7 @@ export function initLightbox() {
     if (!m) return;
     const index = Number(m[1]) - 1;
     if (index >= 0 && index < count && !lightbox.pswp) {
-      lightbox.loadAndOpen(index, { gallery: galleryEl });
+      lightbox.loadAndOpen(index, { gallery: inTiles() && tilesEl ? tilesEl : galleryEl });
     }
   };
   openFromHash();

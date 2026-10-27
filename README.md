@@ -5,7 +5,7 @@ Gebaut mit **Astro 7** und TypeScript und gehostet kostenlos auf **GitHub Pages*
 **https://jeskodorner.github.io**.
 
 - Keine Cookies, keine Tracker, keine Google Fonts. Alle Schriften liegen lokal im Projekt.
-- Die Seiten funktionieren ohne JavaScript. JavaScript wird nur für Lightbox, Teilen und die E-Mail-Adresse verwendet.
+- Die Seiten funktionieren ohne JavaScript. JavaScript wird nur für Lightbox, Ansicht-Umschalter, Teilen und die E-Mail-Adresse verwendet.
 - Lighthouse (lokal gemessen, Mobil): Performance 98–100, Barrierefreiheit 100, Best Practices 100 und SEO 100.
 - Große Fotos mit Parallax und Bewegung beim Scrollen, alles reines CSS (siehe Abschnitt 7).
 
@@ -246,6 +246,13 @@ Unterhalb des Kopfbereichs kannst du optional einen längeren Text in Markdown s
 
 Die Anordnung in der Bühne ergibt sich automatisch aus dem Seitenverhältnis und der Reihenfolge.
 Willst du ein bestimmtes Bild über die volle Breite, setze es an eine passende Stelle in der Liste.
+
+**Umschalter „Groß / Übersicht“:** Ab 4 Bildern steht über jeder Galerie ein Schalter. „Groß“ ist das eingestellte
+Layout (Bühne oder Raster), „Übersicht“ zeigt alle Bilder als gleich große, quadratische Kacheln. Der Schalter
+klebt beim Scrollen oben rechts, auf dem Handy nur mit Symbolen. Beim Umschalten bleibt man beim Bild, das man gerade
+angesehen hat, ein Klick auf eine Kachel öffnet die Lightbox. Die Wahl gilt für den ganzen Besuch, ein neuer Besuch
+startet wieder mit „Groß“. Der Ausschnitt der Kacheln folgt dem Feld `focus`, Hochformate ohne `focus` sind leicht
+nach oben verschoben (Köpfe bleiben drin). Ohne JavaScript gibt es nur die große Ansicht.
 
 **Teilbare Bild-Links:** Jedes Bild hat eine eigene Seite (`/galerien/kueste-im-oktober/3/`) und einen Lightbox-Link
 (`/galerien/kueste-im-oktober/#bild-3`). Die Nummer entspricht der Position in der Liste. Beim Umsortieren ändern sich die Nummern.

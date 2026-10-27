@@ -14,6 +14,8 @@ export interface Props {
   class?: string;
   pictureClass?: string;
   style?: string;
+  /** Nur Varianten bis zu dieser Breite anbieten (kleine Vorschaubilder, z. B. Kacheln) */
+  maxWidth?: number;
 }
 
 const {
@@ -27,18 +29,26 @@ const {
   class: className,
   pictureClass,
   style = '',
+  maxWidth,
 } = Astro.props;
 
 const set = await responsive(src);
+/** srcset auf Breiten ≤ maxWidth kürzen (mindestens die kleinste Variante bleibt) */
+const limit = (srcset: string) => {
+  if (!maxWidth) return srcset;
+  const parts = srcset.split(', ');
+  const kept = parts.filter((p) => Number(p.match(/ (\d+)w$/)?.[1] ?? Infinity) <= maxWidth);
+  return (kept.length ? kept : parts.slice(0, 1)).join(', ');
+};
 const bg = `background-color:${color};${lqip ? `background-image:url(${lqip});` : ''}${style}`;
 ---
 
 <picture class={pictureClass}>
-  <source type="image/avif" srcset={set.avif} sizes={sizes} />
+  <source type="image/avif" srcset={limit(set.avif)} sizes={sizes} />
   <img
     class:list={['ph-img', className]}
     src={set.src}
-    srcset={set.webp}
+    srcset={limit(set.webp)}
     sizes={sizes}
     width={set.width}
     height={set.height}

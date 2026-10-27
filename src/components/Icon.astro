@@ -14,7 +14,9 @@ export type IconName =
   | 'mail'
   | 'whatsapp'
   | 'instagram'
-  | 'lock';
+  | 'lock'
+  | 'view-large'
+  | 'view-grid';
 
 export interface Props {
   name: IconName;
@@ -41,6 +43,9 @@ const paths: Record<IconName, string> = {
     '<path d="M4 20l1.2-3.8A8.3 8.3 0 1 1 8 19z"/><path d="M9 8.5c0 3.3 3.2 6.5 6.5 6.5l1-1.6-2-1-.9.8c-1.2-.5-2.2-1.5-2.8-2.8l.8-.9-1-2-1.6 1z"/>',
   instagram: '<rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".6" fill="currentColor"/>',
   lock: '<rect x="5" y="10.5" width="14" height="10" rx="1.5"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/>',
+  'view-large': '<rect x="3.5" y="5" width="17" height="14" rx="1.5"/>',
+  'view-grid':
+    '<rect x="3.5" y="3.5" width="7" height="7" rx="1"/><rect x="13.5" y="3.5" width="7" height="7" rx="1"/><rect x="3.5" y="13.5" width="7" height="7" rx="1"/><rect x="13.5" y="13.5" width="7" height="7" rx="1"/>',
 };
 ---
 

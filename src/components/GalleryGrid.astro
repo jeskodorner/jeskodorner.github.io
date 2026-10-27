@@ -4,11 +4,16 @@
  * Jedes Bild ist ein normaler Link auf seine Bildseite (funktioniert ohne JS).
  * Mit JS öffnet PhotoSwipe die Lightbox; die URL bekommt #bild-N und ist teilbar.
  * #pos-N springt nur zum Bild, ohne Lightbox („Zur Galerie“ auf der Bildseite).
+ *
+ * Umschalter „Groß / Übersicht“ (ab 4 Bildern, nur mit JS): „Übersicht“ zeigt alle Bilder als
+ * gleich große Kacheln. Die Wahl gilt für den Besuch (sessionStorage), Standard ist „Groß“.
  */
 import type { Gallery } from '../lib/galleries';
 import { responsive } from '../lib/images';
 import { exifLine } from '../lib/exif';
+import { useTranslations } from '../i18n';
 import Picture from './Picture.astro';
+import Icon from './Icon.astro';
 import Showcase, { type StageItem } from './Showcase.astro';
 
 export interface Props {
@@ -17,6 +22,8 @@ export interface Props {
 
 const { gallery } = Astro.props;
 const layout = gallery.layout;
+const t = useTranslations();
+const hasTiles = gallery.images.length >= 4;
 
 const items = await Promise.all(
   gallery.images.map(async (img) => {
@@ -26,7 +33,12 @@ const items = await Promise.all(
       layout === 'masonry'
         ? '(min-width: 2100px) 20vw, (min-width: 1500px) 25vw, (min-width: 900px) 33vw, 50vw'
         : `(min-width: 1700px) ${Math.round(ratio * 440)}px, (min-width: 600px) ${Math.min(100, Math.round(ratio * 26))}vw, ${Math.min(100, Math.round(ratio * 48))}vw`;
-    return { img, set, ratio, sizes, exif: gallery.showExif ? exifLine(img.exif) : '' };
+    // Kachel ist quadratisch: Querformat wird in der Breite beschnitten, braucht also mehr Pixel
+    const wide = Math.max(1, ratio);
+    const tileSizes = `(min-width: 700px) ${Math.round(230 * wide)}px, ${Math.round(34 * wide)}vw`;
+    // Hochformat ohne eigenen Ausschnitt: etwas nach oben (Köpfe sitzen meist im oberen Drittel)
+    const tilePos = img.focus !== '50% 50%' ? img.focus : ratio < 0.9 ? '50% 30%' : '50% 50%';
+    return { img, set, ratio, sizes, tileSizes, tilePos, exif: gallery.showExif ? exifLine(img.exif) : '' };
   }),
 );
 
@@ -53,42 +65,88 @@ const stageItems: StageItem[] = items.map((it) => ({
 }));
 ---
 
-{
-  layout === 'showcase' && (
-    <Showcase items={stageItems} lightbox eagerFirst snap id="gallery" count={gallery.images.length} color={gallery.color} />
-  )
-}
+<div class="gview" data-layout={layout}>
+  {
+    hasTiles && (
+      <>
+        {/* Vor dem ersten Zeichnen: gemerkte Ansicht setzen (kein Aufblitzen der anderen Ansicht) */}
+        <script is:inline>
+          (function (r) {
+            var v = 'main';
+            try {
+              if (sessionStorage.getItem('jd-ansicht') === 'tiles') v = 'tiles';
+            } catch (e) {}
+            r.dataset.view = v;
+          })(document.currentScript.parentElement);
+        </script>
+        <div class="view-bar container container--wide">
+          <div class="view-switch" role="group" aria-label={t.galleries.view}>
+            <button type="button" data-view-btn="main" aria-pressed="true" title={t.galleries.viewLarge}>
+              <Icon name="view-large" /> <span class="vs-label">{t.galleries.viewLarge}</span>
+            </button>
+            <button type="button" data-view-btn="tiles" aria-pressed="false" title={t.galleries.viewTiles}>
+              <Icon name="view-grid" /> <span class="vs-label">{t.galleries.viewTiles}</span>
+            </button>
+          </div>
+        </div>
+      </>
+    )
+  }
 
-{
-  layout !== 'showcase' && (
-    <div id="gallery" class:list={['grid', `grid--${layout}`]} data-gallery data-count={gallery.images.length} data-layout={layout}>
-      {items.map((it) => (
-        <a class="ph reveal" href={it.img.pageUrl} style={`--r:${it.ratio.toFixed(4)}`} {...pswpAttrs(it)}>
-          <span class="pos" id={`pos-${it.img.index}`} />
-          <Picture
-            src={it.img.src}
-            alt={it.img.alt}
-            sizes={it.sizes}
-            color={it.img.color}
-            lqip={it.img.lqip}
-            loading={it.img.index <= 3 ? 'eager' : 'lazy'}
-            fetchpriority={it.img.index === 1 ? 'high' : undefined}
-          />
-        </a>
-      ))}
-    </div>
-  )
-}
+  <div class:list={['view-main', { 'container container--wide': layout !== 'showcase' }]}>
+    {
+      layout === 'showcase' ? (
+        <Showcase items={stageItems} lightbox eagerFirst snap id="gallery" count={gallery.images.length} color={gallery.color} />
+      ) : (
+        <div id="gallery" class:list={['grid', `grid--${layout}`]} data-gallery data-count={gallery.images.length} data-layout={layout}>
+          {items.map((it) => (
+            <a class="ph reveal" href={it.img.pageUrl} style={`--r:${it.ratio.toFixed(4)}`} {...pswpAttrs(it)}>
+              <span class="pos" id={`pos-${it.img.index}`} />
+              <Picture
+                src={it.img.src}
+                alt={it.img.alt}
+                sizes={it.sizes}
+                color={it.img.color}
+                lqip={it.img.lqip}
+                loading={it.img.index <= 3 ? 'eager' : 'lazy'}
+                fetchpriority={it.img.index === 1 ? 'high' : undefined}
+              />
+            </a>
+          ))}
+        </div>
+      )
+    }
+  </div>
+
+  {
+    hasTiles && (
+      <div class="view-tiles container container--wide">
+        <ul class="tiles" role="list" data-tiles>
+          {items.map((it) => (
+            <li>
+              <a
+                class="ph tile"
+                id={`kachel-${it.img.index}`}
+                href={it.img.pageUrl}
+                data-index={it.img.index}
+                data-cropped="true"
+                style={`--tile-pos:${it.tilePos}`}
+              >
+                <Picture src={it.img.src} alt={it.img.alt} sizes={it.tileSizes} color={it.img.color} loading="lazy" maxWidth={1200} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+</div>
 
 <script>
   import { initLightbox } from '../scripts/lightbox';
+  import { initGalleryView } from '../scripts/gallery-view';
+  initGalleryView();
   initLightbox();
-
-  // „Zur Galerie“ von der Bildseite (#pos-N): zum Bild springen. Chrome macht das nach einem
-  // Seitenwechsel mit View Transition nicht von selbst.
-  if (/^#pos-\d+$/.test(location.hash)) {
-    document.querySelector(location.hash)?.scrollIntoView({ block: 'start', behavior: 'instant' });
-  }
 </script>
 
 <style>
@@ -163,5 +221,139 @@ const stageItems: StageItem[] = items.map((it) => ({
     height: 100%;
     aspect-ratio: var(--r);
     object-fit: cover;
+  }
+
+  /* ---------- Umschalter Groß / Übersicht ---------- */
+  .gview:not([data-view]) .view-bar,
+  .gview:not([data-view='tiles']) .view-tiles,
+  .gview[data-view='tiles'] .view-main {
+    display: none;
+  }
+  /* Klebt beim Scrollen oben rechts unter dem Header; die Leiste selbst lässt Klicks durch */
+  .view-bar {
+    position: sticky;
+    top: calc(var(--header-h) + 0.75rem);
+    z-index: 30;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: clamp(0.75rem, 2vw, 1.5rem);
+    pointer-events: none;
+  }
+  .view-switch {
+    display: inline-flex;
+    gap: 2px;
+    padding: 3px;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    background: var(--wall);
+    box-shadow: 0 6px 20px -8px rgb(0 0 0 / 0.35);
+    pointer-events: auto;
+  }
+  .view-switch button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    min-height: 2.25rem;
+    padding: 0.35em 0.95em;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: var(--fs-xs);
+    font-weight: 800;
+    font-stretch: 85%;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+  }
+  .view-switch button :global(svg) {
+    width: 1.15em;
+    height: 1.15em;
+    flex: none;
+  }
+  .view-switch button[aria-pressed='true'] {
+    background: var(--ink);
+    color: var(--wall);
+    cursor: default;
+  }
+  .view-switch button[aria-pressed='false']:hover {
+    background: var(--lime);
+    color: var(--ink);
+  }
+  /* Handy: nur Symbole, damit der Schalter beim Scrollen wenig vom Bild verdeckt */
+  @media (max-width: 599px) {
+    .view-switch button {
+      min-width: 2.75rem;
+      min-height: 2.5rem;
+      justify-content: center;
+      padding: 0.35em 0.7em;
+    }
+    .view-switch button :global(svg) {
+      width: 1.35em;
+      height: 1.35em;
+    }
+    .vs-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+  .view-switch button:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+  }
+  /* Ohne Snap in der Übersicht (die Bühne rastet sonst Bild für Bild ein) */
+  :global(html:has(.gview[data-view='tiles'])) {
+    scroll-snap-type: none;
+    scroll-padding-top: calc(var(--header-h) + 1rem);
+  }
+
+  /* ---------- Übersicht: gleich große, quadratische Kacheln ---------- */
+  .tiles {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(11rem, 30%), 1fr));
+    gap: clamp(0.25rem, 0.15rem + 0.4vw, 0.6rem);
+  }
+  .tile {
+    aspect-ratio: 1;
+    outline-offset: 3px;
+  }
+  .tile :global(picture),
+  .tile :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .tile :global(img) {
+    object-fit: cover;
+    object-position: var(--tile-pos, 50% 50%);
+  }
+  /* Beim Umschalten kurz markieren, welches Bild man gerade angesehen hat */
+  .tile.is-current {
+    animation: tile-mark 1.6s var(--ease) both;
+  }
+  @keyframes tile-mark {
+    0%,
+    55% {
+      outline: 4px solid var(--ink);
+    }
+    100% {
+      outline: 4px solid transparent;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tile.is-current {
+      animation-duration: 2.4s;
+      animation-timing-function: steps(1, end);
+    }
   }
 </style>
