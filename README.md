@@ -253,6 +253,8 @@ klebt beim Scrollen oben rechts, auf dem Handy nur mit Symbolen. Beim Umschalten
 angesehen hat, ein Klick auf eine Kachel öffnet die Lightbox. Die Wahl gilt für den ganzen Besuch, ein neuer Besuch
 startet wieder mit „Groß“. Der Ausschnitt der Kacheln folgt dem Feld `focus`, Hochformate ohne `focus` sind leicht
 nach oben verschoben (Köpfe bleiben drin). Ohne JavaScript gibt es nur die große Ansicht.
+Denselben Schalter hat die Seite „Galerie“ (`/galerien/`): „Übersicht“ zeigt dort alle Galerien als Karten mit
+Titelbild, Name, Bilderzahl und Monat. Beide Seiten merken sich ihre Wahl getrennt.
 
 **Teilbare Bild-Links:** Jedes Bild hat eine eigene Seite (`/galerien/kueste-im-oktober/3/`) und einen Lightbox-Link
 (`/galerien/kueste-im-oktober/#bild-3`). Die Nummer entspricht der Position in der Liste. Beim Umsortieren ändern sich die Nummern.

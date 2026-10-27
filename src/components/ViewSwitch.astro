@@ -1,0 +1,160 @@
+---
+/**
+ * Umschalter „Groß / Übersicht“ (nur mit JavaScript sichtbar).
+ * Muss das ERSTE Kind des Elements mit class="gview" sein; daneben stehen
+ *   .view-main  – große Ansicht (Standard)
+ *   .view-tiles – Übersicht
+ * Einträge beider Ansichten tragen data-index="1…n", damit man beim Umschalten beim selben Eintrag bleibt.
+ * Die Wahl gilt für den Besuch (sessionStorage unter `storageKey`). Logik: scripts/view-switch.ts
+ */
+import Icon from './Icon.astro';
+import { useTranslations } from '../i18n';
+
+export interface Props {
+  storageKey: string;
+}
+
+const { storageKey } = Astro.props;
+const t = useTranslations();
+---
+
+{/* Vor dem ersten Zeichnen: gemerkte Ansicht setzen (kein Aufblitzen der anderen Ansicht) */}
+<script is:inline define:vars={{ storageKey }}>
+  (function (r) {
+    var v = 'main';
+    try {
+      if (sessionStorage.getItem(storageKey) === 'tiles') v = 'tiles';
+    } catch (e) {}
+    r.dataset.viewKey = storageKey;
+    r.dataset.view = v;
+  })(document.currentScript.parentElement);
+</script>
+<div class="view-bar container container--wide">
+  <div class="view-switch" role="group" aria-label={t.galleries.view}>
+    <button type="button" data-view-btn="main" aria-pressed="true" title={t.galleries.viewLarge}>
+      <Icon name="view-large" /> <span class="vs-label">{t.galleries.viewLarge}</span>
+    </button>
+    <button type="button" data-view-btn="tiles" aria-pressed="false" title={t.galleries.viewTiles}>
+      <Icon name="view-grid" /> <span class="vs-label">{t.galleries.viewTiles}</span>
+    </button>
+  </div>
+</div>
+
+<style>
+  :global(.gview:not([data-view]) .view-tiles),
+  :global(.gview[data-view='main'] .view-tiles),
+  :global(.gview[data-view='tiles'] .view-main) {
+    display: none;
+  }
+  :global(.gview:not([data-view])) .view-bar {
+    display: none;
+  }
+  /* Klebt beim Scrollen oben rechts unter dem Header; die Leiste selbst lässt Klicks durch */
+  .view-bar {
+    position: sticky;
+    top: calc(var(--header-h) + 0.75rem);
+    z-index: 30;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: clamp(0.75rem, 2vw, 1.5rem);
+    pointer-events: none;
+  }
+  .view-switch {
+    display: inline-flex;
+    gap: 2px;
+    padding: 3px;
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    background: var(--wall);
+    box-shadow: 0 6px 20px -8px rgb(0 0 0 / 0.35);
+    pointer-events: auto;
+  }
+  .view-switch button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45em;
+    min-height: 2.25rem;
+    padding: 0.35em 0.95em;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: var(--fs-xs);
+    font-weight: 800;
+    font-stretch: 85%;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+  }
+  .view-switch button :global(svg) {
+    width: 1.15em;
+    height: 1.15em;
+    flex: none;
+  }
+  .view-switch button[aria-pressed='true'] {
+    background: var(--ink);
+    color: var(--wall);
+    cursor: default;
+  }
+  .view-switch button[aria-pressed='false']:hover {
+    background: var(--lime);
+    color: var(--ink);
+  }
+  /* Handy: nur Symbole, damit der Schalter beim Scrollen wenig verdeckt */
+  @media (max-width: 599px) {
+    .view-switch button {
+      min-width: 2.75rem;
+      min-height: 2.5rem;
+      justify-content: center;
+      padding: 0.35em 0.7em;
+    }
+    .view-switch button :global(svg) {
+      width: 1.35em;
+      height: 1.35em;
+    }
+    .vs-label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+  }
+  .view-switch button:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  /* Übersicht: ohne Bild-für-Bild-Einrasten der Bühne */
+  :global(html:has(.gview[data-view='tiles'])) {
+    scroll-snap-type: none;
+    scroll-padding-top: calc(var(--header-h) + 1rem);
+  }
+
+  /* Beim Umschalten kurz markieren, welchen Eintrag man gerade angesehen hat */
+  :global(.view-tiles .is-current) {
+    animation: view-mark 1.6s var(--ease) both;
+  }
+  @keyframes view-mark {
+    0%,
+    55% {
+      outline: 4px solid var(--ink);
+      outline-offset: 3px;
+    }
+    100% {
+      outline: 4px solid transparent;
+      outline-offset: 3px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.view-tiles .is-current) {
+      animation-duration: 2.4s;
+      animation-timing-function: steps(1, end);
+    }
+  }
+</style>
