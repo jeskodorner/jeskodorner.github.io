@@ -5,25 +5,14 @@
  * und möglichst nah an der Zielhöhe bleibt – passt ein Foto nicht mehr ganz, wandert es in die nächste
  * Reihe oder alle werden ein wenig kleiner, je nachdem, was näher an der Zielhöhe liegt.
  *
- * [data-justify="vary"] („Hängung“): Hochformate werden größer als die Querformate ihrer Reihe, damit sie
- * nicht winzig wirken (ungefähr gleiche Fläche wie ein Querformat). Sie stehen dann über – je Reihe abwechselnd
- * nach unten, nach oben oder nach beiden Seiten. Die Reihe füllt trotzdem die Breite.
- *
  * Ohne JavaScript übernimmt reines CSS (flex-grow), dann kann ein einzelnes Foto am Reihenende größer werden.
  */
-
-/** Größe eines Fotos für „vary“ (1 = normal): Hochformat so viel größer, dass seine Fläche etwa der eines
- *  4:3-Querformats entspricht – höchstens anderthalbmal so hoch. Querformate und Quadrate bleiben bei 1. */
-const sizeFor = (r: number) => (r < 0.95 ? Math.min(1.5, Math.sqrt(1.33 / r)) : 1);
-/** Ausrichtung der normalen Fotos in einer Reihe mit großem Foto → großes steht unten / oben / beidseitig über */
-const ALIGN = ['flex-start', 'flex-end', 'center'] as const;
 
 function layout(list: HTMLElement) {
   const width = list.clientWidth;
   if (!width) return; // ausgeblendet (andere Ansicht)
   const items = [...list.children].filter((el): el is HTMLElement => el instanceof HTMLElement);
   if (!items.length) return;
-  const vary = list.dataset.justify === 'vary';
 
   // Zielhöhe und Abstand aus dem CSS lesen
   for (const it of items) it.style.removeProperty('flex');
@@ -33,10 +22,8 @@ function layout(list: HTMLElement) {
   const gap = parseFloat(getComputedStyle(list).columnGap) || 0;
   if (!target || !Number.isFinite(target)) return;
 
-  // Breite eines Fotos pro Pixel Reihenhöhe: Seitenverhältnis × Größe
-  const sizes = items.map((el) => (vary ? sizeFor(ratio(el)) : 1));
-  const size = (i: number) => sizes[i]!;
-  const units = items.map((el, i) => ratio(el) * size(i));
+  // Breite eines Fotos pro Pixel Reihenhöhe = Seitenverhältnis
+  const units = items.map(ratio);
 
   const avail = width - 0.5; // Rundungsreserve, damit nichts umbricht
   const heightFor = (sum: number, n: number) => (avail - gap * (n - 1)) / sum;
@@ -68,16 +55,8 @@ function layout(list: HTMLElement) {
   // Letzte, nicht volle Reihe: in Zielhöhe, nicht gestreckt
   if (row.length) rows.push({ idx: row, h: Math.min(target, heightFor(sum, row.length)) });
 
-  let mixed = 0; // Reihen mit großem Foto, für die abwechselnde Ausrichtung
   for (const { idx, h } of rows) {
-    const hasBig = idx.some((i) => size(i) > 1);
-    const align = hasBig ? ALIGN[mixed++ % ALIGN.length]! : '';
-    for (const i of idx) {
-      const el = items[i]!;
-      el.style.flex = `0 0 ${(units[i]! * h).toFixed(2)}px`;
-      if (align && size(i) === 1) el.style.alignSelf = align;
-      else el.style.removeProperty('align-self');
-    }
+    for (const i of idx) items[i]!.style.flex = `0 0 ${(units[i]! * h).toFixed(2)}px`;
   }
 }
 

@@ -253,10 +253,8 @@ klebt beim Scrollen oben rechts, auf dem Handy nur mit Symbolen. Beim Umschalten
 angesehen hat, ein Klick auf eine Kachel öffnet die Lightbox. Die Wahl gilt für den ganzen Besuch, ein neuer Besuch
 startet wieder mit „Groß“. Ohne JavaScript gibt es nur die große Ansicht.
 Denselben Schalter hat die Seite „Galerie“ (`/galerien/`). „Groß“: jedes Titelbild hängt unbeschnitten an der Wand,
-abwechselnd links und rechts, daneben Name, Text und ein Button in der Galeriefarbe. „Übersicht“: alle Galerien in
-Reihen mit Titelbild (unbeschnitten), Name, Bilderzahl und Monat. Hochformate werden größer als die Querformate
-ihrer Reihe (etwa gleiche Fläche wie ein Querformat), damit sie nicht winzig wirken. Sie stehen dann mal nach unten,
-mal nach oben über. Reihen nur aus Querformaten bleiben bündig (Regel `sizeFor` in `src/scripts/justify.ts`). Beide Seiten merken sich ihre Wahl getrennt.
+abwechselnd links und rechts, daneben Name, Text und ein Button in der Galeriefarbe. „Übersicht“: alle Galerien wie in
+Lightroom in gleich hohen, randvollen Reihen mit Titelbild (unbeschnitten), darunter Name, Bilderzahl und Monat. Beide Seiten merken sich ihre Wahl getrennt.
 Die Reihen verteilt ein kleines Skript (`src/scripts/justify.ts`), damit kein einzelnes Foto am Reihenende riesig wird.
 
 **Teilbare Bild-Links:** Jedes Bild hat eine eigene Seite (`/galerien/kueste-im-oktober/3/`) und einen Lightbox-Link

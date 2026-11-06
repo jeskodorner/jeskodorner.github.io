@@ -67,7 +67,7 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
     {
       galleries.length >= 4 && (
         <div class="view-tiles container container--wide">
-          <ul class="cards" role="list" data-justify="vary">
+          <ul class="cards" role="list" data-justify>
             {galleries.map((g, i) => {
               const r = g.cover.src.width / g.cover.src.height;
               return (
@@ -208,12 +208,12 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
      Jedes Bild bleibt im Originalformat. Pro Reihe sind alle Bilder gleich hoch und füllen die Breite:
      Breite ∝ Seitenverhältnis (flex-grow), die letzte Reihe wird nicht gestreckt (::after). */
   .cards {
-    --row: clamp(140px, 100px + 12vw, 290px);
+    --row: clamp(118px, 45px + 19vw, 340px);
     list-style: none;
     padding: 0;
     display: flex;
     flex-wrap: wrap;
-    gap: clamp(1.25rem, 2.5vw, 2.25rem) clamp(0.4rem, 0.8vw, 0.9rem);
+    gap: clamp(1.1rem, 2vw, 1.9rem) clamp(0.45rem, 0.8vw, 0.8rem);
   }
   .cards::after {
     content: '';
