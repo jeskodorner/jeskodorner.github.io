@@ -67,7 +67,7 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
     {
       galleries.length >= 4 && (
         <div class="view-tiles container container--wide">
-          <ul class="cards" role="list" data-justify>
+          <ul class="cards" role="list" data-justify="vary">
             {galleries.map((g, i) => {
               const r = g.cover.src.width / g.cover.src.height;
               return (

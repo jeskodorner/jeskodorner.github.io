@@ -254,7 +254,8 @@ angesehen hat, ein Klick auf eine Kachel öffnet die Lightbox. Die Wahl gilt fü
 startet wieder mit „Groß“. Ohne JavaScript gibt es nur die große Ansicht.
 Denselben Schalter hat die Seite „Galerie“ (`/galerien/`). „Groß“: jedes Titelbild hängt unbeschnitten an der Wand,
 abwechselnd links und rechts, daneben Name, Text und ein Button in der Galeriefarbe. „Übersicht“: alle Galerien in
-gleich hohen Reihen mit Titelbild (unbeschnitten), Name, Bilderzahl und Monat. Beide Seiten merken sich ihre Wahl getrennt.
+Reihen mit Titelbild (unbeschnitten), Name, Bilderzahl und Monat. Wie bei einer Petersburger Hängung sind einzelne
+Titelbilder etwas größer und stehen mal nach unten, mal nach oben über (Muster in `SIZES` in `src/scripts/justify.ts`). Beide Seiten merken sich ihre Wahl getrennt.
 Die Reihen verteilt ein kleines Skript (`src/scripts/justify.ts`), damit kein einzelnes Foto am Reihenende riesig wird.
 
 **Teilbare Bild-Links:** Jedes Bild hat eine eigene Seite (`/galerien/kueste-im-oktober/3/`) und einen Lightbox-Link
