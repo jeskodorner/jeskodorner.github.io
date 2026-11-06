@@ -519,7 +519,8 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   leichtem Schatten, dazu ein kleines Schild. Nichts ist schräg gestellt. Mutig sind Farben und Schrift, nicht die Anordnung.
 - **Körniges Vignetting** am linken und rechten Bildschirmrand (links graphit, rechts blau), wie bei Film.
   Farben, Breite und Stärke in `src/styles/tokens.css` (`--edge-left`, `--edge-right`, `--edge-w`, `--edge-a`;
-  `--edge-a: 0` schaltet es ab).
+  `--edge-a: 0` schaltet es ab). Das Korn ist eine hochaufgelöste, nahtlose Textur in `public/textures/`
+  (doppelte Auflösung für Retina-Bildschirme). Anderes Korn: Werte in `scripts/make-grain.mjs` ändern, dann `npm run grain`.
 - **Jede Galerie hat eine eigene Farbe.** Die Farbe erscheint im Button auf der Seite „Galerie“, im Farbband oben auf
   der Galerieseite, im Fortschrittsbalken und im Download-Kasten.
   Festlegen per `color: pink | blue | lime | orange | violet` in `index.md`. Ohne Angabe wechselt die Farbe automatisch reihum.

@@ -75,12 +75,11 @@
 
   /* Körniges Vignetting am linken und rechten Bildschirmrand (global.css, Abschnitt „Vignetting“).
      Farben als R G B; Stärke 0–1 am äußersten Rand. Abschalten: --edge-a: 0
-     --grain ist Rauschen als Deckkraft: Die Farbe erscheint dadurch körnig. */
+     Das Korn ist eine Bilddatei (public/textures/grain-*.webp, erzeugt mit scripts/make-grain.mjs). */
   --edge-w: clamp(1.5rem, 0.5rem + 7vw, 9rem);
   --edge-left: 24 26 34;
   --edge-right: 62 88 165;
-  --edge-a: 0.5;
-  --grain: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='200'%20height='200'%3E%3Cfilter%20id='g'%20x='0'%20y='0'%20width='100%25'%20height='100%25'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='.9'%20numOctaves='2'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20values='0%200%200%200%200%20%200%200%200%200%200%20%200%200%200%200%200%20%202.8%200%200%200%20-.85'/%3E%3C/filter%3E%3Crect%20width='100%25'%20height='100%25'%20filter='url(%23g)'/%3E%3C/svg%3E");
+  --edge-a: 0.55;
 }
 
 @media (min-width: 900px) {
