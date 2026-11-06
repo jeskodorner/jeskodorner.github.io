@@ -1,6 +1,6 @@
 ---
 /**
- * Galerie-Darstellung: „showcase“ (Bühne, jedes Bild groß mit Parallax), „masonry“ oder „justified“.
+ * Galerie-Darstellung: „showcase“ (Wand, jedes Foto einzeln und unbeschnitten), „masonry“ oder „justified“.
  * Jedes Bild ist ein normaler Link auf seine Bildseite (funktioniert ohne JS).
  * Mit JS öffnet PhotoSwipe die Lightbox; die URL bekommt #bild-N und ist teilbar.
  * #pos-N springt nur zum Bild, ohne Lightbox („Zur Galerie“ auf der Bildseite).
@@ -31,12 +31,10 @@ const items = await Promise.all(
       layout === 'masonry'
         ? '(min-width: 2100px) 20vw, (min-width: 1500px) 25vw, (min-width: 900px) 33vw, 50vw'
         : `(min-width: 1700px) ${Math.round(ratio * 440)}px, (min-width: 600px) ${Math.min(100, Math.round(ratio * 26))}vw, ${Math.min(100, Math.round(ratio * 48))}vw`;
-    // Kachel ist quadratisch: Querformat wird in der Breite beschnitten, braucht also mehr Pixel
-    const wide = Math.max(1, ratio);
-    const tileSizes = `(min-width: 700px) ${Math.round(230 * wide)}px, ${Math.round(34 * wide)}vw`;
-    // Hochformat ohne eigenen Ausschnitt: etwas nach oben (Köpfe sitzen meist im oberen Drittel)
-    const tilePos = img.focus !== '50% 50%' ? img.focus : ratio < 0.9 ? '50% 30%' : '50% 50%';
-    return { img, set, ratio, sizes, tileSizes, tilePos, exif: gallery.showExif ? exifLine(img.exif) : '' };
+    // Übersicht: Foto unbeschnitten im quadratischen Feld – Hochformate werden schmaler
+    const narrow = Math.min(1, ratio);
+    const tileSizes = `(min-width: 700px) ${Math.round(210 * narrow)}px, ${Math.round(32 * narrow)}vw`;
+    return { img, set, ratio, sizes, tileSizes, exif: gallery.showExif ? exifLine(img.exif) : '' };
   }),
 );
 
@@ -98,15 +96,8 @@ const stageItems: StageItem[] = items.map((it) => ({
       <div class="view-tiles container container--wide">
         <ul class="tiles" role="list" data-tiles>
           {items.map((it) => (
-            <li>
-              <a
-                class="ph tile"
-                id={`kachel-${it.img.index}`}
-                href={it.img.pageUrl}
-                data-index={it.img.index}
-                data-cropped="true"
-                style={`--tile-pos:${it.tilePos}`}
-              >
+            <li class="tile-cell" style={`--r:${it.ratio.toFixed(4)}`}>
+              <a class="ph tile" id={`kachel-${it.img.index}`} href={it.img.pageUrl} data-index={it.img.index}>
                 <Picture src={it.img.src} alt={it.img.alt} sizes={it.tileSizes} color={it.img.color} loading="lazy" maxWidth={1200} />
               </a>
             </li>
@@ -203,26 +194,30 @@ const stageItems: StageItem[] = items.map((it) => ({
     object-fit: cover;
   }
 
-  /* ---------- Übersicht: gleich große, quadratische Kacheln ---------- */
+  /* ---------- Übersicht: jedes Foto unbeschnitten in einem gleich großen Feld, mit Abstand ---------- */
   .tiles {
     list-style: none;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(11rem, 30%), 1fr));
-    gap: clamp(0.25rem, 0.15rem + 0.4vw, 0.6rem);
+    grid-template-columns: repeat(auto-fill, minmax(min(10rem, 30%), 1fr));
+    gap: clamp(1rem, 0.5rem + 1.6vw, 2.5rem) clamp(0.75rem, 0.4rem + 1.3vw, 2.25rem);
+  }
+  .tile-cell {
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
   }
   .tile {
-    aspect-ratio: 1;
-    outline-offset: 3px;
+    /* Querformat: volle Feldbreite; Hochformat: volle Feldhöhe */
+    width: calc(min(1, var(--r)) * 100%);
+    box-shadow:
+      0 1px 2px rgb(0 0 0 / 0.08),
+      0 8px 20px -8px rgb(0 0 0 / 0.32);
+    outline-offset: 4px;
   }
-  .tile :global(picture),
   .tile :global(img) {
     display: block;
     width: 100%;
-    height: 100%;
-  }
-  .tile :global(img) {
-    object-fit: cover;
-    object-position: var(--tile-pos, 50% 50%);
+    height: auto;
   }
 </style>

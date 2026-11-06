@@ -8,7 +8,7 @@ date: 2025-02-03
 # Kurzbeschreibung (1–2 Sätze) – erscheint auf der Kachel und in Link-Vorschauen
 description: "Snapshots aus Spanien: weiße Häuser und Zäune, Abende am Wasser,
   ruhige Buchten und ein Ausblick vom Berg über die Küste."
-# showcase = Bühne (jedes Bild groß, Parallax) · masonry = Raster · justified = gleich hohe Reihen
+# showcase = Wand (jedes Foto einzeln, unbeschnitten) · masonry = Raster · justified = gleich hohe Reihen
 layout: showcase
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
 # color: pink

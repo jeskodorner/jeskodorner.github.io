@@ -8,7 +8,7 @@ date: 2024-09-30
 # Kurzbeschreibung (1–2 Sätze) – erscheint auf der Kachel und in Link-Vorschauen
 description: "Beobachtungen aus dem Berliner Alltag: Straßen, Bahnen,
   Ausstellungen, Nächte und Menschen aus der Nähe."
-# showcase = Bühne (jedes Bild groß, Parallax) · masonry = Raster · justified = gleich hohe Reihen
+# showcase = Wand (jedes Foto einzeln, unbeschnitten) · masonry = Raster · justified = gleich hohe Reihen
 layout: masonry
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
 # color: pink

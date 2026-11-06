@@ -78,7 +78,7 @@ date: ${date}
 ${location ? `location: ${JSON.stringify(location)}` : '# location: "Ort"'}
 # Kurzbeschreibung (1–2 Sätze) – erscheint auf der Kachel und in Link-Vorschauen
 description: "Kurze Beschreibung der Galerie."
-# showcase = Bühne (jedes Bild groß, Parallax) · masonry = Raster · justified = gleich hohe Reihen
+# showcase = Wand (jedes Foto einzeln, unbeschnitten) · masonry = Raster · justified = gleich hohe Reihen
 layout: ${layout}
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
 # color: pink

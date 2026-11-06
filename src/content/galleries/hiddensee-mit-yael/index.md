@@ -9,7 +9,7 @@ date: 2026-04-01
 description: "Mit Yael auf Hiddensee Anfang April: Vollmond über dem Feld,
   Rinder in der Dämmerung, sandverwehte Wege durch die Dünen und der Blick auf
   die Ostsee."
-# showcase = Bühne (jedes Bild groß, Parallax) · masonry = Raster · justified = gleich hohe Reihen
+# showcase = Wand (jedes Foto einzeln, unbeschnitten) · masonry = Raster · justified = gleich hohe Reihen
 layout: showcase
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
 # color: pink

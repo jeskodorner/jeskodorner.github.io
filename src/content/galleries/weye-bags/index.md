@@ -8,7 +8,7 @@ date: 2024-10-03
 # Kurzbeschreibung (1–2 Sätze) – erscheint auf der Kachel und in Link-Vorschauen
 description: "Produktfotos für WEYE Bags: aus Jeansstoff genähte Taschen,
   getragen auf einer Brücke, am Uferweg, auf der Parkbank und an der Haustür."
-# showcase = Bühne (jedes Bild groß, Parallax) · masonry = Raster · justified = gleich hohe Reihen
+# showcase = Wand (jedes Foto einzeln, unbeschnitten) · masonry = Raster · justified = gleich hohe Reihen
 layout: showcase
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
 # color: pink

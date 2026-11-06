@@ -51,9 +51,8 @@ export function initLightbox() {
     children: 'a.ph',
     pswpModule: () => import('photoswipe'),
     bgOpacity: 1,
-    // Bühne: Bilder sind per Parallax verschoben → sanft überblenden statt aus dem Vorschaubild zoomen
-    // (wird in beforeOpen je nach Ansicht gesetzt)
-    showHideAnimationType: reduced ? 'none' : galleryEl.dataset.layout === 'showcase' ? 'fade' : 'zoom',
+    // Fotos sind überall unbeschnitten → aus dem Vorschaubild heraus zoomen
+    showHideAnimationType: reduced ? 'none' : 'zoom',
     zoomAnimationDuration: reduced ? 0 : 333,
     closeTitle: de.lightbox.close,
     zoomTitle: de.lightbox.zoom,
@@ -80,14 +79,6 @@ export function initLightbox() {
     item.w = item.width;
     item.h = item.height;
     return item;
-  });
-
-  // Aus den Kacheln heraus zoomen, auf der Bühne überblenden
-  lightbox.on('beforeOpen', () => {
-    const pswp = lightbox.pswp;
-    if (!pswp || reduced) return;
-    const fromTiles = pswp.options.dataSource && 'gallery' in pswp.options.dataSource && pswp.options.dataSource.gallery === tilesEl;
-    pswp.options.showHideAnimationType = fromTiles || galleryEl.dataset.layout !== 'showcase' ? 'zoom' : 'fade';
   });
 
   lightbox.on('uiRegister', () => {

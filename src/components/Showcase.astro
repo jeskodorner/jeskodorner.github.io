@@ -1,15 +1,14 @@
 ---
 /**
- * „Bühne“: Jedes Foto füllt den Bildschirm.
- *   Querformat        → Vollbild, Werkschild als weiße Karte unten links
- *   Hoch-/Quadratformat mit Titel → Bildschirm geteilt: eine Hälfte Bild, eine Hälfte Galeriefarbe mit großem Titel
- *                       (abwechselnd links/rechts)
- *   Hoch-/Quadratformat ohne Titel → Bild unbeschnitten in voller Höhe mittig, Galeriefarbe füllt links und rechts
- * Auf dem Handy: Bilder in voller Breite im Originalformat (kein Zuschnitt), Werkschild darunter.
- * Ausschnitt bei Vollbild: Feld "focus" pro Bild (z. B. "50% 30%").
+ * „Wand“ (große Ansicht im Album): Jedes Foto hängt einzeln an der weißen Wand –
+ * unbeschnitten im Originalformat, mit viel Platz drumherum und leichtem Schatten.
+ *   Desktop: ein Foto pro Bildschirm, mittig, so groß, dass es samt Schild ganz zu sehen ist.
+ *            Beim Scrollen rastet die Galerie sanft Foto für Foto ein.
+ *   Handy:   Foto in voller Breite (mit Rand), Schild darunter.
+ * Schild unter dem Foto: Bildunterschrift (falls vorhanden), Aufnahmedaten und „3 / 12“.
  */
 import type { GalleryImage, RoomColor } from '../lib/galleries';
-import ParallaxImage from './ParallaxImage.astro';
+import Picture from './Picture.astro';
 
 export interface StageItem {
   image: GalleryImage;
@@ -18,7 +17,7 @@ export interface StageItem {
   kicker?: string;
   kickerHref?: string;
   meta?: string;
-  /** Galeriefarbe für die Farbhälfte */
+  /** Galeriefarbe (für die Nummer auf dem Schild) */
   color?: RoomColor;
   /** Zusätzliche Attribute am Bild-Link (Lightbox-Daten, id) */
   attrs?: Record<string, string | number | undefined>;
@@ -40,26 +39,8 @@ export interface Props {
 }
 
 const { items, lightbox = false, eagerFirst = false, snap = false, id, count, color = 'pink' } = Astro.props;
-
-let splits = 0;
-const staged = items.map((item, i) => {
-  const r = item.image.src.width / item.image.src.height;
-  let variant: 'full' | 'center' | 'split-left' | 'split-right';
-  if (r >= 1.2) {
-    variant = 'full';
-  } else if (!item.title) {
-    variant = 'center';
-  } else {
-    variant = splits % 2 === 0 ? 'split-left' : 'split-right';
-    splits++;
-  }
-  return {
-    ...item,
-    variant,
-    sizes: variant === 'full' ? '100vw' : variant === 'center' ? '(min-width: 900px) 60vw, 100vw' : '(min-width: 900px) 50vw, 100vw',
-    color: item.color ?? color,
-  };
-});
+const total = count ?? items.length;
+const pad = (n: number) => String(n).padStart(String(total).length, '0');
 ---
 
 <ol
@@ -67,41 +48,48 @@ const staged = items.map((item, i) => {
   role="list"
   id={id}
   data-gallery={lightbox ? '' : undefined}
-  data-count={lightbox ? (count ?? items.length) : undefined}
+  data-count={lightbox ? total : undefined}
   data-layout="showcase"
 >
   {
-    staged.map((s, i) => (
-      <li id={s.anchor} class:list={['stage', `stage--${s.variant}`, `c-${s.color}`]} style={`--r:${(s.image.src.width / s.image.src.height).toFixed(4)}`}>
-        <ParallaxImage
-          src={s.image.src}
-          alt={s.image.alt}
-          sizes={s.sizes}
-          color={s.image.color}
-          lqip={s.image.lqip}
-          href={s.href}
-          focus={s.image.focus}
-          loading={eagerFirst && i === 0 ? 'eager' : 'lazy'}
-          fetchpriority={eagerFirst && i === 0 ? 'high' : undefined}
-          class:list={['stage-frame', { ph: lightbox }]}
-          attrs={s.attrs}
-        />
-        <div class="placard">
-          <div class="pl-text">
-            {s.title && <p class="pl-title">{s.title}</p>}
-            {s.kicker &&
-              (s.kickerHref ? (
-                <a class="pl-kicker" href={s.kickerHref}>
-                  {s.kicker} <span class="arrow" aria-hidden="true">→</span>
-                </a>
-              ) : (
-                <p class="pl-kicker">{s.kicker}</p>
-              ))}
-            {s.meta && <p class="pl-meta">{s.meta}</p>}
-          </div>
-        </div>
-      </li>
-    ))
+    items.map((s, i) => {
+      const r = s.image.src.width / s.image.src.height;
+      return (
+        <li id={s.anchor} class:list={['stage', `c-${s.color ?? color}`]} style={`--r:${r.toFixed(4)}`}>
+          <figure class="wall">
+            <a class:list={['frame', { ph: lightbox }]} href={s.href} {...s.attrs}>
+              <Picture
+                src={s.image.src}
+                alt={s.image.alt}
+                sizes={`(min-width: 900px) ${Math.min(92, Math.round(r * 46))}vw, 92vw`}
+                color={s.image.color}
+                lqip={s.image.lqip}
+                loading={eagerFirst && i === 0 ? 'eager' : 'lazy'}
+                fetchpriority={eagerFirst && i === 0 ? 'high' : undefined}
+                class="frame-img"
+              />
+            </a>
+            <figcaption class="placard">
+              <span class="pl-text">
+                {s.title && <span class="pl-title">{s.title}</span>}
+                {s.kicker &&
+                  (s.kickerHref ? (
+                    <a class="pl-kicker" href={s.kickerHref}>
+                      {s.kicker} <span class="arrow" aria-hidden="true">→</span>
+                    </a>
+                  ) : (
+                    <span class="pl-kicker">{s.kicker}</span>
+                  ))}
+                {s.meta && <span class="pl-meta">{s.meta}</span>}
+              </span>
+              <span class="pl-num label" aria-hidden="true">
+                {pad(i + 1)} / {pad(total)}
+              </span>
+            </figcaption>
+          </figure>
+        </li>
+      );
+    })
   }
 </ol>
 
@@ -110,171 +98,97 @@ const staged = items.map((item, i) => {
     list-style: none;
     padding: 0;
     display: grid;
-    gap: clamp(0.5rem, 1vw, 0.9rem);
-    /* Höhe einer Bühne: Bildschirm minus kompakter Header */
-    --stage-h: calc(100svh - var(--header-h) + 1rem);
+    gap: clamp(3rem, 2rem + 5vw, 6rem);
+    /* Höchstens so hoch, dass Foto + Schild ganz auf den Bildschirm passen */
+    --wall-h: max(16rem, calc(100svh - var(--header-h) - 11rem));
   }
   .stage {
-    position: relative;
     display: grid;
+    justify-items: center;
+    padding-inline: max(var(--gutter), 1.5rem);
   }
-  /* Ruhigere Parallax-Bewegung bei Vollbild (weniger Zuschnitt) */
-  .stage :global(.stage-frame) {
-    --px-scale: 1.08;
-    --px-from: -3.5%;
-    --px-to: 3.5%;
+  .wall {
+    margin: 0;
+    display: grid;
+    gap: 0.85rem;
+    /* Breite aus dem Seitenverhältnis: nie höher als der Bildschirm erlaubt, nie breiter als der Platz */
+    width: min(100%, 1600px, calc(var(--wall-h) * var(--r)));
+  }
+  .frame {
+    display: block;
+    box-shadow: var(--hang-shadow);
+    cursor: zoom-in;
+    outline-offset: 6px;
+    transition: box-shadow 0.4s var(--ease);
+  }
+  .frame :global(.frame-img) {
+    display: block;
     width: 100%;
+    height: auto;
+  }
+  @media (hover: hover) {
+    .frame:hover {
+      box-shadow:
+        0 2px 4px rgb(0 0 0 / 0.1),
+        0 18px 40px -12px rgb(0 0 0 / 0.35),
+        0 50px 90px -30px rgb(0 0 0 / 0.3);
+    }
   }
 
-  /* ---------- Werkschild ---------- */
+  /* ---------- Schild ---------- */
   .placard {
     display: flex;
-    align-items: flex-end;
+    justify-content: space-between;
+    align-items: baseline;
     gap: 1rem;
-    padding: clamp(1rem, 3vw, 1.75rem) var(--gutter);
   }
   .pl-text {
     display: grid;
-    gap: 0.3rem;
+    gap: 0.2rem;
     min-width: 0;
-    max-width: 34ch;
-    padding-bottom: 0.15rem;
+    max-width: 40ch;
   }
   .pl-title {
-    font-size: clamp(1.15rem, 1rem + 0.7vw, 1.6rem);
+    font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.3rem);
     font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -0.01em;
+    line-height: 1.25;
   }
   .pl-kicker {
     font-size: var(--fs-sm);
     font-weight: 600;
-    text-decoration: none;
   }
   a.pl-kicker {
     color: var(--accent);
-    text-decoration: underline;
   }
   .pl-meta {
     font-size: var(--fs-xs);
     color: var(--ink-soft);
     font-variant-numeric: tabular-nums;
   }
+  .pl-num {
+    flex: none;
+    color: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
+  }
 
-  /* ---------- Desktop: jedes Bild füllt den Bildschirm ---------- */
+  /* ---------- Desktop: ein Foto pro Bildschirm, mittig auf der Wand ---------- */
   @media (min-width: 900px) {
+    .stages {
+      gap: 0;
+    }
     .stage {
-      height: var(--stage-h);
-      min-height: 32rem;
-    }
-    .stage :global(.stage-frame) {
-      aspect-ratio: auto !important;
-      height: 100%;
+      min-height: calc(100svh - var(--header-h));
+      align-content: center;
+      padding-block: 1.5rem;
     }
 
-    /* Vollbild + weiße Karte */
-    .stage--full :global(.stage-frame) {
-      position: absolute;
-      inset: 0;
-    }
-    .stage--full .placard {
-      position: absolute;
-      left: var(--gutter);
-      bottom: var(--gutter);
-      z-index: 1;
-      padding: 1rem 1.25rem;
-      background: var(--wall);
-      border-radius: var(--radius);
-      box-shadow: 0 10px 40px -12px rgb(0 0 0 / 0.35);
-    }
-
-    /* Hochformat ohne Titel: unbeschnitten mittig, Galeriefarbe füllt den Rest */
-    .stage--center {
-      background: var(--c);
-      color: var(--on-c);
-      justify-items: center;
-    }
-    .stage--center :global(.stage-frame) {
-      aspect-ratio: var(--r) !important;
-      width: auto;
-      height: 100%;
-      max-width: 100%;
-    }
-    .stage--center .placard {
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      padding: var(--gutter);
-    }
-    .stage--center .pl-meta,
-    .stage--center a.pl-kicker {
-      color: inherit;
-    }
-
-    /* Geteilter Bildschirm: Bild + Farbhälfte */
-    .stage--split-left,
-    .stage--split-right {
-      grid-template-columns: 1fr 1fr;
-    }
-    .stage--split-right :global(.stage-frame) {
-      grid-column: 2;
-      grid-row: 1;
-    }
-    .stage--split-left .placard,
-    .stage--split-right .placard {
-      grid-row: 1;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-end;
-      gap: 1.5rem;
-      padding: clamp(2rem, 4vw, 4.5rem);
-      background: var(--c);
-      color: var(--on-c);
-    }
-    .stage--split-right .placard {
-      grid-column: 1;
-    }
-    .stage--split-left .pl-meta,
-    .stage--split-right .pl-meta {
-      color: inherit;
-    }
-    .stage--split-left .pl-title,
-    .stage--split-right .pl-title {
-      font-family: var(--font-display);
-      font-weight: 860;
-      font-stretch: 62%;
-      text-transform: uppercase;
-      font-size: clamp(3rem, 1rem + 4.5vw, 7.5rem);
-      line-height: 0.88;
-      letter-spacing: -0.01em;
-      padding-top: 0.08em;
-    }
-    .stage--split-left .pl-text,
-    .stage--split-right .pl-text {
-      max-width: 36rem;
-      gap: 0.75rem;
-    }
-    .stage--split-left .pl-kicker,
-    .stage--split-left .pl-meta,
-    .stage--split-right .pl-kicker,
-    .stage--split-right .pl-meta {
-      font-size: var(--fs-sm);
-    }
-    .stage--split-left a.pl-kicker,
-    .stage--split-right a.pl-kicker {
-      color: inherit;
-    }
-
-    /* Sanftes Einrasten Bild für Bild (Galerieseite) */
+    /* Sanftes Einrasten Foto für Foto (Galerieseite) */
     :global(html:has(.stages--snap)) {
       scroll-snap-type: y proximity;
-      /* Der Header-Abstand steckt schon im scroll-margin der Bühnen – sonst zählt er doppelt
-         und jedes Bild rastet zu tief ein (unten abgeschnitten) */
-      scroll-padding-top: 0;
+      scroll-padding-top: var(--header-h);
     }
     .stages--snap .stage {
       scroll-snap-align: start;
-      scroll-margin-top: calc(var(--header-h) - 1rem);
     }
   }
 </style>

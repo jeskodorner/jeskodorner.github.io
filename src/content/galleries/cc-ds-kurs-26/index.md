@@ -9,7 +9,7 @@ date: 2026-07-05
 description: "Eindrücke von einer Aufführung des DS-Kurses 26: bemalte Hemden,
   eine Kulisse im Stil einer Reality-Show, Spotlights und viel Bewegung auf der
   Bühne."
-# showcase = Bühne (jedes Bild groß, Parallax) · masonry = Raster · justified = gleich hohe Reihen
+# showcase = Wand (jedes Foto einzeln, unbeschnitten) · masonry = Raster · justified = gleich hohe Reihen
 layout: masonry
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
 # color: pink

@@ -25,7 +25,7 @@ if (!title || flag('help')) {
     npm run new-gallery -- "Küste im Oktober"
     npm run new-gallery -- "Hochzeit Lena & Tom" --unlisted
     npm run new-gallery -- "Stadt" --layout justified --date 2026-10-01 --location "Hamburg"
-    (Layouts: showcase = Bühne [Standard], masonry, justified)
+    (Layouts: showcase = Wand [Standard], masonry, justified)
 `);
   process.exit(title ? 0 : 1);
 }

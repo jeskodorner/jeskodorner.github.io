@@ -8,7 +8,7 @@ date: 2024-04-23
 # Kurzbeschreibung (1–2 Sätze) – erscheint auf der Kachel und in Link-Vorschauen
 description: "Eindrücke am Meer: Küste im Abendlicht, ein Fischerboot mit Möwen,
   Hunde am Wasser, ein Lagerfeuer und Menschen – in Farbe und Schwarzweiß."
-# showcase = Bühne (jedes Bild groß, Parallax) · masonry = Raster · justified = gleich hohe Reihen
+# showcase = Wand (jedes Foto einzeln, unbeschnitten) · masonry = Raster · justified = gleich hohe Reihen
 layout: showcase
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
 # color: pink

@@ -8,7 +8,7 @@ date: 2023-06-24
 # Kurzbeschreibung (1–2 Sätze) – erscheint auf der Kachel und in Link-Vorschauen
 description: "Eine gemischte persönliche Sammlung: Reisen ans Meer und in die
   Berge, Straßenszenen, Menschen, Hunde und kleine Momente aus dem Alltag."
-# showcase = Bühne (jedes Bild groß, Parallax) · masonry = Raster · justified = gleich hohe Reihen
+# showcase = Wand (jedes Foto einzeln, unbeschnitten) · masonry = Raster · justified = gleich hohe Reihen
 layout: masonry
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
 # color: pink

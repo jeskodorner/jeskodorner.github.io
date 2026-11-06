@@ -208,7 +208,7 @@ und festen Seitenverhältnissen, damit beim Laden nichts springt.
 | `location` | | Ort |
 | `description` | ja | 1–2 Sätze für Kachel, Suchmaschinen und Link-Vorschau |
 | `cover` | | Dateiname des Vorschaubilds. Es erscheint in der Galerie-Übersicht und auf der Startseite im Showroom, wenn dort kein `bild` angegeben ist. Ohne Angabe wird das erste Bild genommen. |
-| `layout` | | `showcase` (Standard, „Bühne“), `masonry` (Raster) oder `justified` (gleich hohe Reihen). Siehe unten. |
+| `layout` | | `showcase` (Standard, „Wand“), `masonry` (Raster) oder `justified` (gleich hohe Reihen). Siehe unten. |
 | `visibility` | | `public` (Standard) oder `unlisted` |
 | `showExif` | | Aufnahmedaten zeigen (Standard `true`) |
 | `downloadUrl` | | Link zum Download der ganzen Galerie (ZIP/Ordner) |
@@ -229,7 +229,7 @@ Pro Bild:
 | `originalUrl` | | Link zum Original. Dann erscheint „Original herunterladen“. |
 | `hero` | | `true` = großes Bild auf der Startseite |
 | `exif` | | überschreibt ausgelesene Werte, z. B. `exif: { lens: "Helios 44-2" }` |
-| `focus` | | wichtigster Bildbereich, wenn das Foto für Vollbild beschnitten wird, z. B. `focus: "50% 30%"` (waagerecht senkrecht). Standard: Mitte |
+| `focus` | | wichtigster Bildbereich, falls ein Foto doch einmal beschnitten wird (z. B. Hero der Startseite), z. B. `focus: "50% 30%"` (waagerecht senkrecht). Standard: Mitte. In Galerien werden Fotos nicht beschnitten. |
 
 Unterhalb des Kopfbereichs kannst du optional einen längeren Text in Markdown schreiben.
 
@@ -240,21 +240,21 @@ Unterhalb des Kopfbereichs kannst du optional einen längeren Text in Markdown s
 
 | Layout | Wirkung | Gut für |
 |---|---|---|
-| `showcase` („Bühne“, Standard) | Jedes Foto füllt den Bildschirm. Querformate laufen randlos über den ganzen Bildschirm, mit Werkschild als weißer Karte. Hoch- und Quadratformate stehen unbeschnitten in voller Höhe mittig, links und rechts füllt die Galeriefarbe den Bildschirm. Hat ein Hochformat eine Bildunterschrift (`caption`), wird der Bildschirm geteilt: eine Hälfte Bild, eine Hälfte Galeriefarbe mit der Bildunterschrift in großer Schrift. Beim Scrollen rastet die Galerie sanft Bild für Bild ein. Auf dem Handy erscheinen die Bilder in voller Breite und unbeschnitten. | Serien und Portfolio |
+| `showcase` („Wand“, Standard) | Jedes Foto hängt einzeln an der weißen Wand: unbeschnitten im Originalformat, mit viel Weißraum und leichtem Schatten, so groß, dass es samt Schild ganz auf den Bildschirm passt. Darunter ein kleines Schild mit Bildunterschrift (`caption`), Aufnahmedaten und Nummer („3 / 12“). Auf dem Desktop steht ein Foto pro Bildschirm, beim Scrollen rastet die Galerie sanft Foto für Foto ein. Auf dem Handy: volle Breite mit Rand. | Serien und Portfolio |
 | `masonry` | kompaktes Raster in Spalten. Die Bilder laufen spaltenweise von oben nach unten. | viele Bilder, z. B. Kundengalerien |
 | `justified` | gleich hohe Reihen, ruhig und dicht | viele Querformate |
 
-Die Anordnung in der Bühne ergibt sich automatisch aus dem Seitenverhältnis und der Reihenfolge.
-Willst du ein bestimmtes Bild über die volle Breite, setze es an eine passende Stelle in der Liste.
+Die Größe jedes Fotos ergibt sich automatisch aus seinem Seitenverhältnis: Querformate werden breit, Hochformate schmal.
 
 **Umschalter „Groß / Übersicht“:** Ab 4 Bildern steht über jeder Galerie ein Schalter. „Groß“ ist das eingestellte
-Layout (Bühne oder Raster), „Übersicht“ zeigt alle Bilder als gleich große, quadratische Kacheln. Der Schalter
+Layout (Wand oder Raster), „Übersicht“ zeigt alle Bilder klein in gleich großen Feldern, jedes unbeschnitten im
+Originalformat und mit etwas Abstand. Der Schalter
 klebt beim Scrollen oben rechts, auf dem Handy nur mit Symbolen. Beim Umschalten bleibt man beim Bild, das man gerade
 angesehen hat, ein Klick auf eine Kachel öffnet die Lightbox. Die Wahl gilt für den ganzen Besuch, ein neuer Besuch
-startet wieder mit „Groß“. Der Ausschnitt der Kacheln folgt dem Feld `focus`, Hochformate ohne `focus` sind leicht
-nach oben verschoben (Köpfe bleiben drin). Ohne JavaScript gibt es nur die große Ansicht.
-Denselben Schalter hat die Seite „Galerie“ (`/galerien/`): „Übersicht“ zeigt dort alle Galerien als Karten mit
-Titelbild, Name, Bilderzahl und Monat. Beide Seiten merken sich ihre Wahl getrennt.
+startet wieder mit „Groß“. Ohne JavaScript gibt es nur die große Ansicht.
+Denselben Schalter hat die Seite „Galerie“ (`/galerien/`). „Groß“: jedes Titelbild hängt unbeschnitten an der Wand,
+abwechselnd links und rechts, daneben Name, Text und ein Button in der Galeriefarbe. „Übersicht“: alle Galerien als
+Karten mit Titelbild (unbeschnitten), Name, Bilderzahl und Monat. Beide Seiten merken sich ihre Wahl getrennt.
 
 **Teilbare Bild-Links:** Jedes Bild hat eine eigene Seite (`/galerien/kueste-im-oktober/3/`) und einen Lightbox-Link
 (`/galerien/kueste-im-oktober/#bild-3`). Die Nummer entspricht der Position in der Liste. Beim Umsortieren ändern sich die Nummern.
@@ -380,7 +380,7 @@ haben keine Vor/Zurück-Navigation zu anderen Galerien und werden nicht von der 
 
 Alle Effekte sind reines CSS, ohne JavaScript, und laufen flüssig:
 
-- **Parallax:** Fotos gleiten in ihrem Rahmen etwas langsamer als die Seite und blenden beim Hereinscrollen ruhig ein.
+- **Parallax:** Beschnittene Fotos (Hero, Film, Porträt) gleiten in ihrem Rahmen etwas langsamer als die Seite. Galerie-Fotos bewegen sich nicht, damit nichts beschnitten wird.
 - **Dehnende Titel:** Große Titel (Name im Hero, „Ausgewählte Arbeiten“, „Projekt anfragen“, Footer) ziehen sich beim Scrollen von schmal auf breit.
 - **Leuchtmarker:** `*markierte*` Wörter bekommen beim Hereinscrollen einen Lime- bzw. Pink-Marker. Der Satz unter dem Hero leuchtet Wort für Wort auf.
 - **Hero:** Das Vollbild-Foto bleibt stehen, der Name zieht sich beim Scrollen in die Breite.
@@ -512,10 +512,10 @@ GitHub Pages bleibt auch mit eigener Domain kostenlos, inklusive HTTPS. Stand 26
 Look „White Cube“: weiße Galeriewände, schwarze Schrift, knallige Farbflächen. Definiert in `src/styles/tokens.css`.
 Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 
-- **Fotos füllen den Bildschirm**: Querformate randlos, Hochformate neben einer Hälfte in Galeriefarbe. Dazu ein Werkschild.
-  Nichts ist schräg gestellt. Mutig sind Farben und Schrift, nicht die Anordnung.
-- **Jede Galerie hat eine eigene Farbe.** Die Farbe erscheint in der Übersicht, im Farbband oben auf der Galerieseite,
-  im Fortschrittsbalken, und im Download-Kasten.
+- **Fotos hängen an der Wand**: in Galerien und Übersichten immer unbeschnitten im Originalformat, mit Weißraum und
+  leichtem Schatten, dazu ein kleines Schild. Nichts ist schräg gestellt. Mutig sind Farben und Schrift, nicht die Anordnung.
+- **Jede Galerie hat eine eigene Farbe.** Die Farbe erscheint im Button auf der Seite „Galerie“, im Farbband oben auf
+  der Galerieseite, im Fortschrittsbalken und im Download-Kasten.
   Festlegen per `color: pink | blue | lime | orange | violet` in `index.md`. Ohne Angabe wechselt die Farbe automatisch reihum.
 - **Startseite:** Vollbild-Foto mit großem Namen, Leuchtmarker, eine schlichte Zeile „Fotografie — Kamera — Film“,
   „Ausgewählte Arbeiten“ als Showroom (jedes Foto unbeschnitten an der weißen Wand, abwechselnd links/rechts,

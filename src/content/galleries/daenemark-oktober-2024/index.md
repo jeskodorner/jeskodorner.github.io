@@ -9,7 +9,7 @@ date: 2024-10-22
 description: "Zwei Blicke auf die Küste im Oktober: goldenes Licht über dem Meer
   mit Wasservögeln zwischen den Steinen und eine steile Felsklippe in
   Schwarzweiß."
-# showcase = Bühne (jedes Bild groß, Parallax) · masonry = Raster · justified = gleich hohe Reihen
+# showcase = Wand (jedes Foto einzeln, unbeschnitten) · masonry = Raster · justified = gleich hohe Reihen
 layout: showcase
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
 # color: pink

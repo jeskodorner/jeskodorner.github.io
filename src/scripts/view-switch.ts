@@ -57,7 +57,7 @@ export function revealItem(index: number, mark = true) {
       tile.addEventListener('animationend', () => tile.classList.remove('is-current'), { once: true });
     }
   } else {
-    // Galerie: #pos-N ist das Sprungziel (berücksichtigt das Einrasten der Bühne)
+    // Galerie: #pos-N ist das Sprungziel (berücksichtigt das Einrasten der Wand)
     const el = root.querySelector(`#pos-${index}`) ?? root.querySelector(`.view-main [data-index="${index}"]`);
     el?.scrollIntoView({ block: 'start', behavior: 'instant' });
   }
