@@ -2,7 +2,7 @@
 
 Statische Portfolio-Website mit Galerien, Lightbox, Bildübergabe an Kunden und Filmarbeiten.
 Gebaut mit **Astro 7** und TypeScript und gehostet kostenlos auf **GitHub Pages** unter
-**https://jeskodorner.github.io**.
+**https://jeskodorner.de** (die alte Adresse jeskodorner.github.io leitet automatisch weiter).
 
 - Keine Cookies, keine Tracker, keine Google Fonts. Alle Schriften liegen lokal im Projekt.
 - Die Seiten funktionieren ohne JavaScript. JavaScript wird nur für Lightbox, Ansicht-Umschalter, Teilen und die E-Mail-Adresse verwendet.
@@ -479,19 +479,28 @@ gh repo create jeskodorner/jeskodorner.github.io --public --source . --push
 
 Danach weiter mit Schritt 4 und 5 von oben.
 
-### Eigene Domain (z. B. jeskodorner.de)
+### Eigene Domain: jeskodorner.de
 
-GitHub Pages bleibt auch mit eigener Domain kostenlos, inklusive HTTPS. Stand 26.10.2026:
+**Eingerichtet am 06.11.2026.** Die Domain liegt bei **Infomaniak**, die Seite weiter kostenlos bei GitHub Pages (mit HTTPS).
+Falls du das je neu einrichten oder umziehen musst:
 
-- **Anbieter:** **INWX** (deutsch, .de ab 5,97 € im ersten Jahr, danach 4,65 €/Jahr, DNSSEC inklusive) oder **netcup** (ca. 5 €/Jahr,
-  12 Monate Mindestlaufzeit). Vorsicht bei Lockpreisen, die im zweiten Jahr deutlich teurer werden (IONOS, Strato, United Domains:
-  12–19 €/Jahr). Cloudflare bietet .de nicht an.
-- **DNS beim Anbieter eintragen:** vier A-Einträge `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`,
-  vier AAAA-Einträge `2606:50c0:8000::153` bis `2606:50c0:8003::153` und für `www` einen CNAME auf `jeskodorner.github.io`.
-- **Auf GitHub:** Domain unter *Settings → Pages → Custom domain* eintragen, später *Enforce HTTPS* anhaken.
-  Am besten die Domain vorher unter *Settings → Pages → Verified domains* bestätigen.
-- **Im Projekt:** `url` in `src/config/site.ts` und `site` in `astro.config.mjs` auf die neue Adresse ändern
-  (sonst stimmen Sitemap und Vorschaubilder für Social Media nicht).
+- **DNS bei Infomaniak** (Manager → Web & Domain → Domains → jeskodorner.de → DNS-Zone). Quelle leer = die Domain selbst:
+
+  | Typ | Quelle | Ziel |
+  |---|---|---|
+  | A (4×) | *(leer)* | `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153` |
+  | AAAA (4×) | *(leer)* | `2606:50c0:8000::153`, `2606:50c0:8001::153`, `2606:50c0:8002::153`, `2606:50c0:8003::153` |
+  | CNAME | `www` | `jeskodorner.github.io` |
+  | TXT | `_github-pages-challenge-jeskodorner` | Code aus GitHub (Bestätigung der Domain) |
+
+  Beim zweiten A- bzw. AAAA-Eintrag fragt Infomaniak „Replace“ oder „Add … in addition“: immer **in addition** wählen.
+  Die übrigen Einträge (MX, SPF, DMARC, autoconfig, autodiscover, SRV) gehören zum E-Mail-Postfach und bleiben.
+- **GitHub, Konto:** Profilbild → *Settings → Pages → Verified domains* → Domain bestätigen (TXT-Eintrag oben).
+- **GitHub, Projekt:** *Settings → Pages → Custom domain* `jeskodorner.de` → *Enforce HTTPS* anhaken.
+- **Im Projekt:** `url` in `src/config/site.ts` und `site` in `astro.config.mjs` zeigen auf `https://jeskodorner.de`
+  (sonst stimmen Sitemap, Teilen-Links und Vorschaubilder für Social Media nicht).
+- **Nach Änderungen** dauert es Minuten bis Stunden, bis alle Internetanschlüsse die neuen Einträge kennen.
+  Hat ein Netz sich vorher „gibt es nicht“ gemerkt, kann es dort bis zu einer Stunde länger dauern.
 
 ---
 

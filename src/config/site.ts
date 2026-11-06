@@ -4,7 +4,7 @@
  */
 export const site = {
   name: 'Jesko Dorner',
-  url: 'https://jeskodorner.github.io',
+  url: 'https://jeskodorner.de',
   lang: 'de',
   ogLocale: 'de_DE',
 

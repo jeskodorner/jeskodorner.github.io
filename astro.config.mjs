@@ -2,10 +2,10 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
-// GitHub-User-Site: Das Repo heißt exakt "jeskodorner.github.io",
-// deshalb wird nur `site` gesetzt und kein `base`.
+// GitHub-User-Site (Repo "jeskodorner.github.io") mit eigener Domain jeskodorner.de,
+// deshalb wird nur `site` gesetzt und kein `base`. jeskodorner.github.io leitet auf die Domain weiter.
 export default defineConfig({
-  site: 'https://jeskodorner.github.io',
+  site: 'https://jeskodorner.de',
   trailingSlash: 'always',
   build: { format: 'directory' },
   integrations: [
