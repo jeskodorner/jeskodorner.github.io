@@ -74,11 +74,10 @@
   --hang-shadow: 0 1px 2px rgb(0 0 0 / 0.08), 0 12px 30px -10px rgb(0 0 0 / 0.28), 0 40px 80px -30px rgb(0 0 0 / 0.25);
 
   /* Körniges Vignetting am linken und rechten Bildschirmrand (global.css, Abschnitt „Vignetting“).
-     Farben als R G B; Stärke 0–1 am äußersten Rand. Abschalten: --edge-a: 0
+     Farbe als R G B (beide Seiten gleich); Stärke 0–1 am äußersten Rand. Abschalten: --edge-a: 0
      Das Korn ist eine Bilddatei (public/textures/grain-*.webp, erzeugt mit scripts/make-grain.mjs). */
   --edge-w: clamp(1.5rem, 0.5rem + 7vw, 9rem);
-  --edge-left: 24 26 34;
-  --edge-right: 62 88 165;
+  --edge-rgb: 44 44 46;
   --edge-a: 0.55;
 }
 

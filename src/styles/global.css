@@ -404,16 +404,18 @@ a:hover .arrow,
 }
 
 /* ---------- Vignetting ----------
-   Leicht körniger Schatten am linken und rechten Bildschirmrand (nicht oben/unten), wie ein Film-Vignetting.
-   Farbe + hochaufgelöstes Filmkorn (hard-light: hellt und dunkelt die Farbe Pixel für Pixel), weich ausgeblendet.
-   Liegt fest über der Seite, ist aber nicht anklickbar. Farben und Stärke: tokens.css (--edge-…). */
+   Leicht körniger grauer Schatten am linken und rechten Bildschirmrand (nicht oben/unten), wie ein Film-Vignetting.
+   Liegt HINTER dem Inhalt (z-index: -1): sichtbar nur auf der weißen Seite – farbige Flächen, Fotos und
+   Header liegen davor und bleiben frei von Korn. Das Korn flimmert leicht wie bei Film.
+   Farbe + hochaufgelöstes Filmkorn (hard-light: hellt und dunkelt Pixel für Pixel), weich ausgeblendet.
+   Farbe und Stärke: tokens.css (--edge-…). */
 body::before,
 body::after {
   content: '';
   position: fixed;
   top: 0;
   bottom: 0;
-  z-index: 55;
+  z-index: -1;
   width: var(--edge-w);
   pointer-events: none;
   background-color: rgb(var(--edge-rgb));
@@ -428,15 +430,51 @@ body::after {
 }
 body::before {
   left: 0;
-  --edge-rgb: var(--edge-left);
   --dir: to right;
 }
 body::after {
   right: 0;
-  --edge-rgb: var(--edge-right);
   --dir: to left;
-  /* andere Stelle im Korn als links, damit sich das Muster nicht spiegelt */
   background-position: 97px 53px;
+}
+/* Filmflimmern: Das Korn springt etwa zehnmal pro Sekunde an eine andere Stelle */
+@media (prefers-reduced-motion: no-preference) {
+  body::before,
+  body::after {
+    animation: grain-flicker 0.9s steps(1, end) infinite;
+  }
+  body::after {
+    animation-delay: -0.4s;
+  }
+}
+@keyframes grain-flicker {
+  0% {
+    background-position: 0 0;
+  }
+  11% {
+    background-position: -61px 37px;
+  }
+  22% {
+    background-position: 83px -112px;
+  }
+  33% {
+    background-position: -147px -29px;
+  }
+  44% {
+    background-position: 29px 151px;
+  }
+  55% {
+    background-position: -93px -173px;
+  }
+  66% {
+    background-position: 131px 71px;
+  }
+  77% {
+    background-position: -17px -59px;
+  }
+  88% {
+    background-position: 167px 113px;
+  }
 }
 @media print {
   body::before,
