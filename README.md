@@ -515,11 +515,12 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 
 - **Fotos hängen an der Wand**: in Galerien und Übersichten immer unbeschnitten im Originalformat, mit Weißraum und
   leichtem Schatten, dazu ein kleines Schild. Nichts ist schräg gestellt. Mutig sind Farben und Schrift, nicht die Anordnung.
-- **Körniges Vignetting** am linken und rechten Bildschirmrand, beidseitig grau, mit leichtem Filmflimmern
-  (bei „Bewegung reduzieren“ steht es still). Es liegt hinter dem Inhalt: zu sehen nur auf der weißen Seite,
-  farbige Flächen, Fotos und Header bleiben frei von Korn. Farbe, Breite und Stärke in `src/styles/tokens.css`
-  (`--edge-rgb`, `--edge-w`, `--edge-a`; `--edge-a: 0` schaltet es ab). Das Korn ist eine hochaufgelöste, nahtlose
-  Textur in `public/textures/`. Anderes Korn: Werte in `scripts/make-grain.mjs` ändern, dann `npm run grain`.
+- **Körniges Vignetting:** weiche, fließende graue Wolken mit feinem Filmkorn am linken und rechten Bildschirmrand,
+  links und rechts verschieden geformt. Es liegt hinter dem Inhalt: zu sehen nur auf der weißen Seite, farbige Flächen,
+  Fotos und Header bleiben frei von Korn. Farbe, Reichweite und Stärke in `src/styles/tokens.css` (`--edge-rgb`,
+  `--edge-w`, `--edge-a`; `--edge-a: 0` schaltet es ab), die Form (Lage und Größe der Wolken) in `src/styles/global.css`,
+  Abschnitt „Vignetting“. Das Korn ist eine hochaufgelöste, nahtlose Textur in `public/textures/`. Anderes Korn:
+  Werte in `scripts/make-grain.mjs` ändern, dann `npm run grain`.
 - **Jede Galerie hat eine eigene Farbe.** Die Farbe erscheint im Button auf der Seite „Galerie“, im Farbband oben auf
   der Galerieseite, im Fortschrittsbalken und im Download-Kasten.
   Festlegen per `color: pink | blue | lime | orange | violet` in `index.md`. Ohne Angabe wechselt die Farbe automatisch reihum.

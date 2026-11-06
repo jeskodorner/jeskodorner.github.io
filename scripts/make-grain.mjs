@@ -84,11 +84,12 @@ function grain(size, { fine, coarse, mix, spread, seed }) {
 }
 
 await mkdir(OUT, { recursive: true });
+// Feines Korn: kaum weichgezeichnet, wenig grobe Anteile (wie feinkörniger Film)
 for (const [size, fine, coarse] of [
-  [512, 0.55, 1.6],
-  [256, 0.35, 0.8],
+  [512, 0.38, 0.9],
+  [256, 0.28, 0.6],
 ]) {
-  const px = grain(size, { fine, coarse, mix: 0.3, spread: 46, seed: 20261106 });
+  const px = grain(size, { fine, coarse, mix: 0.12, spread: 54, seed: 20261106 });
   const file = `${OUT}grain-${size}.webp`;
   await sharp(px, { raw: { width: size, height: size, channels: 1 } })
     .webp({ quality: 86, smartSubsample: false })

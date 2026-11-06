@@ -404,11 +404,12 @@ a:hover .arrow,
 }
 
 /* ---------- Vignetting ----------
-   Leicht körniger grauer Schatten am linken und rechten Bildschirmrand (nicht oben/unten), wie ein Film-Vignetting.
+   Weiche, fließende graue Wolken mit feinem Filmkorn am linken und rechten Bildschirmrand (nicht oben/unten).
+   Mehrere weiche Ellipsen ergeben eine unregelmäßige Form: an manchen Stellen reicht der Schatten weiter
+   ins Bild, an anderen kaum. Links und rechts sind verschieden geformt.
    Liegt HINTER dem Inhalt (z-index: -1): sichtbar nur auf der weißen Seite – farbige Flächen, Fotos und
-   Header liegen davor und bleiben frei von Korn. Das Korn flimmert leicht wie bei Film.
-   Farbe + hochaufgelöstes Filmkorn (hard-light: hellt und dunkelt Pixel für Pixel), weich ausgeblendet.
-   Farbe und Stärke: tokens.css (--edge-…). */
+   Header liegen davor und bleiben frei von Korn.
+   Farbe + hochaufgelöstes Korn (hard-light: hellt und dunkelt Pixel für Pixel). Werte: tokens.css (--edge-…). */
 body::before,
 body::after {
   content: '';
@@ -423,58 +424,39 @@ body::after {
   background-image: image-set(url('/textures/grain-256.webp') 1x, url('/textures/grain-512.webp') 2x);
   background-size: 256px 256px;
   background-blend-mode: hard-light;
-  --fade: rgb(0 0 0 / var(--edge-a)), rgb(0 0 0 / calc(var(--edge-a) * 0.62)) 25%,
-    rgb(0 0 0 / calc(var(--edge-a) * 0.3)) 50%, rgb(0 0 0 / calc(var(--edge-a) * 0.1)) 75%, transparent;
-  -webkit-mask-image: linear-gradient(var(--dir), var(--fade));
-  mask-image: linear-gradient(var(--dir), var(--fade));
+  --a: var(--edge-a);
+  -webkit-mask-image: var(--shape);
+  mask-image: var(--shape);
 }
 body::before {
   left: 0;
-  --dir: to right;
+  --shape: radial-gradient(
+      ellipse 95% 30% at 0% 15%,
+      rgb(0 0 0 / var(--a)),
+      rgb(0 0 0 / calc(var(--a) * 0.45)) 38%,
+      transparent 72%
+    ),
+    radial-gradient(ellipse 55% 20% at 0% 50%, rgb(0 0 0 / calc(var(--a) * 0.55)), transparent 70%),
+    radial-gradient(
+      ellipse 78% 34% at 0% 92%,
+      rgb(0 0 0 / calc(var(--a) * 0.8)),
+      rgb(0 0 0 / calc(var(--a) * 0.32)) 42%,
+      transparent 72%
+    ),
+    linear-gradient(to right, rgb(0 0 0 / calc(var(--a) * 0.3)), transparent 26%);
 }
 body::after {
   right: 0;
-  --dir: to left;
   background-position: 97px 53px;
-}
-/* Filmflimmern: Das Korn springt etwa zehnmal pro Sekunde an eine andere Stelle */
-@media (prefers-reduced-motion: no-preference) {
-  body::before,
-  body::after {
-    animation: grain-flicker 0.9s steps(1, end) infinite;
-  }
-  body::after {
-    animation-delay: -0.4s;
-  }
-}
-@keyframes grain-flicker {
-  0% {
-    background-position: 0 0;
-  }
-  11% {
-    background-position: -61px 37px;
-  }
-  22% {
-    background-position: 83px -112px;
-  }
-  33% {
-    background-position: -147px -29px;
-  }
-  44% {
-    background-position: 29px 151px;
-  }
-  55% {
-    background-position: -93px -173px;
-  }
-  66% {
-    background-position: 131px 71px;
-  }
-  77% {
-    background-position: -17px -59px;
-  }
-  88% {
-    background-position: 167px 113px;
-  }
+  --shape: radial-gradient(ellipse 60% 22% at 100% 6%, rgb(0 0 0 / calc(var(--a) * 0.6)), transparent 70%),
+    radial-gradient(
+      ellipse 100% 32% at 100% 44%,
+      rgb(0 0 0 / var(--a)),
+      rgb(0 0 0 / calc(var(--a) * 0.42)) 38%,
+      transparent 72%
+    ),
+    radial-gradient(ellipse 65% 26% at 100% 84%, rgb(0 0 0 / calc(var(--a) * 0.65)), transparent 70%),
+    linear-gradient(to left, rgb(0 0 0 / calc(var(--a) * 0.3)), transparent 26%);
 }
 @media print {
   body::before,
