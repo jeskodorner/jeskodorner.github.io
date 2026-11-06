@@ -402,3 +402,49 @@ a:hover .arrow,
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ---------- Vignetting ----------
+   Leicht körniger Schatten am linken und rechten Bildschirmrand (nicht oben/unten), wie ein Film-Vignetting.
+   Eine Farbfläche, deren Deckkraft aus Verlauf × Korn besteht: am Rand dicht, nach innen immer lockerer.
+   Liegt fest über der Seite, ist aber nicht anklickbar. Farben und Stärke: tokens.css (--edge-…). */
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  z-index: 55;
+  width: var(--edge-w);
+  pointer-events: none;
+  background: rgb(var(--edge-rgb));
+  --fade: rgb(0 0 0 / var(--edge-a)), rgb(0 0 0 / calc(var(--edge-a) * 0.55)) 30%,
+    rgb(0 0 0 / calc(var(--edge-a) * 0.18)) 65%, transparent;
+  -webkit-mask-image: var(--grain), linear-gradient(var(--dir), var(--fade));
+  mask-image: var(--grain), linear-gradient(var(--dir), var(--fade));
+  -webkit-mask-size:
+    200px 200px,
+    100% 100%;
+  mask-size:
+    200px 200px,
+    100% 100%;
+  -webkit-mask-repeat: repeat, no-repeat;
+  mask-repeat: repeat, no-repeat;
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+body::before {
+  left: 0;
+  --edge-rgb: var(--edge-left);
+  --dir: to right;
+}
+body::after {
+  right: 0;
+  --edge-rgb: var(--edge-right);
+  --dir: to left;
+}
+@media print {
+  body::before,
+  body::after {
+    display: none;
+  }
+}

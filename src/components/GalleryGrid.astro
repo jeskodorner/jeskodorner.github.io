@@ -31,9 +31,8 @@ const items = await Promise.all(
       layout === 'masonry'
         ? '(min-width: 2100px) 20vw, (min-width: 1500px) 25vw, (min-width: 900px) 33vw, 50vw'
         : `(min-width: 1700px) ${Math.round(ratio * 440)}px, (min-width: 600px) ${Math.min(100, Math.round(ratio * 26))}vw, ${Math.min(100, Math.round(ratio * 48))}vw`;
-    // Übersicht: Foto unbeschnitten im quadratischen Feld – Hochformate werden schmaler
-    const narrow = Math.min(1, ratio);
-    const tileSizes = `(min-width: 700px) ${Math.round(210 * narrow)}px, ${Math.round(32 * narrow)}vw`;
+    // Übersicht: gleich hohe Reihen – die Breite wächst mit dem Seitenverhältnis
+    const tileSizes = `(min-width: 700px) ${Math.round(ratio * 270)}px, ${Math.round(Math.min(100, ratio * 36))}vw`;
     return { img, set, ratio, sizes, tileSizes, exif: gallery.showExif ? exifLine(img.exif) : '' };
   }),
 );
@@ -94,7 +93,7 @@ const stageItems: StageItem[] = items.map((it) => ({
   {
     hasTiles && (
       <div class="view-tiles container container--wide">
-        <ul class="tiles" role="list" data-tiles>
+        <ul class="tiles" role="list" data-tiles data-justify>
           {items.map((it) => (
             <li class="tile-cell" style={`--r:${it.ratio.toFixed(4)}`}>
               <a class="ph tile" id={`kachel-${it.img.index}`} href={it.img.pageUrl} data-index={it.img.index}>
@@ -111,6 +110,8 @@ const stageItems: StageItem[] = items.map((it) => ({
 <script>
   import { initLightbox } from '../scripts/lightbox';
   import { initViewSwitch, revealItem } from '../scripts/view-switch';
+  import { initJustify } from '../scripts/justify';
+  initJustify();
   initViewSwitch();
   initLightbox();
 
@@ -194,30 +195,33 @@ const stageItems: StageItem[] = items.map((it) => ({
     object-fit: cover;
   }
 
-  /* ---------- Übersicht: jedes Foto unbeschnitten in einem gleich großen Feld, mit Abstand ---------- */
+  /* ---------- Übersicht: Fotos in gleich hohen Reihen, dicht gepackt (wie Lightroom) ----------
+     Jedes Foto bleibt im Originalformat. Pro Reihe sind alle Fotos gleich hoch und füllen die Breite:
+     Breite ∝ Seitenverhältnis (flex-grow), die letzte Reihe wird nicht gestreckt (::after). */
   .tiles {
+    --row: clamp(95px, 55px + 12vw, 230px);
     list-style: none;
     padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(10rem, 30%), 1fr));
-    gap: clamp(1rem, 0.5rem + 1.6vw, 2.5rem) clamp(0.75rem, 0.4rem + 1.3vw, 2.25rem);
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(3px, 0.1rem + 0.35vw, 8px);
+  }
+  .tiles::after {
+    content: '';
+    flex-grow: 1000000;
   }
   .tile-cell {
-    aspect-ratio: 1;
-    display: grid;
-    place-items: center;
+    flex-grow: calc(var(--r) * 100);
+    flex-basis: calc(var(--r) * var(--row));
+    min-width: 0;
   }
   .tile {
-    /* Querformat: volle Feldbreite; Hochformat: volle Feldhöhe */
-    width: calc(min(1, var(--r)) * 100%);
-    box-shadow:
-      0 1px 2px rgb(0 0 0 / 0.08),
-      0 8px 20px -8px rgb(0 0 0 / 0.32);
-    outline-offset: 4px;
+    outline-offset: 3px;
   }
   .tile :global(img) {
     display: block;
     width: 100%;
     height: auto;
+    aspect-ratio: var(--r);
   }
 </style>

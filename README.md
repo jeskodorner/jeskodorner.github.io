@@ -247,14 +247,15 @@ Unterhalb des Kopfbereichs kannst du optional einen längeren Text in Markdown s
 Die Größe jedes Fotos ergibt sich automatisch aus seinem Seitenverhältnis: Querformate werden breit, Hochformate schmal.
 
 **Umschalter „Groß / Übersicht“:** Ab 4 Bildern steht über jeder Galerie ein Schalter. „Groß“ ist das eingestellte
-Layout (Wand oder Raster), „Übersicht“ zeigt alle Bilder klein in gleich großen Feldern, jedes unbeschnitten im
-Originalformat und mit etwas Abstand. Der Schalter
+Layout (Wand oder Raster), „Übersicht“ zeigt alle Bilder dicht in gleich hohen Reihen wie in Lightroom: jedes
+unbeschnitten im Originalformat, Hoch- und Querformate gleich hoch, jede Reihe füllt die Breite. Der Schalter
 klebt beim Scrollen oben rechts, auf dem Handy nur mit Symbolen. Beim Umschalten bleibt man beim Bild, das man gerade
 angesehen hat, ein Klick auf eine Kachel öffnet die Lightbox. Die Wahl gilt für den ganzen Besuch, ein neuer Besuch
 startet wieder mit „Groß“. Ohne JavaScript gibt es nur die große Ansicht.
 Denselben Schalter hat die Seite „Galerie“ (`/galerien/`). „Groß“: jedes Titelbild hängt unbeschnitten an der Wand,
-abwechselnd links und rechts, daneben Name, Text und ein Button in der Galeriefarbe. „Übersicht“: alle Galerien als
-Karten mit Titelbild (unbeschnitten), Name, Bilderzahl und Monat. Beide Seiten merken sich ihre Wahl getrennt.
+abwechselnd links und rechts, daneben Name, Text und ein Button in der Galeriefarbe. „Übersicht“: alle Galerien in
+gleich hohen Reihen mit Titelbild (unbeschnitten), Name, Bilderzahl und Monat. Beide Seiten merken sich ihre Wahl getrennt.
+Die Reihen verteilt ein kleines Skript (`src/scripts/justify.ts`), damit kein einzelnes Foto am Reihenende riesig wird.
 
 **Teilbare Bild-Links:** Jedes Bild hat eine eigene Seite (`/galerien/kueste-im-oktober/3/`) und einen Lightbox-Link
 (`/galerien/kueste-im-oktober/#bild-3`). Die Nummer entspricht der Position in der Liste. Beim Umsortieren ändern sich die Nummern.
@@ -514,6 +515,9 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 
 - **Fotos hängen an der Wand**: in Galerien und Übersichten immer unbeschnitten im Originalformat, mit Weißraum und
   leichtem Schatten, dazu ein kleines Schild. Nichts ist schräg gestellt. Mutig sind Farben und Schrift, nicht die Anordnung.
+- **Körniges Vignetting** am linken und rechten Bildschirmrand (links graphit, rechts blau), wie bei Film.
+  Farben, Breite und Stärke in `src/styles/tokens.css` (`--edge-left`, `--edge-right`, `--edge-w`, `--edge-a`;
+  `--edge-a: 0` schaltet es ab).
 - **Jede Galerie hat eine eigene Farbe.** Die Farbe erscheint im Button auf der Seite „Galerie“, im Farbband oben auf
   der Galerieseite, im Fortschrittsbalken und im Download-Kasten.
   Festlegen per `color: pink | blue | lime | orange | violet` in `index.md`. Ohne Angabe wechselt die Farbe automatisch reihum.

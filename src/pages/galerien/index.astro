@@ -67,29 +67,30 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
     {
       galleries.length >= 4 && (
         <div class="view-tiles container container--wide">
-          <ul class="cards" role="list">
-            {galleries.map((g, i) => (
-              <li class={`c-${g.color}`} style={`--r:${(g.cover.src.width / g.cover.src.height).toFixed(4)}`}>
-                <a class="card" href={g.url} data-index={i + 1}>
-                  <span class="card-img">
+          <ul class="cards" role="list" data-justify>
+            {galleries.map((g, i) => {
+              const r = g.cover.src.width / g.cover.src.height;
+              return (
+                <li class:list={['card-item', `c-${g.color}`]} style={`--r:${r.toFixed(4)}`}>
+                  <a class="card" href={g.url} data-index={i + 1}>
                     <span class="card-frame">
                       <Picture
                         src={g.cover.src}
                         alt={g.cover.alt}
-                        sizes="(min-width: 1500px) 18vw, (min-width: 700px) 30vw, 46vw"
+                        sizes={`(min-width: 700px) ${Math.round(r * 330)}px, ${Math.round(Math.min(100, r * 50))}vw`}
                         color={g.cover.color}
                         loading="lazy"
                         maxWidth={1200}
                       />
                     </span>
-                  </span>
-                  <span class="card-title">{g.title}</span>
-                  <span class="label card-meta">
-                    {t.galleries.images(g.images.length)} · {formatMonth(g.date)}
-                  </span>
-                </a>
-              </li>
-            ))}
+                    <span class="card-title">{g.title}</span>
+                    <span class="label card-meta">
+                      {t.galleries.images(g.images.length)} · {formatMonth(g.date)}
+                    </span>
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         </div>
       )
@@ -98,6 +99,8 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
 </BaseLayout>
 <script>
   import { initViewSwitch } from '../../scripts/view-switch';
+  import { initJustify } from '../../scripts/justify';
+  initJustify();
   initViewSwitch();
 </script>
 
@@ -201,42 +204,45 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
     }
   }
 
-  /* ---------- Übersicht: alle Galerien als Karten ---------- */
+  /* ---------- Übersicht: Titelbilder in gleich hohen Reihen (wie Lightroom) ----------
+     Jedes Bild bleibt im Originalformat. Pro Reihe sind alle Bilder gleich hoch und füllen die Breite:
+     Breite ∝ Seitenverhältnis (flex-grow), die letzte Reihe wird nicht gestreckt (::after). */
   .cards {
+    --row: clamp(140px, 100px + 12vw, 290px);
     list-style: none;
     padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(15rem, 45%), 1fr));
-    gap: clamp(1.5rem, 3vw, 2.75rem) clamp(0.6rem, 1.4vw, 1.5rem);
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(1.25rem, 2.5vw, 2.25rem) clamp(0.4rem, 0.8vw, 0.9rem);
+  }
+  .cards::after {
+    content: '';
+    flex-grow: 1000000;
+  }
+  .card-item {
+    flex-grow: calc(var(--r) * 100);
+    flex-basis: calc(var(--r) * var(--row));
+    min-width: 0;
   }
   .card {
     display: grid;
     align-content: start;
-    gap: 0.55rem;
+    gap: 0.45rem;
     text-decoration: none;
     color: var(--ink);
     outline-offset: 6px;
   }
-  /* Titelbild unbeschnitten in einem gleich großen Feld, unten links bündig mit dem Titel */
-  .card-img {
-    display: grid;
-    aspect-ratio: 4 / 3;
-    align-items: end;
-    justify-items: start;
-    margin-bottom: 0.35rem;
-  }
   .card-frame {
     display: block;
-    width: calc(min(1, var(--r) / 1.3333) * 100%);
     overflow: hidden;
-    box-shadow:
-      0 1px 2px rgb(0 0 0 / 0.08),
-      0 10px 24px -10px rgb(0 0 0 / 0.35);
+    background: var(--sand);
+    margin-bottom: 0.3rem;
   }
   .card-frame :global(img) {
     display: block;
     width: 100%;
     height: auto;
+    aspect-ratio: var(--r);
     transition: transform 0.9s var(--ease);
   }
   .card-title {
@@ -244,13 +250,16 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
     font-weight: 860;
     font-stretch: 70%;
     text-transform: uppercase;
-    font-size: clamp(1.15rem, 0.95rem + 0.7vw, 1.65rem);
+    font-size: clamp(1rem, 0.85rem + 0.6vw, 1.5rem);
     line-height: 0.95;
     letter-spacing: -0.005em;
     text-wrap: balance;
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
   .card-meta {
     color: var(--ink-soft);
+    font-size: clamp(0.68rem, 0.62rem + 0.25vw, var(--fs-xs));
   }
   @media (hover: hover) {
     .card:hover :global(img) {

@@ -3,6 +3,8 @@
  * Die gemerkte Ansicht setzt schon ein kleines Inline-Skript vor dem ersten Zeichnen.
  * Einträge beider Ansichten tragen data-index="1…n"; beim Umschalten bleibt man beim selben Eintrag.
  */
+import { justifyAll } from './justify';
+
 type View = 'main' | 'tiles';
 
 const headerBottom = () => document.querySelector('.site-header')?.getBoundingClientRect().bottom ?? 80;
@@ -79,6 +81,7 @@ export function initViewSwitch() {
       const index = currentIndex(root);
       root.dataset.view = next;
       sync();
+      justifyAll(); // Reihen sofort verteilen, damit das Springen zum Bild stimmt
       try {
         if (root.dataset.viewKey) sessionStorage.setItem(root.dataset.viewKey, next);
       } catch {
