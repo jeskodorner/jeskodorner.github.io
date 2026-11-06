@@ -5,14 +5,16 @@
  * und möglichst nah an der Zielhöhe bleibt – passt ein Foto nicht mehr ganz, wandert es in die nächste
  * Reihe oder alle werden ein wenig kleiner, je nachdem, was näher an der Zielhöhe liegt.
  *
- * [data-justify="vary"] („Hängung“): Einzelne Fotos werden etwas größer und stehen über –
- * je Reihe abwechselnd nach unten, nach oben oder nach beiden Seiten. Die Reihe füllt trotzdem die Breite.
+ * [data-justify="vary"] („Hängung“): Hochformate werden größer als die Querformate ihrer Reihe, damit sie
+ * nicht winzig wirken (ungefähr gleiche Fläche wie ein Querformat). Sie stehen dann über – je Reihe abwechselnd
+ * nach unten, nach oben oder nach beiden Seiten. Die Reihe füllt trotzdem die Breite.
  *
  * Ohne JavaScript übernimmt reines CSS (flex-grow), dann kann ein einzelnes Foto am Reihenende größer werden.
  */
 
-/** Größenmuster für „vary“ (1 = normal). Unregelmäßig, damit es nicht wie ein Raster wirkt. */
-const SIZES = [1, 1, 1.26, 1, 1, 1.16, 1, 1, 1, 1.3, 1, 1.18, 1, 1];
+/** Größe eines Fotos für „vary“ (1 = normal): Hochformat so viel größer, dass seine Fläche etwa der eines
+ *  4:3-Querformats entspricht – höchstens anderthalbmal so hoch. Querformate und Quadrate bleiben bei 1. */
+const sizeFor = (r: number) => (r < 0.95 ? Math.min(1.5, Math.sqrt(1.33 / r)) : 1);
 /** Ausrichtung der normalen Fotos in einer Reihe mit großem Foto → großes steht unten / oben / beidseitig über */
 const ALIGN = ['flex-start', 'flex-end', 'center'] as const;
 
@@ -32,7 +34,8 @@ function layout(list: HTMLElement) {
   if (!target || !Number.isFinite(target)) return;
 
   // Breite eines Fotos pro Pixel Reihenhöhe: Seitenverhältnis × Größe
-  const size = (i: number) => (vary ? SIZES[i % SIZES.length]! : 1);
+  const sizes = items.map((el) => (vary ? sizeFor(ratio(el)) : 1));
+  const size = (i: number) => sizes[i]!;
   const units = items.map((el, i) => ratio(el) * size(i));
 
   const avail = width - 0.5; // Rundungsreserve, damit nichts umbricht
