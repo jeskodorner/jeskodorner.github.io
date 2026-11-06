@@ -104,7 +104,7 @@ export const de = {
     intro: 'Schreib mir – ich melde mich so schnell wie möglich und freue mich über jede Anfrage und Nachricht.',
     email: 'E-Mail',
     instagram: 'Instagram',
-    emailFallback: 'jesko.dorner [at] gmail [punkt] com',
+    emailFallback: 'kontakt [at] jeskodorner [punkt] de',
     form: {
       title: 'Nachricht schreiben',
       name: 'Name',

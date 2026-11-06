@@ -20,7 +20,7 @@ export const site = {
    * E-Mail wird nie im Klartext ins HTML geschrieben, sondern im Browser
    * per JavaScript zusammengesetzt (Schutz vor einfachem Scraping).
    */
-  email: { user: 'jesko.dorner', domain: 'gmail.com' },
+  email: { user: 'kontakt', domain: 'jeskodorner.de' },
   instagram: { handle: 'JeskoDorner', url: 'https://instagram.com/JeskoDorner' },
 
   /** Startseiten-Hero: 'image' = ein Bild, 'slideshow' = ruhige Überblendung */
