@@ -516,7 +516,8 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 - **Fotos hängen an der Wand**: in Galerien und Übersichten immer unbeschnitten im Originalformat, mit Weißraum und
   leichtem Schatten, dazu ein kleines Schild. Nichts ist schräg gestellt. Mutig sind Farben und Schrift, nicht die Anordnung.
 - **Körniges Vignetting:** weiche, fließende graue Wolken mit feinem Filmkorn am linken und rechten Bildschirmrand,
-  links und rechts verschieden geformt. Es liegt hinter dem Inhalt: zu sehen nur auf der weißen Seite, farbige Flächen,
+  links und rechts verschieden geformt. Beim Scrollen wandern die Wolken langsamer als der Inhalt (Parallax,
+  `src/scripts/edges.ts`; bei „Bewegung reduzieren“ stehen sie still). Es liegt hinter dem Inhalt: zu sehen nur auf der weißen Seite, farbige Flächen,
   Fotos und Header bleiben frei von Korn. Farbe, Reichweite und Stärke in `src/styles/tokens.css` (`--edge-rgb`,
   `--edge-w`, `--edge-a`; `--edge-a: 0` schaltet es ab), die Form (Lage und Größe der Wolken) in `src/styles/global.css`,
   Abschnitt „Vignetting“. Das Korn ist eine hochaufgelöste, nahtlose Textur in `public/textures/`. Anderes Korn:

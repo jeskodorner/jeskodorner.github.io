@@ -31,8 +31,16 @@ const t = useTranslations();
       <slot />
     </main>
     <Footer />
+    <!-- Körniges Vignetting an den Bildschirmrändern (global.css, Abschnitt „Vignetting“) -->
+    <div class="edge edge--left" aria-hidden="true"></div>
+    <div class="edge edge--right" aria-hidden="true"></div>
   </body>
 </html>
+
+<script>
+  import { initEdges } from '../scripts/edges';
+  initEdges();
+</script>
 
 <style>
   main:focus {

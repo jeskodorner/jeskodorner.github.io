@@ -80,6 +80,8 @@
   --edge-w: clamp(5rem, 2rem + 16vw, 20rem);
   --edge-rgb: 44 44 46;
   --edge-a: 0.7;
+  /* Höhe, nach der sich das Wolkenmuster wiederholt (für den Parallax beim Scrollen) */
+  --edge-tile: 1536px; /* Vielfaches von 256 (Korn-Kachel), damit auch das Korn nahtlos weiterläuft */
 }
 
 @media (min-width: 900px) {

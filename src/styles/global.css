@@ -407,18 +407,21 @@ a:hover .arrow,
    Weiche, fließende graue Wolken mit feinem Filmkorn am linken und rechten Bildschirmrand (nicht oben/unten).
    Mehrere weiche Ellipsen ergeben eine unregelmäßige Form: an manchen Stellen reicht der Schatten weiter
    ins Bild, an anderen kaum. Links und rechts sind verschieden geformt.
+   Parallax: Das Wolkenmuster wiederholt sich alle --edge-tile Pixel senkrecht; scripts/edges.ts schiebt die
+   Ebenen beim Scrollen langsamer als den Inhalt nach oben (ohne JS / bei „Bewegung reduzieren“: steht still).
    Liegt HINTER dem Inhalt (z-index: -1): sichtbar nur auf der weißen Seite – farbige Flächen, Fotos und
    Header liegen davor und bleiben frei von Korn.
    Farbe + hochaufgelöstes Korn (hard-light: hellt und dunkelt Pixel für Pixel). Werte: tokens.css (--edge-…). */
-body::before,
-body::after {
-  content: '';
+.edge {
+  --tile: var(--edge-tile);
   position: fixed;
   top: 0;
-  bottom: 0;
   z-index: -1;
   width: var(--edge-w);
+  height: calc(100vh + var(--tile));
+  height: calc(100lvh + var(--tile));
   pointer-events: none;
+  will-change: transform;
   background-color: rgb(var(--edge-rgb));
   background-image: url('/textures/grain-512.webp');
   background-image: image-set(url('/textures/grain-256.webp') 1x, url('/textures/grain-512.webp') 2x);
@@ -427,40 +430,44 @@ body::after {
   --a: var(--edge-a);
   -webkit-mask-image: var(--shape);
   mask-image: var(--shape);
+  -webkit-mask-size: 100% var(--tile);
+  mask-size: 100% var(--tile);
+  -webkit-mask-repeat: repeat-y;
+  mask-repeat: repeat-y;
 }
-body::before {
+/* Wolken liegen ganz innerhalb einer Kachel, damit sich das Muster nahtlos wiederholt */
+.edge--left {
   left: 0;
   --shape: radial-gradient(
-      ellipse 95% 30% at 0% 15%,
+      ellipse 95% 26% at 0% 20%,
       rgb(0 0 0 / var(--a)),
       rgb(0 0 0 / calc(var(--a) * 0.45)) 38%,
       transparent 72%
     ),
-    radial-gradient(ellipse 55% 20% at 0% 50%, rgb(0 0 0 / calc(var(--a) * 0.55)), transparent 70%),
+    radial-gradient(ellipse 55% 17% at 0% 52%, rgb(0 0 0 / calc(var(--a) * 0.55)), transparent 70%),
     radial-gradient(
-      ellipse 78% 34% at 0% 92%,
+      ellipse 80% 24% at 0% 81%,
       rgb(0 0 0 / calc(var(--a) * 0.8)),
       rgb(0 0 0 / calc(var(--a) * 0.32)) 42%,
       transparent 72%
     ),
     linear-gradient(to right, rgb(0 0 0 / calc(var(--a) * 0.3)), transparent 26%);
 }
-body::after {
+.edge--right {
   right: 0;
   background-position: 97px 53px;
-  --shape: radial-gradient(ellipse 60% 22% at 100% 6%, rgb(0 0 0 / calc(var(--a) * 0.6)), transparent 70%),
+  --shape: radial-gradient(ellipse 60% 16% at 100% 13%, rgb(0 0 0 / calc(var(--a) * 0.6)), transparent 70%),
     radial-gradient(
-      ellipse 100% 32% at 100% 44%,
+      ellipse 100% 26% at 100% 46%,
       rgb(0 0 0 / var(--a)),
       rgb(0 0 0 / calc(var(--a) * 0.42)) 38%,
       transparent 72%
     ),
-    radial-gradient(ellipse 65% 26% at 100% 84%, rgb(0 0 0 / calc(var(--a) * 0.65)), transparent 70%),
+    radial-gradient(ellipse 65% 21% at 100% 80%, rgb(0 0 0 / calc(var(--a) * 0.65)), transparent 70%),
     linear-gradient(to left, rgb(0 0 0 / calc(var(--a) * 0.3)), transparent 26%);
 }
 @media print {
-  body::before,
-  body::after {
+  .edge {
     display: none;
   }
 }
