@@ -9,7 +9,9 @@
  * Ab 700 px: alles linksbündig.
  * Slot „aside“ (Startseite: Bildfeld, BlendLoop.astro): am Handy randlos über die ganze Breite, beginnt hinter
  * „Kontakt“ (4:3, auf niedrigen Bildschirmen etwas flacher, aber immer randlos),
- * ab 700 px rechts neben den Menüpunkten: oben und unten bündig mit der Schrift, mittig zwischen Text und Bildschirmrand.
+ * ab 700 px rechts neben den Menüpunkten: oben und unten bündig mit der Schrift, rechtsbündig am Seitenrand (gleicher
+ * Abstand zum Bildschirmrand wie der Name links), damit die Seite nicht nach links kippt.
+ * Hinter dem Namen steht ein rosa Block wie ein blinkender Textcursor.
  * Übergang: Name, Menüpunkte und Fußzeile tragen feste view-transition-Namen. Beim Wechsel Menü → Startseite
  * gleiten sie an ihren neuen Platz; von der Startseite auf eine Unterseite gleitet der Name ins Logo oben links.
  */
@@ -112,18 +114,39 @@ const hasAside = Astro.slots.has('aside');
     color: var(--ink);
     cursor: pointer;
   }
-  /* Name: eine Zeile, so breit wie der Platz (aber nicht riesig) */
+  /* Name: eine Zeile, so breit wie der Platz (aber nicht riesig). Name und Cursor zusammen sind 5,25 Schrifthöhen
+     breit, bei 100cqi / 5.6 bleibt am Handy links und rechts noch etwas Luft. */
   .bm-name {
     view-transition-name: jd-name;
     display: block;
-    font-size: min(11rem, 100cqi / 5.4);
+    font-size: min(11rem, 100cqi / 5.6);
     line-height: 0.9;
     padding-top: 0.08em;
     white-space: nowrap;
     text-decoration: none;
     color: inherit;
-    /* rosa Detail: leicht versetzter Schatten, wie ein nicht ganz deckungsgleicher Druck */
-    text-shadow: 0.045em 0.045em 0 var(--pink);
+  }
+  /* rosa Detail: Block direkt hinter dem Namen wie ein Textcursor – so hoch wie die Großbuchstaben (0,67), so breit
+     wie ein Buchstabe, steht auf der Grundlinie und blinkt (bei „Bewegung reduzieren“ steht er still) */
+  .bm-name::after {
+    content: '';
+    display: inline-block;
+    width: 0.4em;
+    height: 0.67em;
+    margin-left: 0.06em;
+    vertical-align: baseline;
+    background: var(--pink);
+    animation: bm-cursor 1.1s step-end infinite;
+  }
+  @keyframes bm-cursor {
+    50% {
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bm-name::after {
+      animation: none;
+    }
   }
   /* Menüpunkte: deutlich kleiner als der Name, mit Luft dazwischen */
   /* Menüpunkte, dazu optional das Bildfeld (Slot „aside“). Handy: Bildfeld mittig im freien Platz darunter. */
@@ -203,11 +226,11 @@ const hasAside = Astro.slots.has('aside');
       padding-top: 1.25rem;
     }
   }
-  /* Ab 700 px: links die Menüpunkte (so breit wie der längste), rechts der Platz bis zum Bildschirmrand.
+  /* Ab 700 px: links die Menüpunkte (so breit wie der längste), rechts der Platz bis zum Seitenrand.
      Das Bildfeld reicht genau von der Oberkante der Buchstaben von „Portfolio“ bis zur Unterkante von „Kontakt“
-     (gemessen: Buchstaben beginnen 0,07 und enden 0,2 Schrifthöhen innerhalb ihrer Zeile) und steht waagerecht
-     mittig: gleich viel Abstand zum Menütext wie zum rechten Bildschirmrand. Ist der Platz zu schmal, wird es
-     kleiner und bleibt mittig. */
+     (gemessen: Buchstaben beginnen 0,07 und enden 0,2 Schrifthöhen innerhalb ihrer Zeile) und steht rechtsbündig
+     am Seitenrand – so weit vom rechten Bildschirmrand wie der Name vom linken. Ist der Platz zu schmal, wird es
+     kleiner und hält mindestens 3rem Abstand zum Menütext. */
   @media (min-width: 700px) {
     .bm-body {
       flex: none;
@@ -216,12 +239,10 @@ const hasAside = Astro.slots.has('aside');
       column-gap: 0;
     }
     .bm-aside {
-      /* bis an den rechten Bildschirmrand (über den Seitenrand des Containers hinaus) */
-      margin-right: calc((100cqi - 100vw) / 2);
       padding-block: calc(0.07 * var(--bm-item)) calc(0.2 * var(--bm-item));
       container-type: size;
-      place-items: center;
-      --blend-w: min(100cqw - 4rem, 133.33cqh);
+      place-items: center end;
+      --blend-w: min(100cqw - 3rem, 133.33cqh);
     }
   }
   .bm-list {
