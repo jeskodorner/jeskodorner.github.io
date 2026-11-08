@@ -4,8 +4,6 @@ slug: hilda-setcard
 date: 2026-09-07
 # location: "Ort"
 description: "Setcard-Fotos von Hilda vor einer rostigen Wand."
-# showcase = Wand (jedes Foto einzeln, unbeschnitten) · masonry = Raster · justified = gleich hohe Reihen
-layout: showcase
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
 # color: pink
 visibility: public

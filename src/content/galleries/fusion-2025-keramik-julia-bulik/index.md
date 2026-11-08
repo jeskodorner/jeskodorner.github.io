@@ -9,8 +9,6 @@ date: 2025-06-25
 description: "Keramikbrunnen und Skulpturen von Julia Bulik auf der Fusion 2025:
   Figuren, fließendes Wasser und leuchtende Glasuren zwischen Bäumen und
   Holzbauten."
-# showcase = Wand (jedes Foto einzeln, unbeschnitten) · masonry = Raster · justified = gleich hohe Reihen
-layout: showcase
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
 # color: pink
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex

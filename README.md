@@ -5,7 +5,7 @@ Gebaut mit **Astro 7** und TypeScript und gehostet kostenlos auf **GitHub Pages*
 **https://jeskodorner.de** (die alte Adresse jeskodorner.github.io leitet automatisch weiter).
 
 - Keine Cookies, keine Tracker, keine Google Fonts. Alle Schriften liegen lokal im Projekt.
-- Die Seiten funktionieren ohne JavaScript. JavaScript wird nur für Lightbox, Ansicht-Umschalter, Teilen und die E-Mail-Adresse verwendet.
+- Die Seiten funktionieren ohne JavaScript. JavaScript wird nur für Lightbox, Ansicht-Umschalter (Seite „Galerie“), Teilen und die E-Mail-Adresse verwendet.
 - Lighthouse (lokal gemessen, Mobil): Performance 98–100, Barrierefreiheit 100, Best Practices 100 und SEO 100.
 - Große Fotos mit Parallax und Bewegung beim Scrollen, alles reines CSS (siehe Abschnitt 7).
 
@@ -155,7 +155,7 @@ Das legt zwei Ordner an:
 - `src/content/galleries/kueste-im-oktober/index.md`, die Vorlage mit allen Feldern
 - `photos-source/kueste-im-oktober/`, für deine Originale
 
-Optionen: `--unlisted` (private Kundengalerie, siehe Abschnitt 6), `--layout masonry` oder `--layout justified` (Standard ist `showcase`), `--date 2026-10-22`, `--location "Sylt"`.
+Optionen: `--unlisted` (private Kundengalerie, siehe Abschnitt 6), `--date 2026-10-22`, `--location "Sylt"`.
 
 **Dann:**
 
@@ -174,7 +174,7 @@ Optionen: `--unlisted` (private Kundengalerie, siehe Abschnitt 6), `--layout mas
 
 - Lange Kante max. **2400 px**, sRGB, JPEG mit ca. 300–600 KB. Ist ein Bild zu groß, senkt das Skript die Qualität schrittweise.
 - **Wasserzeichen** „© Jesko Dorner“ dezent unten rechts, nur auf den Web-Versionen.
-- **EXIF** (Kamera, Objektiv, Blende, Belichtung, ISO, Brennweite, Datum) wird ausgelesen und für Lightbox und Bildseite in `meta.json` gespeichert.
+- **EXIF** (Kamera, Objektiv, Blende, Belichtung, ISO, Brennweite, Datum) wird ausgelesen und für die Details in der Lightbox in `meta.json` gespeichert.
 - **GPS-Daten werden entfernt.** In den Web-Versionen bleiben nur Copyright und Urheber.
 - Wurde in Lightroom ein **Alt-Text** oder eine **Bildunterschrift** (IPTC/XMP) hinterlegt, übernimmt das Skript beides automatisch.
 - Bereits verarbeitete Bilder werden übersprungen. `npm run optimize -- --force` erzeugt alles neu, z. B. nach einer Änderung am Wasserzeichen.
@@ -208,9 +208,8 @@ und festen Seitenverhältnissen, damit beim Laden nichts springt.
 | `location` | | Ort |
 | `description` | ja | 1–2 Sätze für Kachel, Suchmaschinen und Link-Vorschau |
 | `cover` | | Dateiname des Vorschaubilds. Es erscheint in der Galerie-Übersicht und auf der Startseite im Showroom, wenn dort kein `bild` angegeben ist. Ohne Angabe wird das erste Bild genommen. |
-| `layout` | | `showcase` (Standard, „Wand“), `masonry` (Raster) oder `justified` (gleich hohe Reihen). Siehe unten. |
 | `visibility` | | `public` (Standard) oder `unlisted` |
-| `showExif` | | Aufnahmedaten zeigen (Standard `true`) |
+| `showExif` | | Aufnahmedaten in den Lightbox-Details zeigen (Standard `true`) |
 | `downloadUrl` | | Link zum Download der ganzen Galerie (ZIP/Ordner) |
 | `downloadSize` | | z. B. `1,2 GB` |
 | `downloadFormat` | | z. B. `ZIP · JPG in voller Auflösung` |
@@ -225,44 +224,36 @@ Pro Bild:
 |---|---|---|
 | `file` | ja | Dateiname in `images/` |
 | `alt` | ja | Was ist zu sehen? Für Screenreader und Suchmaschinen. Ohne Alt-Text bricht der Build bewusst ab. |
-| `caption` | | Bildunterschrift (Lightbox und Bildseite) |
+| `caption` | | Bildunterschrift (in den Lightbox-Details) |
 | `originalUrl` | | Link zum Original. Dann erscheint „Original herunterladen“. |
 | `hero` | | `true` = großes Bild auf der Startseite |
 | `exif` | | überschreibt ausgelesene Werte, z. B. `exif: { lens: "Helios 44-2" }` |
-| `focus` | | wichtigster Bildbereich, falls ein Foto doch einmal beschnitten wird (z. B. Hero der Startseite), z. B. `focus: "50% 30%"` (waagerecht senkrecht). Standard: Mitte. In Galerien werden Fotos nicht beschnitten. |
+| `focus` | | wichtigster Bildbereich, falls ein Foto doch einmal beschnitten wird (z. B. Hero der Startseite), z. B. `focus: "50% 30%"` (waagerecht senkrecht). Standard: Mitte. In Alben werden Fotos nie beschnitten. |
 
 Unterhalb des Kopfbereichs kannst du optional einen längeren Text in Markdown schreiben.
 
 - **Reihenfolge** ändern: Einträge in `images:` umsortieren.
 - **Bild entfernen:** Eintrag löschen und die Datei in `images/` löschen.
 
-### Layouts
+### So sieht ein Album aus
 
-| Layout | Wirkung | Gut für |
-|---|---|---|
-| `showcase` („Wand“, Standard) | Jedes Foto hängt einzeln an der weißen Wand: unbeschnitten im Originalformat, mit viel Weißraum und leichtem Schatten, so groß, dass es samt Schild ganz auf den Bildschirm passt. Darunter ein kleines Schild mit Bildunterschrift (`caption`), Aufnahmedaten und Nummer („3 / 12“). Auf dem Desktop steht ein Foto pro Bildschirm, beim Scrollen rastet die Galerie sanft Foto für Foto ein. Auf dem Handy: volle Breite mit Rand. | Serien und Portfolio |
-| `masonry` | kompaktes Raster in Spalten. Die Bilder laufen spaltenweise von oben nach unten. | viele Bilder, z. B. Kundengalerien |
-| `justified` | gleich hohe Reihen, ruhig und dicht | viele Querformate |
+- **Album:** alle Fotos klein in gleich hohen Reihen wie in Lightroom, jedes unbeschnitten im Originalformat,
+  jede Reihe füllt die Breite. Die Reihen verteilt ein kleines Skript (`src/scripts/justify.ts`), damit kein
+  einzelnes Foto am Reihenende riesig wird. Ohne JavaScript übernimmt reines CSS.
+- **Klick auf ein Foto** öffnet es groß in der Lightbox, mit weißem Rand ringsum (auch auf dem Handy).
+  Blättern per Wischen oder **←**/**→**, schließen per **Esc**.
+- **Details** (i-Symbol oben oder Taste **I**): Albumtitel, „Bild 3 von 12“, Bildunterschrift (`caption`) und
+  Aufnahmedaten (Kamera, Objektiv, Blende, Belichtung, ISO, Brennweite, Datum). Auf dem Handy klappen sie unten auf,
+  am Desktop als Spalte rechts. Das Foto wird dabei kleiner und rückt zur Seite – die Details liegen nie über dem Foto.
+  Offene Details bleiben für den Besuch offen.
+- **Teilbare Bild-Links:** `/galerien/kueste-im-oktober/#bild-3` öffnet das Album direkt mit Foto 3 in der Lightbox.
+  Die Nummer entspricht der Position in der Liste. Beim Umsortieren ändern sich die Nummern.
+- Ohne JavaScript öffnet ein Klick das Foto selbst in groß.
 
-Die Größe jedes Fotos ergibt sich automatisch aus seinem Seitenverhältnis: Querformate werden breit, Hochformate schmal.
-
-**Umschalter „Groß / Übersicht“:** Ab 4 Bildern steht über jeder Galerie ein Schalter. „Groß“ ist das eingestellte
-Layout (Wand oder Raster), „Übersicht“ zeigt alle Bilder dicht in gleich hohen Reihen wie in Lightroom: jedes
-unbeschnitten im Originalformat, Hoch- und Querformate gleich hoch, jede Reihe füllt die Breite. Der Schalter
-klebt beim Scrollen oben rechts, auf dem Handy nur mit Symbolen. Beim Umschalten bleibt man beim Bild, das man gerade
-angesehen hat, ein Klick auf eine Kachel öffnet die Lightbox. Die Wahl gilt für den ganzen Besuch, ein neuer Besuch
-startet wieder mit „Groß“. Ohne JavaScript gibt es nur die große Ansicht.
-Denselben Schalter hat die Seite „Galerie“ (`/galerien/`). „Groß“: jedes Titelbild hängt unbeschnitten an der Wand,
-abwechselnd links und rechts, daneben Name, Text und ein Button in der Galeriefarbe. „Übersicht“: alle Galerien wie in
-Lightroom in gleich hohen, randvollen Reihen mit Titelbild (unbeschnitten), darunter Name, Bilderzahl und Monat. Beide Seiten merken sich ihre Wahl getrennt.
-Die Reihen verteilt ein kleines Skript (`src/scripts/justify.ts`), damit kein einzelnes Foto am Reihenende riesig wird.
-
-**Teilbare Bild-Links:** Jedes Bild hat eine eigene Seite (`/galerien/kueste-im-oktober/3/`) und einen Lightbox-Link
-(`/galerien/kueste-im-oktober/#bild-3`). Die Nummer entspricht der Position in der Liste. Beim Umsortieren ändern sich die Nummern.
-
-**Bildseite durchblättern:** Links und rechts neben dem Bild stehen „Vorheriges Bild“ und „Nächstes Bild“ (auf dem Handy
-darunter). Mit der Tastatur geht es per **←** und **→** weiter, **Esc** führt zurück zur Galerie an die Stelle des Bildes
-(`#pos-3`, öffnet keine Lightbox). Chrome und Edge laden das nächste Bild im Hintergrund vor.
+**Seite „Galerie“ (`/galerien/`)** hat einen Umschalter „Groß / Übersicht“. „Groß“: jedes Titelbild hängt
+unbeschnitten an der Wand, abwechselnd links und rechts, daneben Name, Text und ein Button in der Galeriefarbe.
+„Übersicht“: alle Galerien wie in Lightroom in gleich hohen, randvollen Reihen mit Titelbild, darunter Name,
+Bilderzahl und Monat. Die Wahl gilt für den Besuch, ein neuer Besuch startet wieder mit „Groß“.
 
 ---
 
@@ -522,8 +513,8 @@ Falls du das je neu einrichten oder umziehen musst:
 Look „White Cube“: weiße Galeriewände, schwarze Schrift, knallige Farbflächen. Definiert in `src/styles/tokens.css`.
 Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 
-- **Fotos hängen an der Wand**: in Galerien und Übersichten immer unbeschnitten im Originalformat, mit Weißraum und
-  leichtem Schatten, dazu ein kleines Schild. Nichts ist schräg gestellt. Mutig sind Farben und Schrift, nicht die Anordnung.
+- **Fotos werden nie beschnitten**: in Alben, Übersichten und der Lightbox immer im Originalformat, groß mit weißem
+  Rand. Nichts ist schräg gestellt. Mutig sind Farben und Schrift, nicht die Anordnung.
 - **Körniges Vignetting:** weiche, fließende graue Wolken mit feinem Filmkorn am linken und rechten Bildschirmrand,
   links und rechts verschieden geformt. Beim Scrollen wandern die Wolken langsamer als der Inhalt (Parallax,
   `src/scripts/edges.ts`; bei „Bewegung reduzieren“ stehen sie still). Es liegt hinter dem Inhalt: zu sehen nur auf der weißen Seite, farbige Flächen,

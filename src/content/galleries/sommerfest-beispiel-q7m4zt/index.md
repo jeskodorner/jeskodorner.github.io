@@ -5,7 +5,6 @@ slug: sommerfest-beispiel-q7m4zt
 date: 2026-08-22
 location: "Lüneburg"
 description: "Beispiel für eine private Kundengalerie: nur per Direktlink erreichbar, nicht in der Übersicht, nicht in Suchmaschinen."
-layout: masonry
 visibility: unlisted
 showExif: true
 downloadUrl: "https://example.com/beispiel/sommerfest-originale.zip"

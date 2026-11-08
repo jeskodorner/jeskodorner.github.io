@@ -48,9 +48,6 @@ export const de = {
   },
   image: {
     of: (i: number, n: number) => `Bild ${i} von ${n}`,
-    prev: 'Vorheriges Bild',
-    next: 'Nächstes Bild',
-    back: 'Zur Galerie',
     exif: 'Aufnahmedaten',
     camera: 'Kamera',
     lens: 'Objektiv',
@@ -91,6 +88,8 @@ export const de = {
     prev: 'Vorheriges Bild (Pfeil links)',
     next: 'Nächstes Bild (Pfeil rechts)',
     error: 'Das Bild konnte nicht geladen werden.',
+    details: 'Details (I)',
+    detailsRegion: 'Details zum Foto',
   },
   film: {
     title: 'Film',

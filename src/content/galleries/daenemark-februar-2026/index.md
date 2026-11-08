@@ -9,8 +9,6 @@ date: 2026-02-01
 description: "Dänemark im Februar, überwiegend in Schwarzweiß: verschneite
   Küste, Doppelbelichtungen am Meer, Menschen im Schneefall und Fische unter
   Wasser."
-# showcase = Wand (jedes Foto einzeln, unbeschnitten) · masonry = Raster · justified = gleich hohe Reihen
-layout: showcase
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
 # color: pink
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex

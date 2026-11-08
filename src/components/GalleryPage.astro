@@ -44,7 +44,7 @@ const jsonLd = gallery.isUnlisted
           return {
             '@type': 'ImageObject',
             contentUrl: new URL(v.url, site.url).href,
-            url: new URL(img.pageUrl, site.url).href,
+            url: new URL(img.hashUrl, site.url).href,
             name: img.caption ?? img.alt,
             description: img.alt,
             creator: { '@type': 'Person', name: site.name },
@@ -120,7 +120,7 @@ const jsonLd = gallery.isUnlisted
     </div>
 
     <section
-      class:list={['grid-wrap', { 'grid-wrap--stage': gallery.layout === 'showcase' }]}
+      class="grid-wrap"
       aria-label={t.galleries.images(gallery.images.length)}
     >
       <GalleryGrid gallery={gallery} />
@@ -219,8 +219,8 @@ const jsonLd = gallery.isUnlisted
       gap: clamp(2rem, 6vw, 7rem);
     }
   }
-  .grid-wrap--stage {
-    padding-top: clamp(0.5rem, 2.5vw, 2.5rem);
+  .grid-wrap {
+    padding-top: clamp(0.75rem, 2.5vw, 2.5rem);
   }
   .private {
     display: flex;

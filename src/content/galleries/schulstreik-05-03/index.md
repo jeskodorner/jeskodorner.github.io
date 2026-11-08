@@ -4,8 +4,6 @@ slug: schulstreik-05-03
 date: 2026-03-05
 location: "Berlin"
 description: "Schulstreik gegen die Wehrpflicht am Potsdamer Platz."
-# showcase = Wand (jedes Foto einzeln, unbeschnitten) · masonry = Raster · justified = gleich hohe Reihen
-layout: showcase
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
 # color: pink
 visibility: public

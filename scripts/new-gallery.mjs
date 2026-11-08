@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * npm run new-gallery -- "Name der Galerie" [--unlisted] [--layout justified] [--date 2026-10-22] [--location "Ort"]
+ * npm run new-gallery -- "Name der Galerie" [--unlisted] [--date 2026-10-22] [--location "Ort"]
  *
  * Legt an:
  *   src/content/galleries/<ordner>/index.md   (Vorlage mit allen Feldern)
@@ -16,7 +16,7 @@ const option = (name) => {
   const i = argv.indexOf(`--${name}`);
   return i >= 0 ? argv[i + 1] : undefined;
 };
-const optionValues = new Set(['layout', 'date', 'location'].map(option).filter(Boolean));
+const optionValues = new Set(['date', 'location'].map(option).filter(Boolean));
 const title = argv.find((a) => !a.startsWith('--') && !optionValues.has(a));
 
 if (!title || flag('help')) {
@@ -24,14 +24,12 @@ if (!title || flag('help')) {
   Neue Galerie anlegen:
     npm run new-gallery -- "Küste im Oktober"
     npm run new-gallery -- "Hochzeit Lena & Tom" --unlisted
-    npm run new-gallery -- "Stadt" --layout justified --date 2026-10-01 --location "Hamburg"
-    (Layouts: showcase = Wand [Standard], masonry, justified)
+    npm run new-gallery -- "Stadt" --date 2026-10-01 --location "Hamburg"
 `);
   process.exit(title ? 0 : 1);
 }
 
 const unlisted = flag('unlisted');
-const layout = ['masonry', 'justified'].includes(option('layout')) ? option('layout') : 'showcase';
 const date = option('date') ?? today();
 if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
   console.log(c.red('Datum bitte im Format JJJJ-MM-TT angeben, z. B. 2026-10-22.'));
@@ -58,7 +56,7 @@ await fs.mkdir(path.join(galleryDir, 'images'), { recursive: true });
 await fs.mkdir(sourceDir, { recursive: true });
 await fs.writeFile(
   path.join(galleryDir, 'index.md'),
-  galleryTemplate({ title, slug, date, layout, visibility: unlisted ? 'unlisted' : 'public', location: option('location') }),
+  galleryTemplate({ title, slug, date, visibility: unlisted ? 'unlisted' : 'public', location: option('location') }),
 );
 
 const url = unlisted ? `/g/${slug}/` : `/galerien/${slug}/`;

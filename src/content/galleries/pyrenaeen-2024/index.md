@@ -9,8 +9,6 @@ date: 2024-08-07
 description: "Unterwegs in den Pyrenäen: Gipfel mit Kiefern, Schneefelder im
   Geröll, Klettern am Fels, Berge im rötlichen Licht und zum Schluss die
   Dämmerung an einem Strand."
-# showcase = Wand (jedes Foto einzeln, unbeschnitten) · masonry = Raster · justified = gleich hohe Reihen
-layout: showcase
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
 # color: pink
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex

@@ -115,7 +115,7 @@ const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : 
           </a>
           {
             hero && (
-              <a class="hero-credit" href={hero.image.pageUrl}>
+              <a class="hero-credit" href={hero.image.hashUrl}>
                 {hero.image.caption ?? hero.gallery.title} <span aria-hidden="true">→</span>
               </a>
             )

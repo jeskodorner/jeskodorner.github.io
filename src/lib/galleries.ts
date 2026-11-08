@@ -22,7 +22,7 @@ export interface RawExif {
 }
 
 export interface GalleryImage {
-  /** 1-basierte Position in der Galerie (für #bild-3 und /3/) */
+  /** 1-basierte Position in der Galerie (für #bild-3) */
   index: number;
   file: string;
   src: ImageMetadata;
@@ -35,9 +35,7 @@ export interface GalleryImage {
   exif: RawExif;
   color: string;
   lqip?: string;
-  /** Bildseite, z. B. /galerien/kueste/3/ */
-  pageUrl: string;
-  /** Galerie mit Hash, z. B. /galerien/kueste/#bild-3 */
+  /** Galerie mit Hash, öffnet das Bild in der Lightbox, z. B. /galerien/kueste/#bild-3 */
   hashUrl: string;
 }
 
@@ -54,7 +52,6 @@ export interface Gallery {
   date: Date;
   location?: string;
   description: string;
-  layout: 'showcase' | 'masonry' | 'justified';
   visibility: 'public' | 'unlisted';
   isUnlisted: boolean;
   showExif: boolean;
@@ -138,7 +135,6 @@ async function load(): Promise<Gallery[]> {
         exif: { ...(m.exif ?? {}), ...(img.exif ?? {}) },
         color: m.color ?? FALLBACK_COLOR,
         lqip: m.lqip,
-        pageUrl: `${url}${index}/`,
         hashUrl: `${url}#bild-${index}`,
       };
     });
@@ -153,7 +149,6 @@ async function load(): Promise<Gallery[]> {
       date: d.date,
       location: d.location,
       description: d.description,
-      layout: d.layout,
       color: d.color ?? 'pink',
       visibility: d.visibility,
       isUnlisted: d.visibility === 'unlisted',

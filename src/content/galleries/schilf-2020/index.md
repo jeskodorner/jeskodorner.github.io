@@ -8,8 +8,6 @@ date: 2020-12-29
 # Kurzbeschreibung (1–2 Sätze) – erscheint auf der Kachel und in Link-Vorschauen
 description: "Trockenes Schilf am Wasser, fotografiert Ende Dezember 2020:
   Halme, Spiegelungen des Himmels und treibende Blätter."
-# showcase = Wand (jedes Foto einzeln, unbeschnitten) · masonry = Raster · justified = gleich hohe Reihen
-layout: showcase
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
 # color: pink
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex

@@ -1,203 +1,95 @@
 ---
 /**
- * Galerie-Darstellung: „showcase“ (Wand, jedes Foto einzeln und unbeschnitten), „masonry“ oder „justified“.
- * Jedes Bild ist ein normaler Link auf seine Bildseite (funktioniert ohne JS).
- * Mit JS öffnet PhotoSwipe die Lightbox; die URL bekommt #bild-N und ist teilbar.
- * #pos-N springt nur zum Bild, ohne Lightbox („Zur Galerie“ auf der Bildseite).
- *
- * Umschalter „Groß / Übersicht“ (ab 4 Bildern, nur mit JS, siehe ViewSwitch.astro): „Übersicht“ zeigt
- * alle Bilder als gleich große Kacheln. Die Wahl gilt für den Besuch, Standard ist „Groß“.
+ * Album: alle Fotos klein in gleich hohen Reihen (wie Lightroom), jedes unbeschnitten im Originalformat.
+ * Ein Klick öffnet die Lightbox (PhotoSwipe); die URL bekommt #bild-N und ist teilbar.
+ * Ohne JavaScript öffnet der Link das Foto selbst in groß.
+ * Die Details (Bildunterschrift, Aufnahmedaten) stehen als data-Attribute am Link und erscheinen
+ * in der Lightbox im ausklappbaren Feld „Details“.
  */
 import type { Gallery } from '../lib/galleries';
 import { responsive } from '../lib/images';
-import { exifLine } from '../lib/exif';
+import { exifRows } from '../lib/exif';
+import { formatDate, useTranslations } from '../i18n';
 import Picture from './Picture.astro';
-import ViewSwitch from './ViewSwitch.astro';
-import Showcase, { type StageItem } from './Showcase.astro';
 
 export interface Props {
   gallery: Gallery;
 }
 
 const { gallery } = Astro.props;
-const layout = gallery.layout;
-const hasTiles = gallery.images.length >= 4;
+const t = useTranslations();
 
 const items = await Promise.all(
   gallery.images.map(async (img) => {
     const set = await responsive(img.src);
     const ratio = img.src.width / img.src.height;
-    const sizes =
-      layout === 'masonry'
-        ? '(min-width: 2100px) 20vw, (min-width: 1500px) 25vw, (min-width: 900px) 33vw, 50vw'
-        : `(min-width: 1700px) ${Math.round(ratio * 440)}px, (min-width: 600px) ${Math.min(100, Math.round(ratio * 26))}vw, ${Math.min(100, Math.round(ratio * 48))}vw`;
-    // Übersicht: gleich hohe Reihen – die Breite wächst mit dem Seitenverhältnis
-    const tileSizes = `(min-width: 700px) ${Math.round(ratio * 270)}px, ${Math.round(Math.min(100, ratio * 36))}vw`;
-    return { img, set, ratio, sizes, tileSizes, exif: gallery.showExif ? exifLine(img.exif) : '' };
+    // Gleich hohe Reihen: die Breite wächst mit dem Seitenverhältnis
+    const sizes = `(min-width: 700px) ${Math.round(ratio * 270)}px, ${Math.round(Math.min(100, ratio * 36))}vw`;
+    // Details für die Lightbox: [Bezeichnung, Wert]
+    const details: [string, string][] = [];
+    if (gallery.showExif) {
+      for (const r of exifRows(img.exif)) details.push([r.label, r.value]);
+      const shot = img.exif.date ? new Date(img.exif.date) : undefined;
+      if (shot && !Number.isNaN(shot.getTime())) details.push([t.image.date, formatDate(shot)]);
+    }
+    return { img, set, ratio, sizes, details };
   }),
 );
-
-/** Lightbox-Daten, gemeinsam für alle Layouts */
-const pswpAttrs = (it: (typeof items)[number]) => ({
-  id: `bild-${it.img.index}`,
-  'data-pswp-src': it.set.largest.url,
-  'data-pswp-width': it.set.largest.width,
-  'data-pswp-height': it.set.largest.height,
-  'data-pswp-srcset': it.set.webp,
-  'data-index': it.img.index,
-  'data-caption': it.img.caption,
-  'data-exif': it.exif || undefined,
-  'data-original': it.img.originalUrl,
-});
-
-const stageItems: StageItem[] = items.map((it) => ({
-  image: it.img,
-  href: it.img.pageUrl,
-  title: it.img.caption,
-  meta: it.exif || undefined,
-  attrs: pswpAttrs(it),
-  anchor: `pos-${it.img.index}`,
-}));
 ---
 
-<div class="gview" data-layout={layout}>
-  {
-    hasTiles && <ViewSwitch storageKey="jd-ansicht" />
-  }
-
-  <div class:list={['view-main', { 'container container--wide': layout !== 'showcase' }]}>
+<div class="container container--wide">
+  <ul
+    id="gallery"
+    class="tiles"
+    role="list"
+    data-gallery
+    data-justify
+    data-count={gallery.images.length}
+    data-title={gallery.title}
+  >
     {
-      layout === 'showcase' ? (
-        <Showcase items={stageItems} lightbox eagerFirst snap id="gallery" count={gallery.images.length} color={gallery.color} />
-      ) : (
-        <div id="gallery" class:list={['grid', `grid--${layout}`]} data-gallery data-count={gallery.images.length} data-layout={layout}>
-          {items.map((it) => (
-            <a class="ph reveal" href={it.img.pageUrl} style={`--r:${it.ratio.toFixed(4)}`} {...pswpAttrs(it)}>
-              <span class="pos" id={`pos-${it.img.index}`} />
-              <Picture
-                src={it.img.src}
-                alt={it.img.alt}
-                sizes={it.sizes}
-                color={it.img.color}
-                lqip={it.img.lqip}
-                loading={it.img.index <= 3 ? 'eager' : 'lazy'}
-                fetchpriority={it.img.index === 1 ? 'high' : undefined}
-              />
-            </a>
-          ))}
-        </div>
-      )
+      items.map((it) => (
+        <li class="tile-cell" style={`--r:${it.ratio.toFixed(4)}`}>
+          <a
+            class="ph tile"
+            id={`bild-${it.img.index}`}
+            href={it.set.largest.url}
+            data-pswp-src={it.set.largest.url}
+            data-pswp-width={it.set.largest.width}
+            data-pswp-height={it.set.largest.height}
+            data-pswp-srcset={it.set.webp}
+            data-index={it.img.index}
+            data-caption={it.img.caption}
+            data-details={it.details.length ? JSON.stringify(it.details) : undefined}
+            data-original={it.img.originalUrl}
+          >
+            <Picture
+              src={it.img.src}
+              alt={it.img.alt}
+              sizes={it.sizes}
+              color={it.img.color}
+              loading={it.img.index <= 6 ? 'eager' : 'lazy'}
+              fetchpriority={it.img.index === 1 ? 'high' : undefined}
+              maxWidth={1200}
+            />
+          </a>
+        </li>
+      ))
     }
-  </div>
-
-  {
-    hasTiles && (
-      <div class="view-tiles container container--wide">
-        <ul class="tiles" role="list" data-tiles data-justify>
-          {items.map((it) => (
-            <li class="tile-cell" style={`--r:${it.ratio.toFixed(4)}`}>
-              <a class="ph tile" id={`kachel-${it.img.index}`} href={it.img.pageUrl} data-index={it.img.index}>
-                <Picture src={it.img.src} alt={it.img.alt} sizes={it.tileSizes} color={it.img.color} loading="lazy" maxWidth={1200} />
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    )
-  }
+  </ul>
 </div>
 
 <script>
   import { initLightbox } from '../scripts/lightbox';
-  import { initViewSwitch, revealItem } from '../scripts/view-switch';
   import { initJustify } from '../scripts/justify';
   initJustify();
-  initViewSwitch();
   initLightbox();
-
-  // „Zur Galerie“ von der Bildseite (#pos-N): zum Bild springen. Chrome macht das nach einem
-  // Seitenwechsel mit View Transition nicht von selbst – und in der Übersicht gibt es #pos-N nicht.
-  const pos = location.hash.match(/^#pos-(\d+)$/);
-  if (pos) revealItem(Number(pos[1]));
 </script>
 
 <style>
-  .grid {
-    --gap-g: clamp(0.4rem, 0.2rem + 0.7vw, 1rem);
-  }
-  .ph {
-    position: relative;
-    display: block;
-    overflow: hidden;
-    background: var(--sand);
-    outline-offset: 4px;
-  }
-  .pos {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-  .ph :global(img) {
-    width: 100%;
-    transition:
-      transform 0.9s var(--ease),
-      filter 0.6s;
-  }
-  @media (hover: hover) {
-    .ph:hover :global(img) {
-      transform: scale(1.035);
-    }
-  }
-
-  /* Masonry: CSS-Spalten, kein JavaScript */
-  .grid--masonry {
-    columns: 2;
-    column-gap: var(--gap-g);
-  }
-  .grid--masonry .ph {
-    break-inside: avoid;
-    margin-bottom: var(--gap-g);
-  }
-  @media (min-width: 900px) {
-    .grid--masonry {
-      columns: 3;
-    }
-  }
-  @media (min-width: 1500px) {
-    .grid--masonry {
-      columns: 4;
-    }
-  }
-  @media (min-width: 2100px) {
-    .grid--masonry {
-      columns: 5;
-    }
-  }
-
-  /* Justified Rows: reines CSS – flex-grow proportional zum Seitenverhältnis */
-  .grid--justified {
-    --row: clamp(150px, 6rem + 18vw, 440px);
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--gap-g);
-  }
-  .grid--justified::after {
-    content: '';
-    flex-grow: 1000000;
-  }
-  .grid--justified .ph {
-    flex-grow: calc(var(--r) * 100);
-    flex-basis: calc(var(--r) * var(--row));
-  }
-  .grid--justified .ph :global(img) {
-    height: 100%;
-    aspect-ratio: var(--r);
-    object-fit: cover;
-  }
-
-  /* ---------- Übersicht: Fotos in gleich hohen Reihen, dicht gepackt (wie Lightroom) ----------
-     Jedes Foto bleibt im Originalformat. Pro Reihe sind alle Fotos gleich hoch und füllen die Breite:
-     Breite ∝ Seitenverhältnis (flex-grow), die letzte Reihe wird nicht gestreckt (::after). */
+  /* Gleich hohe Reihen, dicht gepackt (wie Lightroom). Jedes Foto bleibt im Originalformat:
+     Breite ∝ Seitenverhältnis (flex-grow), die letzte Reihe wird nicht gestreckt (::after).
+     scripts/justify.ts verteilt die Reihen genauer, ohne JavaScript übernimmt dieses CSS. */
   .tiles {
     --row: clamp(95px, 55px + 12vw, 230px);
     list-style: none;
@@ -215,13 +107,23 @@ const stageItems: StageItem[] = items.map((it) => ({
     flex-basis: calc(var(--r) * var(--row));
     min-width: 0;
   }
-  .tile {
+  .ph {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    background: var(--sand);
     outline-offset: 3px;
   }
-  .tile :global(img) {
+  .ph :global(img) {
     display: block;
     width: 100%;
     height: auto;
     aspect-ratio: var(--r);
+    transition: transform 0.9s var(--ease);
+  }
+  @media (hover: hover) {
+    .ph:hover :global(img) {
+      transform: scale(1.035);
+    }
   }
 </style>

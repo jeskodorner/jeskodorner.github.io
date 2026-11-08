@@ -4,8 +4,6 @@ slug: love-exercise
 date: 2026-01-15
 # location: "Ort"
 description: "Set-Fotografie bei „Love Exercise“: Szenen und Blicke hinter die Kamera."
-# showcase = Wand (jedes Foto einzeln, unbeschnitten) · masonry = Raster · justified = gleich hohe Reihen
-layout: showcase
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
 # color: pink
 visibility: public

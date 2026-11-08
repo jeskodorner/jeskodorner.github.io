@@ -8,8 +8,6 @@ date: 2026-07-01
 # Kurzbeschreibung (1–2 Sätze) – erscheint auf der Kachel und in Link-Vorschauen
 description: "Island im Sommer: Blick über eine weite, hügelige Landschaft mit
   rötlichem Bewuchs, einem Flusslauf und Bergen im Dunst."
-# showcase = Wand (jedes Foto einzeln, unbeschnitten) · masonry = Raster · justified = gleich hohe Reihen
-layout: showcase
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
 # color: pink
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex

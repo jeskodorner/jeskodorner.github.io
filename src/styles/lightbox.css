@@ -30,7 +30,8 @@
   outline: 3px solid #2b3bff;
   outline-offset: -4px;
 }
-/* Eigene Symbole (Teilen, Download) sind Linien-Icons in der Textfarbe */
+/* Eigene Symbole (Details, Teilen, Download) sind Linien-Icons in der Textfarbe */
+.pswp__button--jd-info .pswp__icn,
 .pswp__button--jd-share .pswp__icn,
 .pswp__button--jd-download .pswp__icn {
   width: 24px;
@@ -66,46 +67,133 @@
 .pswp__button--close:focus-visible {
   outline-offset: 3px;
 }
-.pswp__jd-caption {
-  position: absolute;
-  left: 50%;
-  bottom: max(1rem, env(safe-area-inset-bottom));
-  translate: -50% 0;
-  max-width: min(90vw, 44rem);
-  padding: 0.7rem 1rem;
-  background: #ffffff;
-  border: 2px solid #0b0b0b;
-  border-radius: 4px;
-  box-shadow: 6px 6px 0 #d4ff3a;
-  color: #0b0b0b;
-  text-align: left;
-  pointer-events: none;
-  transition: opacity 0.3s;
+/* Details-Knopf: aktiv = schwarzer Kreis */
+.pswp__button--jd-info {
+  position: relative;
 }
-.pswp__jd-caption:empty {
+.pswp__button--jd-info[aria-expanded='true']::before {
+  content: '';
+  position: absolute;
+  inset: 9px 3px;
+  border-radius: 50%;
+  background: #0b0b0b;
+}
+.pswp__button--jd-info[aria-expanded='true'] .pswp__icn {
+  color: #ffffff;
+}
+
+/* ---------- Detail-Feld ----------
+   Handy (< 900px): unten, so hoch wie nötig (höchstens die halbe Höhe).
+   Desktop: Spalte rechts (340px, wie PANEL_W in scripts/lightbox.ts).
+   Das Foto bekommt per paddingFn genau den restlichen Platz – das Feld liegt nie darüber. */
+.pswp__jd-details {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  max-height: 50vh;
+  overflow-y: auto;
+  padding: 1rem 1.25rem max(1.1rem, env(safe-area-inset-bottom));
+  background: #ffffff;
+  border-top: 2px solid #0b0b0b;
+  color: #0b0b0b;
+  overscroll-behavior: contain;
+}
+.pswp__jd-details[hidden] {
   display: none;
 }
-.jd-caption__text {
-  font-weight: 700;
-  font-size: clamp(1rem, 0.9rem + 0.4vw, 1.2rem);
-  line-height: 1.25;
+@media (min-width: 900px) {
+  .pswp__jd-details {
+    left: auto;
+    top: 64px;
+    width: 340px;
+    max-height: none;
+    padding: 1.5rem 1.75rem 2rem;
+    border-top: 0;
+    border-left: 2px solid #0b0b0b;
+  }
+  /* Pfeil „Nächstes Bild“ rückt neben die Spalte */
+  .pswp.jd-open .pswp__button--arrow--next {
+    right: 340px;
+  }
 }
-.jd-caption__exif {
-  margin-top: 0.2rem;
+.jd-d-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+}
+.jd-d-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-stretch: 70%;
+  text-transform: uppercase;
+  font-size: clamp(1.25rem, 1.05rem + 0.7vw, 1.75rem);
+  line-height: 0.95;
+  padding-top: 0.08em;
+}
+.jd-d-num,
+.jd-d-item dt {
   font-size: 0.75rem;
-  font-weight: 700;
+  font-weight: 750;
   font-stretch: 85%;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #5c5c5c;
   font-variant-numeric: tabular-nums;
 }
-.jd-caption__status {
-  margin-top: 0.3rem;
-  font-size: 0.8rem;
+.jd-d-caption {
+  margin-top: 0.75rem;
   font-weight: 700;
-  color: #2b3bff;
+  font-size: 1.05rem;
+  line-height: 1.3;
 }
-.pswp:not(.pswp--ui-visible) .pswp__jd-caption {
+.jd-d-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
+  gap: 0.75rem 1.25rem;
+  margin-top: 0.9rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid rgb(11 11 11 / 0.12);
+}
+@media (min-width: 900px) {
+  .jd-d-list {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+  }
+}
+.jd-d-item dd {
+  margin: 0.1rem 0 0;
+  font-weight: 600;
+  line-height: 1.3;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Kurzer Hinweis unten, z. B. „Link kopiert“ */
+.pswp__jd-toast {
+  position: absolute;
+  left: 50%;
+  top: 72px;
+  z-index: 3;
+  translate: -50% 0;
+  padding: 0.5rem 0.95rem;
+  border-radius: 999px;
+  background: #0b0b0b;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 700;
   opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+}
+.pswp__jd-toast.is-on {
+  opacity: 1;
+}
+/* PhotoSwipe blendet eigene Elemente sonst automatisch ein */
+.pswp__jd-toast:not(.is-on) {
+  visibility: hidden;
 }

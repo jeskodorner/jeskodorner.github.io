@@ -1,16 +1,32 @@
+/**
+ * Lightbox (PhotoSwipe) für die Alben.
+ * - Das Foto hat immer etwas weißen Rand, auch auf dem Handy.
+ * - „Details“ (i-Symbol oder Taste I) klappt ein Feld mit Albumtitel, Nummer, Bildunterschrift und
+ *   Aufnahmedaten auf: am Desktop als Spalte rechts, auf dem Handy unten. Das Foto wird dabei kleiner
+ *   und rückt zur Seite bzw. nach oben – das Feld liegt nie über dem Foto.
+ *   Ob die Details offen sind, merkt sich die Seite für den Besuch.
+ * - Teilbare URL: #bild-N öffnet direkt das Foto.
+ */
 import PhotoSwipeLightbox from 'photoswipe/lightbox';
+import type PhotoSwipe from 'photoswipe';
 import 'photoswipe/style.css';
 import '../styles/lightbox.css';
 import { de } from '../i18n/de';
 
+const svg = (body: string) =>
+  `<svg class="pswp__icn" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${body}</svg>`;
 const ICON = {
-  share:
-    '<svg class="pswp__icn" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v7.5h14V12"/></svg>',
-  download:
-    '<svg class="pswp__icn" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7.5 10.5 12 15l4.5-4.5"/><path d="M4 20h16"/></svg>',
+  info: svg('<circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><circle cx="12" cy="7.7" r=".6" fill="currentColor"/>'),
+  share: svg('<path d="M12 3v12M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v7.5h14V12"/>'),
+  download: svg('<path d="M12 3v12M7.5 10.5 12 15l4.5-4.5"/><path d="M4 20h16"/>'),
 };
 
 const HASH = /^#bild-(\d+)$/;
+const KEY = 'jd-details';
+/** Ab dieser Breite stehen die Details als Spalte rechts (wie in lightbox.css) */
+const WIDE = 900;
+/** Breite der Detail-Spalte am Desktop (wie in lightbox.css) */
+const PANEL_W = 340;
 
 function imageUrl(index: number) {
   return `${location.origin}${location.pathname}#bild-${index + 1}`;
@@ -33,25 +49,36 @@ async function shareOrCopy(url: string, title: string): Promise<string | undefin
   }
 }
 
-/** Bild-Link der großen Ansicht: trägt alle Lightbox-Daten (data-pswp-*, Bildunterschrift, EXIF) */
-const mainLink = (index: number) => document.getElementById(`bild-${index + 1}`);
+function el<K extends keyof HTMLElementTagNameMap>(tag: K, className: string, text?: string) {
+  const e = document.createElement(tag);
+  e.className = className;
+  if (text) e.textContent = text;
+  return e;
+}
 
 export function initLightbox() {
   const galleryEl = document.querySelector<HTMLElement>('[data-gallery]');
   if (!galleryEl) return;
-  // Übersicht (Kacheln): eigene Links, die Daten kommen aus der großen Ansicht
-  const tilesEl = document.querySelector<HTMLElement>('[data-tiles]');
-  const viewRoot = galleryEl.closest<HTMLElement>('.gview');
-  const inTiles = () => viewRoot?.dataset.view === 'tiles';
   const count = Number(galleryEl.dataset.count ?? 0);
+  const albumTitle = galleryEl.dataset.title ?? document.title;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Zustand des Detail-Felds
+  let open = false;
+  try {
+    open = sessionStorage.getItem(KEY) === '1';
+  } catch {
+    /* privater Modus */
+  }
+  let sheetH = 0; // Höhe des Felds auf dem Handy (wird gemessen)
+  let panel: HTMLElement | undefined;
+  let infoBtn: HTMLElement | undefined;
+
   const lightbox = new PhotoSwipeLightbox({
-    gallery: tilesEl ? [galleryEl, tilesEl] : galleryEl,
+    gallery: galleryEl,
     children: 'a.ph',
     pswpModule: () => import('photoswipe'),
     bgOpacity: 1,
-    // Fotos sind überall unbeschnitten → aus dem Vorschaubild heraus zoomen
     showHideAnimationType: reduced ? 'none' : 'zoom',
     zoomAnimationDuration: reduced ? 0 : 333,
     closeTitle: de.lightbox.close,
@@ -60,67 +87,114 @@ export function initLightbox() {
     arrowNextTitle: de.lightbox.next,
     errorMsg: de.lightbox.error,
     indexIndicatorSep: ' / ',
-    paddingFn: (viewport) =>
-      viewport.x < 700
-        ? { top: 56, bottom: 96, left: 0, right: 0 }
-        : { top: 72, bottom: 104, left: 72, right: 72 },
+    // Weißer Rand ums Foto; offene Details bekommen ihren eigenen Platz
+    paddingFn: (viewport) => {
+      if (viewport.x >= WIDE) {
+        return { top: 76, bottom: 48, left: 96, right: open ? PANEL_W + 48 : 96 };
+      }
+      const side = viewport.x < 600 ? 16 : 48;
+      return { top: 64, bottom: open ? sheetH + 16 : 24, left: side, right: side };
+    },
   });
 
-  // Kachel → Daten vom passenden Bild der großen Ansicht übernehmen
-  lightbox.addFilter('domItemData', (item, _el, link) => {
-    if (!link || link.dataset.pswpSrc) return item;
-    const main = mainLink(Number(link.dataset.index) - 1);
-    if (!main) return item;
-    const d = main.dataset;
-    item.src = d.pswpSrc ?? item.src;
-    item.srcset = d.pswpSrcset;
-    item.width = Number(d.pswpWidth);
-    item.height = Number(d.pswpHeight);
-    item.w = item.width;
-    item.h = item.height;
-    return item;
-  });
+  /** Inhalt des Detail-Felds für das aktuelle Foto */
+  const render = (pswp: PhotoSwipe) => {
+    if (!panel) return;
+    const a = pswp.getItemData(pswp.currIndex).element as HTMLElement | undefined;
+    panel.replaceChildren();
+    const head = el('div', 'jd-d-head');
+    head.append(el('p', 'jd-d-title', albumTitle), el('p', 'jd-d-num', de.image.of(pswp.currIndex + 1, count)));
+    panel.append(head);
+    if (!a) return;
+    if (a.dataset.caption) panel.append(el('p', 'jd-d-caption', a.dataset.caption));
+    let rows: [string, string][] = [];
+    try {
+      rows = a.dataset.details ? JSON.parse(a.dataset.details) : [];
+    } catch {
+      rows = [];
+    }
+    if (rows.length) {
+      const dl = el('dl', 'jd-d-list');
+      for (const [label, value] of rows) {
+        const item = el('div', 'jd-d-item');
+        item.append(el('dt', '', label), el('dd', '', value));
+        dl.append(item);
+      }
+      panel.append(dl);
+    }
+  };
+
+  /** Feld zeigen/verstecken und seine Höhe messen (für paddingFn) */
+  const measure = (pswp: PhotoSwipe) => {
+    pswp.element?.classList.toggle('jd-open', open);
+    infoBtn?.setAttribute('aria-expanded', String(open));
+    if (panel) panel.hidden = !open;
+    sheetH = open && panel && window.innerWidth < WIDE ? panel.offsetHeight : 0;
+  };
+  /** … und dem Foto sofort den passenden Platz geben */
+  const apply = (pswp: PhotoSwipe) => {
+    measure(pswp);
+    pswp.updateSize(true);
+  };
+
+  const toggle = (pswp: PhotoSwipe) => {
+    open = !open;
+    try {
+      sessionStorage.setItem(KEY, open ? '1' : '0');
+    } catch {
+      /* privater Modus */
+    }
+    apply(pswp);
+  };
+
+  /** Hinweis unten (z. B. „Link kopiert“) */
+  let toast: HTMLElement | undefined;
+  let toastTimer = 0;
+  const showToast = (msg: string) => {
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.classList.add('is-on');
+    window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(() => toast?.classList.remove('is-on'), 2600);
+  };
 
   lightbox.on('uiRegister', () => {
     const ui = lightbox.pswp?.ui;
     if (!ui) return;
 
-    // Bildunterschrift + EXIF
+    // Details ein-/ausklappen
     ui.registerElement({
-      name: 'jd-caption',
-      order: 9,
+      name: 'jd-info',
+      title: de.lightbox.details,
+      ariaLabel: de.lightbox.details,
+      order: 7,
+      isButton: true,
+      html: ICON.info,
+      onInit: (button) => {
+        infoBtn = button;
+        button.setAttribute('aria-controls', 'jd-details');
+        button.setAttribute('aria-expanded', String(open));
+      },
+      onClick: (_e, _el, pswp) => toggle(pswp),
+    });
+
+    // Das Detail-Feld selbst
+    ui.registerElement({
+      name: 'jd-details',
       isButton: false,
       appendTo: 'root',
       html: '',
-      onInit: (el, pswp) => {
-        el.setAttribute('aria-live', 'polite');
-        const render = (status?: string) => {
-          const a = mainLink(pswp.currIndex);
-          el.replaceChildren();
-          if (!a) return;
-          const caption = a.dataset.caption;
-          const exif = a.dataset.exif;
-          if (caption) {
-            const p = document.createElement('p');
-            p.className = 'jd-caption__text';
-            p.textContent = caption;
-            el.append(p);
-          }
-          if (exif) {
-            const p = document.createElement('p');
-            p.className = 'jd-caption__exif';
-            p.textContent = exif;
-            el.append(p);
-          }
-          if (status) {
-            const p = document.createElement('p');
-            p.className = 'jd-caption__status';
-            p.textContent = status;
-            el.append(p);
-          }
-        };
-        pswp.on('change', () => render());
-        el.addEventListener('jd-status', (e) => render((e as CustomEvent<string>).detail));
+      onInit: (box, pswp) => {
+        panel = box;
+        box.id = 'jd-details';
+        box.setAttribute('role', 'region');
+        box.setAttribute('aria-label', de.lightbox.detailsRegion);
+        box.hidden = !open;
+        pswp.on('change', () => {
+          render(pswp);
+          // Auf dem Handy kann das Feld je nach Foto höher oder niedriger sein
+          if (open && window.innerWidth < WIDE && box.offsetHeight !== sheetH) apply(pswp);
+        });
       },
     });
 
@@ -134,7 +208,7 @@ export function initLightbox() {
       html: ICON.share,
       onClick: async (_e, _el, pswp) => {
         const msg = await shareOrCopy(imageUrl(pswp.currIndex), document.title);
-        if (msg) pswp.element?.querySelector('.pswp__jd-caption')?.dispatchEvent(new CustomEvent('jd-status', { detail: msg }));
+        if (msg) showToast(msg);
       },
     });
 
@@ -147,12 +221,12 @@ export function initLightbox() {
       isButton: true,
       tagName: 'a',
       html: ICON.download,
-      onInit: (el, pswp) => {
-        const a = el as HTMLAnchorElement;
+      onInit: (link, pswp) => {
+        const a = link as HTMLAnchorElement;
         a.target = '_blank';
         a.rel = 'noopener noreferrer';
         pswp.on('change', () => {
-          const url = mainLink(pswp.currIndex)?.dataset.original;
+          const url = (pswp.currSlide?.data.element as HTMLElement | undefined)?.dataset.original;
           if (url) {
             a.href = url;
             a.hidden = false;
@@ -163,6 +237,44 @@ export function initLightbox() {
         });
       },
     });
+
+    // Hinweis-Zeile
+    ui.registerElement({
+      name: 'jd-toast',
+      isButton: false,
+      appendTo: 'root',
+      html: '',
+      onInit: (box) => {
+        toast = box;
+        box.setAttribute('role', 'status');
+      },
+    });
+  });
+
+  // Beim Öffnen: Feld füllen und messen, bevor PhotoSwipe das Foto zum ersten Mal platziert
+  // (dann springt nichts während der Öffnen-Animation)
+  lightbox.on('firstUpdate', () => {
+    const pswp = lightbox.pswp;
+    if (!pswp) return;
+    render(pswp);
+    measure(pswp);
+  });
+
+  // Taste I: Details ein-/ausklappen
+  lightbox.on('keydown', (e) => {
+    const k = e.originalEvent;
+    if (k.key.toLowerCase() === 'i' && !k.metaKey && !k.ctrlKey && !k.altKey && lightbox.pswp) {
+      k.preventDefault();
+      toggle(lightbox.pswp);
+    }
+  });
+
+  // Auf dem Handy: Feldhöhe nach Drehen/Größenänderung neu messen
+  lightbox.on('resize', () => {
+    const pswp = lightbox.pswp;
+    if (!pswp || !open || !panel) return;
+    const h = window.innerWidth < WIDE ? panel.offsetHeight : 0;
+    if (h !== sheetH) apply(pswp);
   });
 
   // Teilbare URL: #bild-N
@@ -173,11 +285,11 @@ export function initLightbox() {
   });
   lightbox.on('close', () => {
     history.replaceState(history.state, '', location.pathname + location.search);
-    // Zuletzt angesehenes Bild auf der Seite zeigen (sonst zoomt die Lightbox ins Leere)
-    const el = lightbox.pswp?.currSlide?.data.element;
-    if (el instanceof HTMLElement) {
-      const r = el.getBoundingClientRect();
-      if (r.bottom < 0 || r.top > window.innerHeight) el.scrollIntoView({ block: 'center', behavior: 'instant' });
+    // Zuletzt angesehenes Foto auf der Seite zeigen (sonst zoomt die Lightbox ins Leere)
+    const target = lightbox.pswp?.currSlide?.data.element;
+    if (target instanceof HTMLElement) {
+      const r = target.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > window.innerHeight) target.scrollIntoView({ block: 'center', behavior: 'instant' });
     }
   });
 
@@ -188,7 +300,7 @@ export function initLightbox() {
     if (!m) return;
     const index = Number(m[1]) - 1;
     if (index >= 0 && index < count && !lightbox.pswp) {
-      lightbox.loadAndOpen(index, { gallery: inTiles() && tilesEl ? tilesEl : galleryEl });
+      lightbox.loadAndOpen(index, { gallery: galleryEl });
     }
   };
   openFromHash();

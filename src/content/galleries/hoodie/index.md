@@ -4,8 +4,6 @@ slug: hoodie
 date: 2026-01-18
 # location: "Ort"
 description: "Nachts unterwegs: Hoodie-Shooting mit Anouk und Yael."
-# showcase = Wand (jedes Foto einzeln, unbeschnitten) · masonry = Raster · justified = gleich hohe Reihen
-layout: showcase
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
 # color: pink
 visibility: public
