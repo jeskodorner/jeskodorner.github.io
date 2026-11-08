@@ -33,7 +33,7 @@ export const de = {
   },
   galleries: {
     title: 'Galerie',
-    intro: 'Serien, Reisen und Aufträge.',
+    intro: 'Keine kuratierte Ausstellung, sondern mein offenes Fotoarchiv – Serien, Reisen, Aufträge und alles dazwischen.',
     images: (n: number) => (n === 1 ? '1 Bild' : `${n} Bilder`),
     back: 'Alle Galerien',
     prev: 'Vorherige Galerie',
