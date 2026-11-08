@@ -8,7 +8,8 @@
  * Handy (unter 700 px): der Name steht mittig, die Menüpunkte linksbündig an seiner linken Kante, die Fußzeile mittig.
  * Ab 700 px: alles linksbündig.
  * Slot „aside“ (Startseite: Bildfeld, BlendLoop.astro): am Handy randlos über die ganze Breite, beginnt hinter
- * „Kontakt“ (4:3, auf niedrigen Bildschirmen etwas flacher, aber immer randlos),
+ * „Kontakt“ (4:3, auf niedrigen Bildschirmen etwas flacher, aber immer randlos). Dort ist „Kontakt“ ein Fenster:
+ * oben weiß, auf dem Foto zeigen die Buchstaben das Foto in seinen echten (positiven) Farben,
  * ab 700 px rechts neben den Menüpunkten: oben und unten bündig mit der Schrift, rechtsbündig am Seitenrand (gleicher
  * Abstand zum Bildschirmrand wie der Name links), damit die Seite nicht nach links kippt.
  * Der Name ist rosa hinterlegt mit schwarzer Schrift (wie markierter Text) – das einzige große Rosa auf der Seite.
@@ -80,6 +81,33 @@ const hasAside = Astro.slots.has('aside');
   </p>
 </div>
 
+<script>
+  /* Startseite am Handy: „Kontakt“ als Fenster ins Foto. Die untere Hälfte des Worts ist durchsichtig; genau
+     darunter liegt im Bildfeld eine Kopie des Worts, die die Farben umkehrt (Modus „Differenz“ mit Weiß). Da das
+     Foto invertiert ist, zeigen die Buchstaben es so wieder positiv. Die Kopie muss im Bildfeld liegen, weil sich
+     das Menü wegen der Seitenübergänge nicht mit dem Foto mischen kann. Ohne JavaScript bleibt „Kontakt“ zweifarbig. */
+  function initWindow(bm: HTMLElement) {
+    const link = bm.querySelector<HTMLElement>('.bm-list li:last-child a');
+    const box = bm.querySelector<HTMLElement>('.bm-aside [data-blend]');
+    if (!link || !box) return;
+    const word = document.createElement('span');
+    word.className = 'bm-window display';
+    word.textContent = link.textContent?.trim() ?? '';
+    box.append(word);
+    // deckungsgleich über das echte Wort legen (auch nach Drehen, Größenänderung, Laden der Schrift)
+    const place = () => {
+      const a = link.getBoundingClientRect();
+      const b = box.getBoundingClientRect();
+      word.style.translate = `${a.left - b.left}px ${a.top - b.top}px`;
+    };
+    place();
+    new ResizeObserver(place).observe(bm);
+    document.fonts?.ready.then(place);
+    bm.classList.add('has-window');
+  }
+  for (const bm of document.querySelectorAll<HTMLElement>('.bm--aside')) initWindow(bm);
+</script>
+
 <style>
   /* Blaue Fläche über den ganzen Bildschirm; Inhalt von oben nach unten: Name, Menü, Fußzeile */
   .bm {
@@ -140,6 +168,9 @@ const hasAside = Astro.slots.has('aside');
   .bm-aside {
     display: grid;
   }
+  .bm-aside :global(.bm-window) {
+    display: none;
+  }
   /* Handy – auf der Startseite und im Menü gleich: Raster mit drei Spalten. Die mittlere ist genau so breit wie der
      Name, so steht er mittig und die Menüpunkte beginnen an seiner linken Kante. Die Reihe nach dem Menü füllt den
      restlichen Platz (Startseite: Bildfeld), die Fußzeile steht mittig ganz unten. */
@@ -194,6 +225,24 @@ const hasAside = Astro.slots.has('aside');
       background-image: linear-gradient(to bottom, var(--on-menu) 0.34em, var(--menu-bg) 0.5em);
       -webkit-background-clip: text;
       background-clip: text;
+    }
+    /* Mit JavaScript: unten durchsichtig, dort scheint die Kopie im Bildfeld durch (Foto positiv, siehe Skript) */
+    .bm--aside.has-window .bm-list li:last-child a {
+      background-image: linear-gradient(to bottom, var(--on-menu) 0.34em, transparent 0.5em);
+    }
+    .bm-aside :global(.bm-window) {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      font-size: var(--bm-item);
+      line-height: 0.95;
+      padding-inline: 0.06em;
+      white-space: nowrap;
+      color: #fff;
+      mix-blend-mode: difference;
+      pointer-events: none;
     }
     .bm--aside .bm-list li:last-child a:hover {
       background-image: none;

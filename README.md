@@ -592,7 +592,7 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   Bildschirmrand wie der Name vom linken). Am Handy immer randlos über die ganze Breite (auf niedrigen
   Bildschirmen etwas flacher als 4:3, damit nichts scrollt), es beginnt
   halb hinter „Kontakt“ (das Foto beginnt mit kurzem weichem Rand an der Mitte der Buchstaben; „Kontakt“ ist oben
-  weiß und auf dem Foto in der Hintergrundfarbe) und läuft unten weich aus (Verlauf:
+  weiß, auf dem Foto zeigen die Buchstaben das Foto in seinen echten, nicht invertierten Farben – wie ein Fenster) und läuft unten weich aus (Verlauf:
   `--blend-mask` in `BlueMenu.astro`). Am Laptop hat es harte Kanten. Mit „Bewegung reduzieren“
   oder ohne JavaScript bleibt ein festes Paar stehen. Invertieren abschalten: in `BlendLoop.astro` die Zeile
   `filter: invert(1);` löschen. Die frühere Startseite liegt in der Git-Geschichte.
