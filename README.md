@@ -101,8 +101,11 @@ photos.config.json          ← Einstellungen für die Bildverarbeitung (Größe
 > ⚠️ **Impressum und Datenschutzerklärung sind Platzhalter** und auf der Seite deutlich so markiert.
 > Bitte vor der Veröffentlichung vervollständigen und rechtlich prüfen lassen. Das hier ist keine Rechtsberatung.
 
-**Showroom auf der Startseite:** In `startseite.md` legt die Liste `showroom` fest, welche Fotos unter „Ausgewählte Arbeiten“
-hängen, in welcher Reihenfolge und unter welchem Namen:
+**Ausgewählte Arbeiten:** In `startseite.md` legt die Liste `showroom` fest, welche Fotos ausgewählt sind, in welcher
+Reihenfolge und unter welchem Namen. Sie erscheinen an zwei Stellen: auf der Startseite als **Bilderstapel** (Abzüge mit
+weißem Rand, das oberste lässt sich wegziehen oder antippen und schiebt sich unten in den Stapel; Pfeile und ← →
+gehen vor und zurück) und auf der eigenen Seite **/ausgewaehlte-arbeiten/** als kleine Ausstellung (jedes Foto einzeln
+an der Wand, ein Klick öffnet es im Album). Der Knopf oben im Startbild führt dorthin, der Link daneben zur Galerie.
 
 ```yaml
 showroom:
@@ -207,7 +210,7 @@ und festen Seitenverhältnissen, damit beim Laden nichts springt.
 | `date` | ja | `2026-10-22`. Die Übersicht sortiert danach, neueste zuerst. |
 | `location` | | Ort |
 | `description` | ja | 1–2 Sätze für Kachel, Suchmaschinen und Link-Vorschau |
-| `cover` | | Dateiname des Vorschaubilds. Es erscheint in der Galerie-Übersicht und auf der Startseite im Showroom, wenn dort kein `bild` angegeben ist. Ohne Angabe wird das erste Bild genommen. |
+| `cover` | | Dateiname des Vorschaubilds. Es erscheint in der Galerie-Übersicht und bei den ausgewählten Arbeiten, wenn dort kein `bild` angegeben ist. Ohne Angabe wird das erste Bild genommen. |
 | `visibility` | | `public` (Standard) oder `unlisted` |
 | `showExif` | | Aufnahmedaten in den Lightbox-Details zeigen (Standard `true`) |
 | `downloadUrl` | | Link zum Download der ganzen Galerie (ZIP/Ordner) |
@@ -584,8 +587,8 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   der Galerieseite, im Fortschrittsbalken und im Download-Kasten (Kundengalerien).
   Festlegen per `color: pink | blue | lime | orange | violet` in `index.md`. Ohne Angabe wechselt die Farbe automatisch reihum.
 - **Startseite:** Vollbild-Foto mit großem Namen, Leuchtmarker, eine schlichte Zeile „Fotografie — Kamera — Film“,
-  „Ausgewählte Arbeiten“ als Showroom (jedes Foto unbeschnitten an der weißen Wand, abwechselnd links/rechts,
-  kleines Schild mit Name und Link zum Album), ein blauer Bereich „Bewegte Bilder“ und ein Lime-Bereich „Projekt anfragen“.
+  „Ausgewählte Arbeiten“ als Bilderstapel zum Durchblättern (mit Link zur eigenen Seite, dort jedes Foto unbeschnitten
+  an der weißen Wand), ein blauer Bereich „Bewegte Bilder“ und ein Lime-Bereich „Projekt anfragen“.
 
 Kontraste nach WCAG 2.x:
 

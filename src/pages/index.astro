@@ -4,13 +4,14 @@ import { inlineMd, wordSpans } from '../lib/text';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Picture from '../components/Picture.astro';
 import ParallaxImage from '../components/ParallaxImage.astro';
-import Hanging, { type WorkItem } from '../components/Hanging.astro';
+import PhotoPile from '../components/PhotoPile.astro';
 import Icon from '../components/Icon.astro';
 import EmailLink from '../components/EmailLink.astro';
 import portrait from '../assets/portrait.jpg';
 import { site } from '../config/site';
-import { useTranslations, formatMonth } from '../i18n';
-import { getHeroImages, getPublicGalleries, type Gallery, type GalleryImage } from '../lib/galleries';
+import { useTranslations } from '../i18n';
+import { getHeroImages } from '../lib/galleries';
+import { getSelectedWorks } from '../lib/showroom';
 import { ogImage } from '../lib/images';
 
 const t = useTranslations();
@@ -19,7 +20,6 @@ const heroes = await getHeroImages();
 const slideshow = site.hero.mode === 'slideshow' && heroes.length > 1;
 const heroList = slideshow ? heroes : heroes.slice(0, 1);
 const hero = heroes[0];
-const galleries = await getPublicGalleries();
 const films = (await getCollection('films')).sort((a, b) => a.data.order - b.data.order || (b.data.year ?? 0) - (a.data.year ?? 0));
 const og = hero ? await ogImage(hero.image.src) : undefined;
 
@@ -32,34 +32,8 @@ const jsonLd = {
   sameAs: [site.instagram.url],
 };
 
-// Ausgewählte Arbeiten („Showroom“): Liste "showroom" in src/content/pages/startseite.md –
-// welche Fotos in welcher Reihenfolge hängen, jeweils mit optionalem eigenem Namen.
-// Leere Liste: jede öffentliche Galerie einmal mit ihrem Vorschaubild.
-const workFor = (g: Gallery, image: GalleryImage = g.cover, name?: string): WorkItem => ({
-  image,
-  href: g.url,
-  album: g.title,
-  name,
-  meta: (name ? [formatMonth(g.date), g.location] : [t.galleries.images(g.images.length), formatMonth(g.date), g.location])
-    .filter(Boolean)
-    .join(' · '),
-});
-const showroomError = (msg: string) => new Error(`startseite.md → showroom: ${msg}`);
-const works: WorkItem[] = text.showroom?.length
-  ? text.showroom.map((s) => {
-      const g = galleries.find((x) => x.slug === s.galerie || x.id === s.galerie);
-      if (!g) {
-        throw showroomError(
-          `Galerie „${s.galerie}“ gibt es nicht oder sie ist nicht öffentlich. Möglich: ${galleries.map((x) => x.slug).join(', ')}`,
-        );
-      }
-      const image = s.bild ? g.images.find((i) => i.file === s.bild) : g.cover;
-      if (!image) {
-        throw showroomError(`Bild „${s.bild}“ gibt es in „${s.galerie}“ nicht. Möglich: ${g.images.map((i) => i.file).join(', ')}`);
-      }
-      return workFor(g, image, s.name?.trim() || undefined);
-    })
-  : galleries.map((g) => workFor(g));
+// Ausgewählte Arbeiten: Liste "showroom" in src/content/pages/startseite.md (siehe lib/showroom.ts)
+const works = await getSelectedWorks();
 
 // Wörter für die schlichte Zeile unter dem Statement (aus der Zeile über dem Namen, z. B. „Fotografie · Kamera · Film“)
 const words = (text.kicker ?? 'Fotografie · Kamera · Film').split('·').map((w) => w.trim()).filter(Boolean);
@@ -110,16 +84,12 @@ const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : 
       <div class="hero-bottom">
         <p class="hero-claim">{site.claim}</p>
         <div class="hero-ctas">
-          <a class="btn" href="/galerien/">
+          <a class="btn" href="/ausgewaehlte-arbeiten/">
             {t.home.cta} <span class="arrow" aria-hidden="true">→</span>
           </a>
-          {
-            hero && (
-              <a class="hero-credit" href={hero.image.hashUrl}>
-                {hero.image.caption ?? hero.gallery.title} <span aria-hidden="true">→</span>
-              </a>
-            )
-          }
+          <a class="hero-credit" href="/galerien/">
+            {t.home.galleryLink} <span aria-hidden="true">→</span>
+          </a>
         </div>
       </div>
     </div>
@@ -156,12 +126,12 @@ const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : 
             <span class="stretch">{t.home.selected.split(' ')[0]}</span>
             <span class="stretch">{t.home.selected.split(' ').slice(1).join(' ')}</span>
           </h2>
-          <a class="btn btn--small" href="/galerien/">
-            {t.home.allGalleries} ({galleries.length}) <span class="arrow" aria-hidden="true">→</span>
+          <a class="btn btn--small" href="/ausgewaehlte-arbeiten/">
+            {t.home.allSelected} ({works.length}) <span class="arrow" aria-hidden="true">→</span>
           </a>
         </div>
         <div class="container container--wide">
-          <Hanging items={works} />
+          <PhotoPile items={works} />
         </div>
       </section>
     )
@@ -422,6 +392,8 @@ const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : 
   }
   .selected {
     padding-top: var(--section);
+    /* weggeworfene Fotos fliegen über den Rand, ohne seitlich scrollbar zu machen */
+    overflow-x: clip;
   }
 
   /* ---------- Film-Bereich ---------- */

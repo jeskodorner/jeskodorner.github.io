@@ -6,7 +6,8 @@ statement: "Fotografie, die *Bewegung* einfängt."
 note: "Porträts, Events, Setcards, Hochzeiten und Alltagsfotografie – Bilder, die Geschichten erzählen."
 aboutTeaser: "Platzhalter: kurzer Teaser-Text über dich."
 
-# Showroom „Ausgewählte Arbeiten“: Diese Fotos hängen auf der Startseite, in dieser Reihenfolge.
+# „Ausgewählte Arbeiten“: Diese Fotos liegen auf der Startseite im Bilderstapel und hängen auf der Seite
+# /ausgewaehlte-arbeiten/ – in dieser Reihenfolge.
 #   galerie: Ordnername der Galerie (src/content/galleries/<ordner>)
 #   bild:    Dateiname des Fotos – ohne Angabe das Vorschaubild der Galerie
 #   name:    eigener Titel für das Foto, z. B. name: "Beton und Rüschen"

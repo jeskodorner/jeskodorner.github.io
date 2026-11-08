@@ -1,0 +1,206 @@
+---
+/**
+ * Bilderstapel (Startseite): Die ausgewählten Fotos liegen als Abzüge mit weißem Rand leicht schief übereinander.
+ * Das oberste lässt sich wegziehen oder antippen – es fliegt zur Seite und schiebt sich unten in den Stapel.
+ * Pfeil-Knöpfe und Tastatur (← →) gehen vor und zurück. Unter dem Stapel: Name, Album und „Ansehen“.
+ * Ohne JavaScript liegt der Stapel einfach da, das oberste Foto ist ein Link. Logik: scripts/pile.ts
+ */
+import type { WorkItem } from '../lib/showroom';
+import Picture from './Picture.astro';
+import Icon from './Icon.astro';
+import { useTranslations } from '../i18n';
+
+export interface Props {
+  items: WorkItem[];
+}
+
+const { items } = Astro.props;
+const t = useTranslations();
+// Feste, „zufällig“ wirkende Lage jedes Abzugs (gleich bei jedem Besuch)
+const ROT = [-3, 5, -7, 2, -4, 7, -1, 4, -6, 3];
+const DX = [0, 14, -18, 8, -10, 20, -6, 12, -16, 6];
+const DY = [0, -8, 6, 10, -12, 4, 12, -6, 8, -10];
+const first = items[0];
+---
+
+<div class="pile" data-pile role="region" aria-roledescription="Stapel" aria-label={t.home.pileLabel}>
+  <ol class="pile-stack" role="list">
+    {
+      items.map((it, i) => {
+        const r = it.image.src.width / it.image.src.height;
+        return (
+          <li
+            class="pile-card"
+            data-pos={i}
+            data-name={it.name ?? it.album}
+            data-sub={it.name ? t.home.fromAlbum(it.album) : it.meta}
+            data-href={it.photoHref}
+            style={`--r:${r.toFixed(4)};--rot:${ROT[i % ROT.length]}deg;--dx:${DX[i % DX.length]}px;--dy:${DY[i % DY.length]}px;--pos:${i};z-index:${items.length - i}`}
+          >
+            <a class="pile-print" href={it.photoHref} tabindex={i === 0 ? undefined : -1} aria-hidden={i === 0 ? undefined : 'true'}>
+              <Picture
+                src={it.image.src}
+                alt={it.image.alt}
+                sizes="(min-width: 900px) 520px, 80vw"
+                color={it.image.color}
+                loading={i < 3 ? 'eager' : 'lazy'}
+                maxWidth={1200}
+              />
+            </a>
+          </li>
+        );
+      })
+    }
+  </ol>
+
+  {
+    first && (
+      <div class="pile-bar">
+        <p class="pile-caption" aria-live="polite">
+          <span class="pile-name" data-pile-name>{first.name ?? first.album}</span>
+          <span class="pile-meta" data-pile-meta>{first.name ? t.home.fromAlbum(first.album) : first.meta}</span>
+          <a class="pile-view" data-pile-view href={first.photoHref}>
+            {t.home.pileView} <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </p>
+        <div class="pile-ctrls js-only">
+          <button class="pile-btn" type="button" data-pile-prev title={t.home.pilePrev} aria-label={t.home.pilePrev}>
+            <Icon name="arrow-left" />
+          </button>
+          <span class="label pile-count" data-pile-count>1 / {items.length}</span>
+          <button class="pile-btn" type="button" data-pile-next title={t.home.pileNext} aria-label={t.home.pileNext}>
+            <Icon name="arrow-right" />
+          </button>
+        </div>
+        <p class="label muted pile-hint js-only">{t.home.pileHint}</p>
+      </div>
+    )
+  }
+</div>
+
+<script>
+  import { initPiles } from '../scripts/pile';
+  initPiles();
+</script>
+
+<style>
+  .pile {
+    --pile-h: clamp(20rem, 58vh, 40rem);
+    --pile-w: min(100%, 44rem);
+    display: grid;
+    gap: clamp(1.25rem, 3vw, 2rem);
+    justify-items: center;
+  }
+  .pile-stack {
+    position: relative;
+    list-style: none;
+    padding: 0;
+    width: 100%;
+    height: calc(var(--pile-h) + 3rem);
+    touch-action: pan-y;
+  }
+  /* Ein Abzug: unbeschnitten mit weißem Rand, so groß, dass er in den Stapel passt */
+  .pile-card {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(var(--pile-w), calc(var(--pile-h) * var(--r)));
+    transform: translate(-50%, -50%) translate(var(--dx), var(--dy)) rotate(var(--rot))
+      scale(calc(1 - min(var(--pos), 5) * 0.025));
+    transition: transform 0.5s var(--ease);
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .pile-print {
+    display: block;
+    padding: clamp(0.45rem, 1.2vw, 0.75rem);
+    background: #ffffff;
+    box-shadow:
+      0 1px 2px rgb(0 0 0 / 0.12),
+      0 10px 28px -8px rgb(0 0 0 / 0.35);
+    -webkit-user-drag: none;
+  }
+  .pile-print :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    pointer-events: none;
+  }
+  /* Nur das oberste Foto ist anfassbar */
+  :global(.js) .pile-card[data-pos='0'] {
+    cursor: grab;
+  }
+  :global(.js) .pile-card.is-dragging {
+    cursor: grabbing;
+    transition: none;
+  }
+  .pile-card.is-flying {
+    transition: transform 0.45s cubic-bezier(0.3, 0.7, 0.4, 1);
+  }
+
+  /* ---------- Schild und Steuerung ---------- */
+  .pile-bar {
+    display: grid;
+    justify-items: center;
+    gap: 0.75rem;
+    text-align: center;
+  }
+  .pile-caption {
+    display: grid;
+    gap: 0.2rem;
+    justify-items: center;
+    min-height: 4.5rem;
+  }
+  .pile-name {
+    font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.3rem);
+    font-weight: 700;
+  }
+  .pile-meta {
+    font-size: var(--fs-xs);
+    color: var(--ink-soft);
+  }
+  .pile-view {
+    margin-top: 0.2rem;
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .pile-ctrls {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .pile-btn {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1.5px solid var(--ink);
+    border-radius: 50%;
+    background: var(--wall);
+    color: var(--ink);
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  .pile-btn:hover {
+    background: var(--lime);
+  }
+  .pile-btn:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .pile-btn :global(svg) {
+    width: 18px;
+    height: 18px;
+  }
+  .pile-count {
+    min-width: 3.5em;
+    font-variant-numeric: tabular-nums;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pile-card,
+    .pile-card.is-flying {
+      transition: none;
+    }
+  }
+</style>

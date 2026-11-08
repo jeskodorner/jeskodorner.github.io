@@ -1,25 +1,15 @@
 ---
 /**
- * „Hängung“ (Startseite): Jedes Foto hängt unbeschnitten in seinem Originalformat an der weißen Wand,
- * mit viel Platz daneben und einem kleinen Schild mit Verweis auf sein Album.
+ * „Hängung“ (Seite „Ausgewählte Arbeiten“): Jedes Foto hängt unbeschnitten in seinem Originalformat an der
+ * weißen Wand, mit viel Platz daneben und einem kleinen Schild mit Verweis auf sein Album.
+ * Ein Klick aufs Foto öffnet genau dieses Foto im Album (Lightbox).
  *   Desktop: so groß, dass es ganz auf den Bildschirm passt; abwechselnd links und rechts, Schild daneben.
  *   Handy:   volle Breite, Schild darunter.
  * Schild: Hat das Foto einen eigenen Namen (Showroom), steht er als Titel da und darunter „Aus dem Album …“.
  *         Sonst ist der Album-Name der Titel und darunter „Zum Album“.
  */
-import type { GalleryImage } from '../lib/galleries';
+import type { WorkItem } from '../lib/showroom';
 import Picture from './Picture.astro';
-
-export interface WorkItem {
-  image: GalleryImage;
-  /** Link zum Album, zu dem das Foto gehört */
-  href: string;
-  /** Name des Albums */
-  album: string;
-  /** Eigener Name des Fotos (optional) */
-  name?: string;
-  meta?: string;
-}
 
 export interface Props {
   items: WorkItem[];
@@ -34,7 +24,7 @@ const { items } = Astro.props;
       const r = it.image.src.width / it.image.src.height;
       return (
         <li class:list={['work', { 'work--portrait': r < 1 }]} style={`--r:${r.toFixed(4)}`}>
-          <a class="work-media reveal" href={it.href} tabindex="-1">
+          <a class="work-media reveal" href={it.photoHref} tabindex="-1">
             <Picture
               src={it.image.src}
               alt={it.image.alt}
