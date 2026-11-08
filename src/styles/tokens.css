@@ -2,8 +2,8 @@
  * Design-Tokens – „White Cube“: weiße Galeriewände, schwarze Schrift, sommerliche Farbflächen.
  *
  * Palette „Sommer“: warme, frische Galeriefarben (Koralle, Orange, Sonnengelb, klares Blau, Flieder), alle mit
- * schwarzer Schrift, dazu ein lebendiges Mittelblau für Startseite und Links und ein kräftiges Orange nur fürs
- * Überfahren. Frühere Paletten (siehe README): Git-Tags alte-version-verblichene-farben (blass, kühl) und
+ * schwarzer Schrift, dazu ein lebendiges Mittelblau für Links und ein kräftiges Orange nur fürs Überfahren.
+ * Startseite und Menü sind weiß mit schwarzer Schrift, der korallenrote Name ist dort die einzige Farbe. Frühere Paletten (siehe README): Git-Tags alte-version-verblichene-farben (blass, kühl) und
  * alte-version-knallige-galeriefarben (Neon).
  *
  * Kontraste (WCAG 2.x):
@@ -12,7 +12,7 @@
  *     Koralle #FF807F 8,1:1 · Orange #FFA44E 10,0:1 · Sonnengelb #F7E04F 14,7:1
  *     Blau #53A3F2 7,4:1 · Flieder #B98CEA 7,5:1
  *   Rosa/Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer Schrift.
- *   Startseite/Menü #4273B0 + Weiß 4,9:1 · Akzent dort: Koralle-Fläche mit Schwarz 8,1:1
+ *   Startseite/Menü Weiß + Schwarz 19,6:1 · Akzent dort: Koralle-Fläche mit Schwarz 8,1:1
  *   Überfahren: Unterstrich bzw. Fläche in Orange #F25914 (Unterstrich auf Weiß 3,4:1, Fläche + Schwarz 5,8:1)
  */
 
@@ -37,10 +37,10 @@
   --on-pink: #0b0b0b;
   --blue: #53a3f2;
   --on-blue: #0b0b0b;
-  /* Hintergrund von Startseite und Menü: lebendiges Mittelblau. Akzent dort: Koralle (Felder mit schwarzer Schrift).
-     Ausprobiert: #2b3bff, #3d8aae, Schieferblau #58677f (aus der Stirn eines invertierten Fotos) – siehe README. */
-  --menu-bg: #4273b0;
-  --on-menu: #ffffff;
+  /* Hintergrund von Startseite und Menü: Weiß mit schwarzer Schrift. Akzent dort: Koralle (Felder mit schwarzer Schrift).
+     Ausprobiert: #2b3bff, #3d8aae, Schieferblau #58677f, Mittelblau #4273b0 (mit weißer Schrift) – siehe README. */
+  --menu-bg: #ffffff;
+  --on-menu: #0b0b0b;
   --lime: #f7e04f;
   --on-lime: #0b0b0b;
   --orange: #ffa44e;
@@ -52,7 +52,7 @@
   --paper: var(--wall);
   --paper-2: var(--wall-2);
   --sand: var(--wall-3);
-  --accent: var(--menu-bg); /* Links, kleine Akzentschrift, Fokusrahmen – das Blau der Startseite */
+  --accent: #4273b0; /* Links, kleine Akzentschrift, Fokusrahmen – Mittelblau */
   --hover: #f25914; /* Überfahren: Unterstrich (Links) bzw. Fläche (Knöpfe) – kräftiges Orange */
   --accent-vivid: var(--pink); /* nur große Schrift und Flächen */
   --on-accent: #ffffff;

@@ -1,6 +1,6 @@
 ---
 /**
- * Das blaue Menü: oben groß der Name, darunter die Menüpunkte (etwas kleiner), unten Instagram,
+ * Das Menü (früher blau, jetzt weiß mit schwarzer Schrift): oben groß der Name, darunter die Menüpunkte (etwas kleiner), unten Instagram,
  * Impressum und Datenschutz. Zwei Einsätze:
  *   - als Startseite (pages/index.astro): der Name ist die Hauptüberschrift
  *   - als Menü (Header.astro, auf allen Geräten): mit Schließen-Knopf genau dort, wo der Menüknopf sitzt,
@@ -131,6 +131,7 @@ const hasAside = Astro.slots.has('aside');
     height: var(--header-h);
     margin-bottom: clamp(0.25rem, 2vw, 1rem);
   }
+  /* Schließen-Knopf wie der Menüknopf auf den Unterseiten: korallenroter Kreis (auf Weiß sichtbar) */
   .bm-close {
     display: inline-grid;
     place-items: center;
@@ -138,9 +139,16 @@ const hasAside = Astro.slots.has('aside');
     height: 3rem;
     border: 0;
     border-radius: 50%;
-    background: var(--wall);
+    background: var(--pink);
     color: var(--ink);
     cursor: pointer;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+  }
+  .bm-close:hover {
+    background: var(--ink);
+    color: var(--pink);
   }
   /* Name: eine Zeile, so breit wie der Platz (aber nicht riesig). Rosa Fläche genau so breit wie die Schrift, schwarze
      Schrift – wie markierter Text. Die Fläche ist 0,98 Schrifthöhen hoch, oben 0,125 und unten 0,175 Rand um die

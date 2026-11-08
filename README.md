@@ -576,19 +576,19 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   Festlegen per `color: pink | blue | lime | orange | violet` in `index.md`. Ohne Angabe wechselt die Farbe automatisch reihum.
   Palette „Sommer“, warm und frisch: Koralle `#FF807F` (`pink`), Orange `#FFA44E` (`orange`), Sonnengelb `#F7E04F`
   (`lime`), klares Blau `#53A3F2` (`blue`), Flieder `#B98CEA` (`violet`). Auf allen steht schwarze Schrift.
-- **Links und Überfahren:** Links und kleine Akzentschrift (z. B. die Jahreszahlen auf „Über mich“) sind im Blau
-  der Startseite `#4273B0` (Token `--accent`). Beim Überfahren bleibt die Schrift, der Unterstrich wird orange
+- **Links und Überfahren:** Links und kleine Akzentschrift (z. B. die Jahreszahlen auf „Über mich“) sind in
+  Mittelblau `#4273B0` (Token `--accent`). Beim Überfahren bleibt die Schrift, der Unterstrich wird orange
   (Token `--hover`, `#F25914`); Knöpfe, Abspielen und die Knöpfe der Lightbox werden orange hinterlegt. In der schwarzen
   Fußzeile gibt es keine Unterstriche, beim Überfahren werden die Links blau, der große Schriftzug ist korallenrosa.
 - **Rosa** ist Koralle `#FF807F` (vorher kräftiges Pink `#FF3D8B`, dann Altrosa `#E59BB0` und verblichenes
   Korallenrosa `#EF9D9F`). Es gilt auch für Galerien mit `color: pink`.
-- **Startseite = das blaue Menü** (`src/components/BlueMenu.astro`): Fläche in Mittelblau `#4273B0` (vorher Schieferblau `#58677F`; Token
-  `--menu-bg` in `tokens.css`, Farbe aus der Stirn eines invertierten Portfolio-Fotos). Akzent dort ist Rosa: der
+- **Startseite = das Menü** (`src/components/BlueMenu.astro`): weiß mit schwarzer Schrift (Token `--menu-bg` und
+  `--on-menu` in `tokens.css`; vorher Mittelblau `#4273B0` bzw. Schieferblau `#58677F` mit weißer Schrift). Akzent dort ist Rosa: der
   Name ist rosa hinterlegt mit schwarzer Schrift (wie markierter Text, `.bm-name`), der aktive bzw. überfahrene
-  Menüpunkt bekommt dasselbe rosa Feld, der Menü-Knopf ist ein rosa Kreis. Instagram, Impressum und Datenschutz unten
-  sind schlicht weiß (beim Überfahren rosa). Sparsam bleiben: mehr Rosa wirkt schnell zu viel. Die Fläche geht über den ganzen
+  Menüpunkt bekommt dasselbe rosa Feld, Menü- und Schließen-Knopf sind rosa Kreise. Instagram, Impressum und Datenschutz
+  unten sind schlicht schwarz (beim Überfahren rosa). Sparsam bleiben: mehr Rosa wirkt schnell zu viel. Die Fläche geht über den ganzen
   Bildschirm, oben groß der Name, darunter die Menüpunkte (Portfolio, Galerie, Film, Über mich, Kontakt), unten
-  Instagram, Impressum und Datenschutz. Ohne weiße Leiste und ohne Scrollen. Dasselbe Menü öffnet sich auf allen
+  Instagram, Impressum und Datenschutz. Ohne Kopfleiste und ohne Scrollen. Dasselbe Menü öffnet sich auf allen
   Geräten über den rosa Menü-Knopf oben rechts: Die Fläche wächst als Kreis aus dem Knopf, der Schließen-Knopf sitzt an derselben Stelle,
   der Name führt zur Startseite. Eine Textleiste mit Menüpunkten gibt es nur noch als Rückfall für sehr alte Browser.
   Am Handy (unter 700 px) steht der Name mittig, die Menüpunkte beginnen an seiner linken Kante, die Fußzeile ist
@@ -612,6 +612,8 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   - *Andere Hintergründe* (Fotos nur invertiert): kräftiges Blau `#2B3BFF` (mit Grün als Akzent) und Blaugrün
     `#3D8AAE`. Ausprobieren: in `tokens.css` z. B. `--menu-bg: var(--blue);` setzen. Der grüne Akzent war `var(--lime)`
     statt `var(--pink)` in `BlueMenu.astro` und beim Menü-Knopf in `Header.astro`.
+  - *Startseite in Mittelblau `#4273B0` mit weißer Schrift* (kurz im November 2026): in `tokens.css`
+    `--menu-bg: #4273b0; --on-menu: #ffffff;` setzen.
   - *Verblichene, kühle Palette* (kurz im November 2026, wirkte zu traurig): Schieferblau `#58677F` für Startseite
     und Links, Korallenrosa `#EF9D9F`, Aprikose `#ECAF80`, Salbei `#9AD4B4`, Taubenblau `#95B8DD`, Lavendel `#B9A6DD`,
     Hover-Orange `#E66330`, Nebentext `#5B616A`. Git-Tag `alte-version-verblichene-farben`.
@@ -626,7 +628,7 @@ Kontraste nach WCAG 2.x:
 | Wand | `#FFFFFF` | Schwarz `#0B0B0B` / Nebentext `#5C5C5C` | 19,6 : 1 / 6,7 : 1 |
 | Links, kleine Akzente | Mittelblau `#4273B0` auf Weiß | – | 4,9 : 1 |
 | Koralle (`pink`) | `#FF807F` | Schwarz | 8,1 : 1 |
-| Startseite/Menü | `#4273B0` | Weiß | 4,9 : 1 |
+| Startseite/Menü | Weiß `#FFFFFF` | Schwarz | 19,6 : 1 |
 | Akzent im Menü | Koralle `#FF807F` (Fläche) | Schwarz | 8,1 : 1 |
 | Orange (`orange`) | `#FFA44E` | Schwarz | 10,0 : 1 |
 | Sonnengelb (`lime`) | `#F7E04F` | Schwarz | 14,7 : 1 |

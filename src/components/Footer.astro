@@ -47,9 +47,9 @@ const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : 
     color: var(--wall);
     overflow: hidden;
   }
-  /* Überfahren: einheitlich das Blau der Startseite (auch für den E-Mail-Link aus EmailLink.astro) */
+  /* Überfahren: einheitlich das Blau der Links (auch für den E-Mail-Link aus EmailLink.astro) */
   .site-footer :global(a:hover) {
-    color: var(--menu-bg);
+    color: var(--accent);
   }
   .top {
     display: flex;
