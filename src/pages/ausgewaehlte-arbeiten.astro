@@ -38,6 +38,8 @@ const og = works[0] ? await ogImage(works[0].image.src) : undefined;
 
 <style>
   .head {
+    /* Schriftgröße folgt der verfügbaren Breite (cqi), damit „AUSGEWÄHLTE“ auch gedehnt nie über den Rand ragt */
+    container-type: inline-size;
     padding-top: clamp(2rem, 5vw, 4.5rem);
     padding-bottom: clamp(2.5rem, 6vw, 5.5rem);
   }
@@ -45,7 +47,8 @@ const og = works[0] ? await ogImage(works[0].image.src) : undefined;
     --stretch-from: 50%;
     --stretch-to: 100%;
     display: grid;
-    font-size: clamp(3rem, 0.5rem + 11vw, 14rem);
+    /* „AUSGEWÄHLTE“ ist bei voller Dehnung knapp 7,8 Schrifthöhen breit */
+    font-size: min(14rem, 100cqi / 8);
   }
   .lead {
     display: flex;

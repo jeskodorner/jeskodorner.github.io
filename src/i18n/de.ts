@@ -7,6 +7,7 @@ export const de = {
   nav: {
     label: 'Hauptnavigation',
     home: 'Start',
+    selected: 'Ausgewählte Arbeiten',
     galleries: 'Galerie',
     film: 'Film',
     about: 'Über mich',
