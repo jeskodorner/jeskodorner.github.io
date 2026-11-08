@@ -39,7 +39,7 @@ const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (
                     class="still"
                     src={film.data.still}
                     alt={film.data.stillAlt ?? ''}
-                    sizes="(min-width: 1000px) 62vw, 100vw"
+                    sizes="(min-width: 1000px) 48vw, 100vw"
                     loading={i === 0 ? 'eager' : 'lazy'}
                     fetchpriority={i === 0 ? 'high' : undefined}
                   />
@@ -105,16 +105,14 @@ const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (
     gap: clamp(1.25rem, 3vw, 3rem);
     scroll-margin-top: calc(var(--header-h) + 1rem);
   }
+  /* Desktop: Text immer links (gleich breit wie das Video), Video rechts, beide oben bündig */
   @media (min-width: 1000px) {
     .film {
-      grid-template-columns: 3fr 2fr;
-      align-items: center;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: start;
+      column-gap: clamp(2.5rem, 5vw, 6rem);
     }
-    /* Abwechselnd links/rechts – das Video behält dabei immer die breitere Spalte */
-    .film:nth-child(even) {
-      grid-template-columns: 2fr 3fr;
-    }
-    .film:nth-child(even) .media {
+    .film .media {
       order: 2;
     }
   }
@@ -127,6 +125,11 @@ const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (
     display: grid;
     gap: 1rem;
     justify-items: start;
+    max-width: 40rem;
+  }
+  /* Etwas mehr Luft zwischen Überschrift und Text */
+  .info .prose {
+    margin-top: 0.75rem;
   }
   .info :global(.display-2) {
     font-stretch: 75%;

@@ -27,7 +27,7 @@ const watchUrl = `https://www.youtube.com/watch?v=${id}`;
   <a class="yt-poster" href={watchUrl} target="_blank" rel="noopener noreferrer" aria-label={`Video „${title}“ abspielen (lädt YouTube)`}>
     {
       still ? (
-        <Picture src={still} alt={stillAlt ?? ''} sizes="(min-width: 1000px) 62vw, 100vw" loading={eager ? 'eager' : 'lazy'} class="yt-img" />
+        <Picture src={still} alt={stillAlt ?? ''} sizes="(min-width: 1000px) 48vw, 100vw" loading={eager ? 'eager' : 'lazy'} class="yt-img" />
       ) : (
         <span class="yt-title display" aria-hidden="true">
           {title}
