@@ -170,20 +170,12 @@ const hasAside = Astro.slots.has('aside');
          dann oben und unten etwas mehr beschnitten) – so scrollt die Startseite nicht */
       --blend-w: 100cqw;
       --blend-h: min(75cqw, 100cqh);
+      /* oben und unten weich auslaufen (oben liegt „Kontakt“ im ausgeblendeten Bereich und bleibt lesbar) */
+      --blend-mask: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent);
     }
     .bm-foot {
       justify-content: center;
       padding-top: 1.25rem;
-    }
-    /* „Kontakt“ läuft über die Oberkante des Bildfelds: oberhalb weiß, auf dem hellen Foto blau */
-    .bm--aside .bm-list li:last-child a {
-      color: transparent;
-      background-image: linear-gradient(to bottom, var(--on-menu) 0.45em, var(--menu-bg) 0.45em);
-      -webkit-background-clip: text;
-      background-clip: text;
-    }
-    .bm--aside .bm-list li:last-child a:hover {
-      background-image: linear-gradient(to bottom, var(--lime) 0.45em, var(--menu-bg) 0.45em);
     }
   }
   /* Ab 700 px: links die Menüpunkte (so breit wie der längste), rechts der Platz bis zum Bildschirmrand.
@@ -205,6 +197,10 @@ const hasAside = Astro.slots.has('aside');
       container-type: size;
       place-items: center;
       --blend-w: min(100cqw - 4rem, 133.33cqh);
+      /* rundum weich auslaufen */
+      --blend-mask:
+        linear-gradient(to right, transparent, #000 18%, #000 82%, transparent),
+        linear-gradient(to bottom, transparent, #000 22%, #000 78%, transparent);
     }
   }
   .bm-list {
@@ -224,9 +220,19 @@ const hasAside = Astro.slots.has('aside');
     text-decoration: none;
     color: inherit;
   }
+  /* Aktiver bzw. überfahrener Punkt: rosa Feld mit schwarzer Schrift (Rosa als Schriftfarbe wäre auf dem Blaugrau
+     kaum lesbar). Das Feld steht links und rechts ein klein wenig über, die Schrift bleibt an ihrem Platz. */
+  .bm-list a {
+    padding-inline: 0.06em;
+    margin-inline: -0.06em;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+  }
   .bm-list a:hover,
   .bm-list a[aria-current='page'] {
-    color: var(--lime);
+    background-color: var(--pink);
+    color: var(--ink);
   }
   .bm-foot {
     view-transition-name: jd-menu-foot;
@@ -240,11 +246,12 @@ const hasAside = Astro.slots.has('aside');
     color: inherit;
   }
   .bm-foot a:hover {
-    color: var(--lime);
+    background: var(--pink);
+    color: var(--ink);
   }
   .bm a:focus-visible,
   .bm-close:focus-visible {
-    outline: 3px solid var(--lime);
+    outline: 3px solid var(--on-menu);
     outline-offset: 4px;
   }
 </style>

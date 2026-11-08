@@ -574,11 +574,12 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 - **Jede Galerie hat eine eigene Farbe.** Die Farbe erscheint im Button auf der Seite „Galerie“, im Farbband oben auf
   der Galerieseite, im Fortschrittsbalken und im Download-Kasten (Kundengalerien).
   Festlegen per `color: pink | blue | lime | orange | violet` in `index.md`. Ohne Angabe wechselt die Farbe automatisch reihum.
-- **Startseite = das blaue Menü** (`src/components/BlueMenu.astro`): Fläche im kräftigen Blau `#2B3BFF` (Token
-  `--menu-bg` in `tokens.css`) über den ganzen Bildschirm, oben
+- **Startseite = das blaue Menü** (`src/components/BlueMenu.astro`): Fläche in Schieferblau `#58677F` (Token
+  `--menu-bg` in `tokens.css`, Farbe aus der Stirn eines invertierten Portfolio-Fotos). Akzent dort ist Rosa: der
+  aktive bzw. überfahrene Menüpunkt bekommt ein rosa Feld mit schwarzer Schrift, der Menü-Knopf ist ein rosa Kreis über den ganzen Bildschirm, oben
   groß der Name, darunter die Menüpunkte (Portfolio, Galerie, Film, Über mich, Kontakt), unten Instagram, Impressum
   und Datenschutz. Ohne weiße Leiste und ohne Scrollen. Dasselbe Menü öffnet sich auf allen Geräten über den grünen
-  Menü-Knopf oben rechts: Das Blau wächst als Kreis aus dem Knopf, der Schließen-Knopf sitzt an derselben Stelle,
+  Menü-Knopf oben rechts: Die Fläche wächst als Kreis aus dem Knopf, der Schließen-Knopf sitzt an derselben Stelle,
   der Name führt zur Startseite. Eine Textleiste mit Menüpunkten gibt es nur noch als Rückfall für sehr alte Browser.
   Am Handy (unter 700 px) steht der Name mittig, die Menüpunkte beginnen an seiner linken Kante, die Fußzeile ist
   mittig. Ab 700 px ist alles linksbündig.
@@ -587,7 +588,8 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   2,8 Sekunden blendet ein neues oben ein und das unterste verschwindet, so entstehen laufend neue Bilder (Reihenfolge
   bei jedem Besuch zufällig). Am Laptop rechts neben dem Menü. Am Handy immer randlos über die ganze Breite (auf niedrigen
   Bildschirmen etwas flacher als 4:3, damit nichts scrollt), es beginnt
-  hinter „Kontakt“ (dort wird die Schrift in der Hintergrundfarbe gezeigt, damit sie auf dem hellen Foto lesbar bleibt). Mit „Bewegung reduzieren“
+  hinter „Kontakt“ und läuft oben und unten weich aus. Am Laptop läuft es an allen Seiten weich aus (Verläufe:
+  `--blend-mask` in `BlueMenu.astro`). Mit „Bewegung reduzieren“
   oder ohne JavaScript bleibt ein festes Paar stehen. Invertieren abschalten: in `BlendLoop.astro` die Zeile
   `filter: invert(1);` löschen. Die frühere Startseite liegt in der Git-Geschichte.
 - **Ausprobierte Versionen (gemerkt):**
@@ -595,8 +597,9 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
     `alte-version-blau-2b3bff`. Zurückholen: in `BlendLoop.astro` wieder ein
     `.blend::after { content: ''; position: absolute; inset: 0; background: var(--menu-bg); mix-blend-mode: color; opacity: 0.65; }`
     ergänzen.
-  - *Andere Hintergründe* (Fotos nur invertiert): Blaugrün `#3D8AAE` und Schieferblau `#58677F` (aus der Stirn
-    eines invertierten Portfolio-Fotos gemessen). Ausprobieren: in `tokens.css` z. B. `--menu-bg: #58677f;` setzen.
+  - *Andere Hintergründe* (Fotos nur invertiert): kräftiges Blau `#2B3BFF` (mit Grün als Akzent) und Blaugrün
+    `#3D8AAE`. Ausprobieren: in `tokens.css` z. B. `--menu-bg: var(--blue);` setzen. Der grüne Akzent war `var(--lime)`
+    statt `var(--pink)` in `BlueMenu.astro` und beim Menü-Knopf in `Header.astro`.
 
 Kontraste nach WCAG 2.x:
 
@@ -606,7 +609,8 @@ Kontraste nach WCAG 2.x:
 | Links, kleine Akzente | Blau `#2B3BFF` auf Weiß | – | 6,6 : 1 |
 | Pink | `#FF3D8B` | Schwarz | 5,9 : 1 |
 | Blau | `#2B3BFF` | Weiß | 6,6 : 1 |
-| Startseite/Menü | wie Blau `#2B3BFF` | Weiß | 6,6 : 1 |
+| Startseite/Menü | `#58677F` | Weiß | 5,7 : 1 |
+| Akzent im Menü | Pink `#FF3D8B` (Fläche) | Schwarz | 5,9 : 1 |
 | Lime | `#D4FF3A` | Schwarz | 17,0 : 1 |
 | Orange | `#FF5A1F` | Schwarz | 6,3 : 1 |
 | Violett | `#7C5CFF` | Schwarz | 4,5 : 1 |
