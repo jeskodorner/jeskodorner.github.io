@@ -594,13 +594,12 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 - **Bildfeld auf der Startseite** (`src/components/BlendLoop.astro`): Fotos aus dem Portfolio (Liste `showroom`),
   farblich invertiert und im Modus „Aufhellen“ übereinandergelegt, immer 4:3. Es sind immer zwei zu sehen. Alle
   2,8 Sekunden blendet ein neues oben ein und das unterste verschwindet, so entstehen laufend neue Bilder (Reihenfolge
-  bei jedem Besuch zufällig). Am Laptop (ab 700 px) füllt es den ganzen Bildschirm hinter Name, Menü und Fußzeile;
-  die Menüschrift hebt sich mit einem weichen dunklen Schatten ab, der der Maus folgt (der Mauszeiger wirkt wie eine
-  Lampe, Skript `initShadow` in `BlueMenu.astro`). Der rosa Name hat keinen Schatten. Am Handy immer randlos über die ganze Breite (auf niedrigen
+  bei jedem Besuch zufällig). Am Laptop rechts neben dem Menü, rechtsbündig am Seitenrand (so weit vom rechten
+  Bildschirmrand wie der Name vom linken). Am Handy immer randlos über die ganze Breite (auf niedrigen
   Bildschirmen etwas flacher als 4:3, damit nichts scrollt), es beginnt
   halb hinter „Kontakt“ (das Foto beginnt mit kurzem weichem Rand an der Mitte der Buchstaben; „Kontakt“ ist oben
   weiß, auf dem Foto zeigen die Buchstaben das Foto in seinen echten, nicht invertierten Farben – wie ein Fenster) und läuft unten weich aus (Verlauf:
-  `--blend-mask` in `BlueMenu.astro`). Mit „Bewegung reduzieren“
+  `--blend-mask` in `BlueMenu.astro`). Am Laptop hat es harte Kanten. Mit „Bewegung reduzieren“
   oder ohne JavaScript bleibt ein festes Paar stehen. Invertieren abschalten: in `BlendLoop.astro` die Zeile
   `filter: invert(1);` löschen. Die frühere Startseite liegt in der Git-Geschichte.
 - **Ausprobierte Versionen (gemerkt):**
