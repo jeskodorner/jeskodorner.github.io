@@ -18,7 +18,8 @@
     "check-links": "node scripts/check-links.mjs",
     "test": "astro check && astro build && node scripts/check-links.mjs",
     "vorschau": "node scripts/make-preview.mjs",
-    "grain": "node scripts/make-grain.mjs"
+    "grain": "node scripts/make-grain.mjs",
+    "album": "node scripts/album.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
@@ -30,6 +31,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
+    "aws4fetch": "^1.0.20",
     "exifr": "^7.1.3",
     "typescript": "^6.0.3",
     "yaml": "^2.9.1"

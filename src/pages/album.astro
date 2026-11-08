@@ -1,0 +1,157 @@
+---
+/**
+ * HQ-Album mit Zugangscode: Code eingeben → Fotos ansehen (Lightbox) und in voller Auflösung herunterladen.
+ * Alles wird erst im Browser entschlüsselt (scripts/hq-album.ts). Hochladen: npm run album (siehe README).
+ * Nicht in Suchmaschinen und nicht in der Sitemap.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EmailLink from '../components/EmailLink.astro';
+import Icon from '../components/Icon.astro';
+import { useTranslations } from '../i18n';
+import { site } from '../config/site';
+
+const t = useTranslations();
+const h = t.hqAlbum;
+// Zum Testen lässt sich die Adresse per Umgebungsvariable überschreiben
+const base = (import.meta.env.PUBLIC_HQ_ALBUM_BASE || site.hqAlbums.baseUrl || '').replace(/\/$/, '');
+---
+
+<BaseLayout title={h.title} description={h.intro} noindex noReferrer>
+  <section class="container container--wide hq" data-hq data-base={base}>
+    <!-- Schritt 1: Code eingeben -->
+    <div class="hq-gate" data-gate>
+      <h1 class="display display-2 hq-title">{h.title}</h1>
+      <p class="lead hq-intro">{h.intro}</p>
+      {
+        base ? (
+          <form class="hq-form" data-form autocomplete="off" novalidate>
+            <label class="label" for="hq-code">
+              {h.codeLabel}
+            </label>
+            <div class="hq-row">
+              <input
+                id="hq-code"
+                name="code"
+                class="hq-input"
+                type="text"
+                inputmode="text"
+                autocapitalize="characters"
+                spellcheck="false"
+                placeholder="XXXX-XXXX-XXXX"
+                required
+              />
+              <button class="btn btn--solid" type="submit">
+                <Icon name="lock" /> {h.open}
+              </button>
+            </div>
+            <p class="hq-msg" role="status" aria-live="polite" data-msg></p>
+          </form>
+        ) : (
+          <p class="hq-msg">{h.notReady}</p>
+        )
+      }
+      <p class="hq-ask muted">
+        {h.noCode} <EmailLink class="hq-mail" text={h.askCode} icon={false} subject={t.album.subject('HQ-Album')} />
+      </p>
+    </div>
+
+    <!-- Schritt 2: Album -->
+    <div class="hq-album" data-album hidden>
+      <header class="hq-head">
+        <div>
+          <p class="label muted" data-meta></p>
+          <h2 class="display display-2 hq-title" data-title></h2>
+        </div>
+        <div class="hq-actions">
+          <button class="btn btn--solid" type="button" data-all>
+            <Icon name="download" /> <span data-all-label>{h.downloadAll}</span>
+          </button>
+          <button class="btn btn--small" type="button" data-other>{h.other}</button>
+        </div>
+      </header>
+      <p class="hq-msg" role="status" aria-live="polite" data-progress></p>
+      <ul class="tiles hq-tiles" role="list" data-justify data-list></ul>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import { initHqAlbum } from '../scripts/hq-album';
+  initHqAlbum();
+</script>
+
+<style>
+  .hq {
+    padding-block: clamp(2rem, 5vw, 4.5rem) var(--section);
+  }
+  .hq-gate {
+    display: grid;
+    gap: 1.25rem;
+    max-width: 40rem;
+  }
+  .hq-title {
+    padding-top: 0.08em;
+  }
+  .hq-intro {
+    max-width: 36ch;
+  }
+  .hq-form {
+    display: grid;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  .hq-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+  .hq-input {
+    flex: 1 1 14rem;
+    min-height: 3rem;
+    padding: 0.6rem 1rem;
+    border: 2.5px solid var(--ink);
+    border-radius: 999px;
+    background: var(--wall);
+    font: 700 1.15rem/1 var(--font-sans);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-variant-numeric: tabular-nums;
+  }
+  .hq-input:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .hq-msg {
+    min-height: 1.4em;
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .hq-msg:empty {
+    min-height: 0;
+  }
+  .hq-ask {
+    font-size: var(--fs-sm);
+  }
+  .hq-ask :global(.hq-mail) {
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .hq-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.25rem 2rem;
+    margin-bottom: 1rem;
+  }
+  .hq-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .hq-tiles {
+    margin-top: 1rem;
+  }
+</style>

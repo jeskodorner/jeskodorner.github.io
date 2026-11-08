@@ -39,6 +39,13 @@ const firstName = site.name.split(' ')[0];
     }
   </div>
   {note && <p class="album-note">{note}</p>}
+  {
+    site.hqAlbums.baseUrl && (
+      <a class="album-open" href="/album/">
+        {t.hqAlbum.haveCode} <span class="arrow" aria-hidden="true">→</span>
+      </a>
+    )
+  }
 </div>
 
 <style>
@@ -61,6 +68,12 @@ const firstName = site.name.split(' ')[0];
     font-size: var(--fs-sm);
     color: var(--ink-soft);
     max-width: 46ch;
+  }
+  .album-open {
+    margin-top: 0.2rem;
+    font-size: var(--fs-sm);
+    font-weight: 700;
+    color: var(--accent);
   }
   .album-actions {
     display: flex;

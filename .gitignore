@@ -12,9 +12,12 @@ node_modules/
 # Logs
 npm-debug.log*
 
-# Umgebungsvariablen
+# Umgebungsvariablen (Zugangsdaten Cloudflare R2)
 .env
 .env.production
+
+# HQ-Alben: lokale Liste mit Codes und Schlüsseln – geheim, niemals committen!
+alben.local.json
 
 # macOS / Editoren
 .DS_Store

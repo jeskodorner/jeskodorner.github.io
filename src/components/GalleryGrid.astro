@@ -86,44 +86,4 @@ const items = await Promise.all(
   initLightbox();
 </script>
 
-<style>
-  /* Gleich hohe Reihen, dicht gepackt (wie Lightroom). Jedes Foto bleibt im Originalformat:
-     Breite ∝ Seitenverhältnis (flex-grow), die letzte Reihe wird nicht gestreckt (::after).
-     scripts/justify.ts verteilt die Reihen genauer, ohne JavaScript übernimmt dieses CSS. */
-  .tiles {
-    --row: clamp(95px, 55px + 12vw, 230px);
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: clamp(3px, 0.1rem + 0.35vw, 8px);
-  }
-  .tiles::after {
-    content: '';
-    flex-grow: 1000000;
-  }
-  .tile-cell {
-    flex-grow: calc(var(--r) * 100);
-    flex-basis: calc(var(--r) * var(--row));
-    min-width: 0;
-  }
-  .ph {
-    position: relative;
-    display: block;
-    overflow: hidden;
-    background: var(--sand);
-    outline-offset: 3px;
-  }
-  .ph :global(img) {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: var(--r);
-    transition: transform 0.9s var(--ease);
-  }
-  @media (hover: hover) {
-    .ph:hover :global(img) {
-      transform: scale(1.035);
-    }
-  }
-</style>
+<!-- Aussehen der Reihen: global.css, Abschnitt „Foto-Reihen“ (gleich im HQ-Album /album/) -->

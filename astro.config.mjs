@@ -10,8 +10,8 @@ export default defineConfig({
   build: { format: 'directory' },
   integrations: [
     sitemap({
-      // Unlisted-Galerien (/g/…) und die 404-Seite gehören nicht in die Sitemap.
-      filter: (page) => !page.includes('/g/') && !page.endsWith('/404/'),
+      // Unlisted-Galerien (/g/…), das HQ-Album (/album/) und die 404-Seite gehören nicht in die Sitemap.
+      filter: (page) => !page.includes('/g/') && !page.endsWith('/404/') && !page.endsWith('/album/'),
     }),
   ],
   devToolbar: { enabled: false },

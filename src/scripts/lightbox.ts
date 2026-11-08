@@ -70,9 +70,21 @@ function el<K extends keyof HTMLElementTagNameMap>(tag: K, className: string, te
   return e;
 }
 
-export function initLightbox() {
-  const galleryEl = document.querySelector<HTMLElement>('[data-gallery]');
+export interface LightboxOptions {
+  /** Liste mit den Foto-Links (Standard: das Element mit [data-gallery]) */
+  gallery?: HTMLElement | null;
+  /** Teilen-Knopf und #bild-N in der Adresse (Standard: an; aus für die HQ-Alben) */
+  share?: boolean;
+  /** Bild selbst laden (z. B. entschlüsseln); liefert eine Bild-URL */
+  loadImage?: (link: HTMLElement) => Promise<string>;
+  /** Eigener Download (z. B. Original entschlüsseln) statt eines data-original-Links */
+  download?: (link: HTMLElement) => Promise<void> | void;
+}
+
+export function initLightbox(opts: LightboxOptions = {}) {
+  const galleryEl = opts.gallery ?? document.querySelector<HTMLElement>('[data-gallery]');
   if (!galleryEl) return;
+  const shareable = opts.share !== false;
   const count = Number(galleryEl.dataset.count ?? 0);
   const albumTitle = galleryEl.dataset.title ?? document.title;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -266,7 +278,7 @@ export function initLightbox() {
     });
 
     // Bild teilen (Web Share API oder Link kopieren)
-    ui.registerElement({
+    if (shareable) ui.registerElement({
       name: 'jd-share',
       title: de.share.imageShare,
       ariaLabel: de.share.imageShare,
@@ -279,8 +291,30 @@ export function initLightbox() {
       },
     });
 
-    // Original herunterladen (nur wenn originalUrl gesetzt)
-    ui.registerElement({
+    // Original herunterladen: eigener Download (HQ-Album) …
+    if (opts.download) {
+      const download = opts.download;
+      ui.registerElement({
+        name: 'jd-download',
+        title: de.download.original,
+        ariaLabel: de.download.original,
+        order: 8,
+        isButton: true,
+        html: ICON.download,
+        onClick: async (_e, _el, pswp) => {
+          const link = pswp.currSlide?.data.element;
+          if (!(link instanceof HTMLElement)) return;
+          showToast(de.hqAlbum.preparing);
+          try {
+            await download(link);
+          } catch {
+            showToast(de.hqAlbum.failed);
+          }
+        },
+      });
+    }
+    // … oder Link auf das Original (nur wenn originalUrl gesetzt)
+    else ui.registerElement({
       name: 'jd-download',
       title: de.download.original,
       ariaLabel: de.download.original,
@@ -344,14 +378,35 @@ export function initLightbox() {
     if (h !== sheetH) apply(pswp);
   });
 
+  // Bild selbst laden (HQ-Album: erst entschlüsseln, dann anzeigen)
+  if (opts.loadImage) {
+    const load = opts.loadImage;
+    lightbox.on('contentLoadImage', (e) => {
+      const { content } = e;
+      const img = content.element;
+      const link = content.data.element;
+      if (!(img instanceof HTMLImageElement) || !(link instanceof HTMLElement)) return;
+      e.preventDefault();
+      content.state = 'loading';
+      load(link)
+        .then((src) => {
+          img.onload = () => content.onLoaded();
+          img.onerror = () => content.onError();
+          img.alt = content.data.alt ?? '';
+          img.src = src;
+        })
+        .catch(() => content.onError());
+    });
+  }
+
   // Teilbare URL: #bild-N
   lightbox.on('change', () => {
     const i = lightbox.pswp?.currIndex;
-    if (i === undefined) return;
+    if (i === undefined || !shareable) return;
     history.replaceState(history.state, '', `#bild-${i + 1}`);
   });
   lightbox.on('close', () => {
-    history.replaceState(history.state, '', location.pathname + location.search);
+    if (shareable) history.replaceState(history.state, '', location.pathname + location.search);
     // Zuletzt angesehenes Foto auf der Seite zeigen (sonst zoomt die Lightbox ins Leere)
     const target = lightbox.pswp?.currSlide?.data.element;
     if (target instanceof HTMLElement) {
@@ -370,6 +425,9 @@ export function initLightbox() {
       lightbox.loadAndOpen(index, { gallery: galleryEl });
     }
   };
-  openFromHash();
-  window.addEventListener('hashchange', openFromHash);
+  if (shareable) {
+    openFromHash();
+    window.addEventListener('hashchange', openFromHash);
+  }
+  return lightbox;
 }

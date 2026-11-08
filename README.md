@@ -341,10 +341,12 @@ Auf öffentlichen Galerien steht unter den Fotos, bewusst ruhig, **„Ganzes Alb
 
 - **Code anfordern** öffnet eine vorformulierte E-Mail an dich: Betreff mit dem Albumnamen und die Bitte,
   kurz zu schreiben, wer man ist und wofür man die Fotos braucht.
-- Ist `downloadUrl` eingetragen, erscheint zusätzlich **Album öffnen**. Der Link führt zum Anbieter, und dort fragt der
-  Anbieter nach dem Passwort. Das Passwort ist der „Code“.
+- Mit eingerichteten **HQ-Alben** (siehe unten) steht darunter „Code erhalten? Album öffnen →“ und führt zu
+  jeskodorner.de/album. Der Code ist dann der Code aus `npm run album`.
+- Ist stattdessen `downloadUrl` eingetragen, erscheint **Album öffnen** und führt zu einem externen Anbieter, der nach
+  dem Passwort fragt. Das Passwort ist dann der „Code“.
 
-So pflegst du das pro Album:
+So pflegst du das pro Album mit einem externen Anbieter (mit HQ-Alben siehe nächster Abschnitt):
 
 1. Originale beim Anbieter hochladen (ein Ordner pro Album).
 2. Freigabelink mit **Passwort** erstellen, optional mit Ablaufdatum. Das Passwort ist der Code.
@@ -357,6 +359,59 @@ So pflegst du das pro Album:
 Ohne `downloadUrl` gibt es nur „Code anfordern“. Dann schickst du Link und Code zusammen per E-Mail.
 Mit `albumRequest: false` verschwindet die Zeile für diese Galerie.
 Private Kundengalerien mit `downloadUrl` zeigen stattdessen oben den Download-Kasten, weil Kunden genau danach suchen.
+
+### HQ-Alben mit Zugangscode (eigene Albumseite, empfohlen)
+
+Ganze Alben in voller Auflösung, direkt auf deiner Website: Kunden öffnen **jeskodorner.de/album**, geben den Code ein
+und sehen alle Fotos (gleiche Reihen und Lightbox wie auf der Seite). Sie können jedes Original einzeln oder alle auf
+einmal herunterladen: Chrome und Edge am Computer speichern in einen Ordner, andere Browser als ZIP (bis 2 GB).
+
+**Sicherheit:** Die Fotos werden auf deinem Mac verschlüsselt (AES-256), bevor sie hochgeladen werden. Der Code ist
+der Schlüssel. Ohne ihn sind die Dateien bei Cloudflare unlesbar, auch die Dateinamen. Der Code steht nirgends im
+Projekt, nur lokal in `alben.local.json` (nicht im Git, bitte sichern). Ist die Datei weg, kannst du für bestehende
+Alben keinen neuen Code mehr vergeben und lädst sie einfach neu hoch.
+
+**Kosten:** Cloudflare R2 ist bis 10 GB Speicher kostenlos, Downloads kosten nichts. Für R2 verlangt Cloudflare nach
+meinem Stand eine hinterlegte Zahlungsart, auch wenn du unter 10 GB bleibst.
+
+**Einmalig einrichten (ca. 15 Minuten):**
+
+1. Auf **dash.cloudflare.com** ein kostenloses Konto anlegen, links **R2 Object Storage** öffnen und aktivieren.
+2. **Create bucket**, Name z. B. `jeskodorner-alben`.
+3. Im Bucket **Settings → Public Development URL → Enable**. Die Adresse (`https://pub-….r2.dev`) kopieren.
+4. In R2 **Manage API tokens → Create API token**: Berechtigung **Object Read & Write**, nur für diesen Bucket.
+   Angezeigt werden **Access Key ID**, **Secret Access Key** und die **Account ID** (steht auch in der Endpunkt-Adresse
+   `https://<account-id>.r2.cloudflarestorage.com`). Den Secret siehst du nur einmal.
+5. Im Projektordner eine Datei **`.env`** anlegen (sie ist vom Git ausgeschlossen):
+   ```
+   R2_ACCOUNT_ID=…
+   R2_ACCESS_KEY_ID=…
+   R2_SECRET_ACCESS_KEY=…
+   R2_BUCKET=jeskodorner-alben
+   ```
+6. `npm run album -- einrichten`. Das prüft die Verbindung und erlaubt deiner Website den Zugriff (CORS).
+7. Die r2.dev-Adresse aus Schritt 3 in `src/config/site.ts` bei `hqAlbums.baseUrl` eintragen und pushen.
+   Ab dann zeigt die Seite /album/ das Codefeld, und unter jedem Album steht „Code erhalten? Album öffnen →“.
+
+**Pro Album:**
+
+```
+npm run album -- hochladen ~/Desktop/Hochzeit-Lena --titel "Hochzeit Lena & Tom"
+```
+
+Das Skript verkleinert Vorschau und Ansicht, lädt die Originale unverändert hoch und gibt dir am Ende den **Code** aus,
+z. B. `K7QM-4XPA-9TRW`. Schick dem Kunden den Link `https://jeskodorner.de/album/` und den Code. Groß- und
+Kleinschreibung, Leerzeichen und Bindestriche sind beim Eintippen egal.
+
+| Befehl | Was er tut |
+|---|---|
+| `npm run album -- liste` | alle Alben mit Datum, Größe und Code |
+| `npm run album -- neuer-code 2` | neuer Code für Album Nr. 2, der alte gilt sofort nicht mehr (z. B. wenn er weitergegeben wurde) |
+| `npm run album -- loeschen 2` | Album Nr. 2 bei Cloudflare löschen (spart Speicher) |
+
+Hinweis: Cloudflare sieht die r2.dev-Adresse eher für kleine Nutzung vor. Für ein paar Kundenalben reicht sie. Wird es
+viel mehr, kann der Bucket eine eigene Adresse wie `alben.jeskodorner.de` bekommen. Dafür müsste die Domain-Verwaltung
+(DNS) zu Cloudflare umziehen.
 
 ### Kundengalerie (unlisted) anlegen
 

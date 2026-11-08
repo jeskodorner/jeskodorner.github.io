@@ -23,6 +23,13 @@ export const site = {
   email: { user: 'kontakt', domain: 'jeskodorner.de' },
   instagram: { handle: 'JeskoDorner', url: 'https://instagram.com/JeskoDorner' },
 
+  /**
+   * HQ-Alben mit Zugangscode (Seite /album/, Hochladen mit „npm run album“, siehe README).
+   * baseUrl: öffentliche Adresse des Cloudflare-R2-Buckets, z. B. 'https://pub-1234abcd.r2.dev'.
+   * Leer = noch nicht eingerichtet (die Seite /album/ sagt das dann).
+   */
+  hqAlbums: { baseUrl: '' },
+
   /** Startseiten-Hero: 'image' = ein Bild, 'slideshow' = ruhige Überblendung */
   hero: { mode: 'image' as 'image' | 'slideshow', secondsPerImage: 7 },
 
