@@ -91,7 +91,7 @@ photos.config.json          ← Einstellungen für die Bildverarbeitung (Größe
 |---|---|
 | Claim, Beschreibung für Suchmaschinen, Instagram, E-Mail | `src/config/site.ts` |
 | Texte der Startseite | `src/content/pages/startseite.md` |
-| Showroom „Ausgewählte Arbeiten“: welche Fotos, Reihenfolge, eigene Namen | `src/content/pages/startseite.md`, Liste `showroom` (siehe unten) |
+| Portfolio: welche Fotos, Reihenfolge, eigene Namen | `src/content/pages/startseite.md`, Liste `showroom` (siehe unten) |
 | Über mich: Text, Stationen, Ausrüstung | `src/content/pages/ueber-mich.md` |
 | Porträt | Datei `src/assets/portrait.jpg` ersetzen (Hochformat 4:5 ideal) |
 | Filme und Videos | `src/content/films/*.md`. Pro Video eine Datei (siehe unten) |
@@ -101,11 +101,11 @@ photos.config.json          ← Einstellungen für die Bildverarbeitung (Größe
 > ⚠️ **Impressum und Datenschutzerklärung sind Platzhalter** und auf der Seite deutlich so markiert.
 > Bitte vor der Veröffentlichung vervollständigen und rechtlich prüfen lassen. Das hier ist keine Rechtsberatung.
 
-**Ausgewählte Arbeiten:** In `startseite.md` legt die Liste `showroom` fest, welche Fotos ausgewählt sind, in welcher
+**Portfolio:** In `startseite.md` legt die Liste `showroom` fest, welche Fotos ausgewählt sind, in welcher
 Reihenfolge und unter welchem Namen. Sie erscheinen an zwei Stellen: auf der Startseite als **Bilderstapel** (Abzüge mit
 weißem Rand, das oberste lässt sich wegziehen oder antippen und schiebt sich unten in den Stapel; Pfeile und ← →
-gehen vor und zurück) und auf der eigenen Seite **/ausgewaehlte-arbeiten/** als kleine Ausstellung (jedes Foto einzeln
-an der Wand, ein Klick öffnet es im Album). Der Knopf oben im Startbild führt dorthin, der Link daneben zur Galerie.
+gehen vor und zurück) und auf der eigenen Seite **/portfolio/** als kleine Ausstellung (jedes Foto einzeln
+an der Wand; ein Klick öffnet direkt dort die Lightbox mit dem ganzen Album ab diesem Foto, ohne die Albumseite). Der Knopf oben im Startbild führt dorthin, der Link daneben zur Galerie.
 
 ```yaml
 showroom:
@@ -140,7 +140,7 @@ Videos werden **datensparsam per Zwei-Klick** eingebettet. Beim Seitenaufruf lä
 Erst ein Klick auf „Abspielen“ lädt den Player von youtube-nocookie.com. Ohne JavaScript führt der Klick zu YouTube.
 Die Datenschutzerklärung bekommt dazu automatisch einen YouTube-Abschnitt.
 
-**Leuchtmarker:** In `startseite.md` und `ueber-mich.md` wird `*Wort*` in großen Titeln mit einem Leuchtmarker hervorgehoben (erst Lime, dann Pink). Beim Scrollen wischt der Marker über das Wort.
+**Sternchen in Titeln:** `*Wort*` in `startseite.md` und `ueber-mich.md` wird bewusst schlicht gesetzt, ohne Marker (seriöserer Auftritt). Die Sternchen können stehen bleiben.
 
 **Platzhalter entfernen:** Die Beispielgalerien liegen in `src/content/galleries/` (Ordner `kueste-im-oktober`,
 `stadt-nach-regen`, `sommerfest-beispiel-q7m4zt`) und die Beispielfilme in `src/content/films/`. Ordner bzw. Dateien
@@ -210,7 +210,7 @@ und festen Seitenverhältnissen, damit beim Laden nichts springt.
 | `date` | ja | `2026-10-22`. Die Übersicht sortiert danach, neueste zuerst. |
 | `location` | | Ort |
 | `description` | ja | 1–2 Sätze für Kachel, Suchmaschinen und Link-Vorschau |
-| `cover` | | Dateiname des Vorschaubilds. Es erscheint in der Galerie-Übersicht und bei den ausgewählten Arbeiten, wenn dort kein `bild` angegeben ist. Ohne Angabe wird das erste Bild genommen. |
+| `cover` | | Dateiname des Vorschaubilds. Es erscheint in der Galerie-Übersicht und im Portfolio, wenn dort kein `bild` angegeben ist. Ohne Angabe wird das erste Bild genommen. |
 | `visibility` | | `public` (Standard) oder `unlisted` |
 | `showExif` | | Aufnahmedaten in den Lightbox-Details zeigen (Standard `true`) |
 | `downloadUrl` | | Link zum Download der ganzen Galerie (ZIP/Ordner) |
@@ -229,7 +229,7 @@ Pro Bild:
 | `alt` | ja | Was ist zu sehen? Für Screenreader und Suchmaschinen. Ohne Alt-Text bricht der Build bewusst ab. |
 | `caption` | | Bildunterschrift (in den Lightbox-Details) |
 | `originalUrl` | | Link zum Original. Dann erscheint „Original herunterladen“. |
-| `hero` | | wird nicht mehr verwendet (früher: großes Bild auf der Startseite). Die Startseite zeigt jetzt die ausgewählten Arbeiten. |
+| `hero` | | wird nicht mehr verwendet (früher: großes Bild auf der Startseite). Die Startseite zeigt jetzt Fotos aus dem Portfolio. |
 | `exif` | | überschreibt ausgelesene Werte, z. B. `exif: { lens: "Helios 44-2" }` |
 | `focus` | | wichtigster Bildbereich, falls ein Foto doch einmal beschnitten wird (z. B. Film-Vorschaubilder), z. B. `focus: "50% 30%"` (waagerecht senkrecht). Standard: Mitte. In Alben werden Fotos nie beschnitten. |
 
@@ -434,10 +434,10 @@ haben keine Vor/Zurück-Navigation zu anderen Galerien und werden nicht von der 
 Alle Effekte sind reines CSS, ohne JavaScript, und laufen flüssig:
 
 - **Parallax:** Beschnittene Fotos (Film, Porträt) gleiten in ihrem Rahmen etwas langsamer als die Seite. Galerie-Fotos bewegen sich nicht, damit nichts beschnitten wird.
-- **Dehnende Titel:** Große Titel (Name auf der Startseite, „Ausgewählte Arbeiten“, „Projekt anfragen“, Footer) ziehen sich beim Scrollen von schmal auf breit.
-- **Leuchtmarker:** `*markierte*` Wörter bekommen beim Hereinscrollen einen Lime- bzw. Pink-Marker. Der Satz unter dem Kopf der Startseite leuchtet Wort für Wort auf.
+- **Dehnende Titel:** Große Titel (Name auf der Startseite, „Portfolio“, „Projekt anfragen“, Footer) ziehen sich beim Scrollen von schmal auf breit.
+- **Statement:** Der Satz unter dem Kopf der Startseite leuchtet beim Scrollen Wort für Wort auf.
 - **Kopf der Startseite:** Der Name zieht sich beim Scrollen in die Breite. Daneben (Handy: darunter) blenden die
-  ausgewählten Arbeiten schlicht nacheinander über, ohne Bewegung und ohne Knöpfe (Sekunden pro Foto:
+  Fotos aus dem Portfolio schlicht nacheinander über, ohne Bewegung und ohne Knöpfe (Sekunden pro Foto:
   `hero.secondsPerImage` in `src/config/site.ts`). Bei „Bewegung reduzieren“ bleibt das erste Foto stehen.
 - **Weitere Effekte:** Texte steigen auf, der Fortschrittsbalken in Galerien zeigt die Galeriefarbe, und der Header wird kompakt.
 
@@ -576,18 +576,11 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 
 - **Fotos werden nie beschnitten**: in Alben, Übersichten und der Lightbox immer im Originalformat, groß mit weißem
   Rand. Nichts ist schräg gestellt. Mutig sind Farben und Schrift, nicht die Anordnung.
-- **Körniges Vignetting:** weiche, fließende graue Wolken mit feinem Filmkorn am linken und rechten Bildschirmrand,
-  links und rechts verschieden geformt. Beim Scrollen wandern die Wolken langsamer als der Inhalt (Parallax,
-  `src/scripts/edges.ts`; bei „Bewegung reduzieren“ stehen sie still). Es liegt hinter dem Inhalt: zu sehen nur auf der weißen Seite, farbige Flächen,
-  Fotos und Header bleiben frei von Korn. Farbe, Reichweite und Stärke in `src/styles/tokens.css` (`--edge-rgb`,
-  `--edge-w`, `--edge-a`; `--edge-a: 0` schaltet es ab), die Form (Lage und Größe der Wolken) in `src/styles/global.css`,
-  Abschnitt „Vignetting“. Das Korn ist eine hochaufgelöste, nahtlose Textur in `public/textures/`. Anderes Korn:
-  Werte in `scripts/make-grain.mjs` ändern, dann `npm run grain`.
 - **Jede Galerie hat eine eigene Farbe.** Die Farbe erscheint im Button auf der Seite „Galerie“, im Farbband oben auf
   der Galerieseite, im Fortschrittsbalken und im Download-Kasten (Kundengalerien).
   Festlegen per `color: pink | blue | lime | orange | violet` in `index.md`. Ohne Angabe wechselt die Farbe automatisch reihum.
-- **Startseite:** großer Name auf Weiß mit Fotokarussell der ausgewählten Arbeiten, Leuchtmarker, eine schlichte Zeile „Fotografie — Kamera — Film“,
-  „Ausgewählte Arbeiten“ als Bilderstapel zum Durchblättern (mit Link zur eigenen Seite, dort jedes Foto unbeschnitten
+- **Startseite:** großer Name auf Weiß mit Fotokarussell aus dem Portfolio, eine schlichte Zeile „Fotografie — Kamera — Film“,
+  „Portfolio“ als Bilderstapel zum Durchblättern (mit Link zur eigenen Seite, dort jedes Foto unbeschnitten
   an der weißen Wand), ein blauer Bereich „Bewegte Bilder“ und ein Lime-Bereich „Projekt anfragen“.
 
 Kontraste nach WCAG 2.x:

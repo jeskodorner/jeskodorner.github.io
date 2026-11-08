@@ -16,7 +16,7 @@ import { ogImage } from '../lib/images';
 const t = useTranslations();
 const text: Partial<CollectionEntry<'pages'>['data']> = (await getEntry('pages', 'startseite'))?.data ?? {};
 const films = (await getCollection('films')).sort((a, b) => a.data.order - b.data.order || (b.data.year ?? 0) - (a.data.year ?? 0));
-// Ausgewählte Arbeiten: Liste "showroom" in src/content/pages/startseite.md (siehe lib/showroom.ts)
+// Portfolio: Liste "showroom" in src/content/pages/startseite.md (siehe lib/showroom.ts)
 const works = await getSelectedWorks();
 const og = works[0] ? await ogImage(works[0].image.src) : undefined;
 
@@ -32,7 +32,7 @@ const jsonLd = {
 // Wörter für die schlichte Zeile unter dem Statement (aus der Zeile über dem Namen, z. B. „Fotografie · Kamera · Film“)
 const words = (text.kicker ?? 'Fotografie · Kamera · Film').split('·').map((w) => w.trim()).filter(Boolean);
 
-// Karussell neben dem Namen: die ausgewählten Arbeiten blenden schlicht nacheinander über (nur Überblendung,
+// Karussell neben dem Namen: die Fotos aus dem Portfolio blenden schlicht nacheinander über (nur Überblendung,
 // keine Bewegung; reines CSS, ohne Knöpfe)
 const slides = works;
 const duration = slides.length * site.hero.secondsPerImage;
@@ -47,7 +47,7 @@ const fadeCss =
 <BaseLayout image={og} jsonLd={jsonLd}>
   {fadeCss && <style is:inline set:html={fadeCss} slot="head" />}
 
-  <!-- Kopf: großer Name, daneben (Handy: darunter) ein Karussell der ausgewählten Arbeiten -->
+  <!-- Kopf: großer Name, daneben (Handy: darunter) ein Karussell mit Fotos aus dem Portfolio -->
   <section class="hero container container--wide" aria-label={site.name}>
     <h1 class="hero-title display">
       <span class="ht">Jesko</span>
@@ -85,7 +85,7 @@ const fadeCss =
     <div class="hero-bottom">
       <p class="hero-claim">{site.claim}</p>
       <div class="hero-ctas">
-        <a class="btn btn--solid" href="/ausgewaehlte-arbeiten/">
+        <a class="btn btn--solid" href="/portfolio/">
           {t.home.cta} <span class="arrow" aria-hidden="true">→</span>
         </a>
         <a class="hero-link" href="/galerien/">
@@ -117,16 +117,15 @@ const fadeCss =
     }
   </div>
 
-  <!-- Ausgewählte Arbeiten -->
+  <!-- Portfolio -->
   {
     works.length > 0 && (
       <section class="selected" aria-labelledby="sel-h">
         <div class="sec-head container container--wide">
           <h2 id="sel-h" class="display display-2 sec-title">
-            <span class="stretch">{t.home.selected.split(' ')[0]}</span>
-            <span class="stretch">{t.home.selected.split(' ').slice(1).join(' ')}</span>
+            <span class="stretch">{t.home.selected}</span>
           </h2>
-          <a class="btn btn--small" href="/ausgewaehlte-arbeiten/">
+          <a class="btn btn--small" href="/portfolio/">
             {t.home.allSelected} ({works.length}) <span class="arrow" aria-hidden="true">→</span>
           </a>
         </div>
@@ -237,9 +236,6 @@ const fadeCss =
   .ht {
     white-space: nowrap;
     font-stretch: 58%;
-  }
-  .ht-2 {
-    color: var(--pink);
   }
   .hero-bottom {
     grid-area: bottom;

@@ -1,6 +1,6 @@
 ---
 /**
- * Bilderstapel (Startseite): Die ausgewählten Fotos liegen als Abzüge mit weißem Rand leicht schief übereinander.
+ * Bilderstapel (Startseite): Die Fotos aus dem Portfolio liegen als Abzüge mit weißem Rand leicht schief übereinander.
  * Das oberste lässt sich wegziehen oder antippen – es fliegt zur Seite und schiebt sich unten in den Stapel.
  * Pfeil-Knöpfe und Tastatur (← →) gehen vor und zurück. Unter dem Stapel: Name, Album und „Ansehen“.
  * Ohne JavaScript liegt der Stapel einfach da, das oberste Foto ist ein Link. Logik: scripts/pile.ts
@@ -17,9 +17,9 @@ export interface Props {
 const { items } = Astro.props;
 const t = useTranslations();
 // Feste, „zufällig“ wirkende Lage jedes Abzugs (gleich bei jedem Besuch)
-const ROT = [-3, 5, -7, 2, -4, 7, -1, 4, -6, 3];
-const DX = [0, 14, -18, 8, -10, 20, -6, 12, -16, 6];
-const DY = [0, -8, 6, 10, -12, 4, 12, -6, 8, -10];
+const ROT = [-1.5, 2.5, -3.5, 1, -2, 3, -0.5, 2, -3, 1.5];
+const DX = [0, 10, -12, 6, -8, 12, -4, 8, -10, 4];
+const DY = [0, -6, 4, 8, -8, 3, 8, -4, 6, -6];
 const first = items[0];
 ---
 

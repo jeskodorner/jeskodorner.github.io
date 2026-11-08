@@ -1,7 +1,7 @@
 /**
- * Ausgewählte Arbeiten: Liste "showroom" in src/content/pages/startseite.md – welche Fotos in welcher
+ * Portfolio: Liste "showroom" in src/content/pages/startseite.md – welche Fotos in welcher
  * Reihenfolge, jeweils mit optionalem eigenem Namen. Leere Liste: jede öffentliche Galerie einmal mit Vorschaubild.
- * Genutzt von der Startseite (Bilderstapel) und der Seite /ausgewaehlte-arbeiten/.
+ * Genutzt von der Startseite (Bilderstapel) und der Seite /portfolio/.
  */
 import { getEntry, type CollectionEntry } from 'astro:content';
 import { getPublicGalleries, type Gallery, type GalleryImage } from './galleries';
@@ -9,6 +9,8 @@ import { useTranslations, formatMonth } from '../i18n';
 
 export interface WorkItem {
   image: GalleryImage;
+  /** Album, zu dem das Foto gehört */
+  gallery: Gallery;
   /** Link zum Album, zu dem das Foto gehört */
   href: string;
   /** Link, der genau dieses Foto im Album öffnet (Lightbox) */
@@ -26,6 +28,7 @@ export async function getSelectedWorks(): Promise<WorkItem[]> {
   const galleries = await getPublicGalleries();
   const workFor = (g: Gallery, image: GalleryImage = g.cover, name?: string): WorkItem => ({
     image,
+    gallery: g,
     href: g.url,
     photoHref: image.hashUrl,
     album: g.title,

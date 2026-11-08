@@ -1,8 +1,9 @@
 ---
 /**
- * „Hängung“ (Seite „Ausgewählte Arbeiten“): Jedes Foto hängt unbeschnitten in seinem Originalformat an der
+ * „Hängung“ (Seite „Portfolio“): Jedes Foto hängt unbeschnitten in seinem Originalformat an der
  * weißen Wand, mit viel Platz daneben und einem kleinen Schild mit Verweis auf sein Album.
- * Ein Klick aufs Foto öffnet genau dieses Foto im Album (Lightbox).
+ * Ein Klick aufs Foto öffnet die Lightbox mit dem ganzen Album ab diesem Foto – direkt hier, ohne die
+ * Albumseite (Daten und Skript: pages/portfolio.astro). Ohne JavaScript führt der Link ins Album.
  *   Desktop: so groß, dass es ganz auf den Bildschirm passt; abwechselnd links und rechts, Schild daneben.
  *   Handy:   volle Breite, Schild darunter.
  * Schild: Hat das Foto einen eigenen Namen (Showroom), steht er als Titel da und darunter „Aus dem Album …“.
@@ -24,7 +25,13 @@ const { items } = Astro.props;
       const r = it.image.src.width / it.image.src.height;
       return (
         <li class:list={['work', { 'work--portrait': r < 1 }]} style={`--r:${r.toFixed(4)}`}>
-          <a class="work-media reveal" href={it.photoHref} tabindex="-1">
+          <a
+            class="work-media reveal"
+            href={it.photoHref}
+            tabindex="-1"
+            data-open-album={it.gallery.slug}
+            data-photo={it.image.index}
+          >
             <Picture
               src={it.image.src}
               alt={it.image.alt}

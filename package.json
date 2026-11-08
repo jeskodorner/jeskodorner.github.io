@@ -18,7 +18,6 @@
     "check-links": "node scripts/check-links.mjs",
     "test": "astro check && astro build && node scripts/check-links.mjs",
     "vorschau": "node scripts/make-preview.mjs",
-    "grain": "node scripts/make-grain.mjs",
     "album": "node scripts/album.mjs"
   },
   "dependencies": {

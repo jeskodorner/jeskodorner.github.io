@@ -86,14 +86,6 @@ a.px:focus-visible {
   }
 }
 /* Leuchtmarker wischt über das Wort */
-@keyframes mark {
-  from {
-    background-size: 0% 88%;
-  }
-  to {
-    background-size: 100% 88%;
-  }
-}
 @keyframes word-light {
   from {
     opacity: 0.12;
@@ -153,14 +145,6 @@ a.px:focus-visible {
       animation-fill-mode: both;
       animation-timeline: view();
       animation-range: entry 10% cover 55%;
-    }
-    /* Marker: vor dem Hereinscrollen noch nicht gezogen (Schrift bleibt schwarz auf weiß lesbar) */
-    .display em {
-      animation-name: mark;
-      animation-timing-function: linear;
-      animation-fill-mode: both;
-      animation-timeline: view();
-      animation-range: entry 40% cover 45%;
     }
     .words {
       view-timeline-name: --words;

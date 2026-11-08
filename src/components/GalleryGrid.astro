@@ -7,9 +7,7 @@
  * in der Lightbox im ausklappbaren Feld „Details“.
  */
 import type { Gallery } from '../lib/galleries';
-import { responsive } from '../lib/images';
-import { exifRows } from '../lib/exif';
-import { formatDate, useTranslations } from '../i18n';
+import { photoData } from '../lib/lightbox-data';
 import Picture from './Picture.astro';
 
 export interface Props {
@@ -17,22 +15,13 @@ export interface Props {
 }
 
 const { gallery } = Astro.props;
-const t = useTranslations();
-
 const items = await Promise.all(
   gallery.images.map(async (img) => {
-    const set = await responsive(img.src);
+    const { set, attrs } = await photoData(gallery, img);
     const ratio = img.src.width / img.src.height;
     // Gleich hohe Reihen: die Breite wächst mit dem Seitenverhältnis
     const sizes = `(min-width: 700px) ${Math.round(ratio * 270)}px, ${Math.round(Math.min(100, ratio * 36))}vw`;
-    // Details für die Lightbox: [Bezeichnung, Wert]
-    const details: [string, string][] = [];
-    if (gallery.showExif) {
-      for (const r of exifRows(img.exif)) details.push([r.label, r.value]);
-      const shot = img.exif.date ? new Date(img.exif.date) : undefined;
-      if (shot && !Number.isNaN(shot.getTime())) details.push([t.image.date, formatDate(shot)]);
-    }
-    return { img, set, ratio, sizes, details };
+    return { img, set, ratio, sizes, attrs };
   }),
 );
 ---
@@ -54,14 +43,7 @@ const items = await Promise.all(
             class="ph tile"
             id={`bild-${it.img.index}`}
             href={it.set.largest.url}
-            data-pswp-src={it.set.largest.url}
-            data-pswp-width={it.set.largest.width}
-            data-pswp-height={it.set.largest.height}
-            data-pswp-srcset={it.set.webp}
-            data-index={it.img.index}
-            data-caption={it.img.caption}
-            data-details={it.details.length ? JSON.stringify(it.details) : undefined}
-            data-original={it.img.originalUrl}
+            {...it.attrs}
           >
             <Picture
               src={it.img.src}

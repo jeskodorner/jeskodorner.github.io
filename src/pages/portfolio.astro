@@ -1,0 +1,105 @@
+---
+/**
+ * Portfolio: die kuratierte Auswahl aus startseite.md (Liste "showroom") als kleine Ausstellung.
+ * Gegenpol zur Galerie (offenes Archiv). Jedes Foto hängt einzeln an der Wand; ein Klick öffnet es im Album.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hanging from '../components/Hanging.astro';
+import { getSelectedWorks } from '../lib/showroom';
+import { photoData } from '../lib/lightbox-data';
+import type { Gallery } from '../lib/galleries';
+import { ogImage } from '../lib/images';
+import { useTranslations } from '../i18n';
+
+const t = useTranslations();
+const works = await getSelectedWorks();
+const og = works[0] ? await ogImage(works[0].image.src) : undefined;
+
+// Für jedes Album im Portfolio die Lightbox-Daten aller Fotos (unsichtbar) – so lässt sich das ganze Album
+// direkt hier durchblättern, ohne die Albumseite zu öffnen
+const albums = [...new Map(works.map((w) => [w.gallery.slug, w.gallery] as [string, Gallery])).values()];
+const albumData = await Promise.all(
+  albums.map(async (g) => ({ g, items: await Promise.all(g.images.map((img) => photoData(g, img))) })),
+);
+---
+
+<BaseLayout title={t.selected.title} description={t.selected.intro} image={og}>
+  <section class="container container--wide head">
+    <h1 class="display display-1 head-title">
+      <span class="stretch">{t.selected.title}</span>
+    </h1>
+    <p class="lead muted rise">
+      {t.selected.intro} <span class="pill c-lime">{t.selected.count(works.length)}</span>
+    </p>
+  </section>
+
+  <div class="container container--wide">
+    <Hanging items={works} />
+  </div>
+
+  {
+    albumData.map(({ g, items }) => (
+      <ul class="album-src" hidden data-album-src={g.slug} data-count={g.images.length} data-title={g.title}>
+        {items.map((it) => (
+          <li>
+            <a class="ph" href={it.set.largest.url} {...it.attrs}>
+              {g.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+    ))
+  }
+
+  <p class="container container--wide more">
+    <a class="btn" href="/galerien/">
+      {t.selected.toGallery} <span class="arrow" aria-hidden="true">→</span>
+    </a>
+  </p>
+</BaseLayout>
+
+<script>
+  import { initLightbox } from '../scripts/lightbox';
+  // Ein Lightbox-Album pro Album; ein Klick auf ein Foto öffnet sein Album ab genau diesem Foto
+  const boxes = new Map<string, { lb: NonNullable<ReturnType<typeof initLightbox>>; list: HTMLElement }>();
+  for (const list of document.querySelectorAll<HTMLElement>('[data-album-src]')) {
+    const lb = initLightbox({ gallery: list, share: false, fade: true });
+    if (lb && list.dataset.albumSrc) boxes.set(list.dataset.albumSrc, { lb, list });
+  }
+  for (const a of document.querySelectorAll<HTMLAnchorElement>('[data-open-album]')) {
+    a.addEventListener('click', (e) => {
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+      const box = boxes.get(a.dataset.openAlbum ?? '');
+      if (!box) return;
+      e.preventDefault();
+      box.lb.loadAndOpen(Number(a.dataset.photo) - 1, { gallery: box.list });
+    });
+  }
+</script>
+
+<style>
+  .head {
+    /* Schriftgröße folgt der verfügbaren Breite (cqi), damit „PORTFOLIO“ auch gedehnt nie über den Rand ragt */
+    container-type: inline-size;
+    padding-top: clamp(2rem, 5vw, 4.5rem);
+    padding-bottom: clamp(2.5rem, 6vw, 5.5rem);
+  }
+  .head-title {
+    --stretch-from: 50%;
+    --stretch-to: 100%;
+    display: grid;
+    /* „PORTFOLIO“ ist bei voller Dehnung gut 6 Schrifthöhen breit */
+    font-size: min(16rem, 100cqi / 6.8);
+  }
+  .lead {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    max-width: 52ch;
+    margin-top: 1rem;
+  }
+  .more {
+    padding-top: var(--section);
+  }
+</style>

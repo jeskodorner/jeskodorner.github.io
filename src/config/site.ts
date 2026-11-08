@@ -30,7 +30,7 @@ export const site = {
    */
   hqAlbums: { baseUrl: '' },
 
-  /** Startseite: Karussell neben dem Namen – Sekunden pro Foto (Fotos = „Ausgewählte Arbeiten“) */
+  /** Startseite: Karussell neben dem Namen – Sekunden pro Foto (Fotos = „Portfolio“) */
   hero: { secondsPerImage: 4.5 },
 
   /** Startseite: Abschnitt „Über mich“ (Porträt + Teaser) anzeigen? true = an, false = aus */

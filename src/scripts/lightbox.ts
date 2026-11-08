@@ -79,6 +79,8 @@ export interface LightboxOptions {
   loadImage?: (link: HTMLElement) => Promise<string>;
   /** Eigener Download (z. B. Original entschlüsseln) statt eines data-original-Links */
   download?: (link: HTMLElement) => Promise<void> | void;
+  /** Überblenden statt aus dem Vorschaubild zoomen (wenn die Links unsichtbar sind, z. B. im Portfolio) */
+  fade?: boolean;
 }
 
 export function initLightbox(opts: LightboxOptions = {}) {
@@ -115,7 +117,7 @@ export function initLightbox(opts: LightboxOptions = {}) {
     children: 'a.ph',
     pswpModule: () => import('photoswipe'),
     bgOpacity: 1,
-    showHideAnimationType: reduced ? 'none' : 'zoom',
+    showHideAnimationType: reduced ? 'none' : opts.fade ? 'fade' : 'zoom',
     zoomAnimationDuration: reduced ? 0 : 333,
     closeTitle: de.lightbox.close,
     zoomTitle: de.lightbox.zoom,

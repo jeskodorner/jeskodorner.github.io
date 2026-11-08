@@ -9,7 +9,7 @@ const hasFilms = (await getCollection('films')).length > 0;
 const path = Astro.url.pathname;
 
 const links = [
-  { href: '/ausgewaehlte-arbeiten/', label: t.nav.selected, match: ['/ausgewaehlte-arbeiten/'] },
+  { href: '/portfolio/', label: t.nav.selected, match: ['/portfolio/'] },
   { href: '/galerien/', label: t.nav.galleries, match: ['/galerien/', '/g/'] },
   ...(hasFilms ? [{ href: '/film/', label: t.nav.film, match: ['/film/'] }] : []),
   { href: '/ueber-mich/', label: t.nav.about, match: ['/ueber-mich/'] },

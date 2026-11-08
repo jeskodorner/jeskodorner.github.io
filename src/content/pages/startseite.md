@@ -1,13 +1,13 @@
 ---
-# Texte der Startseite. *Sternchen* = Wort mit Leuchtmarker (erst Lime, dann Pink).
+# Texte der Startseite. *Sternchen* um ein Wort sind erlaubt, werden aber schlicht gesetzt (ohne Marker).
 # kicker: Wörter für die schlichte Zeile unter dem Statement (mit · getrennt)
 kicker: "Fotografie · Kamera · Film"
 statement: "Fotografie, die *Bewegung* einfängt."
 note: "Porträts, Events, Setcards, Hochzeiten und Alltagsfotografie – Bilder, die Geschichten erzählen."
 aboutTeaser: "Platzhalter: kurzer Teaser-Text über dich."
 
-# „Ausgewählte Arbeiten“: Diese Fotos liegen auf der Startseite im Bilderstapel und hängen auf der Seite
-# /ausgewaehlte-arbeiten/ – in dieser Reihenfolge.
+# „Portfolio“: Diese Fotos liegen auf der Startseite im Bilderstapel und hängen auf der Seite
+# /portfolio/ – in dieser Reihenfolge.
 #   galerie: Ordnername der Galerie (src/content/galleries/<ordner>)
 #   bild:    Dateiname des Fotos – ohne Angabe das Vorschaubild der Galerie
 #   name:    eigener Titel für das Foto, z. B. name: "Beton und Rüschen"
