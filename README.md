@@ -214,7 +214,7 @@ und festen Seitenverhältnissen, damit beim Laden nichts springt.
 | `downloadSize` | | z. B. `1,2 GB` |
 | `downloadFormat` | | z. B. `ZIP · JPG in voller Auflösung` |
 | `downloadNote` | | Hinweiszeile, z. B. Nutzungsrechte, Gültigkeit, Passworthinweis |
-| `albumRequest` | | Kasten „Ganzes Album anfordern“ mit Button „Code anfordern“. Standard: an bei öffentlichen, aus bei Unlisted-Galerien. `false` blendet ihn aus. Siehe Abschnitt 6. |
+| `albumRequest` | | Zeile „Ganzes Album anfordern“ unter den Fotos mit Knopf „Code anfordern“. Standard: an bei öffentlichen, aus bei Unlisted-Galerien. `false` blendet ihn aus. Siehe Abschnitt 6. |
 | `shareText` | | eigener Teilen-Text, `{title}` und `{url}` werden ersetzt |
 | `images` | ja | Liste der Bilder (siehe unten) |
 
@@ -334,7 +334,8 @@ mit `rel="noopener noreferrer"`.
 
 ### „Ganzes Album anfordern“ (Zugangscode)
 
-Auf öffentlichen Galerien steht neben der Beschreibung der Kasten **„Ganzes Album anfordern“**:
+Auf öffentlichen Galerien steht unter den Fotos, bewusst ruhig, **„Ganzes Album anfordern“**
+(rechts daneben „Album teilen“ mit kleinen Symbolen):
 „Hier siehst du eine Auswahl. Das ganze Album in voller Auflösung gibt es mit Zugangscode.“
 
 - **Code anfordern** öffnet eine vorformulierte E-Mail an dich: Betreff mit dem Albumnamen und die Bitte,
@@ -353,7 +354,8 @@ So pflegst du das pro Album:
    solange der Link gleich bleibt.
 
 Ohne `downloadUrl` gibt es nur „Code anfordern“. Dann schickst du Link und Code zusammen per E-Mail.
-Mit `albumRequest: false` verschwindet der Kasten für diese Galerie.
+Mit `albumRequest: false` verschwindet die Zeile für diese Galerie.
+Private Kundengalerien mit `downloadUrl` zeigen stattdessen oben den Download-Kasten, weil Kunden genau danach suchen.
 
 ### Kundengalerie (unlisted) anlegen
 
@@ -523,7 +525,7 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   Abschnitt „Vignetting“. Das Korn ist eine hochaufgelöste, nahtlose Textur in `public/textures/`. Anderes Korn:
   Werte in `scripts/make-grain.mjs` ändern, dann `npm run grain`.
 - **Jede Galerie hat eine eigene Farbe.** Die Farbe erscheint im Button auf der Seite „Galerie“, im Farbband oben auf
-  der Galerieseite, im Fortschrittsbalken und im Download-Kasten.
+  der Galerieseite, im Fortschrittsbalken und im Download-Kasten (Kundengalerien).
   Festlegen per `color: pink | blue | lime | orange | violet` in `index.md`. Ohne Angabe wechselt die Farbe automatisch reihum.
 - **Startseite:** Vollbild-Foto mit großem Namen, Leuchtmarker, eine schlichte Zeile „Fotografie — Kamera — Film“,
   „Ausgewählte Arbeiten“ als Showroom (jedes Foto unbeschnitten an der weißen Wand, abwechselnd links/rechts,

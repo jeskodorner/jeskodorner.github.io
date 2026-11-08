@@ -59,6 +59,7 @@ export const de = {
   },
   share: {
     title: 'Teilen',
+    album: 'Album teilen',
     copy: 'Link kopieren',
     copied: 'Link kopiert',
     copyFailed: 'Kopieren nicht möglich – bitte manuell kopieren.',

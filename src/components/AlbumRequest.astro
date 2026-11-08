@@ -1,6 +1,7 @@
 ---
 /**
- * „Ganzes Album anfordern“ (öffentliche Galerien): Besucher fordern per E-Mail einen Zugangscode an.
+ * „Ganzes Album anfordern“ (öffentliche Galerien, ruhig unter den Fotos): Besucher fordern per E-Mail
+ * einen Zugangscode an.
  * - „Code anfordern“ öffnet eine vorformulierte E-Mail (Betreff + Frage nach dem Anlass).
  * - Ist downloadUrl gesetzt, führt „Album öffnen“ zum Anbieter; dort fragt der Anbieter nach dem Code.
  * Wichtig: Das Passwort steht nie auf dieser Seite oder im Repository – es wird nur beim Anbieter gesetzt
@@ -27,10 +28,10 @@ const firstName = site.name.split(' ')[0];
   <p class="album-title"><Icon name="lock" size="1em" /> {t.album.title}</p>
   <p class="album-text">{t.album.text}</p>
   <div class="album-actions">
-    <EmailLink class="btn" text={t.album.request} subject={t.album.subject(title)} body={t.album.body(title, firstName)} />
+    <EmailLink class="btn btn--small" text={t.album.request} subject={t.album.subject(title)} body={t.album.body(title, firstName)} />
     {
       url && (
-        <a class="btn" href={url} target="_blank" rel="noopener noreferrer">
+        <a class="btn btn--small" href={url} target="_blank" rel="noopener noreferrer">
           {t.album.open} <Icon name="arrow-up-right" />
           <span class="visually-hidden">{t.download.external}</span>
         </a>
@@ -41,25 +42,24 @@ const firstName = site.name.split(' ')[0];
 </div>
 
 <style>
+  /* Ruhig unter den Fotos: keine Farbfläche, kleiner Knopf */
   .album {
     display: grid;
-    gap: 0.6rem;
+    gap: 0.4rem;
     justify-items: start;
-    padding: clamp(1rem, 2.5vw, 1.5rem);
-    border-radius: var(--radius);
-    background: var(--c, var(--lime));
-    color: var(--on-c, var(--ink));
+    max-width: 34rem;
   }
   .album-title {
     display: flex;
     align-items: center;
     gap: 0.5em;
     font-weight: 800;
-    font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.25rem);
+    font-size: var(--fs-base);
   }
   .album-text,
   .album-note {
     font-size: var(--fs-sm);
+    color: var(--ink-soft);
     max-width: 46ch;
   }
   .album-actions {

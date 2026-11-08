@@ -98,16 +98,8 @@ const jsonLd = gallery.isUnlisted
             )
           }
         </div>
-        <div class="side">
-          {
-            gallery.albumRequest ? (
-              <AlbumRequest title={gallery.title} url={gallery.download?.url} note={gallery.download?.note} />
-            ) : (
-              gallery.download && <DownloadBox {...gallery.download} />
-            )
-          }
-          <ShareBox url={absUrl} title={gallery.title} template={gallery.shareText} />
-        </div>
+        {/* Kundengalerie mit Download: bleibt oben, danach suchen Kunden zuerst */}
+        {!gallery.albumRequest && gallery.download && <div class="side"><DownloadBox {...gallery.download} /></div>}
       </div>
 
       {
@@ -125,6 +117,12 @@ const jsonLd = gallery.isUnlisted
     >
       <GalleryGrid gallery={gallery} />
     </section>
+
+    {/* Unter den Fotos, bewusst ruhig: ganzes Album anfordern und teilen */}
+    <footer class="g-foot container container--wide">
+      {gallery.albumRequest && <AlbumRequest title={gallery.title} url={gallery.download?.url} note={gallery.download?.note} />}
+      <ShareBox url={absUrl} title={gallery.title} template={gallery.shareText} compact />
+    </footer>
   </article>
 
   {
@@ -214,10 +212,28 @@ const jsonLd = gallery.isUnlisted
     align-content: start;
   }
   @media (min-width: 960px) {
-    .intro {
+    .intro:has(.side) {
       grid-template-columns: 1.15fr 1fr;
       gap: clamp(2rem, 6vw, 7rem);
     }
+  }
+  /* Zeile unter den Fotos: links Album anfordern, rechts Teilen */
+  .g-foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1.75rem 3rem;
+    margin-top: clamp(2.5rem, 5vw, 4.5rem);
+  }
+  .g-foot::before {
+    content: '';
+    flex-basis: 100%;
+    height: 1px;
+    background: var(--line);
+  }
+  .g-foot > :global(.share) {
+    margin-left: auto;
   }
   .grid-wrap {
     padding-top: clamp(0.75rem, 2.5vw, 2.5rem);

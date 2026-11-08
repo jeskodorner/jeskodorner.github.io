@@ -2,6 +2,7 @@
 /**
  * Teilen: Link kopieren, Web Share API (v. a. mobil), WhatsApp, E-Mail.
  * Ohne JavaScript bleiben WhatsApp/E-Mail-Links und ein markierbares Linkfeld.
+ * compact: schlichte Zeile „Album teilen“ mit kleinen runden Symbolen (unter den Fotos).
  */
 import Icon from './Icon.astro';
 import { useTranslations } from '../i18n';
@@ -11,7 +12,7 @@ export interface Props {
   url: string;
   title: string;
   template: string;
-  /** Kompakte Darstellung (z. B. auf Bildseiten) */
+  /** Schlichte Zeile mit runden Symbolen statt großer Knöpfe */
   compact?: boolean;
 }
 
@@ -23,26 +24,35 @@ const mail = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURICompo
 ---
 
 <div class:list={['share', { 'share--compact': compact }]} data-share-box>
-  <p class="label muted share-title">{t.share.title}</p>
+  <p class="label muted share-title">{compact ? t.share.album : t.share.title}</p>
   <div class="share-actions">
-    <button class="btn btn--small js-only" type="button" data-copy={url}>
-      <Icon name="link" /><span data-copy-label>{t.share.copy}</span>
+    <button class="btn btn--small js-only" type="button" data-copy={url} title={compact ? t.share.copy : undefined}>
+      <Icon name="link" /><span data-copy-label class:list={{ 'visually-hidden': compact }}>{t.share.copy}</span>
     </button>
-    <button class="btn btn--small" type="button" data-native-share data-url={url} data-title={title} data-text={text} hidden>
-      <Icon name="share" />{t.share.native}
+    <button
+      class="btn btn--small"
+      type="button"
+      data-native-share
+      data-url={url}
+      data-title={title}
+      data-text={text}
+      title={compact ? t.share.native : undefined}
+      hidden
+    >
+      <Icon name="share" /><span class:list={{ 'visually-hidden': compact }}>{t.share.native}</span>
     </button>
-    <a class="btn btn--small" href={whatsapp} target="_blank" rel="noopener noreferrer">
-      <Icon name="whatsapp" />{t.share.whatsapp}
+    <a class="btn btn--small" href={whatsapp} target="_blank" rel="noopener noreferrer" title={compact ? t.share.whatsapp : undefined}>
+      <Icon name="whatsapp" /><span class:list={{ 'visually-hidden': compact }}>{t.share.whatsapp}</span>
     </a>
-    <a class="btn btn--small" href={mail}>
-      <Icon name="mail" />{t.share.mail}
+    <a class="btn btn--small" href={mail} title={compact ? t.share.mail : undefined}>
+      <Icon name="mail" /><span class:list={{ 'visually-hidden': compact }}>{t.share.mail}</span>
     </a>
   </div>
   <label class="no-js-only share-field">
     <span class="visually-hidden">{t.share.linkLabel}</span>
     <input type="text" readonly value={url} />
   </label>
-  <p class="share-status visually-hidden" role="status" aria-live="polite" data-copy-status></p>
+  <p class:list={['share-status', { 'visually-hidden': !compact }]} role="status" aria-live="polite" data-copy-status></p>
 </div>
 
 <script>
@@ -79,7 +89,10 @@ const mail = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURICompo
       btn.addEventListener('click', async () => {
         const ok = await copy(btn.dataset.copy!);
         const msg = ok ? de.share.copied : de.share.copyFailed;
-        if (status) status.textContent = msg;
+        if (status) {
+          status.textContent = msg;
+          window.setTimeout(() => (status.textContent = ''), 2600);
+        }
         if (label) {
           label.textContent = ok ? de.share.copied : de.share.copy;
           window.setTimeout(() => (label.textContent = de.share.copy), 2200);
@@ -117,10 +130,38 @@ const mail = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURICompo
     background: var(--paper);
     font-size: var(--fs-sm);
   }
-  .share--compact .share-title {
-    display: none;
+  /* Schlichte Zeile: „Album teilen“ + runde Symbole */
+  .share--compact {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.9rem;
   }
   .share--compact .share-actions {
     margin-top: 0;
+    gap: 0.4rem;
+  }
+  .share--compact .btn {
+    width: 2.5rem;
+    min-height: 2.5rem;
+    padding: 0;
+    border-width: 1.5px;
+  }
+  .share--compact .btn :global(svg) {
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+  .share--compact .share-field {
+    flex-basis: 100%;
+  }
+  .share--compact .share-status {
+    flex-basis: 100%;
+    font-size: var(--fs-xs);
+    font-weight: 700;
+    color: var(--accent);
+    min-height: 1em;
+  }
+  .share--compact .share-status:empty {
+    display: none;
   }
 </style>
