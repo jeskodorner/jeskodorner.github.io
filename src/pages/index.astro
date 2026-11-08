@@ -1,11 +1,13 @@
 ---
 /**
- * Startseite = das blaue Menü: oben groß der Name, darunter die Menüpunkte, unten Instagram und Rechtliches.
+ * Startseite = das blaue Menü: oben groß der Name, darunter die Menüpunkte (rechts daneben ein kleines Bildfeld
+ * mit überblendeten Portfolio-Fotos, BlendLoop.astro), unten Instagram und Rechtliches.
  * Füllt genau den Bildschirm (ohne weißen Streifen, ohne Scrollen, solange alles passt). Baustein: BlueMenu.astro
  * Die frühere Startseite (Karussell, Bilderstapel, Statement, Film, Kontakt) liegt in der Git-Geschichte.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import BlueMenu from '../components/BlueMenu.astro';
+import BlendLoop from '../components/BlendLoop.astro';
 import { site } from '../config/site';
 import { getSelectedWorks } from '../lib/showroom';
 import { ogImage } from '../lib/images';
@@ -25,7 +27,9 @@ const jsonLd = {
 ---
 
 <BaseLayout image={og} jsonLd={jsonLd} bare mainClass="home">
-  <BlueMenu />
+  <BlueMenu>
+    <BlendLoop slot="aside" works={works} />
+  </BlueMenu>
 </BaseLayout>
 
 <style>

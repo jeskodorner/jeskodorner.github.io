@@ -577,7 +577,14 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   groß der Name, darunter die Menüpunkte (Portfolio, Galerie, Film, Über mich, Kontakt), unten Instagram, Impressum
   und Datenschutz. Ohne weiße Leiste und ohne Scrollen. Dasselbe Menü öffnet sich auf allen Geräten über den grünen
   Menü-Knopf oben rechts: Das Blau wächst als Kreis aus dem Knopf, der Schließen-Knopf sitzt an derselben Stelle,
-  der Name führt zur Startseite. Eine Textleiste mit Menüpunkten gibt es nur noch als Rückfall für sehr alte Browser. Die frühere Startseite liegt in der Git-Geschichte.
+  der Name führt zur Startseite. Eine Textleiste mit Menüpunkten gibt es nur noch als Rückfall für sehr alte Browser.
+  Am Handy (unter 700 px) steht alles mittig, ab 700 px linksbündig.
+- **Bildfeld auf der Startseite** (`src/components/BlendLoop.astro`): Fotos aus dem Portfolio (Liste `showroom`),
+  farblich invertiert und im Modus „Aufhellen“ übereinandergelegt, immer 4:3. Es sind immer zwei zu sehen. Alle
+  2,8 Sekunden blendet ein neues oben ein und das unterste verschwindet, so entstehen laufend neue Bilder (Reihenfolge
+  bei jedem Besuch zufällig). Am Laptop rechts neben dem Menü, am Handy mittig darunter. Mit „Bewegung reduzieren“
+  oder ohne JavaScript bleibt ein festes Paar stehen. Invertieren abschalten: in `BlendLoop.astro` die Zeile
+  `filter: invert(1);` löschen. Die frühere Startseite liegt in der Git-Geschichte.
 
 Kontraste nach WCAG 2.x:
 

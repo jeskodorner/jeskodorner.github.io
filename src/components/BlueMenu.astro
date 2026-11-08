@@ -5,6 +5,9 @@
  *   - als Startseite (pages/index.astro): der Name ist die Hauptüberschrift
  *   - als Menü (Header.astro, auf allen Geräten): mit Schließen-Knopf genau dort, wo der Menüknopf sitzt,
  *     der Name führt zur Startseite
+ * Handy (unter 700 px): alles mittig. Ab 700 px: alles linksbündig.
+ * Slot „aside“ (Startseite: Bildfeld, BlendLoop.astro): am Handy groß und mittig im freien Platz unter dem Menü,
+ * ab 700 px rechts neben den Menüpunkten, ab der Bildschirmmitte, mittig zur Höhe des Menüs.
  * Übergang: Name, Menüpunkte und Fußzeile tragen feste view-transition-Namen. Beim Wechsel Menü → Startseite
  * gleiten sie an ihren neuen Platz; von der Startseite auf eine Unterseite gleitet der Name ins Logo oben links.
  */
@@ -22,6 +25,7 @@ const { overlay = false } = Astro.props;
 const t = useTranslations();
 const links = await navLinks();
 const path = Astro.url.pathname;
+const hasAside = Astro.slots.has('aside');
 ---
 
 <div class:list={['bm', 'container', { 'bm--overlay': overlay }]}>
@@ -43,8 +47,9 @@ const path = Astro.url.pathname;
       <h1 class="bm-name display">{site.name}</h1>
     )
   }
-  <nav aria-label={t.nav.label}>
-    <ul class="bm-list" role="list">
+  <div class="bm-body">
+    <nav aria-label={t.nav.label}>
+      <ul class="bm-list" role="list">
       {
         links.map((l) => (
           <li>
@@ -54,8 +59,16 @@ const path = Astro.url.pathname;
           </li>
         ))
       }
-    </ul>
-  </nav>
+      </ul>
+    </nav>
+    {
+      hasAside && (
+        <div class="bm-aside">
+          <slot name="aside" />
+        </div>
+      )
+    }
+  </div>
   <p class="bm-foot label">
     <a href={site.instagram.url} rel="me noopener" target="_blank">@{site.instagram.handle}</a>
     <a href="/impressum/">{t.footer.imprint}</a>
@@ -107,11 +120,52 @@ const path = Astro.url.pathname;
     color: inherit;
   }
   /* Menüpunkte: deutlich kleiner als der Name, mit Luft dazwischen */
+  /* Menüpunkte, dazu optional das Bildfeld (Slot „aside“). Handy: Bildfeld mittig im freien Platz darunter. */
+  .bm-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-top: clamp(2.5rem, 9vh, 6rem);
+  }
+  .bm-aside {
+    --blend-w: min(60vw, 17rem, 40vh);
+    flex: 1;
+    display: grid;
+    place-items: center;
+    padding-top: 2rem;
+  }
+  /* Handy: alles mittig (Name, Menüpunkte, Fußzeile) – auf der Startseite und im Menü gleich */
+  @media (max-width: 699.98px) {
+    .bm {
+      text-align: center;
+    }
+    .bm-list {
+      justify-items: center;
+    }
+    .bm-foot {
+      justify-content: center;
+    }
+  }
+  /* Ab 700 px: zwei Spalten, Bildfeld in der rechten, mittig zur Höhe des Menüs */
+  @media (min-width: 700px) {
+    .bm-body {
+      flex: none;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: start;
+      column-gap: var(--gutter);
+    }
+    .bm-aside {
+      --blend-w: min(30vw, 36rem, 60vh);
+      align-self: center;
+      place-items: center start;
+      padding-top: 0;
+    }
+  }
   .bm-list {
     view-transition-name: jd-menu;
     list-style: none;
     padding: 0;
-    margin-top: clamp(2.5rem, 9vh, 6rem);
     display: grid;
     gap: clamp(0.35rem, 1.2vh, 0.9rem);
   }

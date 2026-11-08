@@ -1,0 +1,140 @@
+---
+/**
+ * Bildfeld auf der Startseite: Fotos aus dem Portfolio, farblich invertiert, im Modus „Aufhellen“
+ * (lighten) übereinandergelegt, immer im Format 4:3. Es sind immer zwei Fotos zu sehen. Alle paar Sekunden
+ * blendet ein neues Foto oben ein und das unterste verschwindet – so entstehen laufend neue Bilder.
+ * Reihenfolge zufällig, bei jedem Besuch anders. Ohne JavaScript oder mit „Bewegung reduzieren“: ein festes Paar.
+ */
+import Picture from './Picture.astro';
+import type { WorkItem } from '../lib/showroom';
+
+export interface Props {
+  works: WorkItem[];
+}
+
+const { works } = Astro.props;
+---
+
+{
+  works.length >= 2 && (
+    <div class="blend" data-blend aria-hidden="true">
+      {works.map((w) => (
+        <Picture
+          src={w.image.src}
+          alt=""
+          sizes="(min-width: 700px) 30vw, 60vw"
+          maxWidth={800}
+          color="transparent"
+          fetchpriority="low"
+          pictureClass="blend-layer"
+          class="blend-img"
+          style={`object-position:${w.image.focus}`}
+        />
+      ))}
+    </div>
+  )
+}
+
+<script>
+  const STEP = 2800; // alle 2,8 s ein neues Foto
+
+  function shuffle<T>(list: T[]): T[] {
+    const a = [...list];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j]!, a[i]!];
+    }
+    return a;
+  }
+
+  function initBlend(box: HTMLElement) {
+    const layers = [...box.children] as HTMLElement[];
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (layers.length < 3 || reduce) return; // dann bleibt das feste Paar aus dem CSS
+
+    let z = 0;
+    let queue: HTMLElement[] = [];
+    const next = (avoid: HTMLElement[]) => {
+      if (!queue.length) queue = shuffle(layers.filter((l) => !avoid.includes(l)));
+      return queue.shift()!;
+    };
+    const show = (el: HTMLElement) => {
+      el.style.zIndex = String(++z);
+      el.classList.add('is-on');
+    };
+
+    // Zufälliges Startpaar (unsichtbar getauscht, das Feld blendet erst danach ein)
+    queue = shuffle(layers);
+    let visible = [queue.shift()!, queue.shift()!];
+    visible.forEach(show);
+    box.classList.add('is-live');
+
+    const tick = () => {
+      if (!document.hidden) {
+        const incoming = next(visible);
+        show(incoming);
+        visible[0]!.classList.remove('is-on'); // das unterste verschwindet
+        visible = [visible[1]!, incoming];
+      }
+      setTimeout(tick, STEP);
+    };
+    setTimeout(tick, STEP);
+  }
+
+  for (const box of document.querySelectorAll<HTMLElement>('[data-blend]')) initBlend(box);
+</script>
+
+<style>
+  .blend {
+    position: relative;
+    /* Breite gibt der Platz vor (BlueMenu.astro setzt --blend-w) */
+    width: var(--blend-w, 11rem);
+    aspect-ratio: 4 / 3;
+    flex: none;
+    overflow: hidden;
+    /* Die Fotos mischen sich nur untereinander, nicht mit dem Blau dahinter */
+    isolation: isolate;
+  }
+  .blend :global(.blend-layer) {
+    position: absolute;
+    inset: 0;
+    display: block;
+    filter: invert(1);
+    mix-blend-mode: lighten;
+    opacity: 0;
+    transform: scale(1.12);
+    /* Ausblenden: erst unsichtbar werden, dann (unsichtbar) wieder auf Anfangsgröße für den nächsten Auftritt */
+    transition:
+      opacity 1.5s var(--ease),
+      transform 0s 1.5s;
+  }
+  .blend :global(.blend-layer.is-on) {
+    opacity: 1;
+    transform: scale(1);
+    /* Einblenden: weich auftauchen und dabei langsam auf die richtige Größe zurückgehen */
+    transition:
+      opacity 1.5s var(--ease),
+      transform 3.2s var(--ease);
+  }
+  .blend :global(.blend-img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  /* Ohne JavaScript (oder mit „Bewegung reduzieren“): die ersten beiden Fotos fest übereinander */
+  .blend:not(.is-live) :global(.blend-layer:nth-child(-n + 2)) {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .blend {
+      animation: blend-in 1.2s 0.35s var(--ease) both;
+    }
+  }
+  @keyframes blend-in {
+    from {
+      opacity: 0;
+    }
+  }
+</style>
