@@ -5,7 +5,7 @@ Gebaut mit **Astro 7** und TypeScript und gehostet kostenlos auf **GitHub Pages*
 **https://jeskodorner.de** (die alte Adresse jeskodorner.github.io leitet automatisch weiter).
 
 - Keine Cookies, keine Tracker, keine Google Fonts. Alle Schriften liegen lokal im Projekt.
-- Die Seiten funktionieren ohne JavaScript. JavaScript wird nur für Lightbox, Ansicht-Umschalter (Seite „Galerie“), Teilen und die E-Mail-Adresse verwendet.
+- Die Seiten funktionieren ohne JavaScript. JavaScript wird nur für Lightbox, Foto-Reihen, Teilen und die E-Mail-Adresse verwendet.
 - Lighthouse (lokal gemessen, Mobil): Performance 98–100, Barrierefreiheit 100, Best Practices 100 und SEO 100.
 - Große Fotos mit Parallax und Bewegung beim Scrollen, alles reines CSS (siehe Abschnitt 7).
 
@@ -102,7 +102,7 @@ photos.config.json          ← Einstellungen für die Bildverarbeitung (Größe
 
 **Portfolio:** In `startseite.md` legt die Liste `showroom` fest, welche Fotos ausgewählt sind, in welcher
 Reihenfolge und unter welchem Namen. Sie erscheinen auf der Seite **/portfolio/** als kleine Ausstellung (jedes Foto
-einzeln an der Wand; ein Klick öffnet direkt dort die Lightbox mit dem ganzen Album ab diesem Foto, ohne die Albumseite)
+einzeln, linksbündig untereinander, daneben bzw. darunter der Name; ein Klick öffnet direkt dort die Lightbox mit dem ganzen Album ab diesem Foto, ohne die Albumseite)
 und liefern das Vorschaubild der Startseite für Link-Vorschauen.
 
 ```yaml
@@ -252,10 +252,8 @@ Unterhalb des Kopfbereichs kannst du optional einen längeren Text in Markdown s
   Die Nummer entspricht der Position in der Liste. Beim Umsortieren ändern sich die Nummern.
 - Ohne JavaScript öffnet ein Klick das Foto selbst in groß.
 
-**Seite „Galerie“ (`/galerien/`)** hat einen Umschalter „Groß / Übersicht“. „Groß“: jedes Titelbild hängt
-unbeschnitten an der Wand, abwechselnd links und rechts, daneben Name, Text und ein Button in der Galeriefarbe.
-„Übersicht“: alle Galerien wie in Lightroom in gleich hohen, randvollen Reihen mit Titelbild, darunter Name,
-Bilderzahl und Monat. Die Wahl gilt für den Besuch, ein neuer Besuch startet wieder mit „Groß“.
+**Seite „Galerie“ (`/galerien/`)** zeigt alle Galerien wie in Lightroom in gleich hohen, randvollen Reihen mit
+Titelbild, darunter Name, Bilderzahl und Monat. Es gibt nur diese eine Ansicht.
 
 ---
 

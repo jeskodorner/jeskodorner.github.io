@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Picture from '../../components/Picture.astro';
-import ViewSwitch from '../../components/ViewSwitch.astro';
 import { getPublicGalleries } from '../../lib/galleries';
 import { ogImage } from '../../lib/images';
 import { useTranslations, formatMonth } from '../../i18n';
@@ -21,87 +20,43 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
 
   {galleries.length === 0 && <p class="container">{t.galleries.empty}</p>}
 
-  <div class="gview">
-    {galleries.length >= 4 && <ViewSwitch storageKey="jd-ansicht-galerien" />}
-
-    <ol class="rooms view-main container container--wide" role="list">
+  <!-- Alle Galerien wie in Lightroom in gleich hohen, randvollen Reihen; ein Klick öffnet das Album -->
+  <div class="container container--wide">
+    <ul class="cards" role="list" data-justify>
       {
         galleries.map((g, i) => {
           const r = g.cover.src.width / g.cover.src.height;
           return (
-            <li class:list={['room-item', `c-${g.color}`]} style={`--r:${r.toFixed(4)}`}>
-              <a class="room-link" href={g.url} data-index={i + 1}>
-                <span class="room-media">
+            <li class:list={['card-item', `c-${g.color}`]} style={`--r:${r.toFixed(4)}`}>
+              <a class="card" href={g.url} data-index={i + 1}>
+                <span class="card-frame">
                   <Picture
                     src={g.cover.src}
                     alt={g.cover.alt}
-                    sizes={`(min-width: 900px) ${Math.min(58, Math.round(r * 46))}vw, 92vw`}
+                    sizes={`(min-width: 700px) ${Math.round(r * 330)}px, ${Math.round(Math.min(100, r * 50))}vw`}
                     color={g.cover.color}
-                    lqip={g.cover.lqip}
-                    loading={i === 0 ? 'eager' : 'lazy'}
+                    loading={i < 8 ? 'eager' : 'lazy'}
                     fetchpriority={i === 0 ? 'high' : undefined}
-                    class="room-img"
+                    maxWidth={1200}
                   />
                 </span>
-                <span class="room-info">
-                  <span class="label meta-row">
-                    <span>{t.galleries.images(g.images.length)}</span>
-                    <span>{formatMonth(g.date)}</span>
-                    {g.location && <span>{g.location}</span>}
-                  </span>
-                  <span class="display name" style={`view-transition-name: gt-${g.slug}`}>
-                    {g.title}
-                  </span>
-                  <span class="desc">{g.description}</span>
-                  <span class="go">
-                    Galerie ansehen <span class="arrow" aria-hidden="true">→</span>
-                  </span>
+                <span class="card-title" style={`view-transition-name: gt-${g.slug}`}>
+                  {g.title}
+                </span>
+                <span class="label card-meta">
+                  {t.galleries.images(g.images.length)} · {formatMonth(g.date)}
                 </span>
               </a>
             </li>
           );
         })
       }
-    </ol>
-
-    {
-      galleries.length >= 4 && (
-        <div class="view-tiles container container--wide">
-          <ul class="cards" role="list" data-justify>
-            {galleries.map((g, i) => {
-              const r = g.cover.src.width / g.cover.src.height;
-              return (
-                <li class:list={['card-item', `c-${g.color}`]} style={`--r:${r.toFixed(4)}`}>
-                  <a class="card" href={g.url} data-index={i + 1}>
-                    <span class="card-frame">
-                      <Picture
-                        src={g.cover.src}
-                        alt={g.cover.alt}
-                        sizes={`(min-width: 700px) ${Math.round(r * 330)}px, ${Math.round(Math.min(100, r * 50))}vw`}
-                        color={g.cover.color}
-                        loading="lazy"
-                        maxWidth={1200}
-                      />
-                    </span>
-                    <span class="card-title">{g.title}</span>
-                    <span class="label card-meta">
-                      {t.galleries.images(g.images.length)} · {formatMonth(g.date)}
-                    </span>
-                  </a>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      )
-    }
+    </ul>
   </div>
 </BaseLayout>
 <script>
-  import { initViewSwitch } from '../../scripts/view-switch';
   import { initJustify } from '../../scripts/justify';
   initJustify();
-  initViewSwitch();
 </script>
 
 <style>
@@ -120,88 +75,6 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
     align-items: center;
     gap: 0.75rem;
     margin-top: 1rem;
-  }
-
-  /* ---------- Groß: jedes Titelbild hängt unbeschnitten an der Wand, Text daneben ---------- */
-  .rooms {
-    list-style: none;
-    display: grid;
-    gap: clamp(4rem, 2rem + 8vw, 10rem);
-    /* Höchstens so hoch, dass das ganze Foto auf den Bildschirm passt */
-    --room-h: max(18rem, calc(100svh - var(--header-h) - 8rem));
-  }
-  .room-link {
-    display: grid;
-    gap: 1.25rem;
-    text-decoration: none;
-    color: var(--ink);
-  }
-  .room-media {
-    display: block;
-    justify-self: start;
-    width: min(100%, calc(var(--room-h) * var(--r)));
-    box-shadow: var(--hang-shadow);
-    transition: box-shadow 0.4s var(--ease);
-  }
-  .room-media :global(.room-img) {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-  .room-info {
-    display: grid;
-    gap: 0.9rem;
-    justify-items: start;
-    max-width: 34rem;
-  }
-  .name {
-    font-size: clamp(2rem, 1.1rem + 2.6vw, 3.9rem);
-    line-height: 0.9;
-    padding-top: 0.08em;
-    text-wrap: balance;
-  }
-
-  /* Desktop: Foto und Text nebeneinander, abwechselnd links und rechts */
-  @media (min-width: 900px) {
-    .room-link {
-      display: flex;
-      align-items: flex-end;
-      gap: clamp(2rem, 4vw, 5rem);
-    }
-    .room-item:nth-child(even) .room-link {
-      flex-direction: row-reverse;
-    }
-    /* Foto rechts: Text rechtsbündig, damit er am Foto steht */
-    .room-item:nth-child(even) .room-info {
-      justify-items: end;
-      text-align: right;
-    }
-    .room-item:nth-child(even) .meta-row {
-      justify-content: flex-end;
-    }
-    .room-media {
-      flex: none;
-      width: min(58%, calc(var(--room-h) * var(--r)));
-    }
-    .room-info {
-      flex: 1 1 18rem;
-      padding-bottom: 0.25rem;
-    }
-  }
-
-  @media (hover: hover) {
-    .room-link:hover .room-media {
-      box-shadow:
-        0 2px 4px rgb(0 0 0 / 0.1),
-        0 18px 40px -12px rgb(0 0 0 / 0.35),
-        0 50px 90px -30px rgb(0 0 0 / 0.3);
-    }
-    .room-link:hover .name {
-      text-decoration: underline;
-      text-decoration-color: var(--c);
-      text-decoration-thickness: 0.1em;
-      text-underline-offset: 0.1em;
-    }
   }
 
   /* ---------- Übersicht: Titelbilder in gleich hohen Reihen (wie Lightroom) ----------
@@ -273,33 +146,4 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
     }
   }
 
-  .desc {
-    font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.3rem);
-    line-height: 1.4;
-    max-width: 36ch;
-  }
-  /* Button in der Galeriefarbe */
-  .go {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5em;
-    margin-top: 0.35rem;
-    padding: 0.7em 1.3em;
-    border-radius: 999px;
-    border: 2.5px solid var(--ink);
-    background: var(--c);
-    color: var(--on-c);
-    font-size: var(--fs-sm);
-    font-weight: 800;
-    font-stretch: 85%;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    transition:
-      background-color 0.2s,
-      color 0.2s;
-  }
-  .room-link:hover .go {
-    background: var(--ink);
-    color: var(--wall);
-  }
 </style>

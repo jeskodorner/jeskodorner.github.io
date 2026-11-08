@@ -4,8 +4,9 @@
  * weißen Wand, mit viel Platz daneben und einem kleinen Schild mit Verweis auf sein Album.
  * Ein Klick aufs Foto öffnet die Lightbox mit dem ganzen Album ab diesem Foto – direkt hier, ohne die
  * Albumseite (Daten und Skript: pages/portfolio.astro). Ohne JavaScript führt der Link ins Album.
- *   Desktop: so groß, dass es ganz auf den Bildschirm passt; abwechselnd links und rechts, Schild daneben.
- *   Handy:   volle Breite, Schild darunter.
+ *   Alles linksbündig. Desktop: Foto links, Schild rechts daneben. Handy: Schild darunter.
+ *   Größe: deutlich kleiner als der Bildschirm (Hochformate höchstens gut halb so hoch, Querformate höchstens
+ *   knapp die halbe Breite), damit jedes Foto mit Luft für sich steht.
  * Schild: Hat das Foto einen eigenen Namen (Showroom), steht er als Titel da und darunter „Aus dem Album …“.
  *         Sonst ist der Album-Name der Titel und darunter „Zum Album“.
  */
@@ -35,7 +36,7 @@ const { items } = Astro.props;
             <Picture
               src={it.image.src}
               alt={it.image.alt}
-              sizes={r < 1.2 ? '(min-width: 900px) 45vw, 100vw' : '(min-width: 900px) 62vw, 100vw'}
+              sizes={r < 1.2 ? '(min-width: 900px) 32vw, 90vw' : '(min-width: 900px) 46vw, 92vw'}
               color={it.image.color}
               lqip={it.image.lqip}
               class="work-img"
@@ -68,9 +69,9 @@ const { items } = Astro.props;
     list-style: none;
     padding: 0;
     display: grid;
-    gap: clamp(3.5rem, 2rem + 9vw, 11rem);
-    /* Höchstens so hoch, dass das ganze Foto auf den Bildschirm passt */
-    --work-h: max(20rem, calc(100svh - var(--header-h) - 7rem));
+    gap: clamp(3rem, 2rem + 5vw, 7rem);
+    /* Höchstens gut halb so hoch wie der Bildschirm */
+    --work-h: max(16rem, calc((100svh - var(--header-h)) * 0.6));
   }
   .work {
     display: grid;
@@ -79,6 +80,7 @@ const { items } = Astro.props;
   .work-media {
     display: block;
     justify-self: start;
+    width: min(100%, calc(var(--work-h) * var(--r)));
   }
   .work :global(.work-img) {
     display: block;
@@ -118,17 +120,10 @@ const { items } = Astro.props;
       align-items: flex-end;
       gap: clamp(1.5rem, 3vw, 3.5rem);
     }
-    .work:nth-child(even) {
-      flex-direction: row-reverse;
-    }
-    .work:nth-child(even) .work-label {
-      justify-items: end;
-      text-align: right;
-    }
     .work-media {
       flex: none;
-      /* Breite aus dem Seitenverhältnis: nie höher als der Bildschirm, nie breiter als 62 % */
-      width: min(62vw, calc(var(--work-h) * var(--r)));
+      /* Breite aus dem Seitenverhältnis: nie höher als --work-h, nie breiter als 46 % */
+      width: min(46vw, calc(var(--work-h) * var(--r)));
     }
     .work-label {
       flex: 0 1 20rem;
