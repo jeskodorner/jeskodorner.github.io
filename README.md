@@ -97,8 +97,9 @@ photos.config.json          ← Einstellungen für die Bildverarbeitung (Größe
 | Buttons, Beschriftungen | `src/i18n/de.ts` |
 | Impressum und Datenschutz | `src/pages/impressum.astro`, `src/pages/datenschutz.astro` |
 
-> ⚠️ **Im Impressum fehlt noch die Anschrift**, die Datenschutzerklärung hat noch Platzhalter. Beides ist auf der
-> Seite deutlich markiert. Bitte vervollständigen und rechtlich prüfen lassen. Das hier ist keine Rechtsberatung.
+> ⚠️ **Das Impressum enthält bewusst keine Anschrift** (nur Name und E-Mail). § 18 Abs. 1 MStV verlangt sie bei
+> öffentlichen Seiten eigentlich; eine c/o-Adresse eines Impressum-Dienstes wäre eine Möglichkeit. Die
+> Datenschutzerklärung hat noch Platzhalter, die auf der Seite markiert sind. Das hier ist keine Rechtsberatung.
 
 **Portfolio:** In `startseite.md` legt die Liste `showroom` fest, welche Fotos ausgewählt sind, in welcher
 Reihenfolge und unter welchem Namen. Sie erscheinen auf der Seite **/portfolio/** als kleine Ausstellung (jedes Foto

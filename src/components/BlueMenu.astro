@@ -9,7 +9,7 @@
  * Ab 700 px: alles linksbündig.
  * Slot „aside“ (Startseite: Bildfeld, BlendLoop.astro): am Handy randlos über die ganze Breite, beginnt hinter
  * „Kontakt“ und füllt den Platz bis zur Fußzeile (4:3, kleiner nur auf sehr niedrigen Bildschirmen),
- * ab 700 px rechts neben den Menüpunkten, ab der Bildschirmmitte, mittig zur Höhe des Menüs.
+ * ab 700 px rechts neben den Menüpunkten: oben und unten bündig mit der Schrift, mittig zwischen Text und Bildschirmrand.
  * Übergang: Name, Menüpunkte und Fußzeile tragen feste view-transition-Namen. Beim Wechsel Menü → Startseite
  * gleiten sie an ihren neuen Platz; von der Startseite auf eine Unterseite gleitet der Name ins Logo oben links.
  */
@@ -172,11 +172,6 @@ const hasAside = Astro.slots.has('aside');
     .bm-foot {
       justify-content: center;
     }
-    /* Menüpunkte als Blöcke: jede Zeile ist genau 0,95 Schrifthöhen hoch, so lässt sich die Fotokante exakt treffen */
-    .bm-list a {
-      display: block;
-      width: fit-content;
-    }
     /* „Kontakt“ läuft über die Oberkante des Bildfelds: oberhalb weiß, auf dem hellen Foto blau */
     .bm--aside .bm-list li:last-child a {
       color: transparent;
@@ -188,20 +183,25 @@ const hasAside = Astro.slots.has('aside');
       background-image: linear-gradient(to bottom, var(--lime) 0.45em, var(--blue) 0.45em);
     }
   }
-  /* Ab 700 px: zwei Spalten, Bildfeld in der rechten, mittig zur Höhe des Menüs */
+  /* Ab 700 px: links die Menüpunkte (so breit wie der längste), rechts der Platz bis zum Bildschirmrand.
+     Das Bildfeld reicht genau von der Oberkante der Buchstaben von „Portfolio“ bis zur Unterkante von „Kontakt“
+     (gemessen: Buchstaben beginnen 0,07 und enden 0,2 Schrifthöhen innerhalb ihrer Zeile) und steht waagerecht
+     mittig: gleich viel Abstand zum Menütext wie zum rechten Bildschirmrand. Ist der Platz zu schmal, wird es
+     kleiner und bleibt mittig. */
   @media (min-width: 700px) {
     .bm-body {
       flex: none;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      align-items: start;
-      column-gap: var(--gutter);
+      grid-template-columns: auto minmax(0, 1fr);
+      column-gap: 0;
     }
     .bm-aside {
-      --blend-w: min(30vw, 36rem, 60vh);
-      align-self: center;
-      place-items: center start;
-      padding-top: 0;
+      /* bis an den rechten Bildschirmrand (über den Seitenrand des Containers hinaus) */
+      margin-right: calc((100cqi - 100vw) / 2);
+      padding-block: calc(0.07 * var(--bm-item)) calc(0.2 * var(--bm-item));
+      container-type: size;
+      place-items: center;
+      --blend-w: min(100cqw - 4rem, 133.33cqh);
     }
   }
   .bm-list {
@@ -211,7 +211,11 @@ const hasAside = Astro.slots.has('aside');
     display: grid;
     gap: clamp(0.35rem, 1.2vh, 0.9rem);
   }
+  /* Menüpunkte als Blöcke: jede Zeile ist genau 0,95 Schrifthöhen hoch, so lässt sich das Bildfeld exakt an der
+     Schrift ausrichten (Handy: Fotokante hinter „Kontakt“, Laptop: Ober-/Unterkante der Buchstaben) */
   .bm-list a {
+    display: block;
+    width: fit-content;
     font-size: var(--bm-item);
     line-height: 0.95;
     text-decoration: none;
