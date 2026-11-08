@@ -4,7 +4,8 @@
  * weißen Wand, mit viel Platz daneben und einem schlichten Schild (Name und Angaben, kein Link).
  * Ein Klick aufs Foto öffnet die Lightbox mit dem ganzen Album ab diesem Foto – direkt hier, ohne die
  * Albumseite (Daten und Skript: pages/portfolio.astro). Ohne JavaScript führt der Link ins Album.
- *   Alles linksbündig. Desktop: Foto links, Schild rechts daneben. Handy: Schild darunter.
+ *   Fotos linksbündig. Das Schild steht immer mittig zum Foto: Desktop rechts daneben auf halber Bildhöhe,
+ *   Handy darunter, waagrecht mittig unter dem Foto.
  *   Größe: deutlich kleiner als der Bildschirm (Hochformate höchstens gut halb so hoch, Querformate höchstens
  *   knapp die halbe Breite), damit jedes Foto mit Luft für sich steht.
  * Schild: Hat das Foto einen eigenen Namen (Showroom), steht er als Titel da und darunter der Album-Name.
@@ -62,7 +63,7 @@ const { items } = Astro.props;
   }
   .work {
     display: grid;
-    gap: 1rem;
+    gap: 1.5rem;
   }
   .work-media {
     display: block;
@@ -80,12 +81,13 @@ const { items } = Astro.props;
     box-shadow: var(--hang-shadow);
   }
 
-  /* ---------- Schild ---------- */
+  /* ---------- Schild: mittig unter dem Foto (so breit wie das Foto) ---------- */
   .work-label {
     display: grid;
     gap: 0.25rem;
-    justify-items: start;
-    max-width: 20rem;
+    justify-items: center;
+    text-align: center;
+    width: min(100%, calc(var(--work-h) * var(--r)));
   }
   .work-title {
     font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.3rem);
@@ -98,12 +100,12 @@ const { items } = Astro.props;
     font-variant-numeric: tabular-nums;
   }
 
-  /* ---------- Desktop: Foto links, Schild unten daneben ---------- */
+  /* ---------- Desktop: Foto links, Schild rechts daneben auf halber Bildhöhe ---------- */
   @media (min-width: 900px) {
     .work {
       display: flex;
-      align-items: flex-end;
-      gap: clamp(1.5rem, 3vw, 3.5rem);
+      align-items: center;
+      gap: clamp(2.5rem, 5vw, 5.5rem);
     }
     .work-media {
       flex: none;
@@ -112,7 +114,9 @@ const { items } = Astro.props;
     }
     .work-label {
       flex: 0 1 20rem;
-      padding-bottom: 0.25rem;
+      width: auto;
+      justify-items: start;
+      text-align: left;
     }
   }
 </style>
