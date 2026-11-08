@@ -160,10 +160,11 @@ const hasAside = Astro.slots.has('aside');
     }
     .bm-aside {
       grid-column: 1 / -1;
-      /* randlos über die ganze Breite und hinter „Kontakt“: so weit hoch, dass der weiche obere Rand (ein Viertel
-         der Höhe, Höhe ≈ 75 % der Breite) fast ganz hinter dem Wort liegt – das Foto ist unter „Kontakt“ zu sehen */
+      /* randlos über die ganze Breite und halb hinter „Kontakt“: der kurze weiche obere Rand (16 % der Höhe,
+         Höhe ≈ 75 % der Breite, also ≈ 12vw) liegt hinter der oberen Hälfte der Buchstaben, ab ihrer Mitte
+         (0,54 Schrifthöhen über dem Zeilenende) ist das Foto voll da und scheint durch das Wort */
       margin-inline: calc(-1 * var(--gutter));
-      margin-top: calc(-12vw - 0.2 * var(--bm-item));
+      margin-top: calc(-12vw - 0.54 * var(--bm-item));
       padding-top: 0;
       place-items: start center;
       container-type: size;
@@ -172,7 +173,14 @@ const hasAside = Astro.slots.has('aside');
       --blend-w: 100cqw;
       --blend-h: min(75cqw, 100cqh);
       /* oben und unten weich auslaufen (oben liegt „Kontakt“ im ausgeblendeten Bereich und bleibt lesbar) */
-      --blend-mask: linear-gradient(to bottom, transparent, #000 25%, #000 75%, transparent);
+      --blend-mask: linear-gradient(to bottom, transparent, #000 16%, #000 75%, transparent);
+    }
+    /* „Kontakt“ liegt halb auf dem hellen Foto: ein weicher Schatten in der Hintergrundfarbe hält die weiße Schrift
+       lesbar, das Foto bleibt rundherum sichtbar */
+    .bm--aside .bm-list li:last-child a {
+      text-shadow:
+        0 0 0.12em rgb(88 103 127 / 0.6),
+        0 0 0.45em rgb(88 103 127 / 0.45);
     }
     .bm-foot {
       justify-content: center;
