@@ -122,6 +122,8 @@ const hasAside = Astro.slots.has('aside');
     white-space: nowrap;
     text-decoration: none;
     color: inherit;
+    /* rosa Detail: leicht versetzter Schatten, wie ein nicht ganz deckungsgleicher Druck */
+    text-shadow: 0.045em 0.045em 0 var(--pink);
   }
   /* Menüpunkte: deutlich kleiner als der Name, mit Luft dazwischen */
   /* Menüpunkte, dazu optional das Bildfeld (Slot „aside“). Handy: Bildfeld mittig im freien Platz darunter. */
@@ -160,11 +162,11 @@ const hasAside = Astro.slots.has('aside');
     }
     .bm-aside {
       grid-column: 1 / -1;
-      /* randlos über die ganze Breite und halb hinter „Kontakt“: der kurze weiche obere Rand (16 % der Höhe,
-         Höhe ≈ 75 % der Breite, also ≈ 12vw) liegt hinter der oberen Hälfte der Buchstaben, ab ihrer Mitte
-         (0,54 Schrifthöhen über dem Zeilenende) ist das Foto voll da und scheint durch das Wort */
+      /* randlos über die ganze Breite und halb hinter „Kontakt“. Maße in Schrifthöhen der Menüpunkte (--bm-item):
+         die Mitte der Buchstaben liegt 0,54 über dem Zeilenende. Das Foto beginnt 0,2 darüber und ist nach einem
+         kurzen weichen Übergang (0,4) ab 0,2 darunter voll da. */
       margin-inline: calc(-1 * var(--gutter));
-      margin-top: calc(-12vw - 0.54 * var(--bm-item));
+      margin-top: calc(-0.74 * var(--bm-item));
       padding-top: 0;
       place-items: start center;
       container-type: size;
@@ -173,14 +175,28 @@ const hasAside = Astro.slots.has('aside');
       --blend-w: 100cqw;
       --blend-h: min(75cqw, 100cqh);
       /* oben und unten weich auslaufen (oben liegt „Kontakt“ im ausgeblendeten Bereich und bleibt lesbar) */
-      --blend-mask: linear-gradient(to bottom, transparent, #000 16%, #000 75%, transparent);
+      --blend-mask: linear-gradient(
+        to bottom,
+        transparent 0,
+        #000 calc(0.4 * var(--bm-item)),
+        #000 75%,
+        transparent 100%
+      );
     }
-    /* „Kontakt“ liegt halb auf dem hellen Foto: ein weicher Schatten in der Hintergrundfarbe hält die weiße Schrift
-       lesbar, das Foto bleibt rundherum sichtbar */
+    /* „Kontakt“ halb auf dem hellen Foto: oben weiß, wo das Foto beginnt in der Hintergrundfarbe – mit weichem
+       Übergang passend zum Rand des Fotos (Mitte der Buchstaben: 0,41 unter der Zeilenoberkante) */
     .bm--aside .bm-list li:last-child a {
-      text-shadow:
-        0 0 0.12em rgb(88 103 127 / 0.6),
-        0 0 0.45em rgb(88 103 127 / 0.45);
+      color: transparent;
+      background-image: linear-gradient(to bottom, var(--on-menu) 0.34em, var(--menu-bg) 0.5em);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+    .bm--aside .bm-list li:last-child a:hover {
+      background-image: none;
+      background-color: var(--pink);
+      -webkit-background-clip: border-box;
+      background-clip: border-box;
+      color: var(--ink);
     }
     .bm-foot {
       justify-content: center;
@@ -243,16 +259,24 @@ const hasAside = Astro.slots.has('aside');
     view-transition-name: jd-menu-foot;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem 1.5rem;
+    gap: 0.5rem 0.6rem;
     margin-top: auto;
     padding-top: 2.5rem;
   }
+  /* Kleine Links rosa hinterlegt, schwarze Schrift (beim Überfahren umgekehrt) */
   .bm-foot a {
-    color: inherit;
-  }
-  .bm-foot a:hover {
+    display: inline-block;
+    padding: 0.35em 0.6em 0.3em;
     background: var(--pink);
     color: var(--ink);
+    text-decoration: none;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+  }
+  .bm-foot a:hover {
+    background: var(--ink);
+    color: var(--pink);
   }
   .bm a:focus-visible,
   .bm-close:focus-visible {
