@@ -5,8 +5,10 @@
  *   - als Startseite (pages/index.astro): der Name ist die Hauptüberschrift
  *   - als Menü (Header.astro, auf allen Geräten): mit Schließen-Knopf genau dort, wo der Menüknopf sitzt,
  *     der Name führt zur Startseite
- * Handy (unter 700 px): alles mittig. Ab 700 px: alles linksbündig.
- * Slot „aside“ (Startseite: Bildfeld, BlendLoop.astro): am Handy groß und mittig im freien Platz unter dem Menü,
+ * Handy (unter 700 px): der Name steht mittig, die Menüpunkte linksbündig an seiner linken Kante, die Fußzeile mittig.
+ * Ab 700 px: alles linksbündig.
+ * Slot „aside“ (Startseite: Bildfeld, BlendLoop.astro): am Handy randlos über die ganze Breite, beginnt hinter
+ * „Kontakt“ und füllt den Platz bis zur Fußzeile (4:3, kleiner nur auf sehr niedrigen Bildschirmen),
  * ab 700 px rechts neben den Menüpunkten, ab der Bildschirmmitte, mittig zur Höhe des Menüs.
  * Übergang: Name, Menüpunkte und Fußzeile tragen feste view-transition-Namen. Beim Wechsel Menü → Startseite
  * gleiten sie an ihren neuen Platz; von der Startseite auf eine Unterseite gleitet der Name ins Logo oben links.
@@ -28,7 +30,7 @@ const path = Astro.url.pathname;
 const hasAside = Astro.slots.has('aside');
 ---
 
-<div class:list={['bm', 'container', { 'bm--overlay': overlay }]}>
+<div class:list={['bm', 'container', { 'bm--overlay': overlay, 'bm--aside': hasAside }]}>
   {
     overlay && (
       <div class="bm-top">
@@ -79,6 +81,8 @@ const hasAside = Astro.slots.has('aside');
 <style>
   /* Blaue Fläche über den ganzen Bildschirm; Inhalt von oben nach unten: Name, Menü, Fußzeile */
   .bm {
+    /* Schriftgröße der Menüpunkte */
+    --bm-item: clamp(2.3rem, 10.5vw, 4.75rem);
     container-type: inline-size;
     display: flex;
     flex-direction: column;
@@ -128,22 +132,60 @@ const hasAside = Astro.slots.has('aside');
     margin-top: clamp(2.5rem, 9vh, 6rem);
   }
   .bm-aside {
-    --blend-w: min(60vw, 17rem, 40vh);
-    flex: 1;
     display: grid;
-    place-items: center;
-    padding-top: 2rem;
   }
-  /* Handy: alles mittig (Name, Menüpunkte, Fußzeile) – auf der Startseite und im Menü gleich */
+  /* Handy – auf der Startseite und im Menü gleich: Raster mit drei Spalten. Die mittlere ist genau so breit wie der
+     Name, so steht er mittig und die Menüpunkte beginnen an seiner linken Kante. Die Reihe nach dem Menü füllt den
+     restlichen Platz (Startseite: Bildfeld), die Fußzeile steht mittig ganz unten. */
   @media (max-width: 699.98px) {
     .bm {
-      text-align: center;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      grid-template-rows: auto auto 1fr auto;
     }
-    .bm-list {
-      justify-items: center;
+    .bm > * {
+      grid-column: 1 / -1;
+    }
+    .bm .bm-name {
+      grid-column: 2;
+    }
+    .bm-body {
+      display: contents;
+    }
+    .bm-body > nav {
+      grid-column: 2;
+      margin-top: clamp(2.5rem, 9vh, 6rem);
+      position: relative;
+      z-index: 1; /* über dem Bildfeld */
+    }
+    .bm-aside {
+      grid-column: 1 / -1;
+      /* randlos über die ganze Breite und ein Stück hinter „Kontakt“ */
+      margin-inline: calc(-1 * var(--gutter));
+      margin-top: calc(-0.5 * var(--bm-item));
+      padding-top: 0;
+      place-items: start center;
+      container-type: size;
+      /* 4:3 über die ganze Breite – nur wenn die Höhe nicht reicht, etwas schmaler */
+      --blend-w: min(100cqw, 133.33cqh);
     }
     .bm-foot {
       justify-content: center;
+    }
+    /* Menüpunkte als Blöcke: jede Zeile ist genau 0,95 Schrifthöhen hoch, so lässt sich die Fotokante exakt treffen */
+    .bm-list a {
+      display: block;
+      width: fit-content;
+    }
+    /* „Kontakt“ läuft über die Oberkante des Bildfelds: oberhalb weiß, auf dem hellen Foto blau */
+    .bm--aside .bm-list li:last-child a {
+      color: transparent;
+      background-image: linear-gradient(to bottom, var(--on-blue) 0.45em, var(--blue) 0.45em);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+    .bm--aside .bm-list li:last-child a:hover {
+      background-image: linear-gradient(to bottom, var(--lime) 0.45em, var(--blue) 0.45em);
     }
   }
   /* Ab 700 px: zwei Spalten, Bildfeld in der rechten, mittig zur Höhe des Menüs */
@@ -170,7 +212,7 @@ const hasAside = Astro.slots.has('aside');
     gap: clamp(0.35rem, 1.2vh, 0.9rem);
   }
   .bm-list a {
-    font-size: clamp(2.3rem, 10.5vw, 4.75rem);
+    font-size: var(--bm-item);
     line-height: 0.95;
     text-decoration: none;
     color: inherit;

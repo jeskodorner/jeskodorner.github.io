@@ -578,11 +578,14 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   und Datenschutz. Ohne weiße Leiste und ohne Scrollen. Dasselbe Menü öffnet sich auf allen Geräten über den grünen
   Menü-Knopf oben rechts: Das Blau wächst als Kreis aus dem Knopf, der Schließen-Knopf sitzt an derselben Stelle,
   der Name führt zur Startseite. Eine Textleiste mit Menüpunkten gibt es nur noch als Rückfall für sehr alte Browser.
-  Am Handy (unter 700 px) steht alles mittig, ab 700 px linksbündig.
+  Am Handy (unter 700 px) steht der Name mittig, die Menüpunkte beginnen an seiner linken Kante, die Fußzeile ist
+  mittig. Ab 700 px ist alles linksbündig.
 - **Bildfeld auf der Startseite** (`src/components/BlendLoop.astro`): Fotos aus dem Portfolio (Liste `showroom`),
-  farblich invertiert und im Modus „Aufhellen“ übereinandergelegt, immer 4:3. Es sind immer zwei zu sehen. Alle
+  farblich invertiert und im Modus „Aufhellen“ übereinandergelegt, immer 4:3. Darüber liegt das Hintergrundblau im
+  Modus „Farbe“ (65 %), damit die Blautöne zum Blau der Seite passen (Stärke: `opacity` bei `.blend::after`). Es sind immer zwei zu sehen. Alle
   2,8 Sekunden blendet ein neues oben ein und das unterste verschwindet, so entstehen laufend neue Bilder (Reihenfolge
-  bei jedem Besuch zufällig). Am Laptop rechts neben dem Menü, am Handy mittig darunter. Mit „Bewegung reduzieren“
+  bei jedem Besuch zufällig). Am Laptop rechts neben dem Menü. Am Handy randlos über die ganze Breite, es beginnt
+  hinter „Kontakt“ (dort wird die Schrift blau, damit sie auf dem hellen Foto lesbar bleibt). Mit „Bewegung reduzieren“
   oder ohne JavaScript bleibt ein festes Paar stehen. Invertieren abschalten: in `BlendLoop.astro` die Zeile
   `filter: invert(1);` löschen. Die frühere Startseite liegt in der Git-Geschichte.
 
