@@ -30,8 +30,8 @@ export const site = {
    */
   hqAlbums: { baseUrl: '' },
 
-  /** Startseiten-Hero: 'image' = ein Bild, 'slideshow' = ruhige Überblendung */
-  hero: { mode: 'image' as 'image' | 'slideshow', secondsPerImage: 7 },
+  /** Startseite: Karussell neben dem Namen – Sekunden pro Foto (Fotos = „Ausgewählte Arbeiten“) */
+  hero: { secondsPerImage: 4.5 },
 
   /** Startseite: Abschnitt „Über mich“ (Porträt + Teaser) anzeigen? true = an, false = aus */
   home: { aboutTeaser: false as boolean },

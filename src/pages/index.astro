@@ -10,18 +10,15 @@ import EmailLink from '../components/EmailLink.astro';
 import portrait from '../assets/portrait.jpg';
 import { site } from '../config/site';
 import { useTranslations } from '../i18n';
-import { getHeroImages } from '../lib/galleries';
 import { getSelectedWorks } from '../lib/showroom';
 import { ogImage } from '../lib/images';
 
 const t = useTranslations();
 const text: Partial<CollectionEntry<'pages'>['data']> = (await getEntry('pages', 'startseite'))?.data ?? {};
-const heroes = await getHeroImages();
-const slideshow = site.hero.mode === 'slideshow' && heroes.length > 1;
-const heroList = slideshow ? heroes : heroes.slice(0, 1);
-const hero = heroes[0];
 const films = (await getCollection('films')).sort((a, b) => a.data.order - b.data.order || (b.data.year ?? 0) - (a.data.year ?? 0));
-const og = hero ? await ogImage(hero.image.src) : undefined;
+// Ausgewählte Arbeiten: Liste "showroom" in src/content/pages/startseite.md (siehe lib/showroom.ts)
+const works = await getSelectedWorks();
+const og = works[0] ? await ogImage(works[0].image.src) : undefined;
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -32,65 +29,68 @@ const jsonLd = {
   sameAs: [site.instagram.url],
 };
 
-// Ausgewählte Arbeiten: Liste "showroom" in src/content/pages/startseite.md (siehe lib/showroom.ts)
-const works = await getSelectedWorks();
-
 // Wörter für die schlichte Zeile unter dem Statement (aus der Zeile über dem Namen, z. B. „Fotografie · Kamera · Film“)
 const words = (text.kicker ?? 'Fotografie · Kamera · Film').split('·').map((w) => w.trim()).filter(Boolean);
 
-// Ruhige Überblendung im Hero-Rahmen, falls mehrere Hero-Bilder (site.hero.mode = 'slideshow')
-const duration = heroList.length * site.hero.secondsPerImage;
-const share = 100 / heroList.length;
-const fadePct = Math.min(share / 3, (1.5 / duration) * 100);
-const fadeCss = slideshow
-  ? `@keyframes hero-fade{0%{opacity:0}${fadePct.toFixed(2)}%{opacity:1}${share.toFixed(2)}%{opacity:1}${(share + fadePct).toFixed(2)}%{opacity:0}100%{opacity:0}}`
-  : '';
-const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : '3 / 2';
+// Karussell neben dem Namen: die ausgewählten Arbeiten blenden schlicht nacheinander über (nur Überblendung,
+// keine Bewegung; reines CSS, ohne Knöpfe)
+const slides = works;
+const duration = slides.length * site.hero.secondsPerImage;
+const share = 100 / Math.max(1, slides.length);
+const fadePct = Math.min(share / 3, (1.2 / Math.max(1, duration)) * 100);
+const fadeCss =
+  slides.length > 1
+    ? `@keyframes cs-fade{0%{opacity:0}${fadePct.toFixed(2)}%{opacity:1}${share.toFixed(2)}%{opacity:1}${(share + fadePct).toFixed(2)}%{opacity:0}100%{opacity:0}}`
+    : '';
 ---
 
 <BaseLayout image={og} jsonLd={jsonLd}>
   {fadeCss && <style is:inline set:html={fadeCss} slot="head" />}
 
-  <!-- Hero: Vollbild-Foto mit großem Namen -->
-  <section class="hero" aria-label={site.name}>
+  <!-- Kopf: großer Name, daneben (Handy: darunter) ein Karussell der ausgewählten Arbeiten -->
+  <section class="hero container container--wide" aria-label={site.name}>
+    <h1 class="hero-title display">
+      <span class="ht">Jesko</span>
+      <span class="ht ht-2">Dorner</span>
+    </h1>
     {
-      hero && (
+      slides.length > 0 && (
         <div
-          class:list={['px px--soft hero-media', { 'is-slideshow': slideshow }]}
-          style={`--n:${heroList.length};--dur:${duration}s;--focus:${hero.image.focus}`}
+          class:list={['carousel', { 'is-running': slides.length > 1 }]}
+          style={`--n:${slides.length};--dur:${duration}s`}
+          role="img"
+          aria-label={t.home.selected}
         >
-          {heroList.map((h, i) => (
-            <div class="slide" style={`--i:${i};--focus:${h.image.focus}`}>
-              <Picture
-                src={h.image.src}
-                alt={i === 0 ? h.image.alt : ''}
-                sizes="100vw"
-                color={h.image.color}
-                lqip={h.image.lqip}
-                loading={i === 0 ? 'eager' : 'lazy'}
-                fetchpriority={i === 0 ? 'high' : undefined}
-              />
-            </div>
-          ))}
+          {slides.map((w, i) => {
+            const r = w.image.src.width / w.image.src.height;
+            return (
+              <div class="cs-slide" style={`--i:${i};--r:${r.toFixed(4)}`} aria-hidden="true">
+                <Picture
+                  src={w.image.src}
+                  alt=""
+                  sizes="(min-width: 900px) 45vw, 90vw"
+                  color={w.image.color}
+                  lqip={w.image.lqip}
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  fetchpriority={i === 0 ? 'high' : undefined}
+                  maxWidth={1600}
+                  class="cs-img"
+                />
+              </div>
+            );
+          })}
         </div>
       )
     }
-    <div class="hero-shade" aria-hidden="true"></div>
-    <div class="hero-content container container--wide">
-      <h1 class="hero-title display">
-        <span class="ht">Jesko</span>
-        <span class="ht ht-2">Dorner</span>
-      </h1>
-      <div class="hero-bottom">
-        <p class="hero-claim">{site.claim}</p>
-        <div class="hero-ctas">
-          <a class="btn" href="/ausgewaehlte-arbeiten/">
-            {t.home.cta} <span class="arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="hero-credit" href="/galerien/">
-            {t.home.galleryLink} <span aria-hidden="true">→</span>
-          </a>
-        </div>
+    <div class="hero-bottom">
+      <p class="hero-claim">{site.claim}</p>
+      <div class="hero-ctas">
+        <a class="btn btn--solid" href="/ausgewaehlte-arbeiten/">
+          {t.home.cta} <span class="arrow" aria-hidden="true">→</span>
+        </a>
+        <a class="hero-link" href="/galerien/">
+          {t.home.galleryLink} <span class="arrow" aria-hidden="true">→</span>
+        </a>
       </div>
     </div>
   </section>
@@ -214,80 +214,25 @@ const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : 
 </BaseLayout>
 
 <style>
-  /* ---------- Hero: Vollbild ---------- */
+  /* ---------- Kopf: Name + Karussell ----------
+     Handy: Name, darunter Karussell, dann Satz und Links. Ab 900px: Name, Satz, Links links, Karussell rechts. */
   .hero {
-    position: relative;
-    display: flex;
-    align-items: flex-end;
-    min-height: calc(100svh - var(--header-h));
-    color: #ffffff;
-    background: #0b0b0b;
-    overflow: hidden;
-    isolation: isolate;
-  }
-  .hero-media {
-    position: absolute;
-    inset: 0;
-    z-index: -2;
-    aspect-ratio: auto;
-    background: #0b0b0b;
-  }
-  .hero-media .slide {
-    position: absolute;
-    inset: 0;
-  }
-  .hero-media .slide :global(picture),
-  .hero-media .slide :global(img) {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: var(--focus, 50% 50%);
-  }
-  .is-slideshow .slide:not(:first-child) {
-    opacity: 0;
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    .is-slideshow .slide {
-      animation: hero-fade var(--dur) linear infinite both;
-      animation-delay: calc(var(--i) * var(--dur) / var(--n) - 1.5s);
-    }
-    .ht,
-    .hero-bottom {
-      animation: hero-in 0.9s var(--ease) both;
-    }
-    .ht-2 {
-      animation-delay: 0.08s;
-    }
-    .hero-bottom {
-      animation-delay: 0.2s;
-    }
-  }
-  @keyframes hero-in {
-    from {
-      opacity: 0;
-      translate: 0 2rem;
-    }
-  }
-  /* Abdunklung unten, damit Name und Text auf jedem Foto lesbar bleiben */
-  .hero-shade {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: linear-gradient(to top, rgb(11 11 11 / 0.85) 0%, rgb(11 11 11 / 0.6) 45%, rgb(11 11 11 / 0.28) 80%, rgb(11 11 11 / 0.12) 100%);
-  }
-  .hero-content {
     display: grid;
-    gap: clamp(1rem, 2.5vw, 1.75rem);
-    justify-items: start;
-    padding-top: 6rem;
-    padding-bottom: clamp(1.5rem, 4vw, 3.5rem);
+    grid-template-areas: 'name' 'carousel' 'bottom';
+    gap: clamp(1.25rem, 3vw, 2.5rem);
+    padding-top: clamp(1.5rem, 4vw, 3rem);
+    padding-bottom: clamp(1rem, 3vw, 2rem);
+    container-type: inline-size;
   }
   .hero-title {
+    grid-area: name;
     display: flex;
     flex-direction: column;
-    font-size: clamp(4.6rem, 0.6rem + 18vw, 22rem);
+    /* Größe aus der Breite: „DORNER“ passt auch voll gedehnt (100 %) in die Spalte */
+    font-size: min(22rem, 100cqi / 4.6);
     line-height: 0.8;
     margin-left: -0.03em;
+    padding-top: 0.06em;
   }
   .ht {
     white-space: nowrap;
@@ -297,15 +242,13 @@ const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : 
     color: var(--pink);
   }
   .hero-bottom {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 1.25rem 2rem;
-    width: 100%;
+    grid-area: bottom;
+    display: grid;
+    gap: clamp(1rem, 2.5vw, 1.5rem);
+    justify-items: start;
   }
   .hero-claim {
-    font-size: clamp(1.35rem, 1rem + 1.4vw, 2.4rem);
+    font-size: clamp(1.35rem, 1rem + 1.2vw, 2.2rem);
     font-weight: 600;
     line-height: 1.12;
     letter-spacing: -0.015em;
@@ -317,13 +260,94 @@ const heroRatio = hero ? `${hero.image.src.width} / ${hero.image.src.height}` : 
     align-items: center;
     gap: 0.75rem 1.5rem;
   }
-  .hero-credit {
+  .hero-link {
     font-size: var(--fs-sm);
-    font-weight: 600;
-    color: #ffffff;
+    font-weight: 700;
+    color: var(--ink);
   }
-  .hero-credit:hover {
-    color: var(--lime);
+  .hero-link:hover {
+    color: var(--accent);
+  }
+
+  /* Karussell: Fotos unbeschnitten mit Schatten, blenden nacheinander über – keine Knöpfe */
+  .carousel {
+    --ch: clamp(16rem, 72vw, 30rem);
+    grid-area: carousel;
+    position: relative;
+    height: var(--ch);
+  }
+  .cs-slide {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+  }
+  .cs-slide :global(picture) {
+    display: contents;
+  }
+  /* Breite aus dem Seitenverhältnis: nie höher als das Karussell, nie breiter als die Spalte */
+  .cs-slide :global(.cs-img) {
+    display: block;
+    width: min(100%, calc(var(--ch) * var(--r)));
+    height: auto;
+    box-shadow: var(--hang-shadow);
+  }
+  .is-running .cs-slide:not(:first-child) {
+    opacity: 0;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .is-running .cs-slide {
+      animation: cs-fade var(--dur) linear infinite both;
+      animation-delay: calc(var(--i) * var(--dur) / var(--n) - 1.2s);
+    }
+    .ht,
+    .hero-bottom {
+      animation: hero-in 0.9s var(--ease) both;
+    }
+    .ht-2 {
+      animation-delay: 0.08s;
+    }
+    /* Karussell erscheint nur, ohne sich zu bewegen */
+    .carousel {
+      animation: cs-in 0.8s ease both;
+    }
+    .hero-bottom {
+      animation-delay: 0.2s;
+    }
+  }
+  @keyframes hero-in {
+    from {
+      opacity: 0;
+      translate: 0 2rem;
+    }
+  }
+  @keyframes cs-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .hero {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+      grid-template-areas: 'name carousel' 'bottom carousel';
+      align-content: center;
+      align-items: end;
+      column-gap: clamp(2rem, 5vw, 6rem);
+      min-height: calc(100svh - var(--header-h) - 2rem);
+    }
+    .hero-title {
+      /* Spalte ist gut halb so breit */
+      font-size: min(16rem, 49cqi / 4.6);
+      align-self: end;
+    }
+    .hero-bottom {
+      align-self: start;
+    }
+    .carousel {
+      --ch: min(calc(100svh - var(--header-h) - 6rem), 44rem);
+      align-self: center;
+    }
   }
 
   /* Name zieht sich beim Scrollen in die Breite */

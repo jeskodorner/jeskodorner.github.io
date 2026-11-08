@@ -229,9 +229,9 @@ Pro Bild:
 | `alt` | ja | Was ist zu sehen? Für Screenreader und Suchmaschinen. Ohne Alt-Text bricht der Build bewusst ab. |
 | `caption` | | Bildunterschrift (in den Lightbox-Details) |
 | `originalUrl` | | Link zum Original. Dann erscheint „Original herunterladen“. |
-| `hero` | | `true` = großes Bild auf der Startseite |
+| `hero` | | wird nicht mehr verwendet (früher: großes Bild auf der Startseite). Die Startseite zeigt jetzt die ausgewählten Arbeiten. |
 | `exif` | | überschreibt ausgelesene Werte, z. B. `exif: { lens: "Helios 44-2" }` |
-| `focus` | | wichtigster Bildbereich, falls ein Foto doch einmal beschnitten wird (z. B. Hero der Startseite), z. B. `focus: "50% 30%"` (waagerecht senkrecht). Standard: Mitte. In Alben werden Fotos nie beschnitten. |
+| `focus` | | wichtigster Bildbereich, falls ein Foto doch einmal beschnitten wird (z. B. Film-Vorschaubilder), z. B. `focus: "50% 30%"` (waagerecht senkrecht). Standard: Mitte. In Alben werden Fotos nie beschnitten. |
 
 Unterhalb des Kopfbereichs kannst du optional einen längeren Text in Markdown schreiben.
 
@@ -433,11 +433,13 @@ haben keine Vor/Zurück-Navigation zu anderen Galerien und werden nicht von der 
 
 Alle Effekte sind reines CSS, ohne JavaScript, und laufen flüssig:
 
-- **Parallax:** Beschnittene Fotos (Hero, Film, Porträt) gleiten in ihrem Rahmen etwas langsamer als die Seite. Galerie-Fotos bewegen sich nicht, damit nichts beschnitten wird.
-- **Dehnende Titel:** Große Titel (Name im Hero, „Ausgewählte Arbeiten“, „Projekt anfragen“, Footer) ziehen sich beim Scrollen von schmal auf breit.
-- **Leuchtmarker:** `*markierte*` Wörter bekommen beim Hereinscrollen einen Lime- bzw. Pink-Marker. Der Satz unter dem Hero leuchtet Wort für Wort auf.
-- **Hero:** Das Vollbild-Foto bleibt stehen, der Name zieht sich beim Scrollen in die Breite.
-- **Weitere Effekte:** Das Hero-Foto hebt beim Scrollen ab, Texte steigen auf, der Fortschrittsbalken in Galerien zeigt die Galeriefarbe, und der Header wird kompakt.
+- **Parallax:** Beschnittene Fotos (Film, Porträt) gleiten in ihrem Rahmen etwas langsamer als die Seite. Galerie-Fotos bewegen sich nicht, damit nichts beschnitten wird.
+- **Dehnende Titel:** Große Titel (Name auf der Startseite, „Ausgewählte Arbeiten“, „Projekt anfragen“, Footer) ziehen sich beim Scrollen von schmal auf breit.
+- **Leuchtmarker:** `*markierte*` Wörter bekommen beim Hereinscrollen einen Lime- bzw. Pink-Marker. Der Satz unter dem Kopf der Startseite leuchtet Wort für Wort auf.
+- **Kopf der Startseite:** Der Name zieht sich beim Scrollen in die Breite. Daneben (Handy: darunter) blenden die
+  ausgewählten Arbeiten schlicht nacheinander über, ohne Bewegung und ohne Knöpfe (Sekunden pro Foto:
+  `hero.secondsPerImage` in `src/config/site.ts`). Bei „Bewegung reduzieren“ bleibt das erste Foto stehen.
+- **Weitere Effekte:** Texte steigen auf, der Fortschrittsbalken in Galerien zeigt die Galeriefarbe, und der Header wird kompakt.
 
 **Browser:** Chrome, Edge, Brave und Safari (ab Version 26) zeigen die Scroll-Bewegung. Firefox hatte diese Technik
 nach meinem Stand noch nicht standardmäßig aktiviert. Dort erscheint die Seite vollständig, nur ohne Scroll-Bewegung.
@@ -463,8 +465,6 @@ Alles in `src/config/site.ts`:
    Hinweis: Der gehostete Dienst ist laut GoatCounter für nicht-kommerzielle Nutzung kostenlos.
    Wenn du über die Seite Aufträge akquirierst, prüfe bitte die Bedingungen.
 
-**Hero-Slideshow:** `hero: { mode: 'slideshow' }` und bei mehreren Bildern `hero: true` setzen.
-Die Bilder blenden ruhig über, ohne JavaScript. Bei „Bewegung reduzieren“ bleibt das erste Bild stehen.
 
 **„Über mich“ auf der Startseite:** Der Abschnitt mit Porträt und Teaser ist im Moment ausgeschaltet.
 Mit `home: { aboutTeaser: true }` erscheint er wieder (zwischen Film und Kontakt). Die Seite „Über mich“ selbst bleibt immer erreichbar.
@@ -586,7 +586,7 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 - **Jede Galerie hat eine eigene Farbe.** Die Farbe erscheint im Button auf der Seite „Galerie“, im Farbband oben auf
   der Galerieseite, im Fortschrittsbalken und im Download-Kasten (Kundengalerien).
   Festlegen per `color: pink | blue | lime | orange | violet` in `index.md`. Ohne Angabe wechselt die Farbe automatisch reihum.
-- **Startseite:** Vollbild-Foto mit großem Namen, Leuchtmarker, eine schlichte Zeile „Fotografie — Kamera — Film“,
+- **Startseite:** großer Name auf Weiß mit Fotokarussell der ausgewählten Arbeiten, Leuchtmarker, eine schlichte Zeile „Fotografie — Kamera — Film“,
   „Ausgewählte Arbeiten“ als Bilderstapel zum Durchblättern (mit Link zur eigenen Seite, dort jedes Foto unbeschnitten
   an der weißen Wand), ein blauer Bereich „Bewegte Bilder“ und ein Lime-Bereich „Projekt anfragen“.
 
@@ -602,7 +602,7 @@ Kontraste nach WCAG 2.x:
 | Orange | `#FF5A1F` | Schwarz | 6,3 : 1 |
 | Violett | `#7C5CFF` | Schwarz | 4,5 : 1 |
 
-Pink als Textfarbe auf Weiß (3,3 : 1) nur für große Schrift ab 24 px, z. B. „Dorner“ im Hero und den Footer-Schriftzug.
+Pink als Textfarbe auf Weiß (3,3 : 1) nur für große Schrift ab 24 px, z. B. „Dorner“ auf der Startseite und den Footer-Schriftzug.
 
 **Schriften** (lokal, über Fontsource, Lizenz OFL):
 - **Anybody**: große Titel. Die Schrift ist stufenlos von extrem schmal (50 %) bis sehr breit (150 %) einstellbar.
