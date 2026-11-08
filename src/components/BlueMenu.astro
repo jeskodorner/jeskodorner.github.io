@@ -10,8 +10,8 @@
  * Slot „aside“ (Startseite: Bildfeld, BlendLoop.astro): am Handy randlos über die ganze Breite, beginnt hinter
  * „Kontakt“ (4:3, auf niedrigen Bildschirmen etwas flacher, aber immer randlos). Dort ist „Kontakt“ ein Fenster:
  * oben weiß, auf dem Foto zeigen die Buchstaben das Foto in seinen echten (positiven) Farben,
- * ab 700 px rechts neben den Menüpunkten: oben und unten bündig mit der Schrift, rechtsbündig am Seitenrand (gleicher
- * Abstand zum Bildschirmrand wie der Name links), damit die Seite nicht nach links kippt.
+ * ab 700 px bildschirmfüllend hinter Name, Menü und Fußzeile. Die Menüschrift hebt sich dort mit einem weichen
+ * Schatten ab, der der Maus folgt (der Mauszeiger ist das Licht). Der Name bleibt rosa hinterlegt, ohne Schatten.
  * Der Name ist rosa hinterlegt mit schwarzer Schrift (wie markierter Text) – das einzige große Rosa auf der Seite.
  * Übergang: Name, Menüpunkte und Fußzeile tragen feste view-transition-Namen. Beim Wechsel Menü → Startseite
  * gleiten sie an ihren neuen Platz; von der Startseite auf eine Unterseite gleitet der Name ins Logo oben links.
@@ -106,6 +106,36 @@ const hasAside = Astro.slots.has('aside');
     bm.classList.add('has-window');
   }
   for (const bm of document.querySelectorAll<HTMLElement>('.bm--aside')) initWindow(bm);
+
+  /* Startseite am Laptop: Der Schatten der Menüschrift wandert mit der Maus – er fällt vom Mauszeiger weg, als wäre
+     der Zeiger eine Lampe. Weich nachgezogen; bei „Bewegung reduzieren“ oder ohne Maus bleibt er in Ruhelage. */
+  function initShadow(bm: HTMLElement) {
+    const list = bm.querySelector<HTMLElement>('.bm-list');
+    const mq = matchMedia('(min-width: 700px) and (hover: hover) and (prefers-reduced-motion: no-preference)');
+    if (!list) return;
+    const MAX = 0.14; // größter Versatz in Schrifthöhen
+    let x = 0.05; // Ruhelage wie im CSS
+    let y = 0.07;
+    let tx = x;
+    let ty = y;
+    let raf = 0;
+    const clamp = (v: number) => Math.max(-1, Math.min(1, v));
+    const step = () => {
+      x += (tx - x) * 0.1;
+      y += (ty - y) * 0.1;
+      bm.style.setProperty('--sx', `${x.toFixed(4)}em`);
+      bm.style.setProperty('--sy', `${y.toFixed(4)}em`);
+      raf = Math.abs(tx - x) + Math.abs(ty - y) > 0.0005 ? requestAnimationFrame(step) : 0;
+    };
+    addEventListener('pointermove', (e) => {
+      if (e.pointerType !== 'mouse' || !mq.matches) return;
+      const r = list.getBoundingClientRect();
+      tx = clamp((r.left + r.width / 2 - e.clientX) / (innerWidth / 2)) * MAX;
+      ty = clamp((r.top + r.height / 2 - e.clientY) / (innerHeight / 2)) * MAX;
+      if (!raf) raf = requestAnimationFrame(step);
+    });
+  }
+  for (const bm of document.querySelectorAll<HTMLElement>('.bm--aside')) initShadow(bm);
 </script>
 
 <style>
@@ -256,23 +286,48 @@ const hasAside = Astro.slots.has('aside');
       padding-top: 1.25rem;
     }
   }
-  /* Ab 700 px: links die Menüpunkte (so breit wie der längste), rechts der Platz bis zum Seitenrand.
-     Das Bildfeld reicht genau von der Oberkante der Buchstaben von „Portfolio“ bis zur Unterkante von „Kontakt“
-     (gemessen: Buchstaben beginnen 0,07 und enden 0,2 Schrifthöhen innerhalb ihrer Zeile) und steht rechtsbündig
-     am Seitenrand – so weit vom rechten Bildschirmrand wie der Name vom linken. Ist der Platz zu schmal, wird es
-     kleiner und hält mindestens 3rem Abstand zum Menütext. */
+  /* Ab 700 px: alles linksbündig, das Bildfeld füllt den ganzen Bildschirm hinter Name, Menü und Fußzeile
+     (über den Seitenrand des Containers hinaus bis an die Bildschirmränder). */
   @media (min-width: 700px) {
     .bm-body {
       flex: none;
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
-      column-gap: 0;
     }
     .bm-aside {
-      padding-block: calc(0.07 * var(--bm-item)) calc(0.2 * var(--bm-item));
-      container-type: size;
-      place-items: center end;
-      --blend-w: min(100cqw - 3rem, 133.33cqh);
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: calc(50% - 50vw);
+      width: 100vw;
+      z-index: -1; /* hinter allem, aber über dem Hintergrund */
+      --blend-w: 100%;
+      --blend-h: 100%;
+    }
+    /* Menüschrift hebt sich mit Schatten vom Foto ab. --sx/--sy (Versatz) setzt das Skript je nach Mausposition. */
+    .bm--aside {
+      /* eigene Ebene, damit das Foto (z-index -1) über dem Seitenhintergrund und unter der Schrift liegt */
+      position: relative;
+      isolation: isolate;
+      --sx: 0.05em;
+      --sy: 0.07em;
+    }
+    /* naher Schatten + weiter, weicher Schatten (beide wandern) + leichter Schimmer rundum für helle Fotostellen */
+    .bm--aside .bm-list a {
+      text-shadow:
+        var(--sx) var(--sy) 0.06em rgb(14 20 32 / 0.55),
+        calc(var(--sx) * 2.5) calc(var(--sy) * 2.5) 0.35em rgb(14 20 32 / 0.35),
+        0 0 0.2em rgb(14 20 32 / 0.3);
+    }
+    /* kleine Schrift: kräftigerer Schimmer, sonst geht sie auf hellen Fotos unter */
+    .bm--aside .bm-foot a {
+      text-shadow:
+        var(--sx) var(--sy) 0.1em rgb(14 20 32 / 0.6),
+        0 0 0.15em rgb(14 20 32 / 0.65),
+        0 0 0.6em rgb(14 20 32 / 0.55);
+    }
+    .bm--aside .bm-list a:hover,
+    .bm--aside .bm-list a[aria-current='page'],
+    .bm--aside .bm-foot a:hover {
+      text-shadow: none;
     }
   }
   .bm-list {
