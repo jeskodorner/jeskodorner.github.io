@@ -73,7 +73,7 @@
   color: #0b0b0b;
 }
 .pswp__top-bar .pswp__button:hover {
-  background: var(--hover, #ff5a1f);
+  background: var(--hover, #e66330);
 }
 .pswp__button:focus-visible,
 .jd-step:focus-visible .jd-step-circle {
@@ -90,7 +90,7 @@
   color: #ffffff;
 }
 .pswp__top-bar .pswp__button--close:hover {
-  background: var(--hover, #ff5a1f);
+  background: var(--hover, #e66330);
 }
 .pswp__top-bar .pswp__button--close:hover .pswp__icn {
   color: #0b0b0b;
@@ -149,7 +149,7 @@
   transition: background-color 0.2s;
 }
 .jd-step:hover .jd-step-circle {
-  background: var(--hover, #ff5a1f);
+  background: var(--hover, #e66330);
 }
 .jd-step-icn {
   width: 18px;

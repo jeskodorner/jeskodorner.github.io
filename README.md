@@ -566,7 +566,7 @@ Falls du das je neu einrichten oder umziehen musst:
 
 ## 11. Design: Farben und Schriften
 
-Look „White Cube“: weiße Galeriewände, schwarze Schrift, knallige Farbflächen. Definiert in `src/styles/tokens.css`.
+Look „White Cube“: weiße Galeriewände, schwarze Schrift, verblichene Farbflächen. Definiert in `src/styles/tokens.css`.
 Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 
 - **Fotos werden nie beschnitten**: in Alben, Übersichten und der Lightbox immer im Originalformat, groß mit weißem
@@ -574,9 +574,13 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 - **Jede Galerie hat eine eigene Farbe.** Die Farbe erscheint im Button auf der Seite „Galerie“, im Farbband oben auf
   der Galerieseite, im Fortschrittsbalken und im Download-Kasten (Kundengalerien).
   Festlegen per `color: pink | blue | lime | orange | violet` in `index.md`. Ohne Angabe wechselt die Farbe automatisch reihum.
+  Die fünf Farben sind aufeinander abgestimmt: alle gleich hell und gleich zurückhaltend wie das Korallenrosa, nur
+  der Farbton wechselt – Rosa `#EF9D9F`, Aprikose `#ECAF80` (`orange`), Salbei `#9AD4B4` (`lime`), Taubenblau
+  `#95B8DD` (`blue`), Lavendel `#B9A6DD` (`violet`). Auf allen steht schwarze Schrift.
 - **Links und Überfahren:** Links und kleine Akzentschrift (z. B. die Jahreszahlen auf „Über mich“) sind im Blau
   der Startseite `#58677F` (Token `--accent`). Beim Überfahren bleibt die Schrift, der Unterstrich wird orange
-  (Token `--hover`); Knöpfe, Abspielen und die Knöpfe der Lightbox werden orange hinterlegt. In der schwarzen
+  (Token `--hover`, `#E66330`); Knöpfe, Abspielen und die Knöpfe der Lightbox werden orange hinterlegt. Nebentext ist
+  ein leicht kühles Grau `#5B616A`, passend zum Schieferblau. In der schwarzen
   Fußzeile gibt es keine Unterstriche, beim Überfahren werden die Links schieferblau, der große Schriftzug ist rosa.
 - **Rosa** ist ein verblichenes Korallenrosa `#EF9D9F` (vorher kräftiges Pink `#FF3D8B`, kurz Altrosa `#E59BB0`).
   Es gilt auch für Galerien mit `color: pink`.
@@ -610,20 +614,24 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   - *Andere Hintergründe* (Fotos nur invertiert): kräftiges Blau `#2B3BFF` (mit Grün als Akzent) und Blaugrün
     `#3D8AAE`. Ausprobieren: in `tokens.css` z. B. `--menu-bg: var(--blue);` setzen. Der grüne Akzent war `var(--lime)`
     statt `var(--pink)` in `BlueMenu.astro` und beim Menü-Knopf in `Header.astro`.
+  - *Knallige Galeriefarben* (bis November 2026): Blau `#2B3BFF` (weiße Schrift), Lime `#D4FF3A`, Orange `#FF5A1F`
+    (auch fürs Überfahren), Violett `#7C5CFF`, Nebentext `#5C5C5C`. Im Git-Verlauf markiert als Tag
+    `alte-version-knallige-galeriefarben`. Zurückholen: die Werte in `tokens.css` wieder eintragen (`--on-blue: #ffffff`).
 
 Kontraste nach WCAG 2.x:
 
 | Farbe | Hex | Textfarbe darauf | Kontrast |
 |---|---|---|---|
-| Wand | `#FFFFFF` | Schwarz `#0B0B0B` / Nebentext `#5C5C5C` | 19,6 : 1 / 6,7 : 1 |
+| Wand | `#FFFFFF` | Schwarz `#0B0B0B` / Nebentext `#5B616A` | 19,6 : 1 / 6,2 : 1 |
 | Links, kleine Akzente | Schieferblau `#58677F` auf Weiß | – | 5,7 : 1 |
 | Rosa | `#EF9D9F` | Schwarz | 9,4 : 1 |
-| Blau | `#2B3BFF` | Weiß | 6,6 : 1 |
 | Startseite/Menü | `#58677F` | Weiß | 5,7 : 1 |
 | Akzent im Menü | Rosa `#EF9D9F` (Fläche) | Schwarz | 9,4 : 1 |
-| Lime | `#D4FF3A` | Schwarz | 17,0 : 1 |
-| Orange | `#FF5A1F` | Schwarz | 6,3 : 1 |
-| Violett | `#7C5CFF` | Schwarz | 4,5 : 1 |
+| Aprikose (`orange`) | `#ECAF80` | Schwarz | 10,3 : 1 |
+| Salbei (`lime`) | `#9AD4B4` | Schwarz | 11,7 : 1 |
+| Taubenblau (`blue`) | `#95B8DD` | Schwarz | 9,5 : 1 |
+| Lavendel (`violet`) | `#B9A6DD` | Schwarz | 9,0 : 1 |
+| Überfahren | Orange `#E66330` | Schwarz / als Unterstrich auf Weiß | 5,8 : 1 / 3,4 : 1 |
 
 Rosa nie als Schriftfarbe auf Weiß (zu blass), nur als Fläche mit schwarzer Schrift.
 

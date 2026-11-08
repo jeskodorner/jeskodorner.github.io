@@ -311,8 +311,8 @@ html:not(.js) .js-only {
   color: var(--ink);
 }
 .btn--accent {
-  background: var(--blue);
-  border-color: var(--blue);
+  background: var(--accent);
+  border-color: var(--accent);
   color: #fff;
 }
 .btn--accent:hover {

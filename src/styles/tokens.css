@@ -1,15 +1,19 @@
 /*
- * Design-Tokens – „White Cube“: weiße Galeriewände, schwarze Schrift, knallige Farbflächen.
+ * Design-Tokens – „White Cube“: weiße Galeriewände, schwarze Schrift, verblichene Farbflächen.
+ *
+ * Abgestimmte Palette: Die fünf Galeriefarben sind gleich hell und gleich zurückhaltend wie das Korallenrosa
+ * (OKLCH: Helligkeit ≈ 0,78, Sättigung ≈ 0,08), nur der Farbton wechselt. Dazu Schieferblau (Startseite, Links)
+ * und ein etwas kräftigeres Orange nur fürs Überfahren. Die frühere knallige Palette: Git-Tag
+ * alte-version-knallige-galeriefarben (siehe README).
  *
  * Kontraste (WCAG 2.x):
- *   Text #0B0B0B auf Weiß 19,6:1 · Nebentext #5C5C5C 6,7:1 · Links/Blau #2B3BFF 6,6:1
- *   Farbflächen mit ihrer Textfarbe:
- *     Rosa   #EF9D9F + Schwarz 9,4:1      Blau   #2B3BFF + Weiß 6,6:1
- *     Lime   #D4FF3A + Schwarz 17,0:1     Orange #FF5A1F + Schwarz 6,3:1
- *     Violett #7C5CFF + Schwarz 4,5:1
+ *   Text #0B0B0B auf Weiß 19,6:1 · Nebentext #5B616A 6,2:1 · Links #58677F 5,7:1
+ *   Farbflächen, alle mit schwarzer Schrift:
+ *     Rosa #EF9D9F 9,4:1 · Aprikose #ECAF80 10,3:1 · Salbei #9AD4B4 11,7:1
+ *     Taubenblau #95B8DD 9,5:1 · Lavendel #B9A6DD 9,0:1
  *   Rosa nie als Schriftfarbe auf Weiß (zu blass), nur als Fläche mit schwarzer Schrift.
  *   Startseite/Menü #58677F + Weiß 5,7:1 · Akzent dort: Rosa-Fläche mit Schwarz 9,4:1
- *   Links/Akzentschrift #58677F auf Weiß 5,7:1 · Überfahren: Unterstrich bzw. Fläche in Orange
+ *   Überfahren: Unterstrich bzw. Fläche in Orange #E66330 (Unterstrich auf Weiß 3,4:1, Fläche + Schwarz 5,8:1)
  */
 
 :root {
@@ -22,25 +26,26 @@
 
   /* Schrift */
   --ink: #0b0b0b;
-  --ink-soft: #5c5c5c;
+  --ink-soft: #5b616a; /* leicht kühles Grau, passend zum Schieferblau */
   --line: rgb(11 11 11 / 0.12);
   --line-strong: #0b0b0b;
 
-  /* Pop-Farben (Galerien) und ihre Textfarben */
+  /* Galeriefarben (verblichen, alle gleich hell) und ihre Textfarben. Die Namen bleiben wegen color: … in den
+     Galerien/Filmen gleich: „lime“ ist jetzt Salbeigrün, „orange“ Aprikose, „blue“ Taubenblau, „violet“ Lavendel. */
   /* verblichenes Korallenrosa (vorher kräftiges Pink #ff3d8b, kurz Altrosa #e59bb0) */
   --pink: #ef9d9f;
   --on-pink: #0b0b0b;
-  --blue: #2b3bff;
-  --on-blue: #ffffff;
+  --blue: #95b8dd;
+  --on-blue: #0b0b0b;
   /* Hintergrund von Startseite und Menü: Schieferblau, aus der Stirn eines invertierten Portfolio-Fotos gemessen.
      Akzent dort: Rosa (Felder mit schwarzer Schrift). Ausprobiert: #2b3bff, #3d8aae – siehe README. */
   --menu-bg: #58677f;
   --on-menu: #ffffff;
-  --lime: #d4ff3a;
+  --lime: #9ad4b4;
   --on-lime: #0b0b0b;
-  --orange: #ff5a1f;
+  --orange: #ecaf80;
   --on-orange: #0b0b0b;
-  --violet: #7c5cff;
+  --violet: #b9a6dd;
   --on-violet: #0b0b0b;
 
   /* Rollen (von Komponenten verwendet) */
@@ -48,7 +53,7 @@
   --paper-2: var(--wall-2);
   --sand: var(--wall-3);
   --accent: var(--menu-bg); /* Links, kleine Akzentschrift, Fokusrahmen – das Blau der Startseite */
-  --hover: var(--orange); /* Überfahren: Unterstrich (Links) bzw. Fläche (Knöpfe) */
+  --hover: #e66330; /* Überfahren: Unterstrich (Links) bzw. Fläche (Knöpfe) – Orange, etwas ruhiger als früher */
   --accent-vivid: var(--pink); /* nur große Schrift und Flächen */
   --on-accent: #ffffff;
   --scrim: 11 11 11;
