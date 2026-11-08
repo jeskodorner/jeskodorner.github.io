@@ -13,73 +13,147 @@
 .pswp__img {
   box-shadow: var(--hang-shadow);
 }
-.pswp__counter {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 900;
-  font-stretch: 70%;
-  opacity: 1;
-  margin-inline-start: 1.25rem;
+/* ---------- Leiste oben: alles aus einem Guss ----------
+   Zahl in derselben Schrift wie „Vorheriges/Nächstes Bild“, alle Knöpfe 44px rund mit 1,5px Rand
+   und gleichen Linien-Symbolen. Nur „Schließen“ ist gefüllt. Höhe 64px (wie BAR_H in scripts/lightbox.ts). */
+.pswp__top-bar {
+  height: 64px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px 0 18px;
+}
+@media (min-width: 900px) {
+  .pswp__top-bar {
+    padding: 0 22px 0 26px;
+  }
+}
+.pswp__counter,
+.jd-step-label {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 800;
+  font-stretch: 85%;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
   color: #0b0b0b;
+}
+.pswp__counter {
+  height: auto;
+  margin: 0 auto 0 0;
+  line-height: 1;
+  opacity: 1;
   text-shadow: none;
 }
-.pswp__button {
-  opacity: 1;
-}
-.pswp__button:focus-visible {
-  outline: 3px solid #2b3bff;
-  outline-offset: -4px;
-}
-/* Eigene Symbole (Details, Teilen, Download) sind Linien-Icons in der Textfarbe */
-.pswp__button--jd-info .pswp__icn,
-.pswp__button--jd-share .pswp__icn,
-.pswp__button--jd-download .pswp__icn {
-  width: 24px;
-  height: 24px;
-  top: 18px;
-  left: 13px;
-  fill: none;
-  color: var(--pswp-icon-color);
-}
-
-/* Schließen: deutlich sichtbares rundes X oben rechts */
-.pswp__button--close {
-  --pswp-icon-color: #ffffff;
-  --pswp-icon-stroke-color: transparent;
-  width: 52px;
-  height: 52px;
-  margin: 10px 12px 0 6px;
+.pswp__top-bar .pswp__button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  border: 1.5px solid #0b0b0b;
   border-radius: 50%;
-  background: #0b0b0b;
+  background: #ffffff;
+  opacity: 1;
   transition:
     background-color 0.2s,
-    scale 0.3s var(--pop);
+    color 0.2s;
 }
-.pswp__button--close .pswp__icn {
-  top: 10px;
-  left: 10px;
+.pswp__top-bar .pswp__button[hidden],
+.pswp:not(.pswp--zoom-allowed) .pswp__button--zoom {
+  display: none;
 }
-.pswp__button--close:hover {
-  --pswp-icon-color: #0b0b0b;
+.pswp__top-bar .pswp__icn {
+  position: static;
+  width: 20px;
+  height: 20px;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  color: #0b0b0b;
+}
+.pswp__top-bar .pswp__button:hover {
   background: #d4ff3a;
-  scale: 1.06;
 }
-.pswp__button--close:focus-visible {
-  outline-offset: 3px;
+.pswp__button:focus-visible,
+.jd-step:focus-visible .jd-step-circle {
+  outline: 3px solid #2b3bff;
+  outline-offset: 2px;
 }
-/* Details-Knopf: aktiv = schwarzer Kreis */
-.pswp__button--jd-info {
-  position: relative;
-}
-.pswp__button--jd-info[aria-expanded='true']::before {
-  content: '';
-  position: absolute;
-  inset: 9px 3px;
-  border-radius: 50%;
+/* Schließen und aktive Details: gefüllt */
+.pswp__top-bar .pswp__button--close,
+.pswp__top-bar .pswp__button--jd-info[aria-expanded='true'] {
   background: #0b0b0b;
 }
-.pswp__button--jd-info[aria-expanded='true'] .pswp__icn {
+.pswp__top-bar .pswp__button--close .pswp__icn,
+.pswp__top-bar .pswp__button--jd-info[aria-expanded='true'] .pswp__icn {
   color: #ffffff;
+}
+.pswp__top-bar .pswp__button--close:hover {
+  background: #d4ff3a;
+}
+.pswp__top-bar .pswp__button--close:hover .pswp__icn {
+  color: #0b0b0b;
+}
+
+/* ---------- „← Vorheriges Bild“ / „Nächstes Bild →“: direkt über dem Foto ----------
+   Lage und Breite setzt scripts/lightbox.ts passend zum Foto. Höhe 48px (wie NAV_H). */
+.pswp__jd-nav {
+  position: absolute;
+  top: 64px;
+  left: 16px;
+  z-index: 2;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.pswp__jd-nav.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+.pswp__jd-nav.is-tight .jd-step-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.pswp--one-slide .pswp__jd-nav {
+  display: none;
+}
+.jd-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  pointer-events: auto;
+}
+.jd-step--next {
+  flex-direction: row-reverse;
+}
+.jd-step-circle {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid #0b0b0b;
+  border-radius: 50%;
+  color: #0b0b0b;
+  transition: background-color 0.2s;
+}
+.jd-step:hover .jd-step-circle {
+  background: #d4ff3a;
+}
+.jd-step-icn {
+  width: 18px;
+  height: 18px;
 }
 
 /* ---------- Detail-Feld ----------
@@ -112,10 +186,6 @@
     padding: 1.5rem 1.75rem 2rem;
     border-top: 0;
     border-left: 2px solid #0b0b0b;
-  }
-  /* Pfeil „Nächstes Bild“ rückt neben die Spalte */
-  .pswp.jd-open .pswp__button--arrow--next {
-    right: 340px;
   }
 }
 .jd-d-head {
@@ -177,7 +247,7 @@
 .pswp__jd-toast {
   position: absolute;
   left: 50%;
-  top: 72px;
+  top: 120px;
   z-index: 3;
   translate: -50% 0;
   padding: 0.5rem 0.95rem;

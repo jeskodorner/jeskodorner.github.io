@@ -5,6 +5,8 @@
  *   Aufnahmedaten auf: am Desktop als Spalte rechts, auf dem Handy unten. Das Foto wird dabei kleiner
  *   und rückt zur Seite bzw. nach oben – das Feld liegt nie über dem Foto.
  *   Ob die Details offen sind, merkt sich die Seite für den Besuch.
+ * - „← Vorheriges Bild“ / „Nächstes Bild →“ stehen direkt über dem Foto (nicht darauf), so breit wie das Foto.
+ * - Oben eine einheitliche Leiste: alle Knöpfe gleich groß, rund, gleiche Linien-Symbole; nur „Schließen“ ist gefüllt.
  * - Teilbare URL: #bild-N öffnet direkt das Foto.
  */
 import PhotoSwipeLightbox from 'photoswipe/lightbox';
@@ -16,6 +18,10 @@ import { de } from '../i18n/de';
 const svg = (body: string) =>
   `<svg class="pswp__icn" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${body}</svg>`;
 const ICON = {
+  close: svg('<path d="M6 6l12 12M18 6 6 18"/>'),
+  zoom: svg(
+    '<circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 20 20"/><path d="M8 10.5h5"/><path class="pswp__zoom-icn-bar-v" d="M10.5 8v5"/>',
+  ),
   info: svg('<circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><circle cx="12" cy="7.7" r=".6" fill="currentColor"/>'),
   share: svg('<path d="M12 3v12M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v7.5h14V12"/>'),
   download: svg('<path d="M12 3v12M7.5 10.5 12 15l4.5-4.5"/><path d="M4 20h16"/>'),
@@ -27,6 +33,14 @@ const KEY = 'jd-details';
 const WIDE = 900;
 /** Breite der Detail-Spalte am Desktop (wie in lightbox.css) */
 const PANEL_W = 340;
+/** Höhe der Leiste oben und der Zeile mit „Vorheriges/Nächstes Bild“ (wie in lightbox.css) */
+const BAR_H = 64;
+const NAV_H = 48;
+
+const ARROW = {
+  prev: '<svg class="jd-step-icn" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12H5M11 6l-6 6 6 6"/></svg>',
+  next: '<svg class="jd-step-icn" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15M13 6l6 6-6 6"/></svg>',
+};
 
 function imageUrl(index: number) {
   return `${location.origin}${location.pathname}#bild-${index + 1}`;
@@ -74,6 +88,16 @@ export function initLightbox() {
   let panel: HTMLElement | undefined;
   let infoBtn: HTMLElement | undefined;
 
+  /** Weißer Rand ums Foto; Leiste, Pfeil-Zeile und offene Details bekommen ihren eigenen Platz */
+  const paddingFor = (viewport: { x: number; y: number }) => {
+    const top = BAR_H + (count > 1 ? NAV_H : 0) + 12;
+    if (viewport.x >= WIDE) {
+      return { top, bottom: 40, left: 56, right: open ? PANEL_W + 40 : 56 };
+    }
+    const side = viewport.x < 600 ? 16 : 32;
+    return { top, bottom: open ? sheetH + 16 : 24, left: side, right: side };
+  };
+
   const lightbox = new PhotoSwipeLightbox({
     gallery: galleryEl,
     children: 'a.ph',
@@ -83,18 +107,14 @@ export function initLightbox() {
     zoomAnimationDuration: reduced ? 0 : 333,
     closeTitle: de.lightbox.close,
     zoomTitle: de.lightbox.zoom,
-    arrowPrevTitle: de.lightbox.prev,
-    arrowNextTitle: de.lightbox.next,
+    closeSVG: ICON.close,
+    zoomSVG: ICON.zoom,
+    // Eigene Pfeile in der Zeile über dem Foto statt auf dem Foto
+    arrowPrev: false,
+    arrowNext: false,
     errorMsg: de.lightbox.error,
     indexIndicatorSep: ' / ',
-    // Weißer Rand ums Foto; offene Details bekommen ihren eigenen Platz
-    paddingFn: (viewport) => {
-      if (viewport.x >= WIDE) {
-        return { top: 76, bottom: 48, left: 96, right: open ? PANEL_W + 48 : 96 };
-      }
-      const side = viewport.x < 600 ? 16 : 48;
-      return { top: 64, bottom: open ? sheetH + 16 : 24, left: side, right: side };
-    },
+    paddingFn: paddingFor,
   });
 
   /** Inhalt des Detail-Felds für das aktuelle Foto */
@@ -161,6 +181,53 @@ export function initLightbox() {
   lightbox.on('uiRegister', () => {
     const ui = lightbox.pswp?.ui;
     if (!ui) return;
+
+    // „← Vorheriges Bild“ / „Nächstes Bild →“ über dem Foto
+    ui.registerElement({
+      name: 'jd-nav',
+      isButton: false,
+      appendTo: 'root',
+      html: '',
+      onInit: (row, pswp) => {
+        const step = (dir: 'prev' | 'next') => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = `jd-step jd-step--${dir}`;
+          b.title = dir === 'prev' ? de.lightbox.prev : de.lightbox.next;
+          b.innerHTML = `<span class="jd-step-circle">${ARROW[dir]}</span><span class="jd-step-label">${
+            dir === 'prev' ? de.lightbox.prevLabel : de.lightbox.nextLabel
+          }</span>`;
+          b.addEventListener('click', () => (dir === 'prev' ? pswp.prev() : pswp.next()));
+          return b;
+        };
+        row.append(step('prev'), step('next'));
+
+        // Direkt über die Oberkante des Fotos setzen, so breit wie das Foto (mindestens Platz für beide Beschriftungen).
+        // Gerechnet wird mit der Ruhelage des Fotos, nicht mit der Animation – so steht die Zeile sofort richtig.
+        const place = () => {
+          const s = pswp.currSlide;
+          if (!s || !s.width || !s.panAreaSize) return;
+          const z = s.zoomLevels.initial;
+          const w = s.width * z;
+          const h = s.height * z;
+          const pad = paddingFor(pswp.viewportSize);
+          const imgLeft = Math.round((s.panAreaSize.x - w) / 2) + pad.left;
+          const imgTop = Math.round((s.panAreaSize.y - h) / 2) + pad.top;
+          const vw = pswp.viewportSize.x;
+          const width = Math.min(Math.max(w, 330), vw - 32);
+          const left = Math.min(Math.max(imgLeft + w / 2 - width / 2, 16), vw - 16 - width);
+          row.style.left = `${left}px`;
+          row.style.width = `${width}px`;
+          row.style.top = `${imgTop - NAV_H}px`;
+          row.classList.toggle('is-tight', width < 330);
+          // Beim Hineinzoomen ausblenden, die Zeile würde sonst auf dem Foto liegen
+          row.classList.toggle('is-hidden', s.currZoomLevel > z * 1.01);
+        };
+        pswp.on('change', place);
+        pswp.on('zoomPanUpdate', place);
+        pswp.on('resize', place);
+      },
+    });
 
     // Details ein-/ausklappen
     ui.registerElement({

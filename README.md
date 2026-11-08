@@ -241,7 +241,8 @@ Unterhalb des Kopfbereichs kannst du optional einen längeren Text in Markdown s
   jede Reihe füllt die Breite. Die Reihen verteilt ein kleines Skript (`src/scripts/justify.ts`), damit kein
   einzelnes Foto am Reihenende riesig wird. Ohne JavaScript übernimmt reines CSS.
 - **Klick auf ein Foto** öffnet es groß in der Lightbox, mit weißem Rand ringsum (auch auf dem Handy).
-  Blättern per Wischen oder **←**/**→**, schließen per **Esc**.
+  Direkt über dem Foto stehen „← Vorheriges Bild“ und „Nächstes Bild →“ (nie auf dem Foto). Außerdem blättern per
+  Wischen oder **←**/**→**, schließen per **Esc**. Oben eine einheitliche Leiste: Nummer, Details, Teilen, Zoom, Schließen.
 - **Details** (i-Symbol oben oder Taste **I**): Albumtitel, „Bild 3 von 12“, Bildunterschrift (`caption`) und
   Aufnahmedaten (Kamera, Objektiv, Blende, Belichtung, ISO, Brennweite, Datum). Auf dem Handy klappen sie unten auf,
   am Desktop als Spalte rechts. Das Foto wird dabei kleiner und rückt zur Seite – die Details liegen nie über dem Foto.

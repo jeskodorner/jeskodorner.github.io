@@ -88,6 +88,8 @@ export const de = {
     zoom: 'Zoomen',
     prev: 'Vorheriges Bild (Pfeil links)',
     next: 'Nächstes Bild (Pfeil rechts)',
+    prevLabel: 'Vorheriges Bild',
+    nextLabel: 'Nächstes Bild',
     error: 'Das Bild konnte nicht geladen werden.',
     details: 'Details (I)',
     detailsRegion: 'Details zum Foto',
