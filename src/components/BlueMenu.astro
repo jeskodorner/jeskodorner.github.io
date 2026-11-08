@@ -4,6 +4,8 @@
  * Impressum und Datenschutz. Zwei Einsätze:
  *   - als Startseite (pages/index.astro): der Name ist die Hauptüberschrift
  *   - als Menü auf dem Handy (Header.astro): mit Schließen-Knopf, der Name führt zur Startseite
+ * Übergang: Name, Menüpunkte und Fußzeile tragen feste view-transition-Namen. Beim Wechsel Menü → Startseite
+ * gleiten sie an ihren neuen Platz; von der Startseite auf eine Unterseite gleitet der Name ins Logo oben links.
  */
 import { site } from '../config/site';
 import { useTranslations } from '../i18n';
@@ -88,6 +90,7 @@ const path = Astro.url.pathname;
   }
   /* Name: eine Zeile, so breit wie der Platz (aber nicht riesig) */
   .bm-name {
+    view-transition-name: jd-name;
     display: block;
     font-size: min(11rem, 100cqi / 5.4);
     line-height: 0.9;
@@ -98,6 +101,7 @@ const path = Astro.url.pathname;
   }
   /* Menüpunkte: deutlich kleiner als der Name, mit Luft dazwischen */
   .bm-list {
+    view-transition-name: jd-menu;
     list-style: none;
     padding: 0;
     margin-top: clamp(2.5rem, 9vh, 6rem);
@@ -115,6 +119,7 @@ const path = Astro.url.pathname;
     color: var(--lime);
   }
   .bm-foot {
+    view-transition-name: jd-menu-foot;
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem 1.5rem;

@@ -381,6 +381,19 @@ a:hover .arrow,
   animation-duration: 0.35s;
   animation-timing-function: var(--ease);
 }
+/* Blaues Menü ↔ Startseite ↔ Logo: Name, Menüpunkte und Fußzeile gleiten an ihren neuen Platz */
+::view-transition-group(jd-name),
+::view-transition-group(jd-menu),
+::view-transition-group(jd-menu-foot) {
+  animation-duration: 0.55s;
+  animation-timing-function: var(--ease);
+}
+::view-transition-old(jd-name),
+::view-transition-new(jd-name) {
+  animation-duration: 0.55s;
+  height: 100%;
+  object-fit: fill;
+}
 @media (prefers-reduced-motion: reduce) {
   @view-transition {
     navigation: none;

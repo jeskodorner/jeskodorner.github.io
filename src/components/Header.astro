@@ -76,6 +76,14 @@ const isCurrent = (match: string[]) => current(path, match);
   .logo:hover {
     color: var(--ink);
   }
+  /* Übergang: der große Name der Startseite gleitet ins Logo (und zurück). Bei offenem Handy-Menü trägt der
+     Name im Menü diesen Übergangsnamen – dann hier keiner, sonst gäbe es ihn doppelt. */
+  .logo-text {
+    view-transition-name: jd-name;
+  }
+  :global(html:has(#site-menu:popover-open)) .logo-text {
+    view-transition-name: none;
+  }
   .nav-desktop {
     display: none;
     margin-left: auto;
