@@ -8,11 +8,11 @@
  * Handy (unter 700 px): der Name steht mittig, die Menüpunkte linksbündig an seiner linken Kante, die Fußzeile mittig.
  * Ab 700 px: alles linksbündig.
  * Slot „aside“ (Startseite: Bildfeld, BlendLoop.astro): am Handy randlos über die ganze Breite, beginnt hinter
- * „Kontakt“ (4:3, auf niedrigen Bildschirmen etwas flacher, aber immer randlos). Dort ist „Kontakt“ ein Fenster:
- * oben weiß, auf dem Foto zeigen die Buchstaben das Foto in seinen echten (positiven) Farben,
- * ab 700 px rechts neben den Menüpunkten: oben und unten bündig mit der Schrift, rechtsbündig am Seitenrand (gleicher
- * Abstand zum Bildschirmrand wie der Name links), damit die Seite nicht nach links kippt.
- * Der Name ist rosa hinterlegt mit schwarzer Schrift (wie markierter Text) – das einzige große Rosa auf der Seite.
+ * „Kontakt“ (4:3, auf niedrigen Bildschirmen etwas flacher, aber immer randlos). Ab 700 px füllt es die rechte
+ * Bildschirmhälfte randlos von oben bis unten, der Name ragt hinein.
+ * Fenster: Wo ein Wort auf dem Foto liegt, zeigen seine Buchstaben das Foto in echten (positiven) Farben – am Handy
+ * die untere Hälfte von „Kontakt“, am Laptop der Teil des Namens, der ins Foto ragt (Skript unten).
+ * Farben: Name blau (ohne Fläche), Menüpunkte schwarz, aktueller Menüpunkt blau; beim Überfahren rosa Feld.
  * Übergang: Name, Menüpunkte und Fußzeile tragen feste view-transition-Namen. Beim Wechsel Menü → Startseite
  * gleiten sie an ihren neuen Platz; von der Startseite auf eine Unterseite gleitet der Name ins Logo oben links.
  */
@@ -82,34 +82,47 @@ const hasAside = Astro.slots.has('aside');
 </div>
 
 <script>
-  /* Startseite am Handy: „Kontakt“ als Fenster ins Foto. Die untere Hälfte des Worts ist durchsichtig; genau
-     darunter liegt im Bildfeld eine Kopie des Worts, die die Farben umkehrt (Modus „Differenz“ mit Weiß). Da das
-     Foto invertiert ist, zeigen die Buchstaben es so wieder positiv. Die Kopie muss im Bildfeld liegen, weil sich
-     das Menü wegen der Seitenübergänge nicht mit dem Foto mischen kann. Ohne JavaScript bleibt „Kontakt“ zweifarbig. */
-  function initWindow(bm: HTMLElement) {
-    const link = bm.querySelector<HTMLElement>('.bm-list li:last-child a');
+  /* Wörter als Fenster ins Foto: Wo ein Wort auf dem Foto liegt, ist es durchsichtig; genau darunter liegt im
+     Bildfeld eine Kopie des Worts, die die Farben umkehrt (Weiß im Modus „Differenz“). Da das Foto invertiert ist,
+     zeigen die Buchstaben es so wieder positiv. Die Kopie muss im Bildfeld liegen, weil sich Name und Menü wegen der
+     Seitenübergänge nicht mit dem Foto mischen können. Ohne JavaScript bleiben die Wörter einfach einfarbig.
+       Handy:  „Kontakt“ – die untere Hälfte liegt auf dem Foto (CSS: Verlauf von oben nach unten)
+       Laptop: der Name – der rechte Teil ragt ins Foto (CSS: Schnitt bei --split, dem linken Fotorand) */
+  type Prop = 'fontSize' | 'lineHeight' | 'letterSpacing' | 'paddingTop' | 'paddingLeft' | 'paddingRight';
+  const COPY: Prop[] = ['fontSize', 'lineHeight', 'letterSpacing', 'paddingTop', 'paddingLeft', 'paddingRight'];
+
+  function addWindow(bm: HTMLElement, source: HTMLElement | null, kind: string, flag: string) {
     const box = bm.querySelector<HTMLElement>('.bm-aside [data-blend]');
-    if (!link || !box) return;
+    if (!source || !box) return;
     const word = document.createElement('span');
-    word.className = 'bm-window display';
-    word.textContent = link.textContent?.trim() ?? '';
+    word.className = `bm-window bm-window--${kind} display`;
+    word.textContent = source.textContent?.trim() ?? '';
     box.append(word);
     // deckungsgleich über das echte Wort legen (auch nach Drehen, Größenänderung, Laden der Schrift)
     const place = () => {
-      const a = link.getBoundingClientRect();
+      const cs = getComputedStyle(source);
+      for (const p of COPY) word.style[p] = cs[p];
+      const a = source.getBoundingClientRect();
       const b = box.getBoundingClientRect();
       word.style.translate = `${a.left - b.left}px ${a.top - b.top}px`;
+      source.style.setProperty('--split', `${(b.left - a.left).toFixed(1)}px`);
     };
     place();
     new ResizeObserver(place).observe(bm);
     document.fonts?.ready.then(place);
-    bm.classList.add('has-window');
+    bm.classList.add(flag);
   }
-  for (const bm of document.querySelectorAll<HTMLElement>('.bm--aside')) initWindow(bm);
+
+  for (const bm of document.querySelectorAll<HTMLElement>('.bm--aside')) {
+    addWindow(bm, bm.querySelector('.bm-list li:last-child a'), 'kontakt', 'has-window');
+    addWindow(bm, bm.querySelector('.bm-name'), 'name', 'has-name-window');
+    // Beim Wechsel auf eine Unterseite gleitet der Name ins Logo – dafür ganz blau (die Kopie gleitet nicht mit)
+    addEventListener('pageswap', () => bm.classList.remove('has-name-window'));
+  }
 </script>
 
 <style>
-  /* Blaue Fläche über den ganzen Bildschirm; Inhalt von oben nach unten: Name, Menü, Fußzeile */
+  /* Weiße Fläche über den ganzen Bildschirm; Inhalt von oben nach unten: Name, Menü, Fußzeile */
   .bm {
     /* Schriftgröße der Menüpunkte */
     --bm-item: clamp(2.3rem, 10.5vw, 4.75rem);
@@ -150,9 +163,8 @@ const hasAside = Astro.slots.has('aside');
     background: var(--ink);
     color: var(--pink);
   }
-  /* Name: eine Zeile, so breit wie der Platz (aber nicht riesig). Rosa Fläche genau so breit wie die Schrift, schwarze
-     Schrift – wie markierter Text. Die Fläche ist 0,98 Schrifthöhen hoch, oben 0,125 und unten 0,175 Rand um die
-     Großbuchstaben. */
+  /* Name: eine Zeile, so breit wie der Platz (aber nicht riesig), in Blau. Im Menü ist er ein Link zur Startseite
+     und bekommt beim Überfahren dasselbe rosa Feld wie die Menüpunkte. */
   .bm-name {
     view-transition-name: jd-name;
     display: block;
@@ -162,6 +174,12 @@ const hasAside = Astro.slots.has('aside');
     padding-top: 0.08em;
     white-space: nowrap;
     text-decoration: none;
+    color: var(--accent);
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+  }
+  a.bm-name:hover {
     background: var(--pink);
     color: var(--ink);
   }
@@ -176,8 +194,18 @@ const hasAside = Astro.slots.has('aside');
   .bm-aside {
     display: grid;
   }
+  /* Kopien für die Fenster (siehe Skript): weiß im Modus „Differenz“, sichtbar nur, wo das Wort auf dem Foto liegt */
   .bm-aside :global(.bm-window) {
     display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    margin: 0;
+    white-space: nowrap;
+    color: #fff;
+    mix-blend-mode: difference;
+    pointer-events: none;
   }
   /* Handy – auf der Startseite und im Menü gleich: Raster mit drei Spalten. Die mittlere ist genau so breit wie der
      Name, so steht er mittig und die Menüpunkte beginnen an seiner linken Kante. Die Reihe nach dem Menü füllt den
@@ -238,19 +266,8 @@ const hasAside = Astro.slots.has('aside');
     .bm--aside.has-window .bm-list li:last-child a {
       background-image: linear-gradient(to bottom, var(--on-menu) 0.34em, transparent 0.5em);
     }
-    .bm-aside :global(.bm-window) {
+    .bm-aside :global(.bm-window--kontakt) {
       display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 1;
-      font-size: var(--bm-item);
-      line-height: 0.95;
-      padding-inline: 0.06em;
-      white-space: nowrap;
-      color: #fff;
-      mix-blend-mode: difference;
-      pointer-events: none;
     }
     .bm--aside .bm-list li:last-child a:hover {
       background-image: none;
@@ -264,23 +281,37 @@ const hasAside = Astro.slots.has('aside');
       padding-top: 1.25rem;
     }
   }
-  /* Ab 700 px: links die Menüpunkte (so breit wie der längste), rechts der Platz bis zum Seitenrand.
-     Das Bildfeld reicht genau von der Oberkante der Buchstaben von „Portfolio“ bis zur Unterkante von „Kontakt“
-     (gemessen: Buchstaben beginnen 0,07 und enden 0,2 Schrifthöhen innerhalb ihrer Zeile) und steht rechtsbündig
-     am Seitenrand – so weit vom rechten Bildschirmrand wie der Name vom linken. Ist der Platz zu schmal, wird es
-     kleiner und hält mindestens 3rem Abstand zum Menütext. */
+  /* Ab 700 px: geteilt – links auf Weiß Name, Menü und Fußzeile, rechts füllt das Foto die halbe Bildschirmbreite
+     randlos von oben bis unten. Der Name ragt ins Foto; dort zeigen seine Buchstaben das Foto positiv (Fenster). */
   @media (min-width: 700px) {
     .bm-body {
       flex: none;
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
-      column-gap: 0;
+    }
+    .bm--aside {
+      position: relative;
     }
     .bm-aside {
-      padding-block: calc(0.07 * var(--bm-item)) calc(0.2 * var(--bm-item));
-      container-type: size;
-      place-items: center end;
-      --blend-w: min(100cqw - 3rem, 133.33cqh);
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: calc(50% - 50vw); /* bis an den Bildschirmrand, auch wenn der Inhalt schmaler ist */
+      width: 50vw;
+      --blend-w: 100%;
+      --blend-h: 100%;
+    }
+    .bm--aside .bm-name {
+      position: relative;
+      z-index: 1; /* über dem Foto */
+    }
+    .bm-aside :global(.bm-window--name) {
+      display: block;
+    }
+    /* Mit JavaScript: links vom Fotorand blau, auf dem Foto durchsichtig (dort scheint die Kopie durch) */
+    .bm--aside.has-name-window .bm-name {
+      color: transparent;
+      background-image: linear-gradient(to right, var(--accent) var(--split, 100%), transparent var(--split, 100%));
+      -webkit-background-clip: text;
+      background-clip: text;
     }
   }
   .bm-list {
@@ -300,8 +331,8 @@ const hasAside = Astro.slots.has('aside');
     text-decoration: none;
     color: inherit;
   }
-  /* Aktiver bzw. überfahrener Punkt: rosa Feld mit schwarzer Schrift (Rosa als Schriftfarbe wäre auf dem Blau
-     kaum lesbar). Das Feld steht links und rechts ein klein wenig über, die Schrift bleibt an ihrem Platz. */
+  /* Aktueller Punkt (im Menü auf Unterseiten): blau. Überfahren: rosa Feld mit schwarzer Schrift. Das Feld steht
+     links und rechts ein klein wenig über, die Schrift bleibt an ihrem Platz. */
   .bm-list a {
     padding-inline: 0.06em;
     margin-inline: -0.06em;
@@ -309,8 +340,10 @@ const hasAside = Astro.slots.has('aside');
       background-color 0.2s,
       color 0.2s;
   }
-  .bm-list a:hover,
   .bm-list a[aria-current='page'] {
+    color: var(--accent);
+  }
+  .bm-list a:hover {
     background-color: var(--pink);
     color: var(--ink);
   }
@@ -322,7 +355,7 @@ const hasAside = Astro.slots.has('aside');
     margin-top: auto;
     padding-top: 2.5rem;
   }
-  /* Kleine Links schlicht weiß, beim Überfahren rosa hinterlegt wie die Menüpunkte */
+  /* Kleine Links schlicht schwarz, beim Überfahren rosa hinterlegt wie die Menüpunkte */
   .bm-foot a {
     color: inherit;
   }
