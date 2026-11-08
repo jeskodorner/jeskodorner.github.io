@@ -8,7 +8,7 @@
  *     Lime   #D4FF3A + Schwarz 17,0:1     Orange #FF5A1F + Schwarz 6,3:1
  *     Violett #7C5CFF + Schwarz 4,5:1
  *   Pink als Textfarbe auf Weiß nur für große Schrift (3,3:1, ab 24 px).
- *   Startseite/Menü #3D8AAE + Weiß 3,9:1 – genug für große Schrift (Name, Menüpunkte), kleine Schrift knapp darunter.
+ *   Startseite/Menü = Blau #2B3BFF + Weiß 6,6:1
  */
 
 :root {
@@ -30,8 +30,8 @@
   --on-pink: #0b0b0b;
   --blue: #2b3bff;
   --on-blue: #ffffff;
-  /* Hintergrund von Startseite und Menü. Alte Version: #2b3bff (= --blue), siehe README „Alte Versionen“. */
-  --menu-bg: #3d8aae;
+  /* Hintergrund von Startseite und Menü: das kräftige Blau. Ausprobiert: #3d8aae, #58677f – siehe README. */
+  --menu-bg: var(--blue);
   --on-menu: #ffffff;
   --lime: #d4ff3a;
   --on-lime: #0b0b0b;

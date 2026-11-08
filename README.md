@@ -574,7 +574,7 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 - **Jede Galerie hat eine eigene Farbe.** Die Farbe erscheint im Button auf der Seite „Galerie“, im Farbband oben auf
   der Galerieseite, im Fortschrittsbalken und im Download-Kasten (Kundengalerien).
   Festlegen per `color: pink | blue | lime | orange | violet` in `index.md`. Ohne Angabe wechselt die Farbe automatisch reihum.
-- **Startseite = das blaue Menü** (`src/components/BlueMenu.astro`): Fläche in Blaugrün `#3D8AAE` (Token
+- **Startseite = das blaue Menü** (`src/components/BlueMenu.astro`): Fläche im kräftigen Blau `#2B3BFF` (Token
   `--menu-bg` in `tokens.css`) über den ganzen Bildschirm, oben
   groß der Name, darunter die Menüpunkte (Portfolio, Galerie, Film, Über mich, Kontakt), unten Instagram, Impressum
   und Datenschutz. Ohne weiße Leiste und ohne Scrollen. Dasselbe Menü öffnet sich auf allen Geräten über den grünen
@@ -585,16 +585,18 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 - **Bildfeld auf der Startseite** (`src/components/BlendLoop.astro`): Fotos aus dem Portfolio (Liste `showroom`),
   farblich invertiert und im Modus „Aufhellen“ übereinandergelegt, immer 4:3. Es sind immer zwei zu sehen. Alle
   2,8 Sekunden blendet ein neues oben ein und das unterste verschwindet, so entstehen laufend neue Bilder (Reihenfolge
-  bei jedem Besuch zufällig). Am Laptop rechts neben dem Menü. Am Handy randlos über die ganze Breite, es beginnt
+  bei jedem Besuch zufällig). Am Laptop rechts neben dem Menü. Am Handy immer randlos über die ganze Breite (auf niedrigen
+  Bildschirmen etwas flacher als 4:3, damit nichts scrollt), es beginnt
   hinter „Kontakt“ (dort wird die Schrift in der Hintergrundfarbe gezeigt, damit sie auf dem hellen Foto lesbar bleibt). Mit „Bewegung reduzieren“
   oder ohne JavaScript bleibt ein festes Paar stehen. Invertieren abschalten: in `BlendLoop.astro` die Zeile
   `filter: invert(1);` löschen. Die frühere Startseite liegt in der Git-Geschichte.
-- **Alte Versionen (gemerkt):**
-  - *Startseite/Menü in Ultramarin `#2B3BFF`*, dazu Fotos im Bildfeld mit diesem Blau im Modus „Farbe“ (65 %)
-    eingefärbt. Im Git-Verlauf markiert als Tag `alte-version-blau-2b3bff`. Zurück zum Blau: in `tokens.css`
-    `--menu-bg: #2b3bff;` setzen. Die Einfärbung der Fotos: in `BlendLoop.astro` wieder ein
+- **Ausprobierte Versionen (gemerkt):**
+  - *Fotos im Bildfeld mit dem Blau eingefärbt* (Modus „Farbe“, 65 %). Im Git-Verlauf markiert als Tag
+    `alte-version-blau-2b3bff`. Zurückholen: in `BlendLoop.astro` wieder ein
     `.blend::after { content: ''; position: absolute; inset: 0; background: var(--menu-bg); mix-blend-mode: color; opacity: 0.65; }`
     ergänzen.
+  - *Andere Hintergründe* (Fotos nur invertiert): Blaugrün `#3D8AAE` und Schieferblau `#58677F` (aus der Stirn
+    eines invertierten Portfolio-Fotos gemessen). Ausprobieren: in `tokens.css` z. B. `--menu-bg: #58677f;` setzen.
 
 Kontraste nach WCAG 2.x:
 
@@ -604,7 +606,7 @@ Kontraste nach WCAG 2.x:
 | Links, kleine Akzente | Blau `#2B3BFF` auf Weiß | – | 6,6 : 1 |
 | Pink | `#FF3D8B` | Schwarz | 5,9 : 1 |
 | Blau | `#2B3BFF` | Weiß | 6,6 : 1 |
-| Startseite/Menü | `#3D8AAE` | Weiß | 3,9 : 1 (gut für große Schrift; kleine Schrift wie die Fußzeile liegt knapp unter 4,5 : 1) |
+| Startseite/Menü | wie Blau `#2B3BFF` | Weiß | 6,6 : 1 |
 | Lime | `#D4FF3A` | Schwarz | 17,0 : 1 |
 | Orange | `#FF5A1F` | Schwarz | 6,3 : 1 |
 | Violett | `#7C5CFF` | Schwarz | 4,5 : 1 |

@@ -8,7 +8,7 @@
  * Handy (unter 700 px): der Name steht mittig, die Menüpunkte linksbündig an seiner linken Kante, die Fußzeile mittig.
  * Ab 700 px: alles linksbündig.
  * Slot „aside“ (Startseite: Bildfeld, BlendLoop.astro): am Handy randlos über die ganze Breite, beginnt hinter
- * „Kontakt“ und füllt den Platz bis zur Fußzeile (4:3, kleiner nur auf sehr niedrigen Bildschirmen),
+ * „Kontakt“ (4:3, auf niedrigen Bildschirmen etwas flacher, aber immer randlos),
  * ab 700 px rechts neben den Menüpunkten: oben und unten bündig mit der Schrift, mittig zwischen Text und Bildschirmrand.
  * Übergang: Name, Menüpunkte und Fußzeile tragen feste view-transition-Namen. Beim Wechsel Menü → Startseite
  * gleiten sie an ihren neuen Platz; von der Startseite auf eine Unterseite gleitet der Name ins Logo oben links.
@@ -166,11 +166,14 @@ const hasAside = Astro.slots.has('aside');
       padding-top: 0;
       place-items: start center;
       container-type: size;
-      /* 4:3 über die ganze Breite – nur wenn die Höhe nicht reicht, etwas schmaler */
-      --blend-w: min(100cqw, 133.33cqh);
+      /* Immer über die ganze Breite. 4:3, nur wenn die Höhe dafür nicht reicht, etwas flacher (Fotos werden
+         dann oben und unten etwas mehr beschnitten) – so scrollt die Startseite nicht */
+      --blend-w: 100cqw;
+      --blend-h: min(75cqw, 100cqh);
     }
     .bm-foot {
       justify-content: center;
+      padding-top: 1.25rem;
     }
     /* „Kontakt“ läuft über die Oberkante des Bildfelds: oberhalb weiß, auf dem hellen Foto blau */
     .bm--aside .bm-list li:last-child a {

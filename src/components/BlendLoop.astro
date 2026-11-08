@@ -89,8 +89,9 @@ const { works } = Astro.props;
 <style>
   .blend {
     position: relative;
-    /* Breite gibt der Platz vor (BlueMenu.astro setzt --blend-w) */
+    /* Größe gibt der Platz vor (BlueMenu.astro setzt --blend-w, am Handy auch --blend-h; sonst 4:3) */
     width: var(--blend-w, 11rem);
+    height: var(--blend-h, auto);
     aspect-ratio: 4 / 3;
     flex: none;
     overflow: hidden;
