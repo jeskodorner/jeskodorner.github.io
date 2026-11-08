@@ -1,14 +1,14 @@
 ---
 /**
  * „Hängung“ (Seite „Portfolio“): Jedes Foto hängt unbeschnitten in seinem Originalformat an der
- * weißen Wand, mit viel Platz daneben und einem kleinen Schild mit Verweis auf sein Album.
+ * weißen Wand, mit viel Platz daneben und einem schlichten Schild (Name und Angaben, kein Link).
  * Ein Klick aufs Foto öffnet die Lightbox mit dem ganzen Album ab diesem Foto – direkt hier, ohne die
  * Albumseite (Daten und Skript: pages/portfolio.astro). Ohne JavaScript führt der Link ins Album.
  *   Alles linksbündig. Desktop: Foto links, Schild rechts daneben. Handy: Schild darunter.
  *   Größe: deutlich kleiner als der Bildschirm (Hochformate höchstens gut halb so hoch, Querformate höchstens
  *   knapp die halbe Breite), damit jedes Foto mit Luft für sich steht.
- * Schild: Hat das Foto einen eigenen Namen (Showroom), steht er als Titel da und darunter „Aus dem Album …“.
- *         Sonst ist der Album-Name der Titel und darunter „Zum Album“.
+ * Schild: Hat das Foto einen eigenen Namen (Showroom), steht er als Titel da und darunter der Album-Name.
+ *         Sonst ist der Album-Name der Titel.
  */
 import type { WorkItem } from '../lib/showroom';
 import Picture from './Picture.astro';
@@ -29,7 +29,6 @@ const { items } = Astro.props;
           <a
             class="work-media reveal"
             href={it.photoHref}
-            tabindex="-1"
             data-open-album={it.gallery.slug}
             data-photo={it.image.index}
           >
@@ -44,19 +43,7 @@ const { items } = Astro.props;
           </a>
           <div class="work-label">
             <p class="work-title">{it.name ?? it.album}</p>
-            {it.meta && <p class="work-meta">{it.meta}</p>}
-            <a class="work-link" href={it.href}>
-              {it.name ? (
-                <>Aus dem Album „{it.album}“</>
-              ) : (
-                <>
-                  Zum Album<span class="visually-hidden"> „{it.album}“</span>
-                </>
-              )}{' '}
-              <span class="arrow" aria-hidden="true">
-                →
-              </span>
-            </a>
+            {(it.name || it.meta) && <p class="work-meta">{[it.name && it.album, it.meta].filter(Boolean).join(' · ')}</p>}
           </div>
         </li>
       );
@@ -82,6 +69,10 @@ const { items } = Astro.props;
     justify-self: start;
     width: min(100%, calc(var(--work-h) * var(--r)));
   }
+  .work-media {
+    cursor: zoom-in;
+    outline-offset: 4px;
+  }
   .work :global(.work-img) {
     display: block;
     width: 100%;
@@ -106,14 +97,8 @@ const { items } = Astro.props;
     color: var(--ink-soft);
     font-variant-numeric: tabular-nums;
   }
-  .work-link {
-    margin-top: 0.35rem;
-    font-size: var(--fs-sm);
-    font-weight: 700;
-    color: var(--accent);
-  }
 
-  /* ---------- Desktop: Foto in voller Höhe, abwechselnd links/rechts, Schild unten daneben ---------- */
+  /* ---------- Desktop: Foto links, Schild unten daneben ---------- */
   @media (min-width: 900px) {
     .work {
       display: flex;

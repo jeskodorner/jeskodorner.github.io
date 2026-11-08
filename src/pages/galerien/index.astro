@@ -82,6 +82,8 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
      Breite ∝ Seitenverhältnis (flex-grow). scripts/justify.ts füllt jede Reihe, ohne JS bleibt die letzte ungestreckt (::after). */
   .cards {
     --row: clamp(118px, 45px + 19vw, 340px);
+    /* So schmal wird kein Titelbild (Hochformate bleiben groß genug, der Titel passt darunter) */
+    --min-w: clamp(150px, 40vw, 200px);
     list-style: none;
     padding: 0;
     display: flex;

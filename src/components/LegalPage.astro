@@ -8,21 +8,25 @@ export interface Props {
 }
 const { title, description } = Astro.props;
 const t = useTranslations();
+// Der Hinweis erscheint nur, solange noch Platzhalter (class="ph") im Text stehen
+const html = await Astro.slots.render('default');
+const hasPlaceholders = /class="ph[\s"]/.test(html);
 ---
 
 <BaseLayout title={title} description={description}>
   <article class="container container--wide legal">
     <h1 class="display display-2">{title}</h1>
-    <p class="warning" role="note"><strong>Hinweis:</strong> {t.legal.placeholder}</p>
-    <div class="prose">
-      <slot />
-    </div>
+    {hasPlaceholders && <p class="warning" role="note"><strong>Hinweis:</strong> {t.legal.placeholder}</p>}
+    <div class:list={['prose', { 'prose--final': !hasPlaceholders }]} set:html={html} />
   </article>
 </BaseLayout>
 
 <style>
   .legal {
     padding-top: clamp(2.5rem, 6vw, 5rem);
+  }
+  .prose--final {
+    margin-top: 2.5rem;
   }
   .warning {
     max-width: var(--max-text);

@@ -413,6 +413,8 @@ a:hover .arrow,
    scripts/justify.ts verteilt die Reihen genauer, ohne JavaScript übernimmt dieses CSS. */
 .tiles {
   --row: clamp(95px, 55px + 12vw, 230px);
+  /* So schmal wird kein Foto (Hochformate neben Querformaten bleiben erkennbar) */
+  --min-w: clamp(84px, 22vw, 150px);
   list-style: none;
   padding: 0;
   display: flex;

@@ -1,6 +1,7 @@
 /**
  * Gleich hohe, randvolle Reihen „wie Lightroom“ für Listen mit [data-justify].
  * Jedes Kind trägt sein Seitenverhältnis als CSS-Variable --r, die Zielhöhe einer Reihe kommt aus CSS (--row).
+ * Optional --min-w: so schmal soll kein Foto werden (sonst wird z. B. ein Hochformat neben Querformaten winzig).
  *
  * Das Skript verteilt die Fotos so auf Reihen, dass JEDE Reihe die ganze Breite füllt – auch die letzte – und
  * alle Reihen insgesamt möglichst nah an der Zielhöhe bleiben (die Verteilung wird über die ganze Liste
@@ -15,12 +16,14 @@ const MAX_GROW = 1.9;
 const MAX_VIEWPORT = 0.8;
 /** Höchstens so viel kleiner (mehr Fotos passen dann nicht in eine Reihe) */
 const MIN_SHRINK = 0.55;
+/** Wie stark ein zu schmales Foto bestraft wird (im Vergleich zur Abweichung von der Zielhöhe) */
+const NARROW_WEIGHT = 8;
 
-/** Zielhöhe aus --row in Pixeln (über ein unsichtbares Messelement, klappt in allen Browsern gleich) */
-function rowTarget(list: HTMLElement): number {
+/** Eine CSS-Länge (z. B. var(--row)) in Pixeln, über ein unsichtbares Messelement – klappt in allen Browsern gleich */
+function measure(list: HTMLElement, value: string): number {
   const probe = document.createElement('div');
   probe.setAttribute('aria-hidden', 'true');
-  probe.style.cssText = 'position:absolute;visibility:hidden;height:0;padding:0;border:0;width:var(--row)';
+  probe.style.cssText = `position:absolute;visibility:hidden;height:0;padding:0;border:0;width:${value}`;
   list.append(probe);
   const px = probe.getBoundingClientRect().width;
   probe.remove();
@@ -33,8 +36,9 @@ function layout(list: HTMLElement) {
   const items = [...list.children].filter((el): el is HTMLElement => el instanceof HTMLElement);
   if (!items.length) return;
 
-  const target = rowTarget(list);
+  const target = measure(list, 'var(--row)');
   if (!target || !Number.isFinite(target)) return;
+  const minW = Math.min(measure(list, 'var(--min-w, 0px)'), width);
   const gap = parseFloat(getComputedStyle(list).columnGap) || 0;
 
   // Breite eines Fotos pro Pixel Reihenhöhe = Seitenverhältnis
@@ -50,14 +54,18 @@ function layout(list: HTMLElement) {
   best[0] = 0;
   for (let i = 1; i <= n; i++) {
     let sum = 0;
+    let narrowest = Infinity;
     for (let j = i - 1; j >= 0; j--) {
       sum += units[j]!;
+      narrowest = Math.min(narrowest, units[j]!);
       const k = i - j;
       const h = (avail - gap * (k - 1)) / sum;
       if (h < minH && k > 1) break; // noch mehr Fotos machen die Reihe nur flacher
       const dev = Math.log(h / target);
+      // Zu schmale Fotos bestrafen (z. B. ein Hochformat zwischen Querformaten)
+      const thin = minW > 0 ? Math.max(0, Math.log(minW / (Math.min(h, maxH) * narrowest))) : 0;
       // Zu hohe Reihen stark bestrafen, damit sie nur vorkommen, wenn es gar nicht anders geht
-      const cost = dev * dev + (h > maxH ? 50 + dev : 0);
+      const cost = dev * dev + NARROW_WEIGHT * thin * thin + (h > maxH ? 50 + dev : 0);
       if (best[j]! + cost < best[i]!) {
         best[i] = best[j]! + cost;
         from[i] = j;

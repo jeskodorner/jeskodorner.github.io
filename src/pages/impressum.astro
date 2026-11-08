@@ -1,12 +1,19 @@
 ---
+/**
+ * Impressum. Auch ohne Bezahlung nötig: Eine öffentliche Portfolio-Seite dient nicht nur privaten oder
+ * familiären Zwecken, deshalb gehören nach § 18 Abs. 1 MStV Name und ladungsfähige Anschrift hierher
+ * (keine Telefonnummer, keine USt-IdNr. nötig).
+ */
 import LegalPage from '../components/LegalPage.astro';
 import EmailLink from '../components/EmailLink.astro';
+import { site } from '../config/site';
 ---
 
 <LegalPage title="Impressum" description="Impressum und Anbieterkennzeichnung.">
-  <h2>Angaben gemäß § 5 DDG</h2>
+  <h2>Anbieter</h2>
+  <p>Angaben gemäß § 5 DDG und § 18 Abs. 1 MStV</p>
   <p>
-    <span class="ph">Vorname Nachname</span><br />
+    {site.name}<br />
     <span class="ph">Straße Hausnummer</span><br />
     <span class="ph">PLZ Ort</span><br />
     Deutschland
@@ -14,20 +21,18 @@ import EmailLink from '../components/EmailLink.astro';
 
   <h2>Kontakt</h2>
   <p>E-Mail: <EmailLink icon={false} /></p>
-  <p><span class="ph">Telefon (optional)</span></p>
-
-  <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
-  <p><span class="ph">Vorname Nachname, Anschrift wie oben</span></p>
-
-  <h2>Umsatzsteuer</h2>
-  <p><span class="ph">Nur falls vorhanden: USt-IdNr. bzw. Hinweis auf Kleinunternehmerregelung</span></p>
 
   <h2>Urheberrecht</h2>
   <p>
-    Alle Fotos, Filme und Texte auf dieser Website sind urheberrechtlich geschützt (© Jesko Dorner). Jede Nutzung außerhalb der
-    Grenzen des Urheberrechts bedarf der vorherigen schriftlichen Zustimmung.
+    Alle Fotos, Filme und Texte auf dieser Website sind urheberrechtlich geschützt (© {site.name}). Jede Nutzung außerhalb der
+    Grenzen des Urheberrechts bedarf meiner vorherigen schriftlichen Zustimmung.
   </p>
 
-  <h2>Haftung für Links</h2>
-  <p><span class="ph">Platzhalter – Text rechtlich prüfen lassen.</span></p>
+  <h2>Haftung für Inhalte und Links</h2>
+  <p>
+    Die Inhalte dieser Website erstelle ich mit Sorgfalt, kann für ihre Vollständigkeit und Aktualität aber keine Gewähr
+    übernehmen. Die Website enthält Links zu externen Seiten, etwa zu Instagram oder YouTube. Auf deren Inhalte habe ich keinen
+    Einfluss, verantwortlich ist jeweils der Anbieter der verlinkten Seite. Beim Setzen der Links waren keine Rechtsverstöße
+    erkennbar. Erfahre ich von einem Rechtsverstoß, entferne ich den Link umgehend.
+  </p>
 </LegalPage>

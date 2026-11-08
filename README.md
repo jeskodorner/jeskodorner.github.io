@@ -97,8 +97,8 @@ photos.config.json          ← Einstellungen für die Bildverarbeitung (Größe
 | Buttons, Beschriftungen | `src/i18n/de.ts` |
 | Impressum und Datenschutz | `src/pages/impressum.astro`, `src/pages/datenschutz.astro` |
 
-> ⚠️ **Impressum und Datenschutzerklärung sind Platzhalter** und auf der Seite deutlich so markiert.
-> Bitte vor der Veröffentlichung vervollständigen und rechtlich prüfen lassen. Das hier ist keine Rechtsberatung.
+> ⚠️ **Im Impressum fehlt noch die Anschrift**, die Datenschutzerklärung hat noch Platzhalter. Beides ist auf der
+> Seite deutlich markiert. Bitte vervollständigen und rechtlich prüfen lassen. Das hier ist keine Rechtsberatung.
 
 **Portfolio:** In `startseite.md` legt die Liste `showroom` fest, welche Fotos ausgewählt sind, in welcher
 Reihenfolge und unter welchem Namen. Sie erscheinen auf der Seite **/portfolio/** als kleine Ausstellung (jedes Foto
@@ -112,7 +112,7 @@ showroom:
     name: "Hilda"                 # ohne Angabe: Name der Galerie
 ```
 
-Mit Namen zeigt das Schild den Namen, das Datum und den Link „Aus dem Album …“. Ohne Namen zeigt es den Namen der Galerie, die Bildanzahl und „Zum Album“.
+Mit Namen zeigt das Schild den Namen, darunter Album und Datum. Ohne Namen zeigt es den Namen der Galerie und die Bildanzahl. Das Schild hat keinen Link, ein Klick aufs Foto öffnet das Album in der Lightbox.
 Neue Galerien erscheinen dort nicht automatisch. Mit `showroom: []` kommt jede öffentliche Galerie einmal mit ihrem Vorschaubild.
 Ein Tippfehler bei `galerie` oder `bild` bricht den Build mit einer Meldung ab, welche Namen möglich sind.
 
@@ -242,7 +242,9 @@ Unterhalb des Kopfbereichs kannst du optional einen längeren Text in Markdown s
   jede Reihe füllt die Breite, auch die letzte. Die Reihen verteilt ein kleines Skript (`src/scripts/justify.ts`)
   über die ganze Liste, damit alle Reihen ähnlich hoch bleiben und keine Lücken entstehen. Nur ein Album mit
   sehr wenigen Fotos (z. B. ein einzelnes Hochformat) lässt rechts Platz, weil das Foto sonst höher als der
-  Bildschirm würde. Ohne JavaScript übernimmt reines CSS (dann ist die letzte Reihe nicht gestreckt).
+  Bildschirm würde. Kein Foto wird schmaler als eine Mindestbreite (`--min-w`, in `global.css` für Alben und in
+  `galerien/index.astro` für die Galerie-Seite), ein Hochformat wird also nie winzig neben Querformaten.
+  Ohne JavaScript übernimmt reines CSS (dann ist die letzte Reihe nicht gestreckt).
 - **Klick auf ein Foto** öffnet es groß in der Lightbox, mit weißem Rand ringsum (auch auf dem Handy).
   Direkt über dem Foto stehen „← Vorheriges Bild“ und „Nächstes Bild →“ (nie auf dem Foto). Außerdem blättern per
   Wischen oder **←**/**→**, schließen per **Esc**. Oben eine einheitliche Leiste: Nummer, Details, Teilen, Zoom, Schließen.
@@ -573,8 +575,9 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   Festlegen per `color: pink | blue | lime | orange | violet` in `index.md`. Ohne Angabe wechselt die Farbe automatisch reihum.
 - **Startseite = das blaue Menü** (`src/components/BlueMenu.astro`): blaue Fläche über den ganzen Bildschirm, oben
   groß der Name, darunter die Menüpunkte (Portfolio, Galerie, Film, Über mich, Kontakt), unten Instagram, Impressum
-  und Datenschutz. Ohne weiße Leiste und ohne Scrollen. Dasselbe Menü öffnet sich auf dem Handy über den Menü-Knopf
-  (dort mit Schließen-Knopf, der Name führt zur Startseite). Die frühere Startseite liegt in der Git-Geschichte.
+  und Datenschutz. Ohne weiße Leiste und ohne Scrollen. Dasselbe Menü öffnet sich auf allen Geräten über den grünen
+  Menü-Knopf oben rechts: Das Blau wächst als Kreis aus dem Knopf, der Schließen-Knopf sitzt an derselben Stelle,
+  der Name führt zur Startseite. Eine Textleiste mit Menüpunkten gibt es nur noch als Rückfall für sehr alte Browser. Die frühere Startseite liegt in der Git-Geschichte.
 
 Kontraste nach WCAG 2.x:
 

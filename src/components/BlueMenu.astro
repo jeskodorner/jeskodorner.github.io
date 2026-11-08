@@ -3,7 +3,8 @@
  * Das blaue Menü: oben groß der Name, darunter die Menüpunkte (etwas kleiner), unten Instagram,
  * Impressum und Datenschutz. Zwei Einsätze:
  *   - als Startseite (pages/index.astro): der Name ist die Hauptüberschrift
- *   - als Menü auf dem Handy (Header.astro): mit Schließen-Knopf, der Name führt zur Startseite
+ *   - als Menü (Header.astro, auf allen Geräten): mit Schließen-Knopf genau dort, wo der Menüknopf sitzt,
+ *     der Name führt zur Startseite
  * Übergang: Name, Menüpunkte und Fußzeile tragen feste view-transition-Namen. Beim Wechsel Menü → Startseite
  * gleiten sie an ihren neuen Platz; von der Startseite auf eine Unterseite gleitet der Name ins Logo oben links.
  */
@@ -13,7 +14,7 @@ import { navLinks, isCurrent } from '../lib/nav';
 import Icon from './Icon.astro';
 
 export interface Props {
-  /** true = Menü auf dem Handy (mit Schließen-Knopf), false = Startseite */
+  /** true = Menü (mit Schließen-Knopf), false = Startseite */
   overlay?: boolean;
 }
 
@@ -72,10 +73,16 @@ const path = Astro.url.pathname;
     padding-block: clamp(1.25rem, 4vw, 2.5rem) max(1.5rem, env(safe-area-inset-bottom));
     color: var(--on-blue);
   }
+  /* Im Menü: oben eine Leiste so hoch wie der Header, der Schließen-Knopf sitzt an der Stelle des Menüknopfs */
+  .bm--overlay {
+    padding-top: 0;
+  }
   .bm-top {
     display: flex;
+    align-items: center;
     justify-content: flex-end;
-    margin-bottom: 0.5rem;
+    height: var(--header-h);
+    margin-bottom: clamp(0.25rem, 2vw, 1rem);
   }
   .bm-close {
     display: inline-grid;

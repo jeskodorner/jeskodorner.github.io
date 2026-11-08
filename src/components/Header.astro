@@ -84,6 +84,7 @@ const isCurrent = (match: string[]) => current(path, match);
   :global(html:has(#site-menu:popover-open)) .logo-text {
     view-transition-name: none;
   }
+  /* Textmenü nur als Rückfall für Browser ohne Popover (siehe unten); sonst überall der Menüknopf */
   .nav-desktop {
     display: none;
     margin-left: auto;
@@ -128,16 +129,16 @@ const isCurrent = (match: string[]) => current(path, match);
     color: var(--ink);
   }
 
-  @media (min-width: 820px) {
-    .nav-desktop {
-      display: block;
-    }
-    .menu-btn {
-      display: none;
-    }
+  .menu-btn:hover {
+    background: var(--ink);
+    color: var(--lime);
+  }
+  .menu-btn:focus-visible {
+    outline: 3px solid var(--ink);
+    outline-offset: 3px;
   }
 
-  /* Mobiles Menü als Popover (funktioniert ohne JavaScript), Inhalt: BlueMenu.astro.
+  /* Menü als Popover (funktioniert ohne JavaScript), auf allen Geräten gleich. Inhalt: BlueMenu.astro.
      So hoch wie der größte Bildschirmbereich (lvh): kein Streifen der Seite darunter, auch wenn die
      Adressleiste im Handy-Browser eingeklappt ist. Dahinter lässt sich nicht scrollen. */
   .menu {
@@ -167,12 +168,13 @@ const isCurrent = (match: string[]) => current(path, match);
       animation: menu-in 0.45s var(--ease);
     }
   }
+  /* Das Blau wächst als Kreis aus dem Menüknopf (Mittelpunkt setzt das Skript unten, sonst ungefähr dort) */
   @keyframes menu-in {
     from {
-      clip-path: circle(0% at calc(100% - 2.5rem) 2rem);
+      clip-path: circle(0% at var(--mx, calc(100% - 2.5rem)) var(--my, 2.25rem));
     }
     to {
-      clip-path: circle(150% at calc(100% - 2.5rem) 2rem);
+      clip-path: circle(150% at var(--mx, calc(100% - 2.5rem)) var(--my, 2.25rem));
     }
   }
   /* Fallback für Browser ohne Popover-API: Links immer sichtbar */
@@ -208,3 +210,15 @@ const isCurrent = (match: string[]) => current(path, match);
     }
   }
 </style>
+
+<script>
+  // Kreis-Animation genau aus der Mitte des Menüknopfs starten
+  const menu = document.getElementById('site-menu');
+  const btn = document.querySelector<HTMLElement>('.menu-btn');
+  menu?.addEventListener('beforetoggle', (e) => {
+    if ((e as ToggleEvent).newState !== 'open' || !btn) return;
+    const r = btn.getBoundingClientRect();
+    menu.style.setProperty('--mx', `${Math.round(r.left + r.width / 2)}px`);
+    menu.style.setProperty('--my', `${Math.round(r.top + r.height / 2)}px`);
+  });
+</script>
