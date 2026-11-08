@@ -86,11 +86,12 @@ a {
     color 0.2s,
     background-color 0.2s;
 }
+/* Überfahren: Schrift bleibt, der Unterstrich wird orange */
 a:hover {
-  color: var(--accent);
+  text-decoration-color: var(--hover);
 }
 :focus-visible {
-  outline: 3px solid var(--blue);
+  outline: 3px solid var(--accent);
   outline-offset: 3px;
   border-radius: var(--radius);
 }
@@ -295,16 +296,18 @@ html:not(.js) .js-only {
     color 0.2s,
     border-color 0.2s;
 }
+/* Knöpfe beim Überfahren einheitlich orange */
 .btn:hover {
   color: var(--ink);
-  background: var(--lime);
+  background: var(--hover);
 }
 .btn--solid {
   background: var(--ink);
   color: var(--wall);
 }
 .btn--solid:hover {
-  background: var(--pink);
+  background: var(--hover);
+  border-color: var(--hover);
   color: var(--ink);
 }
 .btn--accent {
@@ -313,7 +316,7 @@ html:not(.js) .js-only {
   color: #fff;
 }
 .btn--accent:hover {
-  background: var(--lime);
+  background: var(--hover);
   border-color: var(--ink);
   color: var(--ink);
 }

@@ -321,6 +321,7 @@ const hasAside = Astro.slots.has('aside');
   .bm-foot a:hover {
     background: var(--pink);
     color: var(--ink);
+    text-decoration-color: currentColor; /* nicht das Orange der weißen Seiten */
   }
   .bm a:focus-visible,
   .bm-close:focus-visible {

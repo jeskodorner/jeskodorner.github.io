@@ -574,6 +574,13 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 - **Jede Galerie hat eine eigene Farbe.** Die Farbe erscheint im Button auf der Seite „Galerie“, im Farbband oben auf
   der Galerieseite, im Fortschrittsbalken und im Download-Kasten (Kundengalerien).
   Festlegen per `color: pink | blue | lime | orange | violet` in `index.md`. Ohne Angabe wechselt die Farbe automatisch reihum.
+- **Links und Überfahren:** Links und kleine Akzentschrift (z. B. die Jahreszahlen auf „Über mich“) sind im Blau
+  der Startseite `#58677F` (Token `--accent`). Beim Überfahren bleibt die Schrift, der Unterstrich wird orange
+  (Token `--hover`); Knöpfe, Abspielen und die Knöpfe der Lightbox werden orange hinterlegt. In der schwarzen
+  Fußzeile gibt es keine Unterstriche, beim Überfahren werden die Links schieferblau, der große Schriftzug ist
+  ebenfalls schieferblau.
+- **Rosa** ist ein verblichenes Korallenrosa `#EF9D9F` (vorher kräftiges Pink `#FF3D8B`, kurz Altrosa `#E59BB0`).
+  Es gilt auch für Galerien mit `color: pink`.
 - **Startseite = das blaue Menü** (`src/components/BlueMenu.astro`): Fläche in Schieferblau `#58677F` (Token
   `--menu-bg` in `tokens.css`, Farbe aus der Stirn eines invertierten Portfolio-Fotos). Akzent dort ist Rosa: der
   Name ist rosa hinterlegt mit schwarzer Schrift (wie markierter Text, `.bm-name`), der aktive bzw. überfahrene
@@ -610,16 +617,16 @@ Kontraste nach WCAG 2.x:
 | Farbe | Hex | Textfarbe darauf | Kontrast |
 |---|---|---|---|
 | Wand | `#FFFFFF` | Schwarz `#0B0B0B` / Nebentext `#5C5C5C` | 19,6 : 1 / 6,7 : 1 |
-| Links, kleine Akzente | Blau `#2B3BFF` auf Weiß | – | 6,6 : 1 |
-| Pink | `#FF3D8B` | Schwarz | 5,9 : 1 |
+| Links, kleine Akzente | Schieferblau `#58677F` auf Weiß | – | 5,7 : 1 |
+| Rosa | `#EF9D9F` | Schwarz | 9,4 : 1 |
 | Blau | `#2B3BFF` | Weiß | 6,6 : 1 |
 | Startseite/Menü | `#58677F` | Weiß | 5,7 : 1 |
-| Akzent im Menü | Pink `#FF3D8B` (Fläche) | Schwarz | 5,9 : 1 |
+| Akzent im Menü | Rosa `#EF9D9F` (Fläche) | Schwarz | 9,4 : 1 |
 | Lime | `#D4FF3A` | Schwarz | 17,0 : 1 |
 | Orange | `#FF5A1F` | Schwarz | 6,3 : 1 |
 | Violett | `#7C5CFF` | Schwarz | 4,5 : 1 |
 
-Pink als Textfarbe auf Weiß (3,3 : 1) nur für große Schrift ab 24 px, z. B. den Footer-Schriftzug.
+Rosa nie als Schriftfarbe auf Weiß (zu blass), nur als Fläche mit schwarzer Schrift.
 
 **Schriften** (lokal, über Fontsource, Lizenz OFL):
 - **Anybody**: große Titel. Die Schrift ist stufenlos von extrem schmal (50 %) bis sehr breit (150 %) einstellbar.

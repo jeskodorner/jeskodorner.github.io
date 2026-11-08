@@ -73,11 +73,11 @@
   color: #0b0b0b;
 }
 .pswp__top-bar .pswp__button:hover {
-  background: #d4ff3a;
+  background: var(--hover, #ff5a1f);
 }
 .pswp__button:focus-visible,
 .jd-step:focus-visible .jd-step-circle {
-  outline: 3px solid #2b3bff;
+  outline: 3px solid var(--accent, #58677f);
   outline-offset: 2px;
 }
 /* Schließen und aktive Details: gefüllt */
@@ -90,7 +90,7 @@
   color: #ffffff;
 }
 .pswp__top-bar .pswp__button--close:hover {
-  background: #d4ff3a;
+  background: var(--hover, #ff5a1f);
 }
 .pswp__top-bar .pswp__button--close:hover .pswp__icn {
   color: #0b0b0b;
@@ -149,7 +149,7 @@
   transition: background-color 0.2s;
 }
 .jd-step:hover .jd-step-circle {
-  background: #d4ff3a;
+  background: var(--hover, #ff5a1f);
 }
 .jd-step-icn {
   width: 18px;
