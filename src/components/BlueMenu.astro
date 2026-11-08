@@ -88,7 +88,7 @@ const hasAside = Astro.slots.has('aside');
     flex-direction: column;
     min-height: 100%;
     padding-block: clamp(1.25rem, 4vw, 2.5rem) max(1.5rem, env(safe-area-inset-bottom));
-    color: var(--on-blue);
+    color: var(--on-menu);
   }
   /* Im Menü: oben eine Leiste so hoch wie der Header, der Schließen-Knopf sitzt an der Stelle des Menüknopfs */
   .bm--overlay {
@@ -175,12 +175,12 @@ const hasAside = Astro.slots.has('aside');
     /* „Kontakt“ läuft über die Oberkante des Bildfelds: oberhalb weiß, auf dem hellen Foto blau */
     .bm--aside .bm-list li:last-child a {
       color: transparent;
-      background-image: linear-gradient(to bottom, var(--on-blue) 0.45em, var(--blue) 0.45em);
+      background-image: linear-gradient(to bottom, var(--on-menu) 0.45em, var(--menu-bg) 0.45em);
       -webkit-background-clip: text;
       background-clip: text;
     }
     .bm--aside .bm-list li:last-child a:hover {
-      background-image: linear-gradient(to bottom, var(--lime) 0.45em, var(--blue) 0.45em);
+      background-image: linear-gradient(to bottom, var(--lime) 0.45em, var(--menu-bg) 0.45em);
     }
   }
   /* Ab 700 px: links die Menüpunkte (so breit wie der längste), rechts der Platz bis zum Bildschirmrand.

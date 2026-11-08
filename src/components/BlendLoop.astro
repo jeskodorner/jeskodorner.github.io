@@ -1,8 +1,7 @@
 ---
 /**
  * Bildfeld auf der Startseite: Fotos aus dem Portfolio, farblich invertiert, im Modus „Aufhellen“
- * (lighten) übereinandergelegt, immer im Format 4:3. Darüber liegt das Hintergrundblau im Modus „Farbe“
- * (65 %), damit die Blautöne der Fotos dem Blau der Seite ähneln. Es sind immer zwei Fotos zu sehen. Alle paar Sekunden
+ * (lighten) übereinandergelegt, immer im Format 4:3. Es sind immer zwei Fotos zu sehen. Alle paar Sekunden
  * blendet ein neues Foto oben ein und das unterste verschwindet – so entstehen laufend neue Bilder.
  * Reihenfolge zufällig, bei jedem Besuch anders. Ohne JavaScript oder mit „Bewegung reduzieren“: ein festes Paar.
  */
@@ -102,16 +101,6 @@ const { works } = Astro.props;
     position: absolute;
     inset: 0;
     isolation: isolate;
-  }
-  /* Blautöne ans Hintergrundblau angleichen: Blau im Modus „Farbe“ über den Fotos (Helligkeit bleibt) */
-  .blend::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--blue);
-    mix-blend-mode: color;
-    opacity: 0.65;
-    pointer-events: none;
   }
   .blend :global(.blend-layer) {
     position: absolute;

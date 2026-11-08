@@ -574,7 +574,8 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 - **Jede Galerie hat eine eigene Farbe.** Die Farbe erscheint im Button auf der Seite „Galerie“, im Farbband oben auf
   der Galerieseite, im Fortschrittsbalken und im Download-Kasten (Kundengalerien).
   Festlegen per `color: pink | blue | lime | orange | violet` in `index.md`. Ohne Angabe wechselt die Farbe automatisch reihum.
-- **Startseite = das blaue Menü** (`src/components/BlueMenu.astro`): blaue Fläche über den ganzen Bildschirm, oben
+- **Startseite = das blaue Menü** (`src/components/BlueMenu.astro`): Fläche in Blaugrün `#3D8AAE` (Token
+  `--menu-bg` in `tokens.css`) über den ganzen Bildschirm, oben
   groß der Name, darunter die Menüpunkte (Portfolio, Galerie, Film, Über mich, Kontakt), unten Instagram, Impressum
   und Datenschutz. Ohne weiße Leiste und ohne Scrollen. Dasselbe Menü öffnet sich auf allen Geräten über den grünen
   Menü-Knopf oben rechts: Das Blau wächst als Kreis aus dem Knopf, der Schließen-Knopf sitzt an derselben Stelle,
@@ -582,13 +583,18 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   Am Handy (unter 700 px) steht der Name mittig, die Menüpunkte beginnen an seiner linken Kante, die Fußzeile ist
   mittig. Ab 700 px ist alles linksbündig.
 - **Bildfeld auf der Startseite** (`src/components/BlendLoop.astro`): Fotos aus dem Portfolio (Liste `showroom`),
-  farblich invertiert und im Modus „Aufhellen“ übereinandergelegt, immer 4:3. Darüber liegt das Hintergrundblau im
-  Modus „Farbe“ (65 %), damit die Blautöne zum Blau der Seite passen (Stärke: `opacity` bei `.blend::after`). Es sind immer zwei zu sehen. Alle
+  farblich invertiert und im Modus „Aufhellen“ übereinandergelegt, immer 4:3. Es sind immer zwei zu sehen. Alle
   2,8 Sekunden blendet ein neues oben ein und das unterste verschwindet, so entstehen laufend neue Bilder (Reihenfolge
   bei jedem Besuch zufällig). Am Laptop rechts neben dem Menü. Am Handy randlos über die ganze Breite, es beginnt
-  hinter „Kontakt“ (dort wird die Schrift blau, damit sie auf dem hellen Foto lesbar bleibt). Mit „Bewegung reduzieren“
+  hinter „Kontakt“ (dort wird die Schrift in der Hintergrundfarbe gezeigt, damit sie auf dem hellen Foto lesbar bleibt). Mit „Bewegung reduzieren“
   oder ohne JavaScript bleibt ein festes Paar stehen. Invertieren abschalten: in `BlendLoop.astro` die Zeile
   `filter: invert(1);` löschen. Die frühere Startseite liegt in der Git-Geschichte.
+- **Alte Versionen (gemerkt):**
+  - *Startseite/Menü in Ultramarin `#2B3BFF`*, dazu Fotos im Bildfeld mit diesem Blau im Modus „Farbe“ (65 %)
+    eingefärbt. Im Git-Verlauf markiert als Tag `alte-version-blau-2b3bff`. Zurück zum Blau: in `tokens.css`
+    `--menu-bg: #2b3bff;` setzen. Die Einfärbung der Fotos: in `BlendLoop.astro` wieder ein
+    `.blend::after { content: ''; position: absolute; inset: 0; background: var(--menu-bg); mix-blend-mode: color; opacity: 0.65; }`
+    ergänzen.
 
 Kontraste nach WCAG 2.x:
 
@@ -598,6 +604,7 @@ Kontraste nach WCAG 2.x:
 | Links, kleine Akzente | Blau `#2B3BFF` auf Weiß | – | 6,6 : 1 |
 | Pink | `#FF3D8B` | Schwarz | 5,9 : 1 |
 | Blau | `#2B3BFF` | Weiß | 6,6 : 1 |
+| Startseite/Menü | `#3D8AAE` | Weiß | 3,9 : 1 (gut für große Schrift; kleine Schrift wie die Fußzeile liegt knapp unter 4,5 : 1) |
 | Lime | `#D4FF3A` | Schwarz | 17,0 : 1 |
 | Orange | `#FF5A1F` | Schwarz | 6,3 : 1 |
 | Violett | `#7C5CFF` | Schwarz | 4,5 : 1 |

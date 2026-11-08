@@ -36,7 +36,7 @@ const isCurrent = (match: string[]) => current(path, match);
     </button>
   </div>
 
-  <div id="site-menu" class="menu c-blue" popover>
+  <div id="site-menu" class="menu" popover>
     <BlueMenu overlay />
   </div>
 </header>
@@ -154,8 +154,8 @@ const isCurrent = (match: string[]) => current(path, match);
     border: 0;
     overflow-y: auto;
     overscroll-behavior: contain;
-    background: var(--c);
-    color: var(--on-c);
+    background: var(--menu-bg);
+    color: var(--on-menu);
   }
   .menu > :global(.bm) {
     min-height: 100dvh;
