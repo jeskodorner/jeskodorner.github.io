@@ -17,7 +17,7 @@ const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : 
         <p class="links">
           <EmailLink class="big-link" />
           <a class="big-link" href={site.instagram.url} rel="me noopener" target="_blank">
-            <Icon name="instagram" size="0.9em" /> @{site.instagram.handle}
+            <Icon name="instagram" size="0.9em" /> {site.instagram.handle.toLowerCase()}
           </a>
         </p>
       </div>
