@@ -1,19 +1,19 @@
 /*
- * Design-Tokens – „White Cube“: weiße Galeriewände, schwarze Schrift, verblichene Farbflächen.
+ * Design-Tokens – „White Cube“: weiße Galeriewände, schwarze Schrift, sommerliche Farbflächen.
  *
- * Abgestimmte Palette: Die fünf Galeriefarben sind gleich hell und gleich zurückhaltend wie das Korallenrosa
- * (OKLCH: Helligkeit ≈ 0,78, Sättigung ≈ 0,08), nur der Farbton wechselt. Dazu Schieferblau (Startseite, Links)
- * und ein etwas kräftigeres Orange nur fürs Überfahren. Die frühere knallige Palette: Git-Tag
- * alte-version-knallige-galeriefarben (siehe README).
+ * Palette „Sommer“: warme, frische Galeriefarben (Koralle, Orange, Sonnengelb, klares Blau, Flieder), alle mit
+ * schwarzer Schrift, dazu ein lebendiges Mittelblau für Startseite und Links und ein kräftiges Orange nur fürs
+ * Überfahren. Frühere Paletten (siehe README): Git-Tags alte-version-verblichene-farben (blass, kühl) und
+ * alte-version-knallige-galeriefarben (Neon).
  *
  * Kontraste (WCAG 2.x):
- *   Text #0B0B0B auf Weiß 19,6:1 · Nebentext #5B616A 6,2:1 · Links #58677F 5,7:1
+ *   Text #0B0B0B auf Weiß 19,6:1 · Nebentext #5C5C5C 6,7:1 · Links #4273B0 4,9:1
  *   Farbflächen, alle mit schwarzer Schrift:
- *     Rosa #EF9D9F 9,4:1 · Aprikose #ECAF80 10,3:1 · Salbei #9AD4B4 11,7:1
- *     Taubenblau #95B8DD 9,5:1 · Lavendel #B9A6DD 9,0:1
- *   Rosa nie als Schriftfarbe auf Weiß (zu blass), nur als Fläche mit schwarzer Schrift.
- *   Startseite/Menü #58677F + Weiß 5,7:1 · Akzent dort: Rosa-Fläche mit Schwarz 9,4:1
- *   Überfahren: Unterstrich bzw. Fläche in Orange #E66330 (Unterstrich auf Weiß 3,4:1, Fläche + Schwarz 5,8:1)
+ *     Koralle #FF807F 8,1:1 · Orange #FFA44E 10,0:1 · Sonnengelb #F7E04F 14,7:1
+ *     Blau #53A3F2 7,4:1 · Flieder #B98CEA 7,5:1
+ *   Rosa/Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer Schrift.
+ *   Startseite/Menü #4273B0 + Weiß 4,9:1 · Akzent dort: Koralle-Fläche mit Schwarz 8,1:1
+ *   Überfahren: Unterstrich bzw. Fläche in Orange #F25914 (Unterstrich auf Weiß 3,4:1, Fläche + Schwarz 5,8:1)
  */
 
 :root {
@@ -26,26 +26,26 @@
 
   /* Schrift */
   --ink: #0b0b0b;
-  --ink-soft: #5b616a; /* leicht kühles Grau, passend zum Schieferblau */
+  --ink-soft: #5c5c5c;
   --line: rgb(11 11 11 / 0.12);
   --line-strong: #0b0b0b;
 
-  /* Galeriefarben (verblichen, alle gleich hell) und ihre Textfarben. Die Namen bleiben wegen color: … in den
-     Galerien/Filmen gleich: „lime“ ist jetzt Salbeigrün, „orange“ Aprikose, „blue“ Taubenblau, „violet“ Lavendel. */
-  /* verblichenes Korallenrosa (vorher kräftiges Pink #ff3d8b, kurz Altrosa #e59bb0) */
-  --pink: #ef9d9f;
+  /* Galeriefarben („Sommer“) und ihre Textfarben. Die Namen bleiben wegen color: … in den Galerien/Filmen gleich:
+     „pink“ ist Koralle, „lime“ Sonnengelb, „blue“ klares Blau, „violet“ Flieder. */
+  /* Koralle (vorher kräftiges Pink #ff3d8b, dann verblichen #ef9d9f) */
+  --pink: #ff807f;
   --on-pink: #0b0b0b;
-  --blue: #95b8dd;
+  --blue: #53a3f2;
   --on-blue: #0b0b0b;
-  /* Hintergrund von Startseite und Menü: Schieferblau, aus der Stirn eines invertierten Portfolio-Fotos gemessen.
-     Akzent dort: Rosa (Felder mit schwarzer Schrift). Ausprobiert: #2b3bff, #3d8aae – siehe README. */
-  --menu-bg: #58677f;
+  /* Hintergrund von Startseite und Menü: lebendiges Mittelblau. Akzent dort: Koralle (Felder mit schwarzer Schrift).
+     Ausprobiert: #2b3bff, #3d8aae, Schieferblau #58677f (aus der Stirn eines invertierten Fotos) – siehe README. */
+  --menu-bg: #4273b0;
   --on-menu: #ffffff;
-  --lime: #9ad4b4;
+  --lime: #f7e04f;
   --on-lime: #0b0b0b;
-  --orange: #ecaf80;
+  --orange: #ffa44e;
   --on-orange: #0b0b0b;
-  --violet: #b9a6dd;
+  --violet: #b98cea;
   --on-violet: #0b0b0b;
 
   /* Rollen (von Komponenten verwendet) */
@@ -53,7 +53,7 @@
   --paper-2: var(--wall-2);
   --sand: var(--wall-3);
   --accent: var(--menu-bg); /* Links, kleine Akzentschrift, Fokusrahmen – das Blau der Startseite */
-  --hover: #e66330; /* Überfahren: Unterstrich (Links) bzw. Fläche (Knöpfe) – Orange, etwas ruhiger als früher */
+  --hover: #f25914; /* Überfahren: Unterstrich (Links) bzw. Fläche (Knöpfe) – kräftiges Orange */
   --accent-vivid: var(--pink); /* nur große Schrift und Flächen */
   --on-accent: #ffffff;
   --scrim: 11 11 11;

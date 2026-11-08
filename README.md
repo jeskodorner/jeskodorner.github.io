@@ -566,7 +566,7 @@ Falls du das je neu einrichten oder umziehen musst:
 
 ## 11. Design: Farben und Schriften
 
-Look „White Cube“: weiße Galeriewände, schwarze Schrift, verblichene Farbflächen. Definiert in `src/styles/tokens.css`.
+Look „White Cube“: weiße Galeriewände, schwarze Schrift, sommerliche Farbflächen. Definiert in `src/styles/tokens.css`.
 Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 
 - **Fotos werden nie beschnitten**: in Alben, Übersichten und der Lightbox immer im Originalformat, groß mit weißem
@@ -574,17 +574,15 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 - **Jede Galerie hat eine eigene Farbe.** Die Farbe erscheint im Button auf der Seite „Galerie“, im Farbband oben auf
   der Galerieseite, im Fortschrittsbalken und im Download-Kasten (Kundengalerien).
   Festlegen per `color: pink | blue | lime | orange | violet` in `index.md`. Ohne Angabe wechselt die Farbe automatisch reihum.
-  Die fünf Farben sind aufeinander abgestimmt: alle gleich hell und gleich zurückhaltend wie das Korallenrosa, nur
-  der Farbton wechselt – Rosa `#EF9D9F`, Aprikose `#ECAF80` (`orange`), Salbei `#9AD4B4` (`lime`), Taubenblau
-  `#95B8DD` (`blue`), Lavendel `#B9A6DD` (`violet`). Auf allen steht schwarze Schrift.
+  Palette „Sommer“, warm und frisch: Koralle `#FF807F` (`pink`), Orange `#FFA44E` (`orange`), Sonnengelb `#F7E04F`
+  (`lime`), klares Blau `#53A3F2` (`blue`), Flieder `#B98CEA` (`violet`). Auf allen steht schwarze Schrift.
 - **Links und Überfahren:** Links und kleine Akzentschrift (z. B. die Jahreszahlen auf „Über mich“) sind im Blau
-  der Startseite `#58677F` (Token `--accent`). Beim Überfahren bleibt die Schrift, der Unterstrich wird orange
-  (Token `--hover`, `#E66330`); Knöpfe, Abspielen und die Knöpfe der Lightbox werden orange hinterlegt. Nebentext ist
-  ein leicht kühles Grau `#5B616A`, passend zum Schieferblau. In der schwarzen
-  Fußzeile gibt es keine Unterstriche, beim Überfahren werden die Links schieferblau, der große Schriftzug ist rosa.
-- **Rosa** ist ein verblichenes Korallenrosa `#EF9D9F` (vorher kräftiges Pink `#FF3D8B`, kurz Altrosa `#E59BB0`).
-  Es gilt auch für Galerien mit `color: pink`.
-- **Startseite = das blaue Menü** (`src/components/BlueMenu.astro`): Fläche in Schieferblau `#58677F` (Token
+  der Startseite `#4273B0` (Token `--accent`). Beim Überfahren bleibt die Schrift, der Unterstrich wird orange
+  (Token `--hover`, `#F25914`); Knöpfe, Abspielen und die Knöpfe der Lightbox werden orange hinterlegt. In der schwarzen
+  Fußzeile gibt es keine Unterstriche, beim Überfahren werden die Links blau, der große Schriftzug ist korallenrosa.
+- **Rosa** ist Koralle `#FF807F` (vorher kräftiges Pink `#FF3D8B`, dann Altrosa `#E59BB0` und verblichenes
+  Korallenrosa `#EF9D9F`). Es gilt auch für Galerien mit `color: pink`.
+- **Startseite = das blaue Menü** (`src/components/BlueMenu.astro`): Fläche in Mittelblau `#4273B0` (vorher Schieferblau `#58677F`; Token
   `--menu-bg` in `tokens.css`, Farbe aus der Stirn eines invertierten Portfolio-Fotos). Akzent dort ist Rosa: der
   Name ist rosa hinterlegt mit schwarzer Schrift (wie markierter Text, `.bm-name`), der aktive bzw. überfahrene
   Menüpunkt bekommt dasselbe rosa Feld, der Menü-Knopf ist ein rosa Kreis. Instagram, Impressum und Datenschutz unten
@@ -614,6 +612,9 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   - *Andere Hintergründe* (Fotos nur invertiert): kräftiges Blau `#2B3BFF` (mit Grün als Akzent) und Blaugrün
     `#3D8AAE`. Ausprobieren: in `tokens.css` z. B. `--menu-bg: var(--blue);` setzen. Der grüne Akzent war `var(--lime)`
     statt `var(--pink)` in `BlueMenu.astro` und beim Menü-Knopf in `Header.astro`.
+  - *Verblichene, kühle Palette* (kurz im November 2026, wirkte zu traurig): Schieferblau `#58677F` für Startseite
+    und Links, Korallenrosa `#EF9D9F`, Aprikose `#ECAF80`, Salbei `#9AD4B4`, Taubenblau `#95B8DD`, Lavendel `#B9A6DD`,
+    Hover-Orange `#E66330`, Nebentext `#5B616A`. Git-Tag `alte-version-verblichene-farben`.
   - *Knallige Galeriefarben* (bis November 2026): Blau `#2B3BFF` (weiße Schrift), Lime `#D4FF3A`, Orange `#FF5A1F`
     (auch fürs Überfahren), Violett `#7C5CFF`, Nebentext `#5C5C5C`. Im Git-Verlauf markiert als Tag
     `alte-version-knallige-galeriefarben`. Zurückholen: die Werte in `tokens.css` wieder eintragen (`--on-blue: #ffffff`).
@@ -622,18 +623,18 @@ Kontraste nach WCAG 2.x:
 
 | Farbe | Hex | Textfarbe darauf | Kontrast |
 |---|---|---|---|
-| Wand | `#FFFFFF` | Schwarz `#0B0B0B` / Nebentext `#5B616A` | 19,6 : 1 / 6,2 : 1 |
-| Links, kleine Akzente | Schieferblau `#58677F` auf Weiß | – | 5,7 : 1 |
-| Rosa | `#EF9D9F` | Schwarz | 9,4 : 1 |
-| Startseite/Menü | `#58677F` | Weiß | 5,7 : 1 |
-| Akzent im Menü | Rosa `#EF9D9F` (Fläche) | Schwarz | 9,4 : 1 |
-| Aprikose (`orange`) | `#ECAF80` | Schwarz | 10,3 : 1 |
-| Salbei (`lime`) | `#9AD4B4` | Schwarz | 11,7 : 1 |
-| Taubenblau (`blue`) | `#95B8DD` | Schwarz | 9,5 : 1 |
-| Lavendel (`violet`) | `#B9A6DD` | Schwarz | 9,0 : 1 |
-| Überfahren | Orange `#E66330` | Schwarz / als Unterstrich auf Weiß | 5,8 : 1 / 3,4 : 1 |
+| Wand | `#FFFFFF` | Schwarz `#0B0B0B` / Nebentext `#5C5C5C` | 19,6 : 1 / 6,7 : 1 |
+| Links, kleine Akzente | Mittelblau `#4273B0` auf Weiß | – | 4,9 : 1 |
+| Koralle (`pink`) | `#FF807F` | Schwarz | 8,1 : 1 |
+| Startseite/Menü | `#4273B0` | Weiß | 4,9 : 1 |
+| Akzent im Menü | Koralle `#FF807F` (Fläche) | Schwarz | 8,1 : 1 |
+| Orange (`orange`) | `#FFA44E` | Schwarz | 10,0 : 1 |
+| Sonnengelb (`lime`) | `#F7E04F` | Schwarz | 14,7 : 1 |
+| Blau (`blue`) | `#53A3F2` | Schwarz | 7,4 : 1 |
+| Flieder (`violet`) | `#B98CEA` | Schwarz | 7,5 : 1 |
+| Überfahren | Orange `#F25914` | Schwarz / als Unterstrich auf Weiß | 5,8 : 1 / 3,4 : 1 |
 
-Rosa nie als Schriftfarbe auf Weiß (zu blass), nur als Fläche mit schwarzer Schrift.
+Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer Schrift.
 
 **Schriften** (lokal, über Fontsource, Lizenz OFL):
 - **Anybody**: große Titel. Die Schrift ist stufenlos von extrem schmal (50 %) bis sehr breit (150 %) einstellbar.
