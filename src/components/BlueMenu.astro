@@ -112,45 +112,45 @@ const hasAside = Astro.slots.has('aside');
     return place;
   }
 
-  /* Laptop: Die Fotokante (Mitte des kurzen Übergangs) soll stimmig durch den Namen laufen – genau durch die Mitte
-     eines Buchstabens oder durch die Lücke zwischen „Jesko“ und „Dorner“, nie knapp an einem Buchstabenrand.
-     (Zwischen zwei Buchstaben eines Worts ist die Lücke schmaler als der Übergang.) Dazu wird die Kante von der
-     Bildschirmmitte zur nächstgelegenen solchen Stelle geschoben; die Fotobreite setzt --photo-w. */
+  /* Laptop: Lage des Fotos. Die Fotokante (Mitte des kurzen Übergangs) läuft immer genau zwischen R und N von
+     „Dorner“ – „DOR“ bleibt blau, „NER“ liegt im Foto (die beiden Buchstaben stoßen in dieser Schrift aneinander,
+     der Übergang verteilt sich gleichmäßig auf beide Kanten). Unten endet das Foto auf der Grundlinie von „Kontakt“.
+     Setzt --photo-w (Breite) und --photo-b (Abstand unten); ohne JavaScript: Bildschirmmitte bzw. Fußzeile. */
   const desk = matchMedia('(min-width: 700px)');
-  function alignEdge(bm: HTMLElement) {
+  const baseline = (el: HTMLElement) => {
+    const probe = document.createElement('span');
+    probe.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline';
+    el.append(probe);
+    const y = probe.getBoundingClientRect().top;
+    probe.remove();
+    return y;
+  };
+  function layoutPhoto(bm: HTMLElement) {
     const aside = bm.querySelector<HTMLElement>('.bm-aside');
     const name = bm.querySelector<HTMLElement>('.bm-name');
+    const last = bm.querySelector<HTMLElement>('.bm-list li:last-child a');
     if (!aside || !name) return;
     aside.style.removeProperty('--photo-w');
+    aside.style.removeProperty('--photo-b');
     if (!desk.matches) return;
+    // unten: Grundlinie von „Kontakt“
+    if (last) aside.style.setProperty('--photo-b', `${(bm.getBoundingClientRect().bottom - baseline(last)).toFixed(1)}px`);
+    // links: Grenze zwischen R und N
     const node = [...name.childNodes].find((n) => n.nodeType === Node.TEXT_NODE && n.textContent?.trim());
-    if (!node?.textContent) return;
-    // Breite des Übergangs (CSS --fade) messen
+    const i = node?.textContent?.toLowerCase().lastIndexOf('rn') ?? -1;
+    if (!node || i < 0) return;
+    const range = document.createRange();
+    range.setStart(node, i + 1);
+    range.setEnd(node, i + 2);
+    const edge = range.getBoundingClientRect().left;
+    // Breite des Übergangs (CSS --fade) messen; die Kante ist seine Mitte
     const probe = document.createElement('div');
     probe.style.cssText = 'position:absolute;visibility:hidden;width:var(--fade)';
     bm.append(probe);
     const fade = probe.getBoundingClientRect().width;
     probe.remove();
     const right = aside.getBoundingClientRect().right;
-    const edge = right - innerWidth / 2 + fade / 2; // wo die Kante ohne Ausrichtung läge
-    const n = name.getBoundingClientRect();
-    if (edge <= n.left || edge >= n.right) return; // Kante läuft nicht durch den Namen
-    // Mitten aller Zeichen: Buchstaben und das Leerzeichen (= Mitte der Wortlücke)
-    const range = document.createRange();
-    let best = edge;
-    let dist = Infinity;
-    for (let i = 0; i < node.textContent.length; i++) {
-      range.setStart(node, i);
-      range.setEnd(node, i + 1);
-      const r = range.getBoundingClientRect();
-      if (!r.width) continue;
-      const mid = r.left + r.width / 2;
-      if (Math.abs(mid - edge) < dist) {
-        dist = Math.abs(mid - edge);
-        best = mid;
-      }
-    }
-    aside.style.setProperty('--photo-w', `${(right - best + fade / 2).toFixed(1)}px`);
+    aside.style.setProperty('--photo-w', `${(right - edge + fade / 2).toFixed(1)}px`);
   }
 
   for (const bm of document.querySelectorAll<HTMLElement>('.bm--aside')) {
@@ -160,7 +160,7 @@ const hasAside = Astro.slots.has('aside');
     ];
     // erst die Fotokante ausrichten, dann die Kopien darauf legen (auch nach Drehen, Größenänderung, Schrift geladen)
     const update = () => {
-      alignEdge(bm);
+      layoutPhoto(bm);
       for (const place of placers) place?.();
     };
     update();
@@ -331,10 +331,10 @@ const hasAside = Astro.slots.has('aside');
       padding-top: 1.25rem;
     }
   }
-  /* Ab 700 px: geteilt – links auf Weiß Name, Menü und Fußzeile, rechts füllt das Foto die halbe Bildschirmbreite
-     randlos, von oben bis zur Unterkante der Schrift der Fußzeile („Datenschutz“). Links läuft es in einem ganz kurzen
-     Übergang (--fade) aus. Der Name ragt ins Foto; dort zeigen seine Buchstaben das Foto positiv (Fenster), mit
-     demselben kurzen Übergang. */
+  /* Ab 700 px: geteilt – links auf Weiß Name, Menü und Fußzeile, rechts das Foto randlos bis an den Bildschirmrand,
+     von oben bis zur Grundlinie von „Kontakt“. Die linke Kante läuft zwischen R und N des Namens („DOR“ blau, „NER“
+     im Foto, Skript) und hat einen ganz kurzen Übergang (--fade). Wo der Name im Foto liegt, zeigen seine Buchstaben
+     das Foto positiv (Fenster), mit demselben kurzen Übergang. */
   @media (min-width: 700px) {
     .bm-body {
       flex: none;
@@ -346,10 +346,11 @@ const hasAside = Astro.slots.has('aside');
     .bm-aside {
       position: absolute;
       top: 0;
-      /* Grundlinie der Fußzeile: unterer Seitenabstand + 0,376 Schrifthöhen (gemessen) */
-      bottom: calc(max(1.5rem, env(safe-area-inset-bottom)) + 0.376 * var(--fs-xs));
+      /* --photo-b (Skript): Grundlinie von „Kontakt“. Ohne Skript: Grundlinie der Fußzeile (unterer Seitenabstand
+         + 0,376 Schrifthöhen, gemessen) */
+      bottom: var(--photo-b, calc(max(1.5rem, env(safe-area-inset-bottom)) + 0.376 * var(--fs-xs)));
       right: calc(50% - 50vw); /* bis an den Bildschirmrand, auch wenn der Inhalt schmaler ist */
-      width: var(--photo-w, 50vw); /* --photo-w: Kante stimmig im Namen, siehe Skript */
+      width: var(--photo-w, 50vw); /* --photo-w (Skript): Kante zwischen R und N des Namens */
       --blend-w: 100%;
       --blend-h: 100%;
       --blend-mask: linear-gradient(to right, transparent 0, #000 var(--fade));
