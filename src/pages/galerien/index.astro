@@ -79,7 +79,7 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
 
   /* ---------- Übersicht: Titelbilder in gleich hohen Reihen (wie Lightroom) ----------
      Jedes Bild bleibt im Originalformat. Pro Reihe sind alle Bilder gleich hoch und füllen die Breite:
-     Breite ∝ Seitenverhältnis (flex-grow), die letzte Reihe wird nicht gestreckt (::after). */
+     Breite ∝ Seitenverhältnis (flex-grow). scripts/justify.ts füllt jede Reihe, ohne JS bleibt die letzte ungestreckt (::after). */
   .cards {
     --row: clamp(118px, 45px + 19vw, 340px);
     list-style: none;

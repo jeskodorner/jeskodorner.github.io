@@ -409,7 +409,7 @@ a:hover .arrow,
 
 /* ---------- Foto-Reihen (Alben und HQ-Album) ----------
    Gleich hohe Reihen, dicht gepackt (wie Lightroom). Jedes Foto bleibt im Originalformat:
-   Breite ∝ Seitenverhältnis (flex-grow), die letzte Reihe wird nicht gestreckt (::after).
+   Breite ∝ Seitenverhältnis (flex-grow). scripts/justify.ts füllt jede Reihe, ohne JS bleibt die letzte ungestreckt (::after).
    scripts/justify.ts verteilt die Reihen genauer, ohne JavaScript übernimmt dieses CSS. */
 .tiles {
   --row: clamp(95px, 55px + 12vw, 230px);

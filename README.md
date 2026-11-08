@@ -239,8 +239,10 @@ Unterhalb des Kopfbereichs kannst du optional einen längeren Text in Markdown s
 ### So sieht ein Album aus
 
 - **Album:** alle Fotos klein in gleich hohen Reihen wie in Lightroom, jedes unbeschnitten im Originalformat,
-  jede Reihe füllt die Breite. Die Reihen verteilt ein kleines Skript (`src/scripts/justify.ts`), damit kein
-  einzelnes Foto am Reihenende riesig wird. Ohne JavaScript übernimmt reines CSS.
+  jede Reihe füllt die Breite, auch die letzte. Die Reihen verteilt ein kleines Skript (`src/scripts/justify.ts`)
+  über die ganze Liste, damit alle Reihen ähnlich hoch bleiben und keine Lücken entstehen. Nur ein Album mit
+  sehr wenigen Fotos (z. B. ein einzelnes Hochformat) lässt rechts Platz, weil das Foto sonst höher als der
+  Bildschirm würde. Ohne JavaScript übernimmt reines CSS (dann ist die letzte Reihe nicht gestreckt).
 - **Klick auf ein Foto** öffnet es groß in der Lightbox, mit weißem Rand ringsum (auch auf dem Handy).
   Direkt über dem Foto stehen „← Vorheriges Bild“ und „Nächstes Bild →“ (nie auf dem Foto). Außerdem blättern per
   Wischen oder **←**/**→**, schließen per **Esc**. Oben eine einheitliche Leiste: Nummer, Details, Teilen, Zoom, Schließen.
