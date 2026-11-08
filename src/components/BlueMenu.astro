@@ -160,9 +160,10 @@ const hasAside = Astro.slots.has('aside');
     }
     .bm-aside {
       grid-column: 1 / -1;
-      /* randlos über die ganze Breite und ein Stück hinter „Kontakt“ */
+      /* randlos über die ganze Breite und hinter „Kontakt“: so weit hoch, dass der weiche obere Rand (ein Viertel
+         der Höhe, Höhe ≈ 75 % der Breite) fast ganz hinter dem Wort liegt – das Foto ist unter „Kontakt“ zu sehen */
       margin-inline: calc(-1 * var(--gutter));
-      margin-top: calc(-0.5 * var(--bm-item));
+      margin-top: calc(-12vw - 0.2 * var(--bm-item));
       padding-top: 0;
       place-items: start center;
       container-type: size;
@@ -197,10 +198,6 @@ const hasAside = Astro.slots.has('aside');
       container-type: size;
       place-items: center;
       --blend-w: min(100cqw - 4rem, 133.33cqh);
-      /* rundum weich auslaufen */
-      --blend-mask:
-        linear-gradient(to right, transparent, #000 18%, #000 82%, transparent),
-        linear-gradient(to bottom, transparent, #000 22%, #000 78%, transparent);
     }
   }
   .bm-list {

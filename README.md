@@ -588,8 +588,8 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   2,8 Sekunden blendet ein neues oben ein und das unterste verschwindet, so entstehen laufend neue Bilder (Reihenfolge
   bei jedem Besuch zufällig). Am Laptop rechts neben dem Menü. Am Handy immer randlos über die ganze Breite (auf niedrigen
   Bildschirmen etwas flacher als 4:3, damit nichts scrollt), es beginnt
-  hinter „Kontakt“ und läuft oben und unten weich aus. Am Laptop läuft es an allen Seiten weich aus (Verläufe:
-  `--blend-mask` in `BlueMenu.astro`). Mit „Bewegung reduzieren“
+  hinter „Kontakt“ (das Foto liegt sichtbar unter dem Wort) und läuft oben und unten weich aus (Verlauf:
+  `--blend-mask` in `BlueMenu.astro`). Am Laptop hat es harte Kanten. Mit „Bewegung reduzieren“
   oder ohne JavaScript bleibt ein festes Paar stehen. Invertieren abschalten: in `BlendLoop.astro` die Zeile
   `filter: invert(1);` löschen. Die frühere Startseite liegt in der Git-Geschichte.
 - **Ausprobierte Versionen (gemerkt):**
