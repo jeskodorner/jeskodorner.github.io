@@ -12,9 +12,11 @@ import { useTranslations } from '../i18n';
 export interface Props extends HeadProps {
   /** Zusätzliche Klasse für <main> */
   mainClass?: string;
+  /** Ohne weiße Leiste und Fußzeile (Startseite = blaues Menü) */
+  bare?: boolean;
 }
 
-const { mainClass, ...head } = Astro.props;
+const { mainClass, bare = false, ...head } = Astro.props;
 const t = useTranslations();
 ---
 
@@ -26,11 +28,11 @@ const t = useTranslations();
   </head>
   <body>
     <a class="skip-link" href="#main">{t.skipLink}</a>
-    <Header />
+    {!bare && <Header />}
     <main id="main" class={mainClass} tabindex="-1">
       <slot />
     </main>
-    <Footer />
+    {!bare && <Footer />}
   </body>
 </html>
 

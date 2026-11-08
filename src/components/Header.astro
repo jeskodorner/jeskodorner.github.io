@@ -1,21 +1,14 @@
 ---
-import { getCollection } from 'astro:content';
 import { site } from '../config/site';
 import { useTranslations } from '../i18n';
+import { navLinks, isCurrent as current } from '../lib/nav';
 import Icon from './Icon.astro';
+import BlueMenu from './BlueMenu.astro';
 
 const t = useTranslations();
-const hasFilms = (await getCollection('films')).length > 0;
 const path = Astro.url.pathname;
-
-const links = [
-  { href: '/portfolio/', label: t.nav.selected, match: ['/portfolio/'] },
-  { href: '/galerien/', label: t.nav.galleries, match: ['/galerien/', '/g/'] },
-  ...(hasFilms ? [{ href: '/film/', label: t.nav.film, match: ['/film/'] }] : []),
-  { href: '/ueber-mich/', label: t.nav.about, match: ['/ueber-mich/'] },
-  { href: '/kontakt/', label: t.nav.contact, match: ['/kontakt/'] },
-];
-const isCurrent = (match: string[]) => match.some((m) => path.startsWith(m));
+const links = await navLinks();
+const isCurrent = (match: string[]) => current(path, match);
 ---
 
 <header class="site-header">
@@ -44,31 +37,7 @@ const isCurrent = (match: string[]) => match.some((m) => path.startsWith(m));
   </div>
 
   <div id="site-menu" class="menu c-blue" popover>
-    <div class="menu-inner container">
-      <div class="menu-top">
-        <span class="label">{t.nav.menu}</span>
-        <button class="menu-close" type="button" popovertarget="site-menu" popovertargetaction="hide" aria-label={t.nav.close}>
-          <Icon name="close" size={30} />
-        </button>
-      </div>
-      <nav aria-label={t.nav.label}>
-        <ul>
-          <li><a class="display" href="/" aria-current={path === '/' ? 'page' : undefined}>{t.nav.home}</a></li>
-          {
-            links.map((l) => (
-              <li>
-                <a class="display" href={l.href} aria-current={isCurrent(l.match) ? 'page' : undefined}>
-                  {l.label}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </nav>
-      <p class="menu-foot label">
-        <a href={site.instagram.url} rel="me noopener" target="_blank">@{site.instagram.handle}</a>
-      </p>
-    </div>
+    <BlueMenu overlay />
   </div>
 </header>
 
@@ -140,8 +109,7 @@ const isCurrent = (match: string[]) => match.some((m) => path.startsWith(m));
     color: var(--wall);
   }
 
-  .menu-btn,
-  .menu-close {
+  .menu-btn {
     display: inline-grid;
     place-items: center;
     width: 3rem;
@@ -150,9 +118,6 @@ const isCurrent = (match: string[]) => match.some((m) => path.startsWith(m));
     border-radius: 50%;
     background: var(--lime);
     color: var(--ink);
-  }
-  .menu-close {
-    background: var(--wall);
   }
 
   @media (min-width: 820px) {
@@ -164,49 +129,30 @@ const isCurrent = (match: string[]) => match.some((m) => path.startsWith(m));
     }
   }
 
-  /* Mobiles Menü als Popover (funktioniert ohne JavaScript) */
+  /* Mobiles Menü als Popover (funktioniert ohne JavaScript), Inhalt: BlueMenu.astro.
+     So hoch wie der größte Bildschirmbereich (lvh): kein Streifen der Seite darunter, auch wenn die
+     Adressleiste im Handy-Browser eingeklappt ist. Dahinter lässt sich nicht scrollen. */
   .menu {
     position: fixed;
-    inset: 0;
+    inset: 0 0 auto;
     width: 100%;
-    height: 100%;
+    height: 100vh;
+    height: 100lvh;
     max-width: none;
     max-height: none;
     margin: 0;
     padding: 0;
     border: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
     background: var(--c);
     color: var(--on-c);
   }
-  .menu-inner {
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
-    padding-block: 1rem 2rem;
+  .menu > :global(.bm) {
+    min-height: 100dvh;
   }
-  .menu-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: calc(var(--header-h) - 0.5rem);
-  }
-  .menu ul {
-    list-style: none;
-    padding: 0;
-    margin-top: 5vh;
-    display: grid;
-    gap: 0.2rem;
-  }
-  .menu ul a {
-    font-size: clamp(3.5rem, 17vw, 6.5rem);
-    text-decoration: none;
-  }
-  .menu ul a:hover,
-  .menu ul a[aria-current='page'] {
-    color: var(--lime);
-  }
-  .menu-foot {
-    margin-top: auto;
+  :global(html:has(#site-menu:popover-open)) {
+    overflow: hidden;
   }
   @media (prefers-reduced-motion: no-preference) {
     .menu:popover-open {

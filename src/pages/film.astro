@@ -13,7 +13,7 @@ const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (
 
 <BaseLayout title={t.film.title} description={`${t.film.title}: ${t.film.intro}`}>
   <section class="container container--wide head">
-    <h1 class="display display-1"><span class="stretch">{t.film.title}</span><sup class="count">({String(films.length).padStart(2, '0')})</sup></h1>
+    <h1 class="display display-1"><span class="stretch">{t.film.title}</span></h1>
     <p class="lead muted">{t.film.intro}</p>
   </section>
 
@@ -90,12 +90,6 @@ const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (
   .head {
     padding-top: clamp(2.5rem, 6vw, 5rem);
     padding-bottom: clamp(2rem, 5vw, 4rem);
-  }
-  .count {
-    font-size: 0.28em;
-    vertical-align: top;
-    margin-left: 0.15em;
-    color: var(--accent);
   }
   .lead {
     margin-top: 1rem;

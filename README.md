@@ -69,7 +69,7 @@ src/
       images/*.jpg          ← Web-Versionen (erzeugt von npm run optimize)
       meta.json             ← EXIF, Farbe, Blur-Platzhalter (erzeugt, nicht von Hand ändern)
     films/*.md              ← Filmarbeiten (+ images/ für Standbilder)
-    pages/startseite.md     ← Texte der Startseite
+    pages/startseite.md     ← Liste fürs Portfolio („showroom“)
     pages/ueber-mich.md     ← Texte „Über mich“, Stationen, Ausrüstung
   assets/portrait.jpg       ← Porträt für „Über mich“ (einfach ersetzen)
   pages/                    ← Seiten und Routen
@@ -90,7 +90,6 @@ photos.config.json          ← Einstellungen für die Bildverarbeitung (Größe
 | Was | Wo |
 |---|---|
 | Claim, Beschreibung für Suchmaschinen, Instagram, E-Mail | `src/config/site.ts` |
-| Texte der Startseite | `src/content/pages/startseite.md` |
 | Portfolio: welche Fotos, Reihenfolge, eigene Namen | `src/content/pages/startseite.md`, Liste `showroom` (siehe unten) |
 | Über mich: Text, Stationen, Ausrüstung | `src/content/pages/ueber-mich.md` |
 | Porträt | Datei `src/assets/portrait.jpg` ersetzen (Hochformat 4:5 ideal) |
@@ -102,10 +101,9 @@ photos.config.json          ← Einstellungen für die Bildverarbeitung (Größe
 > Bitte vor der Veröffentlichung vervollständigen und rechtlich prüfen lassen. Das hier ist keine Rechtsberatung.
 
 **Portfolio:** In `startseite.md` legt die Liste `showroom` fest, welche Fotos ausgewählt sind, in welcher
-Reihenfolge und unter welchem Namen. Sie erscheinen an zwei Stellen: auf der Startseite als **Bilderstapel** (Abzüge mit
-weißem Rand, das oberste lässt sich wegziehen oder antippen und schiebt sich unten in den Stapel; Pfeile und ← →
-gehen vor und zurück) und auf der eigenen Seite **/portfolio/** als kleine Ausstellung (jedes Foto einzeln
-an der Wand; ein Klick öffnet direkt dort die Lightbox mit dem ganzen Album ab diesem Foto, ohne die Albumseite). Der Knopf oben im Startbild führt dorthin, der Link daneben zur Galerie.
+Reihenfolge und unter welchem Namen. Sie erscheinen auf der Seite **/portfolio/** als kleine Ausstellung (jedes Foto
+einzeln an der Wand; ein Klick öffnet direkt dort die Lightbox mit dem ganzen Album ab diesem Foto, ohne die Albumseite)
+und liefern das Vorschaubild der Startseite für Link-Vorschauen.
 
 ```yaml
 showroom:
@@ -229,7 +227,7 @@ Pro Bild:
 | `alt` | ja | Was ist zu sehen? Für Screenreader und Suchmaschinen. Ohne Alt-Text bricht der Build bewusst ab. |
 | `caption` | | Bildunterschrift (in den Lightbox-Details) |
 | `originalUrl` | | Link zum Original. Dann erscheint „Original herunterladen“. |
-| `hero` | | wird nicht mehr verwendet (früher: großes Bild auf der Startseite). Die Startseite zeigt jetzt Fotos aus dem Portfolio. |
+| `hero` | | wird nicht mehr verwendet (früher: großes Bild auf der Startseite). |
 | `exif` | | überschreibt ausgelesene Werte, z. B. `exif: { lens: "Helios 44-2" }` |
 | `focus` | | wichtigster Bildbereich, falls ein Foto doch einmal beschnitten wird (z. B. Film-Vorschaubilder), z. B. `focus: "50% 30%"` (waagerecht senkrecht). Standard: Mitte. In Alben werden Fotos nie beschnitten. |
 
@@ -434,11 +432,7 @@ haben keine Vor/Zurück-Navigation zu anderen Galerien und werden nicht von der 
 Alle Effekte sind reines CSS, ohne JavaScript, und laufen flüssig:
 
 - **Parallax:** Beschnittene Fotos (Film, Porträt) gleiten in ihrem Rahmen etwas langsamer als die Seite. Galerie-Fotos bewegen sich nicht, damit nichts beschnitten wird.
-- **Dehnende Titel:** Große Titel (Name auf der Startseite, „Portfolio“, „Projekt anfragen“, Footer) ziehen sich beim Scrollen von schmal auf breit.
-- **Statement:** Der Satz unter dem Kopf der Startseite leuchtet beim Scrollen Wort für Wort auf.
-- **Kopf der Startseite:** Der Name zieht sich beim Scrollen in die Breite. Daneben (Handy: darunter) blenden die
-  Fotos aus dem Portfolio schlicht nacheinander über, ohne Bewegung und ohne Knöpfe (Sekunden pro Foto:
-  `hero.secondsPerImage` in `src/config/site.ts`). Bei „Bewegung reduzieren“ bleibt das erste Foto stehen.
+- **Dehnende Titel:** Große Titel („Portfolio“, „Galerie“, „Film“, Footer) ziehen sich beim Scrollen von schmal auf breit.
 - **Weitere Effekte:** Texte steigen auf, der Fortschrittsbalken in Galerien zeigt die Galeriefarbe, und der Header wird kompakt.
 
 **Browser:** Chrome, Edge, Brave und Safari (ab Version 26) zeigen die Scroll-Bewegung. Firefox hatte diese Technik
@@ -466,8 +460,6 @@ Alles in `src/config/site.ts`:
    Wenn du über die Seite Aufträge akquirierst, prüfe bitte die Bedingungen.
 
 
-**„Über mich“ auf der Startseite:** Der Abschnitt mit Porträt und Teaser ist im Moment ausgeschaltet.
-Mit `home: { aboutTeaser: true }` erscheint er wieder (zwischen Film und Kontakt). Die Seite „Über mich“ selbst bleibt immer erreichbar.
 
 **Wasserzeichen aus:** In `photos.config.json` `"watermark": { "enabled": false, … }` setzen, dann `npm run optimize -- --force`.
 
@@ -579,9 +571,10 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 - **Jede Galerie hat eine eigene Farbe.** Die Farbe erscheint im Button auf der Seite „Galerie“, im Farbband oben auf
   der Galerieseite, im Fortschrittsbalken und im Download-Kasten (Kundengalerien).
   Festlegen per `color: pink | blue | lime | orange | violet` in `index.md`. Ohne Angabe wechselt die Farbe automatisch reihum.
-- **Startseite:** großer Name auf Weiß mit Fotokarussell aus dem Portfolio, eine schlichte Zeile „Fotografie — Kamera — Film“,
-  „Portfolio“ als Bilderstapel zum Durchblättern (mit Link zur eigenen Seite, dort jedes Foto unbeschnitten
-  an der weißen Wand), ein blauer Bereich „Bewegte Bilder“ und ein Lime-Bereich „Projekt anfragen“.
+- **Startseite = das blaue Menü** (`src/components/BlueMenu.astro`): blaue Fläche über den ganzen Bildschirm, oben
+  groß der Name, darunter die Menüpunkte (Portfolio, Galerie, Film, Über mich, Kontakt), unten Instagram, Impressum
+  und Datenschutz. Ohne weiße Leiste und ohne Scrollen. Dasselbe Menü öffnet sich auf dem Handy über den Menü-Knopf
+  (dort mit Schließen-Knopf, der Name führt zur Startseite). Die frühere Startseite liegt in der Git-Geschichte.
 
 Kontraste nach WCAG 2.x:
 
@@ -595,7 +588,7 @@ Kontraste nach WCAG 2.x:
 | Orange | `#FF5A1F` | Schwarz | 6,3 : 1 |
 | Violett | `#7C5CFF` | Schwarz | 4,5 : 1 |
 
-Pink als Textfarbe auf Weiß (3,3 : 1) nur für große Schrift ab 24 px, z. B. „Dorner“ auf der Startseite und den Footer-Schriftzug.
+Pink als Textfarbe auf Weiß (3,3 : 1) nur für große Schrift ab 24 px, z. B. den Footer-Schriftzug.
 
 **Schriften** (lokal, über Fontsource, Lizenz OFL):
 - **Anybody**: große Titel. Die Schrift ist stufenlos von extrem schmal (50 %) bis sehr breit (150 %) einstellbar.

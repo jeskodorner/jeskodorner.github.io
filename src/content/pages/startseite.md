@@ -1,5 +1,6 @@
 ---
-# Texte der Startseite. *Sternchen* um ein Wort sind erlaubt, werden aber schlicht gesetzt (ohne Marker).
+# Die Startseite ist das blaue Menü – von dieser Datei wird nur noch die Liste „showroom“ (Portfolio) genutzt.
+# kicker, statement, note und aboutTeaser stammen von der früheren Startseite und werden zurzeit nicht angezeigt.
 # kicker: Wörter für die schlichte Zeile unter dem Statement (mit · getrennt)
 kicker: "Fotografie · Kamera · Film"
 statement: "Fotografie, die *Bewegung* einfängt."

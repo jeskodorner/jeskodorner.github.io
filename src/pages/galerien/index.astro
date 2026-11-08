@@ -16,7 +16,7 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
     <h1 class="display display-1 head-title">
       <span class="stretch">{t.galleries.title}</span>
     </h1>
-    <p class="lead muted rise">{t.galleries.intro} <span class="pill c-lime">{galleries.length} {galleries.length === 1 ? 'Galerie' : 'Galerien'}</span></p>
+    <p class="lead muted rise">{t.galleries.intro}</p>
   </section>
 
   {galleries.length === 0 && <p class="container">{t.galleries.empty}</p>}
