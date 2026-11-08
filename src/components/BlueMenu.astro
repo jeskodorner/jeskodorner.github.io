@@ -91,9 +91,10 @@ const hasAside = Astro.slots.has('aside');
   type Prop = 'fontSize' | 'lineHeight' | 'letterSpacing' | 'paddingTop' | 'paddingLeft' | 'paddingRight';
   const COPY: Prop[] = ['fontSize', 'lineHeight', 'letterSpacing', 'paddingTop', 'paddingLeft', 'paddingRight'];
 
+  /** Legt die Kopie an und gibt zurück, wie sie neu ausgerichtet wird */
   function addWindow(bm: HTMLElement, source: HTMLElement | null, kind: string, flag: string) {
     const box = bm.querySelector<HTMLElement>('.bm-aside [data-blend]');
-    if (!source || !box) return;
+    if (!source || !box) return null;
     const word = document.createElement('span');
     word.className = `bm-window bm-window--${kind} display`;
     word.textContent = source.textContent?.trim() ?? '';
@@ -107,15 +108,64 @@ const hasAside = Astro.slots.has('aside');
       word.style.translate = `${a.left - b.left}px ${a.top - b.top}px`;
       source.style.setProperty('--split', `${(b.left - a.left).toFixed(1)}px`);
     };
-    place();
-    new ResizeObserver(place).observe(bm);
-    document.fonts?.ready.then(place);
     bm.classList.add(flag);
+    return place;
+  }
+
+  /* Laptop: Die Fotokante (Mitte des kurzen Übergangs) soll stimmig durch den Namen laufen – genau durch die Mitte
+     eines Buchstabens oder durch die Lücke zwischen „Jesko“ und „Dorner“, nie knapp an einem Buchstabenrand.
+     (Zwischen zwei Buchstaben eines Worts ist die Lücke schmaler als der Übergang.) Dazu wird die Kante von der
+     Bildschirmmitte zur nächstgelegenen solchen Stelle geschoben; die Fotobreite setzt --photo-w. */
+  const desk = matchMedia('(min-width: 700px)');
+  function alignEdge(bm: HTMLElement) {
+    const aside = bm.querySelector<HTMLElement>('.bm-aside');
+    const name = bm.querySelector<HTMLElement>('.bm-name');
+    if (!aside || !name) return;
+    aside.style.removeProperty('--photo-w');
+    if (!desk.matches) return;
+    const node = [...name.childNodes].find((n) => n.nodeType === Node.TEXT_NODE && n.textContent?.trim());
+    if (!node?.textContent) return;
+    // Breite des Übergangs (CSS --fade) messen
+    const probe = document.createElement('div');
+    probe.style.cssText = 'position:absolute;visibility:hidden;width:var(--fade)';
+    bm.append(probe);
+    const fade = probe.getBoundingClientRect().width;
+    probe.remove();
+    const right = aside.getBoundingClientRect().right;
+    const edge = right - innerWidth / 2 + fade / 2; // wo die Kante ohne Ausrichtung läge
+    const n = name.getBoundingClientRect();
+    if (edge <= n.left || edge >= n.right) return; // Kante läuft nicht durch den Namen
+    // Mitten aller Zeichen: Buchstaben und das Leerzeichen (= Mitte der Wortlücke)
+    const range = document.createRange();
+    let best = edge;
+    let dist = Infinity;
+    for (let i = 0; i < node.textContent.length; i++) {
+      range.setStart(node, i);
+      range.setEnd(node, i + 1);
+      const r = range.getBoundingClientRect();
+      if (!r.width) continue;
+      const mid = r.left + r.width / 2;
+      if (Math.abs(mid - edge) < dist) {
+        dist = Math.abs(mid - edge);
+        best = mid;
+      }
+    }
+    aside.style.setProperty('--photo-w', `${(right - best + fade / 2).toFixed(1)}px`);
   }
 
   for (const bm of document.querySelectorAll<HTMLElement>('.bm--aside')) {
-    addWindow(bm, bm.querySelector('.bm-list li:last-child a'), 'kontakt', 'has-window');
-    addWindow(bm, bm.querySelector('.bm-name'), 'name', 'has-name-window');
+    const placers = [
+      addWindow(bm, bm.querySelector('.bm-list li:last-child a'), 'kontakt', 'has-window'),
+      addWindow(bm, bm.querySelector('.bm-name'), 'name', 'has-name-window'),
+    ];
+    // erst die Fotokante ausrichten, dann die Kopien darauf legen (auch nach Drehen, Größenänderung, Schrift geladen)
+    const update = () => {
+      alignEdge(bm);
+      for (const place of placers) place?.();
+    };
+    update();
+    new ResizeObserver(update).observe(bm);
+    document.fonts?.ready.then(update);
     // Beim Wechsel auf eine Unterseite gleitet der Name ins Logo – dafür ganz blau (die Kopie gleitet nicht mit)
     addEventListener('pageswap', () => bm.classList.remove('has-name-window'));
   }
@@ -299,7 +349,7 @@ const hasAside = Astro.slots.has('aside');
       /* Grundlinie der Fußzeile: unterer Seitenabstand + 0,376 Schrifthöhen (gemessen) */
       bottom: calc(max(1.5rem, env(safe-area-inset-bottom)) + 0.376 * var(--fs-xs));
       right: calc(50% - 50vw); /* bis an den Bildschirmrand, auch wenn der Inhalt schmaler ist */
-      width: 50vw;
+      width: var(--photo-w, 50vw); /* --photo-w: Kante stimmig im Namen, siehe Skript */
       --blend-w: 100%;
       --blend-h: 100%;
       --blend-mask: linear-gradient(to right, transparent 0, #000 var(--fade));

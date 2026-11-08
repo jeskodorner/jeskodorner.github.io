@@ -599,7 +599,9 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   bei jedem Besuch zufällig). Am Laptop (ab 700 px) füllt es die rechte Bildschirmhälfte randlos von oben bis zur Grundlinie der
   Fußzeile („Datenschutz“), links mit einem ganz kurzen Übergang (`--fade`); der
   Name ragt hinein, und wo er auf dem Foto liegt, zeigen seine Buchstaben das Foto in echten Farben (wie „Kontakt“
-  am Handy, Skript `addWindow` in `BlueMenu.astro`). Am Handy immer randlos über die ganze Breite (auf niedrigen
+  am Handy, Skript `addWindow` in `BlueMenu.astro`). Die Fotokante läuft dabei immer genau durch die Mitte eines
+  Buchstabens oder durch die Lücke zwischen „Jesko“ und „Dorner“ (Skript `alignEdge`, verschiebt sie dafür um
+  höchstens einen halben Buchstaben). Am Handy immer randlos über die ganze Breite (auf niedrigen
   Bildschirmen etwas flacher als 4:3, damit nichts scrollt), es beginnt
   halb hinter „Kontakt“ (das Foto beginnt mit kurzem weichem Rand an der Mitte der Buchstaben; „Kontakt“ ist oben
   weiß, auf dem Foto zeigen die Buchstaben das Foto in seinen echten, nicht invertierten Farben – wie ein Fenster) und läuft unten weich aus (Verlauf:
