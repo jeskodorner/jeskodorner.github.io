@@ -4,6 +4,8 @@
  * - Beim Seitenaufruf wird NICHTS von YouTube/Google geladen (keine Cookies, keine Verbindung).
  * - Erst beim Klick auf „Abspielen“ wird der Player von youtube-nocookie.com eingebettet.
  * - Ohne JavaScript führt der Klick direkt zu YouTube (neuer Tab).
+ * - Kein sichtbarer Hinweistext unter dem Video (wirkte unruhig); erklärt wird es in der Datenschutzerklärung,
+ *   Screenreader hören „lädt YouTube“ im Namen des Abspielen-Links.
  */
 import type { ImageMetadata } from 'astro';
 import Picture from './Picture.astro';
@@ -39,9 +41,6 @@ const watchUrl = `https://www.youtube.com/watch?v=${id}`;
       Abspielen
     </span>
   </a>
-  <figcaption class="yt-note">
-    Beim Abspielen wird das Video von YouTube (Google) geladen. <a href="/datenschutz/#youtube">Datenschutz</a>
-  </figcaption>
 </figure>
 
 <script>
@@ -133,13 +132,5 @@ const watchUrl = `https://www.youtube.com/watch?v=${id}`;
   }
   .yt-poster:focus-visible {
     outline-offset: 4px;
-  }
-  .yt-note {
-    margin-top: 0.6rem;
-    font-size: var(--fs-xs);
-    color: var(--ink-soft);
-  }
-  .yt-note a {
-    color: var(--accent);
   }
 </style>
