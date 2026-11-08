@@ -11,7 +11,7 @@
  * „Kontakt“ (4:3, auf niedrigen Bildschirmen etwas flacher, aber immer randlos),
  * ab 700 px rechts neben den Menüpunkten: oben und unten bündig mit der Schrift, rechtsbündig am Seitenrand (gleicher
  * Abstand zum Bildschirmrand wie der Name links), damit die Seite nicht nach links kippt.
- * Hinter dem Namen steht ein rosa Block wie ein blinkender Textcursor.
+ * Der Name ist rosa hinterlegt mit schwarzer Schrift (wie markierter Text) – das einzige große Rosa auf der Seite.
  * Übergang: Name, Menüpunkte und Fußzeile tragen feste view-transition-Namen. Beim Wechsel Menü → Startseite
  * gleiten sie an ihren neuen Platz; von der Startseite auf eine Unterseite gleitet der Name ins Logo oben links.
  */
@@ -114,39 +114,20 @@ const hasAside = Astro.slots.has('aside');
     color: var(--ink);
     cursor: pointer;
   }
-  /* Name: eine Zeile, so breit wie der Platz (aber nicht riesig). Name und Cursor zusammen sind 5,25 Schrifthöhen
-     breit, bei 100cqi / 5.6 bleibt am Handy links und rechts noch etwas Luft. */
+  /* Name: eine Zeile, so breit wie der Platz (aber nicht riesig). Rosa Fläche genau so breit wie die Schrift, schwarze
+     Schrift – wie markierter Text. Die Fläche ist 0,98 Schrifthöhen hoch, oben 0,125 und unten 0,175 Rand um die
+     Großbuchstaben. */
   .bm-name {
     view-transition-name: jd-name;
     display: block;
-    font-size: min(11rem, 100cqi / 5.6);
+    width: fit-content;
+    font-size: min(11rem, 100cqi / 5.4);
     line-height: 0.9;
     padding-top: 0.08em;
     white-space: nowrap;
     text-decoration: none;
-    color: inherit;
-  }
-  /* rosa Detail: Block direkt hinter dem Namen wie ein Textcursor – so hoch wie die Großbuchstaben (0,67), so breit
-     wie ein Buchstabe, steht auf der Grundlinie und blinkt (bei „Bewegung reduzieren“ steht er still) */
-  .bm-name::after {
-    content: '';
-    display: inline-block;
-    width: 0.4em;
-    height: 0.67em;
-    margin-left: 0.06em;
-    vertical-align: baseline;
     background: var(--pink);
-    animation: bm-cursor 1.1s step-end infinite;
-  }
-  @keyframes bm-cursor {
-    50% {
-      opacity: 0;
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .bm-name::after {
-      animation: none;
-    }
+    color: var(--ink);
   }
   /* Menüpunkte: deutlich kleiner als der Name, mit Luft dazwischen */
   /* Menüpunkte, dazu optional das Bildfeld (Slot „aside“). Handy: Bildfeld mittig im freien Platz darunter. */
@@ -284,20 +265,13 @@ const hasAside = Astro.slots.has('aside');
     margin-top: auto;
     padding-top: 2.5rem;
   }
-  /* Kleine Links rosa hinterlegt, schwarze Schrift (beim Überfahren umgekehrt) */
+  /* Kleine Links schlicht weiß, beim Überfahren rosa hinterlegt wie die Menüpunkte */
   .bm-foot a {
-    display: inline-block;
-    padding: 0.35em 0.6em 0.3em;
-    background: var(--pink);
-    color: var(--ink);
-    text-decoration: none;
-    transition:
-      background-color 0.2s,
-      color 0.2s;
+    color: inherit;
   }
   .bm-foot a:hover {
-    background: var(--ink);
-    color: var(--pink);
+    background: var(--pink);
+    color: var(--ink);
   }
   .bm a:focus-visible,
   .bm-close:focus-visible {

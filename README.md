@@ -576,9 +576,9 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   Festlegen per `color: pink | blue | lime | orange | violet` in `index.md`. Ohne Angabe wechselt die Farbe automatisch reihum.
 - **Startseite = das blaue Menü** (`src/components/BlueMenu.astro`): Fläche in Schieferblau `#58677F` (Token
   `--menu-bg` in `tokens.css`, Farbe aus der Stirn eines invertierten Portfolio-Fotos). Akzent dort ist Rosa: der
-  aktive bzw. überfahrene Menüpunkt bekommt ein rosa Feld mit schwarzer Schrift, der Menü-Knopf ist ein rosa Kreis,
-  Instagram/Impressum/Datenschutz unten sind rosa hinterlegt, hinter dem Namen blinkt ein rosa Block wie ein
-  Textcursor (`.bm-name::after`; bei „Bewegung reduzieren“ steht er still). Die Fläche geht über den ganzen
+  Name ist rosa hinterlegt mit schwarzer Schrift (wie markierter Text, `.bm-name`), der aktive bzw. überfahrene
+  Menüpunkt bekommt dasselbe rosa Feld, der Menü-Knopf ist ein rosa Kreis. Instagram, Impressum und Datenschutz unten
+  sind schlicht weiß (beim Überfahren rosa). Sparsam bleiben: mehr Rosa wirkt schnell zu viel. Die Fläche geht über den ganzen
   Bildschirm, oben groß der Name, darunter die Menüpunkte (Portfolio, Galerie, Film, Über mich, Kontakt), unten
   Instagram, Impressum und Datenschutz. Ohne weiße Leiste und ohne Scrollen. Dasselbe Menü öffnet sich auf allen
   Geräten über den rosa Menü-Knopf oben rechts: Die Fläche wächst als Kreis aus dem Knopf, der Schließen-Knopf sitzt an derselben Stelle,
