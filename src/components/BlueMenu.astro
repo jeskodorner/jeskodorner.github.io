@@ -282,22 +282,27 @@ const hasAside = Astro.slots.has('aside');
     }
   }
   /* Ab 700 px: geteilt – links auf Weiß Name, Menü und Fußzeile, rechts füllt das Foto die halbe Bildschirmbreite
-     randlos von oben bis unten. Der Name ragt ins Foto; dort zeigen seine Buchstaben das Foto positiv (Fenster). */
+     randlos, von oben bis zur Unterkante der Schrift der Fußzeile („Datenschutz“). Links läuft es in einem ganz kurzen
+     Übergang (--fade) aus. Der Name ragt ins Foto; dort zeigen seine Buchstaben das Foto positiv (Fenster), mit
+     demselben kurzen Übergang. */
   @media (min-width: 700px) {
     .bm-body {
       flex: none;
     }
     .bm--aside {
       position: relative;
+      --fade: clamp(0.75rem, 1.5vw, 1.5rem);
     }
     .bm-aside {
       position: absolute;
       top: 0;
-      bottom: 0;
+      /* Grundlinie der Fußzeile: unterer Seitenabstand + 0,376 Schrifthöhen (gemessen) */
+      bottom: calc(max(1.5rem, env(safe-area-inset-bottom)) + 0.376 * var(--fs-xs));
       right: calc(50% - 50vw); /* bis an den Bildschirmrand, auch wenn der Inhalt schmaler ist */
       width: 50vw;
       --blend-w: 100%;
       --blend-h: 100%;
+      --blend-mask: linear-gradient(to right, transparent 0, #000 var(--fade));
     }
     .bm--aside .bm-name {
       position: relative;
@@ -306,10 +311,15 @@ const hasAside = Astro.slots.has('aside');
     .bm-aside :global(.bm-window--name) {
       display: block;
     }
-    /* Mit JavaScript: links vom Fotorand blau, auf dem Foto durchsichtig (dort scheint die Kopie durch) */
+    /* Mit JavaScript: links vom Fotorand blau, auf dem Foto durchsichtig (dort scheint die Kopie durch); dazwischen
+       derselbe kurze Übergang wie am Fotorand, so blenden Blau und Foto ineinander */
     .bm--aside.has-name-window .bm-name {
       color: transparent;
-      background-image: linear-gradient(to right, var(--accent) var(--split, 100%), transparent var(--split, 100%));
+      background-image: linear-gradient(
+        to right,
+        var(--accent) var(--split, 100%),
+        transparent calc(var(--split, 100%) + var(--fade))
+      );
       -webkit-background-clip: text;
       background-clip: text;
     }

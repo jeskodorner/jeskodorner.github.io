@@ -596,7 +596,8 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 - **Bildfeld auf der Startseite** (`src/components/BlendLoop.astro`): Fotos aus dem Portfolio (Liste `showroom`),
   farblich invertiert und im Modus „Aufhellen“ übereinandergelegt, immer 4:3. Es sind immer zwei zu sehen. Alle
   2,8 Sekunden blendet ein neues oben ein und das unterste verschwindet, so entstehen laufend neue Bilder (Reihenfolge
-  bei jedem Besuch zufällig). Am Laptop (ab 700 px) füllt es die rechte Bildschirmhälfte randlos von oben bis unten; der
+  bei jedem Besuch zufällig). Am Laptop (ab 700 px) füllt es die rechte Bildschirmhälfte randlos von oben bis zur Grundlinie der
+  Fußzeile („Datenschutz“), links mit einem ganz kurzen Übergang (`--fade`); der
   Name ragt hinein, und wo er auf dem Foto liegt, zeigen seine Buchstaben das Foto in echten Farben (wie „Kontakt“
   am Handy, Skript `addWindow` in `BlueMenu.astro`). Am Handy immer randlos über die ganze Breite (auf niedrigen
   Bildschirmen etwas flacher als 4:3, damit nichts scrollt), es beginnt
