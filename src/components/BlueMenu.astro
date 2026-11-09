@@ -12,7 +12,7 @@
  * Bildschirmhälfte randlos von oben bis unten, der Name ragt hinein.
  * Fenster: Wo ein Wort auf dem Foto liegt, zeigen seine Buchstaben das Foto in echten (positiven) Farben – am Handy
  * die untere Hälfte von „Kontakt“, am Laptop der Teil des Namens, der ins Foto ragt (Skript unten).
- * Farben: Name blau (ohne Fläche), Menüpunkte schwarz, aktueller Menüpunkt blau; beim Überfahren rosa Feld.
+ * Farben: Name und Menüpunkte schwarz, aktueller Menüpunkt blau; beim Überfahren rosa Feld.
  * Übergang: Name, Menüpunkte und Fußzeile tragen feste view-transition-Namen. Beim Wechsel Menü → Startseite
  * gleiten sie an ihren neuen Platz; von der Startseite auf eine Unterseite gleitet der Name ins Logo oben links.
  */
@@ -176,6 +176,8 @@ const hasAside = Astro.slots.has('aside');
   .bm {
     /* Schriftgröße der Menüpunkte */
     --bm-item: clamp(2.3rem, 10.5vw, 4.75rem);
+    /* Farbe des Namens (vorher Blau: var(--accent)) */
+    --name-color: var(--on-menu);
     /* oberer Seitenrand (Laptop: auch der Abstand des Fotos nach oben) */
     --bm-pad: clamp(1.25rem, 4vw, 2.5rem);
     container-type: inline-size;
@@ -215,7 +217,7 @@ const hasAside = Astro.slots.has('aside');
     background: var(--ink);
     color: var(--pink);
   }
-  /* Name: eine Zeile, so breit wie der Platz (aber nicht riesig), in Blau. Im Menü ist er ein Link zur Startseite
+  /* Name: eine Zeile, so breit wie der Platz (aber nicht riesig), in --name-color (schwarz). Im Menü ist er ein Link zur Startseite
      und bekommt beim Überfahren dasselbe rosa Feld wie die Menüpunkte. */
   .bm-name {
     view-transition-name: jd-name;
@@ -226,7 +228,7 @@ const hasAside = Astro.slots.has('aside');
     padding-top: 0.08em;
     white-space: nowrap;
     text-decoration: none;
-    color: var(--accent);
+    color: var(--name-color);
     transition:
       background-color 0.2s,
       color 0.2s;
@@ -370,7 +372,7 @@ const hasAside = Astro.slots.has('aside');
       color: transparent;
       background-image: linear-gradient(
         to right,
-        var(--accent) var(--split, 100%),
+        var(--name-color) var(--split, 100%),
         transparent calc(var(--split, 100%) + var(--fade))
       );
       -webkit-background-clip: text;

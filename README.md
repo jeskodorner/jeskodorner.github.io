@@ -584,7 +584,8 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   Korallenrosa `#EF9D9F`). Es gilt auch für Galerien mit `color: pink`.
 - **Startseite = das Menü** (`src/components/BlueMenu.astro`): weiß mit schwarzer Schrift (Token `--menu-bg` und
   `--on-menu` in `tokens.css`; vorher Mittelblau `#4273B0` bzw. Schieferblau `#58677F` mit weißer Schrift). Der Name ist
-  blau (`.bm-name`, früher rosa hinterlegt), der Menüpunkt der aktuellen Seite ebenfalls blau. Beim Überfahren bekommen
+  schwarz (`--name-color` in `BlueMenu.astro`; vorher blau, davor rosa hinterlegt), der Menüpunkt der aktuellen
+  Seite blau. Beim Überfahren bekommen
   Menüpunkte und Name ein rosa Feld mit schwarzer Schrift, Menü- und Schließen-Knopf sind rosa Kreise. Instagram, Impressum und Datenschutz
   unten sind schlicht schwarz (beim Überfahren rosa). Sparsam bleiben: mehr Rosa wirkt schnell zu viel. Die Fläche geht über den ganzen
   Bildschirm, oben groß der Name, darunter die Menüpunkte (Portfolio, Galerie, Film, Über mich, Kontakt), unten
@@ -632,7 +633,6 @@ Kontraste nach WCAG 2.x:
 | Links, kleine Akzente | Mittelblau `#4273B0` auf Weiß | – | 4,9 : 1 |
 | Koralle (`pink`) | `#FF807F` | Schwarz | 8,1 : 1 |
 | Startseite/Menü | Weiß `#FFFFFF` | Schwarz | 19,6 : 1 |
-| Name auf der Startseite | Mittelblau `#4273B0` auf Weiß | – | 4,9 : 1 |
 | Überfahren im Menü | Koralle `#FF807F` (Fläche) | Schwarz | 8,1 : 1 |
 | Orange (`orange`) | `#FFA44E` | Schwarz | 10,0 : 1 |
 | Sonnengelb (`lime`) | `#F7E04F` | Schwarz | 14,7 : 1 |
