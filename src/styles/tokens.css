@@ -63,6 +63,8 @@
   /* Schriften – lokal eingebunden (keine Google-Fonts-CDN) */
   /* Titel: Instrument Serif (nur eine Stärke, normal und kursiv); vorher Anybody, sehr fett und schmal */
   --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  /* nur der große Name auf Startseite und Menü: Climate Crisis, sehr fett und breit */
+  --font-name: 'Climate Crisis Variable', 'Arial Black', sans-serif;
   --font-sans: 'Archivo Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   /* Fließende Schriftgrößen 360 px → 2560 px */

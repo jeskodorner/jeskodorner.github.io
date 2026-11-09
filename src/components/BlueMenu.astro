@@ -34,7 +34,8 @@ const hasAside = Astro.slots.has('aside');
 
 /* Optischer Ausgleich einzelner Buchstabenpaare im Namen (Großbuchstaben in Instrument Serif), in em: zusätzlicher
    Abstand nach dem ersten Buchstaben des Paars. „S–K“ und „D–O–R“ standen zu luftig, „R–N“ berührten sich fast. */
-const KERN: Record<string, number> = { SK: -0.025, DO: -0.03, OR: -0.035, RN: 0.015 };
+// Für Climate Crisis nicht nötig. Werte für Instrument Serif: { SK: -0.025, DO: -0.03, OR: -0.035, RN: 0.015 }
+const KERN: Record<string, number> = {};
 const nameParts = [...site.name].map((ch, i, all) => ({
   ch,
   kern: KERN[(ch + (all[i + 1] ?? '')).toUpperCase()],
@@ -99,6 +100,8 @@ const nameParts = [...site.name].map((ch, i, all) => ({
        Handy: der Name – die obere Hälfte liegt im Foto (CSS: Verlauf von oben nach unten). Am Laptop (Foto über den
        ganzen Bildschirm) wird die Kopie nicht gezeigt. */
   type Prop =
+    | 'fontFamily'
+    | 'fontWeight'
     | 'fontSize'
     | 'lineHeight'
     | 'letterSpacing'
@@ -109,6 +112,8 @@ const nameParts = [...site.name].map((ch, i, all) => ({
     | 'textTransform'
     | 'webkitTextStrokeWidth';
   const COPY: Prop[] = [
+    'fontFamily',
+    'fontWeight',
     'fontSize',
     'lineHeight',
     'letterSpacing',
@@ -249,8 +254,9 @@ const nameParts = [...site.name].map((ch, i, all) => ({
     --bm-item: clamp(2.3rem, 10.5vw, 4.75rem);
     /* Farbe und Schriftgröße des Namens (auch fürs Foto am Handy gebraucht) */
     --name-color: var(--on-menu);
-    /* „JESKO DORNER“ ist in Instrument Serif 5,22 Schrifthöhen breit → / 5.9 füllt knapp 90 % der Breite */
-    --name-fs: min(11rem, 100cqi / 5.9);
+    /* „JESKO DORNER“ ist in Climate Crisis 11,02 Schrifthöhen breit → / 12.4 füllt knapp 90 % der Breite
+       (Instrument Serif war 5,22 breit: min(11rem, 100cqi / 5.9)) */
+    --name-fs: min(5.2rem, 100cqi / 12.4);
     /* oberer Seitenrand (Laptop: auch der Abstand des Fotos nach oben) */
     --bm-pad: clamp(1.25rem, 4vw, 2.5rem);
     container-type: inline-size;
@@ -301,11 +307,12 @@ const nameParts = [...site.name].map((ch, i, all) => ({
     font-size: var(--name-fs);
     line-height: 0.9;
     white-space: nowrap;
+    font-family: var(--font-name);
+    font-weight: 400;
+    letter-spacing: 0;
     text-transform: uppercase;
     text-decoration: none;
     color: var(--name-color);
-    /* etwas fetter als die Schrift selbst (sie hat nur eine Stärke): feine Kontur in Schriftfarbe */
-    -webkit-text-stroke: 0.022em currentColor;
     /* Platz für den Bogen des „J“, der unter die Zeile und links über den Rand ragt (sonst schneidet ihn der
        Foto-Effekt am Handy ab) – ohne das Layout zu ändern */
     padding: 0.08em 0.12em 0.15em;
@@ -347,9 +354,9 @@ const nameParts = [...site.name].map((ch, i, all) => ({
      Schließen-Knopf (Menü) · Name · Menüpunkte · Fußzeile (mittig ganz unten).
      Startseite: Das Foto steht ganz oben, randlos mit harten Kanten oben, links und rechts, und läuft unten weich in
      den Namen aus – die obere Hälfte der Buchstaben liegt im Foto und zeigt es als Negativ (Fenster, siehe Skript).
-     Maße in Schrifthöhen des Namens (Instrument Serif, gemessen): Großbuchstaben 0,126 bis 0,858 unter seiner
-     Oberkante, Mitte 0,492. Das Foto ist bis 0,2 über der Mitte voll da, läuft über 0,4 aus und endet 0,2 unter der
-     Mitte (also 0,692 in den Namen). */
+     Maße in Schrifthöhen des Namens (Climate Crisis, gemessen): Großbuchstaben 0,121 bis 0,914 unter seiner
+     Oberkante, Mitte 0,518. Das Foto ist bis 0,2 über der Mitte voll da, läuft über 0,4 aus und endet 0,2 unter der
+     Mitte (also 0,718 in den Namen). Instrument Serif: 0,126 bis 0,858, Mitte 0,492. */
   @media (max-width: 699.98px) {
     .bm {
       display: grid;
@@ -382,7 +389,7 @@ const nameParts = [...site.name].map((ch, i, all) => ({
       --blend-mask: linear-gradient(to bottom, #000 calc(100% - 0.4 * var(--name-fs)), transparent 100%);
     }
     .bm--aside .bm-name {
-      margin-top: -0.692em;
+      margin-top: -0.718em;
       position: relative;
       z-index: 1; /* über dem Foto */
     }
@@ -390,7 +397,7 @@ const nameParts = [...site.name].map((ch, i, all) => ({
        Wechsel liegt mitten im weichen Rand des Fotos */
     .bm--aside.has-name-window .bm-name {
       color: transparent;
-      background-image: linear-gradient(to bottom, transparent 0.402em, var(--name-color) 0.562em);
+      background-image: linear-gradient(to bottom, transparent 0.428em, var(--name-color) 0.588em);
       -webkit-background-clip: text;
       background-clip: text;
     }
