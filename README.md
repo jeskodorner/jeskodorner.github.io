@@ -642,6 +642,10 @@ Kontraste nach WCAG 2.x:
 
 Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer Schrift.
 
+**Browser-Symbol** (Favicon): ein weißes „J“ aus Instrument Serif auf Ultramarin, als `public/favicon.svg`, dazu
+`public/favicon.ico` (32 px, für ältere Browser) und `public/apple-touch-icon.png` (180 px, Home-Bildschirm). Der
+Buchstabe ist als Form gespeichert, damit er überall gleich aussieht.
+
 **Schriften** (lokal, über Fontsource, Lizenz OFL):
 - **Instrument Serif**: Titel, Name, Menü und Schilder im Portfolio (nur eine Stärke, normal und kursiv). Auf der
   Startseite und im Menü in Großbuchstaben, die Menüpunkte kursiv außer „Portfolio“; der Name ist mit einer feinen

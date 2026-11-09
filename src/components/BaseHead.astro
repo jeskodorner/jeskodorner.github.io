@@ -37,7 +37,11 @@ const ld = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 {noReferrer && <meta name="referrer" content="no-referrer" />}
 <meta name="generator" content={Astro.generator} />
 
+<!-- Browser-Symbol: „J“ in Instrument Serif auf Ultramarin (SVG), dazu .ico für ältere Browser und ein Symbol für den
+     Home-Bildschirm. Neu erzeugen: siehe README („Browser-Symbol“). -->
+<link rel="icon" href="/favicon.ico" sizes="32x32" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <meta name="theme-color" content="#ffffff" />
 
