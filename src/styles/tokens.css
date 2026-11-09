@@ -61,7 +61,8 @@
   --scrim: 11 11 11;
 
   /* Schriften – lokal eingebunden (keine Google-Fonts-CDN) */
-  --font-display: 'Anybody Variable', 'Arial Narrow', sans-serif;
+  /* Titel: Instrument Serif (nur eine Stärke, normal und kursiv); vorher Anybody, sehr fett und schmal */
+  --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
   --font-sans: 'Archivo Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   /* Fließende Schriftgrößen 360 px → 2560 px */

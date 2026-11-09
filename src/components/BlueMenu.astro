@@ -88,8 +88,27 @@ const hasAside = Astro.slots.has('aside');
      Seitenübergänge nicht mit dem Foto mischen können. Ohne JavaScript bleiben die Wörter einfach einfarbig.
        Handy: der Name – die obere Hälfte liegt im Foto (CSS: Verlauf von oben nach unten). Am Laptop (Foto über den
        ganzen Bildschirm) wird die Kopie nicht gezeigt. */
-  type Prop = 'fontSize' | 'lineHeight' | 'letterSpacing' | 'paddingTop' | 'paddingLeft' | 'paddingRight';
-  const COPY: Prop[] = ['fontSize', 'lineHeight', 'letterSpacing', 'paddingTop', 'paddingLeft', 'paddingRight'];
+  type Prop =
+    | 'fontSize'
+    | 'lineHeight'
+    | 'letterSpacing'
+    | 'paddingTop'
+    | 'paddingBottom'
+    | 'paddingLeft'
+    | 'paddingRight'
+    | 'textTransform'
+    | 'webkitTextStrokeWidth';
+  const COPY: Prop[] = [
+    'fontSize',
+    'lineHeight',
+    'letterSpacing',
+    'paddingTop',
+    'paddingBottom',
+    'paddingLeft',
+    'paddingRight',
+    'textTransform',
+    'webkitTextStrokeWidth',
+  ];
 
   /** Legt die Kopie an und gibt zurück, wie sie neu ausgerichtet wird */
   function addWindow(bm: HTMLElement, source: HTMLElement | null, kind: string, flag: string) {
@@ -220,7 +239,8 @@ const hasAside = Astro.slots.has('aside');
     --bm-item: clamp(2.3rem, 10.5vw, 4.75rem);
     /* Farbe und Schriftgröße des Namens (auch fürs Foto am Handy gebraucht) */
     --name-color: var(--on-menu);
-    --name-fs: min(11rem, 100cqi / 5.4);
+    /* „JESKO DORNER“ ist in Instrument Serif 5,22 Schrifthöhen breit → / 5.9 füllt knapp 90 % der Breite */
+    --name-fs: min(11rem, 100cqi / 5.9);
     /* oberer Seitenrand (Laptop: auch der Abstand des Fotos nach oben) */
     --bm-pad: clamp(1.25rem, 4vw, 2.5rem);
     container-type: inline-size;
@@ -270,10 +290,16 @@ const hasAside = Astro.slots.has('aside');
     width: fit-content;
     font-size: var(--name-fs);
     line-height: 0.9;
-    padding-top: 0.08em;
     white-space: nowrap;
+    text-transform: uppercase;
     text-decoration: none;
     color: var(--name-color);
+    /* etwas fetter als die Schrift selbst (sie hat nur eine Stärke): feine Kontur in Schriftfarbe */
+    -webkit-text-stroke: 0.022em currentColor;
+    /* Platz für den Bogen des „J“, der unter die Zeile und links über den Rand ragt (sonst schneidet ihn der
+       Foto-Effekt am Handy ab) – ohne das Layout zu ändern */
+    padding: 0.08em 0.12em 0.15em;
+    margin: 0 -0.12em -0.15em;
     transition:
       background-color 0.2s,
       color 0.2s;
@@ -311,8 +337,9 @@ const hasAside = Astro.slots.has('aside');
      Schließen-Knopf (Menü) · Name · Menüpunkte · Fußzeile (mittig ganz unten).
      Startseite: Das Foto steht ganz oben, randlos mit harten Kanten oben, links und rechts, und läuft unten weich in
      den Namen aus – die obere Hälfte der Buchstaben liegt im Foto und zeigt es als Negativ (Fenster, siehe Skript).
-     Maße in Schrifthöhen des Namens: Großbuchstaben 0,125 bis 0,805 unter seiner Oberkante, Mitte 0,465. Das Foto ist
-     bis 0,2 über der Mitte voll da, läuft über 0,4 aus und endet 0,2 unter der Mitte (also 0,665 in den Namen). */
+     Maße in Schrifthöhen des Namens (Instrument Serif, gemessen): Großbuchstaben 0,126 bis 0,858 unter seiner
+     Oberkante, Mitte 0,492. Das Foto ist bis 0,2 über der Mitte voll da, läuft über 0,4 aus und endet 0,2 unter der
+     Mitte (also 0,692 in den Namen). */
   @media (max-width: 699.98px) {
     .bm {
       display: grid;
@@ -345,7 +372,7 @@ const hasAside = Astro.slots.has('aside');
       --blend-mask: linear-gradient(to bottom, #000 calc(100% - 0.4 * var(--name-fs)), transparent 100%);
     }
     .bm--aside .bm-name {
-      margin-top: -0.665em;
+      margin-top: -0.692em;
       position: relative;
       z-index: 1; /* über dem Foto */
     }
@@ -353,7 +380,7 @@ const hasAside = Astro.slots.has('aside');
        Wechsel liegt mitten im weichen Rand des Fotos */
     .bm--aside.has-name-window .bm-name {
       color: transparent;
-      background-image: linear-gradient(to bottom, transparent 0.375em, var(--name-color) 0.535em);
+      background-image: linear-gradient(to bottom, transparent 0.402em, var(--name-color) 0.562em);
       -webkit-background-clip: text;
       background-clip: text;
     }
@@ -419,8 +446,14 @@ const hasAside = Astro.slots.has('aside');
     width: fit-content;
     font-size: var(--bm-item);
     line-height: 0.95;
+    text-transform: uppercase;
+    font-style: italic;
     text-decoration: none;
     color: inherit;
+  }
+  /* „Portfolio“ hebt sich ab: als einziger Punkt gerade, die anderen kursiv */
+  .bm-list a[href='/portfolio/'] {
+    font-style: normal;
   }
   /* Aktueller Punkt (im Menü auf Unterseiten): unterstrichen. Überfahren: rosa Feld mit schwarzer Schrift. Das Feld steht
      links und rechts ein klein wenig über, die Schrift bleibt an ihrem Platz. */

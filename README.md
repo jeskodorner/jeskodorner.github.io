@@ -643,8 +643,9 @@ Kontraste nach WCAG 2.x:
 Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer Schrift.
 
 **Schriften** (lokal, über Fontsource, Lizenz OFL):
-- **Anybody**: große Titel. Die Schrift ist stufenlos von extrem schmal (50 %) bis sehr breit (150 %) einstellbar.
-  Deshalb können sich Titel beim Scrollen in die Breite ziehen.
+- **Instrument Serif**: Titel, Name, Menü und Schilder im Portfolio (nur eine Stärke, normal und kursiv). Auf der
+  Startseite und im Menü in Großbuchstaben, die Menüpunkte kursiv außer „Portfolio“; der Name ist mit einer feinen
+  Kontur etwas fetter (`-webkit-text-stroke`). Überall sonst normal geschrieben. Vorher: Anybody, sehr fett und schmal.
 - **Archivo**: Fließtext, Beschriftungen und Werkschilder
 
 **Extenda einsetzen:** Extenda (Zetafonts) ist eine kommerzielle Schrift. Fürs Web brauchst du eine passende Lizenz.
@@ -659,8 +660,7 @@ Mit Lizenz:
      font-display: swap;
    }
    ```
-3. In `src/styles/tokens.css` `--font-display: 'Extenda', 'Anybody Variable', sans-serif;` setzen.
-   Hinweis: Der Dehn-Effekt beim Scrollen braucht eine Schrift mit Breitenachse. Extenda hat einzelne Breiten-Schnitte statt einer Achse, mit Extenda bleiben die Titel deshalb fest in einer Breite.
+3. In `src/styles/tokens.css` `--font-display: 'Extenda', 'Instrument Serif', serif;` setzen.
 4. Optional in `src/components/BaseHead.astro` die Preload-Zeile auf die neue Datei umstellen.
 
 ---

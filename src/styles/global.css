@@ -159,12 +159,13 @@ html:not(.js) .js-only {
 }
 
 /* ---------- Typografie ---------- */
+/* Titel in Instrument Serif, normal geschrieben (die Startseite setzt Großbuchstaben, BlueMenu.astro).
+   Die Schrift hat nur eine Stärke – keine künstlich fett gerechneten Buchstaben. */
 .display {
   font-family: var(--font-display);
-  font-weight: 860;
-  font-stretch: 62%;
-  text-transform: uppercase;
-  line-height: 0.86;
+  font-weight: 400;
+  font-synthesis-weight: none;
+  line-height: 0.95;
   letter-spacing: -0.01em;
 }
 /* Etwas Luft nach oben: Bei enger Zeilenhöhe ragen Ä/Ö/Ü-Punkte sonst in die Zeile darüber */
@@ -184,10 +185,9 @@ html:not(.js) .js-only {
   font-size: var(--fs-mega);
   line-height: 0.8;
 }
-/* Hervorhebung in großen Titeln: Leuchtmarker in Lime (2. Hervorhebung Pink) */
-/* *Betonte* Wörter in großen Titeln: schlicht, ohne Leuchtmarker */
+/* *Betonte* Wörter in großen Titeln: kursiv (z. B. „Über *mich*“) */
 .display em {
-  font-style: normal;
+  font-style: italic;
 }
 .lead {
   font-size: var(--fs-lead);
@@ -219,9 +219,8 @@ html:not(.js) .js-only {
 }
 .prose h2 {
   font-family: var(--font-display);
-  text-transform: uppercase;
-  font-weight: 860;
-  font-stretch: 62%;
+  font-weight: 400;
+  font-synthesis-weight: none;
   font-size: var(--fs-h3);
   line-height: 0.95;
   margin-top: 1.6em;

@@ -197,9 +197,8 @@
 }
 .jd-d-title {
   font-family: var(--font-display);
-  font-weight: 900;
-  font-stretch: 70%;
-  text-transform: uppercase;
+  font-weight: 400;
+  font-synthesis-weight: none;
   font-size: clamp(1.25rem, 1.05rem + 0.7vw, 1.75rem);
   line-height: 0.95;
   padding-top: 0.08em;
