@@ -1,7 +1,7 @@
 ---
 /**
  * Das Menü (blau mit weißer Schrift, Farben in tokens.css): oben groß der Name, darunter die Menüpunkte (etwas kleiner), unten Instagram,
- * Impressum und Datenschutz. Zwei Einsätze:
+ * im Menü auch Impressum und Datenschutz (auf der Startseite nicht). Zwei Einsätze:
  *   - als Startseite (pages/index.astro): der Name ist die Hauptüberschrift
  *   - als Menü (Header.astro, auf allen Geräten): mit Schließen-Knopf genau dort, wo der Menüknopf sitzt,
  *     der Name führt zur Startseite
@@ -101,66 +101,21 @@ const nameWords = site.name.split(' ').map((word) =>
   </div>
   <p class="bm-foot label">
     <a href={site.instagram.url} rel="me noopener" target="_blank">@{site.instagram.handle}</a>
-    <a href="/impressum/">{t.footer.imprint}</a>
-    <a href="/datenschutz/">{t.footer.privacy}</a>
+    {
+      /* Impressum und Datenschutz nur im Menü, nicht auf der Startseite (dort über jede Unterseite erreichbar) */
+      overlay && (
+        <>
+          <a href="/impressum/">{t.footer.imprint}</a>
+          <a href="/datenschutz/">{t.footer.privacy}</a>
+        </>
+      )
+    }
   </p>
 </div>
 
 <script>
-  /* Wörter als Fenster ins Foto: Wo ein Wort auf dem Foto liegt, ist es durchsichtig; genau darunter liegt im
-     Bildfeld eine Kopie des Worts, die die Farben umkehrt (Weiß im Modus „Differenz“): Die Buchstaben zeigen das
-     Foto als Negativ und bleiben so auf dem Foto lesbar. Die Kopie muss im Bildfeld liegen, weil sich Name und Menü wegen der
-     Seitenübergänge nicht mit dem Foto mischen können. Ohne JavaScript bleiben die Wörter einfach einfarbig.
-       Handy: der Name – die obere Hälfte liegt im Foto (CSS: Verlauf von oben nach unten). Am Laptop (Foto über den
-       ganzen Bildschirm) wird die Kopie nicht gezeigt. */
-  type Prop =
-    | 'fontFamily'
-    | 'fontWeight'
-    | 'fontSize'
-    | 'lineHeight'
-    | 'letterSpacing'
-    | 'paddingTop'
-    | 'paddingBottom'
-    | 'paddingLeft'
-    | 'paddingRight'
-    | 'textTransform'
-    | 'webkitTextStrokeWidth';
-  const COPY: Prop[] = [
-    'fontFamily',
-    'fontWeight',
-    'fontSize',
-    'lineHeight',
-    'letterSpacing',
-    'paddingTop',
-    'paddingBottom',
-    'paddingLeft',
-    'paddingRight',
-    'textTransform',
-    'webkitTextStrokeWidth',
-  ];
-
-  /** Legt die Kopie an und gibt zurück, wie sie neu ausgerichtet wird */
-  function addWindow(bm: HTMLElement, source: HTMLElement | null, kind: string, flag: string) {
-    const box = bm.querySelector<HTMLElement>('.bm-aside [data-blend]');
-    if (!source || !box) return null;
-    const word = document.createElement('span');
-    word.className = `bm-window bm-window--${kind} display`;
-    word.innerHTML = source.innerHTML; // samt Ausgleich einzelner Buchstabenpaare (Spans)
-    box.append(word);
-    // deckungsgleich über das echte Wort legen (auch nach Drehen, Größenänderung, Laden der Schrift)
-    const place = () => {
-      const cs = getComputedStyle(source);
-      for (const p of COPY) word.style[p] = cs[p];
-      const a = source.getBoundingClientRect();
-      const b = box.getBoundingClientRect();
-      word.style.translate = `${a.left - b.left}px ${a.top - b.top}px`;
-    };
-    bm.classList.add(flag);
-    return place;
-  }
-
-  /* Laptop: Das Foto füllt den Bildschirm, die weiße Schrift hebt sich mit einem weichen Schatten ab, der sich dem
-     Foto dahinter anpasst. Bei jedem Fotowechsel wird das sichtbare Bild (die beiden Fotos im Modus „Aufhellen“)
+  /* Die weiße Schrift hebt sich mit einem weichen Schatten ab, der sich dem Foto dahinter anpasst – am Laptop Name und
+     Menüpunkte (Foto über den ganzen Bildschirm), am Handy nur der Name (das Foto läuft in „JESKO“ aus). Bei jedem Fotowechsel wird das sichtbare Bild (die beiden Fotos im Modus „Aufhellen“)
      klein nachgezeichnet und für jedes Wort die Fläche dahinter gemessen: Helligkeit → Stärke des Schattens (auf
      hellen Stellen kräftig, auf dunklen kaum), Farbe → ein dunkler Ton derselben Farbe. Gesetzt wird --sh je Wort;
      der Schatten blendet dann im Takt der Fotos über (CSS). */
@@ -172,7 +127,7 @@ const nameWords = site.name.split(' ').map((word) =>
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d', { willReadFrequently: true });
     if (!box || !ctx) return null;
-    const words = [...bm.querySelectorAll<HTMLElement>('.bm-name, .bm-list a')];
+    const words = [...bm.querySelectorAll<HTMLElement>('.bm-name, .bm-list li')];
 
     // ein Foto so zeichnen wie im Bildfeld: object-fit: cover mit object-position (Bildschwerpunkt)
     const draw = (img: HTMLImageElement, w: number, h: number) => {
@@ -187,10 +142,9 @@ const nameWords = site.name.split(' ').map((word) =>
     };
 
     const sample = () => {
-      if (!desk.matches) {
-        for (const el of words) el.style.removeProperty('--sh');
-        return;
-      }
+      // am Handy liegen nur die Buchstaben des Namens auf dem Foto
+      const active = desk.matches ? words : words.filter((el) => el.matches('.bm-name'));
+      for (const el of words) if (!active.includes(el)) el.style.removeProperty('--sh');
       const b = box.getBoundingClientRect();
       if (!b.width || !b.height) return;
       const W = 96;
@@ -210,7 +164,7 @@ const nameWords = site.name.split(' ').map((word) =>
       } catch {
         return; // Bild (noch) nicht lesbar – dann bleibt der neutrale Schatten aus dem CSS
       }
-      for (const el of words) {
+      for (const el of active) {
         const r = el.getBoundingClientRect();
         const x0 = clamp(Math.floor(((r.left - b.left) / b.width) * W), 0, W - 1);
         const x1 = clamp(Math.ceil(((r.right - b.left) / b.width) * W), x0 + 1, W);
@@ -246,18 +200,13 @@ const nameWords = site.name.split(' ').map((word) =>
   }
 
   for (const bm of document.querySelectorAll<HTMLElement>('.bm--aside')) {
-    const place = addWindow(bm, bm.querySelector('.bm-name'), 'name', 'has-name-window');
     const shade = initShadows(bm);
-    // neu ausrichten bzw. messen nach Drehen, Größenänderung, geladener Schrift
-    const update = () => {
-      place?.();
-      shade?.();
-    };
-    update();
-    new ResizeObserver(update).observe(bm);
-    document.fonts?.ready.then(update);
-    // Beim Wechsel auf eine Unterseite gleitet der Name ins Logo – dafür ganz blau (die Kopie gleitet nicht mit)
-    addEventListener('pageswap', () => bm.classList.remove('has-name-window'));
+    // neu messen nach Drehen, Größenänderung, geladener Schrift
+    if (shade) {
+      shade();
+      new ResizeObserver(shade).observe(bm);
+      document.fonts?.ready.then(shade);
+    }
   }
 </script>
 
@@ -327,8 +276,8 @@ const nameWords = site.name.split(' ').map((word) =>
     text-transform: uppercase;
     text-decoration: none;
     color: var(--name-color);
-    /* Platz für den Bogen des „J“, der unter die Zeile und links über den Rand ragt (sonst schneidet ihn der
-       Foto-Effekt am Handy ab) – ohne das Layout zu ändern */
+    /* etwas Luft rundum (rosa Feld beim Überfahren im Menü, Bogen des „J“ in Instrument Serif) – ohne das Layout
+       zu ändern */
     padding: 0.08em 0.12em 0.15em;
     margin: 0 -0.12em -0.15em;
     transition:
@@ -350,24 +299,13 @@ const nameWords = site.name.split(' ').map((word) =>
   .bm-aside {
     display: grid;
   }
-  /* Kopien für die Fenster (siehe Skript): weiß im Modus „Differenz“, sichtbar nur, wo das Wort auf dem Foto liegt */
-  .bm-aside :global(.bm-window) {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    margin: 0;
-    white-space: nowrap;
-    color: #fff;
-    mix-blend-mode: difference;
-    pointer-events: none;
-  }
   /* Handy – auf der Startseite und im Menü gleich: Raster mit drei Spalten. Die mittlere ist genau so breit wie der
      Name, so steht er mittig und die Menüpunkte beginnen an seiner linken Kante. Reihen: Foto (Startseite) bzw.
      Schließen-Knopf (Menü) · Name · Menüpunkte · Fußzeile (mittig ganz unten).
      Startseite: Das Foto steht ganz oben, randlos mit harten Kanten oben, links und rechts, und läuft unten weich in
-     den Namen aus – die obere Hälfte der Buchstaben liegt im Foto und zeigt es als Negativ (Fenster, siehe Skript).
+     den Namen aus – die obere Hälfte von „JESKO“ liegt im weichen Rand des Fotos, der Name ist ganz weiß und hebt
+     sich dort mit einem Schatten ab, der sich dem Foto anpasst (Skript). Früher zeigten die Buchstaben im Foto das
+     Negativ („Fenster“, siehe Git-Verlauf).
      Maße in Schrifthöhen des Namens (Climate Crisis, gemessen): Großbuchstaben 0,121 bis 0,914 unter seiner
      Oberkante, Mitte 0,518. Das Foto ist bis 0,2 über der Mitte voll da, läuft über 0,4 aus und endet 0,2 unter der
      Mitte (also 0,718 in den Namen). Instrument Serif: 0,126 bis 0,858, Mitte 0,492. */
@@ -386,9 +324,8 @@ const nameWords = site.name.split(' ').map((word) =>
       grid-column: 2;
       grid-row: 2;
     }
-    /* jedes Wort in einer eigenen Zeile – auch in der Kopie fürs Fenster ins Foto */
-    .bm-name :global(.bm-w),
-    .bm-aside :global(.bm-window .bm-w) {
+    /* jedes Wort in einer eigenen Zeile */
+    .bm-name :global(.bm-w) {
       display: block;
     }
     .bm-body {
@@ -419,13 +356,13 @@ const nameWords = site.name.split(' ').map((word) =>
       position: relative;
       z-index: 1; /* über dem Foto */
     }
-    /* Mit JavaScript: oben (im Foto) durchsichtig, dort scheint die Kopie durch; unten in der Schriftfarbe – der
-       Wechsel liegt mitten im weichen Rand des Fotos */
-    .bm--aside.has-name-window .bm-name {
-      color: transparent;
-      background-image: linear-gradient(to bottom, transparent 0.428em, var(--name-color) 0.588em);
-      -webkit-background-clip: text;
-      background-clip: text;
+    /* Schatten nur auf „JESKO“ (liegt im Foto), „DORNER“ steht frei auf dem Blau. --sh setzt das Skript. */
+    .bm--aside .bm-name {
+      --sh: rgb(10 12 20 / 0.45);
+    }
+    .bm--aside .bm-name :global(.bm-w:first-child) {
+      filter: drop-shadow(0 0 0.35em var(--sh)) drop-shadow(0 0 0.1em var(--sh));
+      transition: filter 1.5s var(--ease);
     }
     /* .bm davor: sonst gewinnt die allgemeine Regel (padding-top 2,5rem), die weiter unten steht */
     .bm .bm-foot {
@@ -458,13 +395,11 @@ const nameWords = site.name.split(' ').map((word) =>
       --blend-w: 100%;
       --blend-h: 100%;
     }
-    .bm-aside :global(.bm-window) {
-      display: none;
-    }
     /* Schatten als Filter auf das fertig gezeichnete Wort (nicht als text-shadow): Safari und Firefox zeichnen den
        Schatten der Kontur (macht den Namen fetter) sonst über die Buchstaben – sie wirken dann innen grau. */
+    /* Menüpunkte: Schatten auf dem ganzen Listenpunkt (beim Überfahren aus) */
     .bm--aside .bm-name,
-    .bm--aside .bm-list a {
+    .bm--aside .bm-list li {
       --sh: rgb(10 12 20 / 0.45);
       filter: drop-shadow(0 0 0.35em var(--sh)) drop-shadow(0 0 0.1em var(--sh));
       transition:
@@ -472,7 +407,7 @@ const nameWords = site.name.split(' ').map((word) =>
         background-color 0.2s,
         color 0.2s;
     }
-    .bm--aside .bm-list a:hover {
+    .bm--aside .bm-list li:has(a:hover) {
       filter: none;
     }
   }

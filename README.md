@@ -588,7 +588,8 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   Menüpunkte und Name ein rosa Feld mit schwarzer Schrift, Menü- und Schließen-Knopf sind rosa Kreise. Instagram, Impressum und Datenschutz
   unten sind schlicht in der Schriftfarbe (beim Überfahren rosa). Sparsam bleiben: mehr Rosa wirkt schnell zu viel. Die Fläche geht über den ganzen
   Bildschirm, oben groß der Name, darunter die Menüpunkte (Portfolio, Galerie, Film, Über mich, Kontakt), unten
-  Instagram, Impressum und Datenschutz. Ohne Kopfleiste und ohne Scrollen. Dasselbe Menü öffnet sich auf allen
+  Instagram – im Menü zusätzlich Impressum und Datenschutz, auf der Startseite nicht (dort erreicht man sie über jede
+  Unterseite, also mit zwei Klicks). Ohne Kopfleiste und ohne Scrollen. Dasselbe Menü öffnet sich auf allen
   Geräten über den rosa Menü-Knopf oben rechts: Die Fläche wächst als Kreis aus dem Knopf, der Schließen-Knopf sitzt an derselben Stelle,
   der Name führt zur Startseite. Eine Textleiste mit Menüpunkten gibt es nur noch als Rückfall für sehr alte Browser.
   Am Handy (unter 700 px) steht der Name mittig, die Menüpunkte beginnen an seiner linken Kante, die Fußzeile ist
@@ -602,8 +603,8 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   wird der Schatten kräftig, auf dunklen kaum sichtbar, und er nimmt einen dunklen Ton aus dem Foto an. Die vorherige
   geteilte Fassung (Foto rechts, Kante zwischen R und N) liegt im Git-Tag `alte-version-laptop-geteilt`. Am Handy steht es ganz oben, randlos mit harten Kanten oben,
   links und rechts (4:3, auf niedrigen Bildschirmen etwas flacher, damit nichts scrollt), und läuft unten weich in
-  den Namen aus: Das Foto endet mitten in den Buchstaben, deren obere Hälfte zeigt das Foto als Negativ, die untere ist
-  weiß (Verlauf: `--blend-mask` in `BlueMenu.astro`). Früher lag das Foto am Handy unten, halb hinter „Kontakt“. Mit „Bewegung reduzieren“
+  den Namen aus: Das Foto endet mitten in „JESKO“, der Name ist ganz weiß und hat dort einen Schatten, der sich dem Foto
+  anpasst (Verlauf: `--blend-mask` in `BlueMenu.astro`). Früher zeigten die Buchstaben im Foto das Negativ (Git-Verlauf). Früher lag das Foto am Handy unten, halb hinter „Kontakt“. Mit „Bewegung reduzieren“
   oder ohne JavaScript bleibt ein festes Paar stehen. Früher waren die Fotos invertiert (Negativ) und die Buchstaben
   zeigten sie positiv; zurückholen: in `BlendLoop.astro` bei `.blend-layer` wieder `filter: invert(1);` ergänzen. Die frühere Startseite liegt in der Git-Geschichte.
 - **Ausprobierte Versionen (gemerkt):**
