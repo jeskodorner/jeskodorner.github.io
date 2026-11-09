@@ -427,19 +427,19 @@ const nameParts = [...site.name].map((ch, i, all) => ({
     .bm-aside :global(.bm-window) {
       display: none;
     }
+    /* Schatten als Filter auf das fertig gezeichnete Wort (nicht als text-shadow): Safari und Firefox zeichnen den
+       Schatten der Kontur (macht den Namen fetter) sonst über die Buchstaben – sie wirken dann innen grau. */
     .bm--aside .bm-name,
     .bm--aside .bm-list a {
       --sh: rgb(10 12 20 / 0.45);
-      text-shadow:
-        0 0 0.35em var(--sh),
-        0 0 0.1em var(--sh);
+      filter: drop-shadow(0 0 0.35em var(--sh)) drop-shadow(0 0 0.1em var(--sh));
       transition:
-        text-shadow 1.5s var(--ease),
+        filter 1.5s var(--ease),
         background-color 0.2s,
         color 0.2s;
     }
     .bm--aside .bm-list a:hover {
-      text-shadow: none;
+      filter: none;
     }
   }
   .bm-list {
