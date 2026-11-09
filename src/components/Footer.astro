@@ -97,6 +97,9 @@ const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : 
     font-size: clamp(3rem, 23vw, 34rem);
     font-size: calc(100cqi / 4.3);
     line-height: 0.95;
+    /* Der Bogen des „J“ reicht 0,22 Schrifthöhen unter die Grundlinie, die Zeile endet schon bei 0,135 – Platz
+       schaffen, damit er nicht in die Copyright-Zeile darunter ragt */
+    padding-bottom: 0.1em;
     color: var(--pink);
     -webkit-text-stroke: 0.022em currentColor; /* etwas fetter, wie der Name auf der Startseite */
     user-select: none;
