@@ -8,9 +8,9 @@
  * Handy (unter 700 px): der Name steht mittig, die Menüpunkte linksbündig an seiner linken Kante, die Fußzeile mittig.
  * Ab 700 px: alles linksbündig.
  * Slot „aside“ (Startseite: Bildfeld, BlendLoop.astro): am Handy randlos über die ganze Breite, beginnt hinter
- * „Kontakt“ (4:3, auf niedrigen Bildschirmen etwas flacher, aber immer randlos). Ab 700 px füllt es die rechte
- * Bildschirmhälfte randlos von oben bis unten, der Name ragt hinein.
- * Fenster: Wo ein Wort auf dem Foto liegt, zeigen seine Buchstaben das Foto in echten (positiven) Farben – am Handy
+ * „Kontakt“ (4:3, auf niedrigen Bildschirmen etwas flacher, aber immer randlos). Ab 700 px rechts innerhalb der
+ * Seitenränder, der Name ragt hinein.
+ * Fenster: Wo ein Wort auf dem Foto liegt, zeigen seine Buchstaben das Foto in umgekehrten Farben (Negativ) – am Handy
  * die untere Hälfte von „Kontakt“, am Laptop der Teil des Namens, der ins Foto ragt (Skript unten).
  * Farben: Name und Menüpunkte schwarz, aktueller Menüpunkt blau; beim Überfahren rosa Feld.
  * Übergang: Name, Menüpunkte und Fußzeile tragen feste view-transition-Namen. Beim Wechsel Menü → Startseite
@@ -83,8 +83,8 @@ const hasAside = Astro.slots.has('aside');
 
 <script>
   /* Wörter als Fenster ins Foto: Wo ein Wort auf dem Foto liegt, ist es durchsichtig; genau darunter liegt im
-     Bildfeld eine Kopie des Worts, die die Farben umkehrt (Weiß im Modus „Differenz“). Da das Foto invertiert ist,
-     zeigen die Buchstaben es so wieder positiv. Die Kopie muss im Bildfeld liegen, weil sich Name und Menü wegen der
+     Bildfeld eine Kopie des Worts, die die Farben umkehrt (Weiß im Modus „Differenz“): Die Buchstaben zeigen das
+     Foto als Negativ und bleiben so auf dem Foto lesbar. Die Kopie muss im Bildfeld liegen, weil sich Name und Menü wegen der
      Seitenübergänge nicht mit dem Foto mischen können. Ohne JavaScript bleiben die Wörter einfach einfarbig.
        Handy:  „Kontakt“ – die untere Hälfte liegt auf dem Foto (CSS: Verlauf von oben nach unten)
        Laptop: der Name – der rechte Teil ragt ins Foto (CSS: Schnitt bei --split, dem linken Fotorand) */

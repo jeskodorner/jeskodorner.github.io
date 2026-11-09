@@ -1,6 +1,6 @@
 ---
 /**
- * Bildfeld auf der Startseite: Fotos aus dem Portfolio, farblich invertiert, im Modus „Aufhellen“
+ * Bildfeld auf der Startseite: Fotos aus dem Portfolio in normalen Farben (früher invertiert), im Modus „Aufhellen“
  * (lighten) übereinandergelegt, immer im Format 4:3. Es sind immer zwei Fotos zu sehen. Alle paar Sekunden
  * blendet ein neues Foto oben ein und das unterste verschwindet – so entstehen laufend neue Bilder.
  * Reihenfolge zufällig, bei jedem Besuch anders. Ohne JavaScript oder mit „Bewegung reduzieren“: ein festes Paar.
@@ -112,7 +112,6 @@ const { works } = Astro.props;
     position: absolute;
     inset: 0;
     display: block;
-    filter: invert(1);
     mix-blend-mode: lighten;
     opacity: 0;
     transform: scale(1.12);

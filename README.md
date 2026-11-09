@@ -595,19 +595,19 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   Am Handy (unter 700 px) steht der Name mittig, die Menüpunkte beginnen an seiner linken Kante, die Fußzeile ist
   mittig. Ab 700 px ist alles linksbündig.
 - **Bildfeld auf der Startseite** (`src/components/BlendLoop.astro`): Fotos aus dem Portfolio (Liste `showroom`),
-  farblich invertiert und im Modus „Aufhellen“ übereinandergelegt, immer 4:3. Es sind immer zwei zu sehen. Alle
+  in normalen Farben im Modus „Aufhellen“ übereinandergelegt (wie eine Doppelbelichtung), immer 4:3. Es sind immer zwei zu sehen. Alle
   2,8 Sekunden blendet ein neues oben ein und das unterste verschwindet, so entstehen laufend neue Bilder (Reihenfolge
   bei jedem Besuch zufällig). Am Laptop (ab 700 px) steht es rechts innerhalb der Seitenränder (oben so weit vom Rand wie der Name,
   rechts so weit wie der Text links), bis zur Grundlinie von „Kontakt“, links mit einem ganz kurzen Übergang (`--fade`); der
-  Name ragt hinein, und wo er auf dem Foto liegt, zeigen seine Buchstaben das Foto in echten Farben (wie „Kontakt“
+  Name ragt hinein, und wo er auf dem Foto liegt, zeigen seine Buchstaben das Foto als Negativ (wie „Kontakt“
   am Handy, Skript `addWindow` in `BlueMenu.astro`). Die Fotokante läuft dabei immer genau zwischen R und N
-  von „Dorner“: „DOR“ bleibt blau, „NER“ liegt im Foto (Skript `layoutPhoto`; die Fotobreite passt sich an). Am Handy immer randlos über die ganze Breite (auf niedrigen
+  von „Dorner“: „DOR“ bleibt schwarz, „NER“ liegt im Foto (Skript `layoutPhoto`; die Fotobreite passt sich an). Am Handy immer randlos über die ganze Breite (auf niedrigen
   Bildschirmen etwas flacher als 4:3, damit nichts scrollt), es beginnt
   halb hinter „Kontakt“ (das Foto beginnt mit kurzem weichem Rand an der Mitte der Buchstaben; „Kontakt“ ist oben
-  weiß, auf dem Foto zeigen die Buchstaben das Foto in seinen echten, nicht invertierten Farben – wie ein Fenster) und läuft unten weich aus (Verlauf:
-  `--blend-mask` in `BlueMenu.astro`). Am Laptop hat es harte Kanten. Mit „Bewegung reduzieren“
-  oder ohne JavaScript bleibt ein festes Paar stehen. Invertieren abschalten: in `BlendLoop.astro` die Zeile
-  `filter: invert(1);` löschen. Die frühere Startseite liegt in der Git-Geschichte.
+  weiß, auf dem Foto zeigen die Buchstaben das Foto als Negativ – wie ein Fenster) und läuft unten weich aus (Verlauf:
+  `--blend-mask` in `BlueMenu.astro`). Mit „Bewegung reduzieren“
+  oder ohne JavaScript bleibt ein festes Paar stehen. Früher waren die Fotos invertiert (Negativ) und die Buchstaben
+  zeigten sie positiv; zurückholen: in `BlendLoop.astro` bei `.blend-layer` wieder `filter: invert(1);` ergänzen. Die frühere Startseite liegt in der Git-Geschichte.
 - **Ausprobierte Versionen (gemerkt):**
   - *Fotos im Bildfeld mit dem Blau eingefärbt* (Modus „Farbe“, 65 %). Im Git-Verlauf markiert als Tag
     `alte-version-blau-2b3bff`. Zurückholen: in `BlendLoop.astro` wieder ein
