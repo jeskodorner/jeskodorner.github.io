@@ -124,7 +124,7 @@ const hasAside = Astro.slots.has('aside');
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d', { willReadFrequently: true });
     if (!box || !ctx) return null;
-    const words = [...bm.querySelectorAll<HTMLElement>('.bm-name, .bm-list a, .bm-foot a')];
+    const words = [...bm.querySelectorAll<HTMLElement>('.bm-name, .bm-list a')];
 
     // ein Foto so zeichnen wie im Bildfeld: object-fit: cover mit object-position (Bildschwerpunkt)
     const draw = (img: HTMLImageElement, w: number, h: number) => {
@@ -227,7 +227,9 @@ const hasAside = Astro.slots.has('aside');
     display: flex;
     flex-direction: column;
     min-height: 100%;
-    padding-block: var(--bm-pad) max(1.5rem, env(safe-area-inset-bottom));
+    /* unterer Seitenrand (Laptop: auch der Abstand im blauen Streifen über der Fußzeile) */
+    --foot-pad: max(1.5rem, env(safe-area-inset-bottom));
+    padding-block: var(--bm-pad) var(--foot-pad);
     color: var(--on-menu);
   }
   /* Im Menü: oben eine Leiste so hoch wie der Header, der Schließen-Knopf sitzt an der Stelle des Menüknopfs */
@@ -360,7 +362,8 @@ const hasAside = Astro.slots.has('aside');
       padding-top: 1.25rem;
     }
   }
-  /* Ab 700 px: Das Foto füllt den ganzen Bildschirm hinter Name, Menü und Fußzeile. Die weiße Schrift hebt sich mit
+  /* Ab 700 px: Das Foto füllt den ganzen Bildschirm hinter Name und Menü; unten bleibt ein blauer Streifen (bündig
+     links, rechts und unten) mit der Fußzeile. Die weiße Schrift hebt sich mit
      einem weichen Schatten ab, der sich dem Foto dahinter anpasst (Farbe und Stärke setzt das Skript je Wort über
      --sh; ohne Skript ein neutraler dunkler Schatten). Die geteilte Fassung (Foto rechts, Kante zwischen R und N)
      liegt im Git-Tag alte-version-laptop-geteilt. */
@@ -375,7 +378,9 @@ const hasAside = Astro.slots.has('aside');
     .bm-aside {
       position: absolute;
       top: 0;
-      bottom: 0;
+      /* unten bleibt ein blauer Streifen für die Fußzeile frei: oben und unten gleich viel Luft um die Zeile
+         (Zeilenhöhe der kleinen Schrift: 1,3) */
+      bottom: calc(2 * var(--foot-pad) + 1.3 * var(--fs-xs));
       left: calc(50% - 50vw); /* bis an die Bildschirmränder, auch wenn der Inhalt schmaler ist */
       width: 100vw;
       z-index: -1;
@@ -396,19 +401,7 @@ const hasAside = Astro.slots.has('aside');
         background-color 0.2s,
         color 0.2s;
     }
-    /* kleine Schrift: etwas breiterer Schatten, sonst geht sie auf hellen Stellen unter */
-    .bm--aside .bm-foot a {
-      --sh: rgb(10 12 20 / 0.45);
-      text-shadow:
-        0 0 0.6em var(--sh),
-        0 0 0.2em var(--sh);
-      transition:
-        text-shadow 1.5s var(--ease),
-        background-color 0.2s,
-        color 0.2s;
-    }
-    .bm--aside .bm-list a:hover,
-    .bm--aside .bm-foot a:hover {
+    .bm--aside .bm-list a:hover {
       text-shadow: none;
     }
   }

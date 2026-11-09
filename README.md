@@ -596,8 +596,8 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 - **Bildfeld auf der Startseite** (`src/components/BlendLoop.astro`): Fotos aus dem Portfolio (Liste `showroom`),
   in normalen Farben im Modus „Aufhellen“ übereinandergelegt (wie eine Doppelbelichtung), immer 4:3. Es sind immer zwei zu sehen. Alle
   2,8 Sekunden blendet ein neues oben ein und das unterste verschwindet, so entstehen laufend neue Bilder (Reihenfolge
-  bei jedem Besuch zufällig). Am Laptop (ab 700 px) füllt es den ganzen Bildschirm hinter Name, Menü und
-  Fußzeile. Die weiße Schrift hebt sich mit einem weichen Schatten ab, der sich dem Foto anpasst: Bei jedem
+  bei jedem Besuch zufällig). Am Laptop (ab 700 px) füllt es den ganzen Bildschirm hinter Name und Menü;
+  unten bleibt ein blauer Streifen (bündig links, rechts und unten) mit der Fußzeile. Die weiße Schrift hebt sich mit einem weichen Schatten ab, der sich dem Foto anpasst: Bei jedem
   Fotowechsel misst ein Skript (`initShadows` in `BlueMenu.astro`) die Fläche hinter jedem Wort – auf hellen Stellen
   wird der Schatten kräftig, auf dunklen kaum sichtbar, und er nimmt einen dunklen Ton aus dem Foto an. Die vorherige
   geteilte Fassung (Foto rechts, Kante zwischen R und N) liegt im Git-Tag `alte-version-laptop-geteilt`. Am Handy steht es ganz oben, randlos mit harten Kanten oben,
