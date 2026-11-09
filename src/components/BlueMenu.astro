@@ -36,10 +36,10 @@ const hasAside = Astro.slots.has('aside');
    Abstand nach dem ersten Buchstaben des Paars. „S–K“ und „D–O–R“ standen zu luftig, „R–N“ berührten sich fast. */
 // Für Climate Crisis nicht nötig. Werte für Instrument Serif: { SK: -0.025, DO: -0.03, OR: -0.035, RN: 0.015 }
 const KERN: Record<string, number> = {};
-const nameParts = [...site.name].map((ch, i, all) => ({
-  ch,
-  kern: KERN[(ch + (all[i + 1] ?? '')).toUpperCase()],
-}));
+/* Der Name Wort für Wort (am Handy steht jedes Wort in einer eigenen Zeile), darin Zeichen mit Ausgleich */
+const nameWords = site.name.split(' ').map((word) =>
+  [...word].map((ch, i, all) => ({ ch, kern: KERN[(ch + (all[i + 1] ?? '')).toUpperCase()] })),
+);
 ---
 
 <div class:list={['bm', 'container', { 'bm--overlay': overlay, 'bm--aside': hasAside }]}>
@@ -55,11 +55,25 @@ const nameParts = [...site.name].map((ch, i, all) => ({
   {
     overlay ? (
       <a class="bm-name display" href="/">
-        {nameParts.map((p) => (p.kern ? <span style={`letter-spacing:calc(-0.01em + ${p.kern}em)`}>{p.ch}</span> : p.ch))}
+        {nameWords.map((w, i) => (
+          <>
+            {i > 0 && ' '}
+            <span class="bm-w">
+              {w.map((p) => (p.kern ? <span style={`letter-spacing:calc(-0.01em + ${p.kern}em)`}>{p.ch}</span> : p.ch))}
+            </span>
+          </>
+        ))}
       </a>
     ) : (
       <h1 class="bm-name display">
-        {nameParts.map((p) => (p.kern ? <span style={`letter-spacing:calc(-0.01em + ${p.kern}em)`}>{p.ch}</span> : p.ch))}
+        {nameWords.map((w, i) => (
+          <>
+            {i > 0 && ' '}
+            <span class="bm-w">
+              {w.map((p) => (p.kern ? <span style={`letter-spacing:calc(-0.01em + ${p.kern}em)`}>{p.ch}</span> : p.ch))}
+            </span>
+          </>
+        ))}
       </h1>
     )
   }
@@ -256,7 +270,7 @@ const nameParts = [...site.name].map((ch, i, all) => ({
     --name-color: var(--on-menu);
     /* „JESKO DORNER“ ist in Climate Crisis 11,02 Schrifthöhen breit → / 12.4 füllt knapp 90 % der Breite
        (Instrument Serif war 5,22 breit: min(11rem, 100cqi / 5.9)) */
-    --name-fs: min(5.2rem, 100cqi / 12.4);
+    --name-fs: min(6.5rem, 100cqi / 12.4);
     /* oberer Seitenrand (Laptop: auch der Abstand des Fotos nach oben) */
     --bm-pad: clamp(1.25rem, 4vw, 2.5rem);
     container-type: inline-size;
@@ -359,6 +373,8 @@ const nameParts = [...site.name].map((ch, i, all) => ({
      Mitte (also 0,718 in den Namen). Instrument Serif: 0,126 bis 0,858, Mitte 0,492. */
   @media (max-width: 699.98px) {
     .bm {
+      /* Name zweizeilig („JESKO“ / „DORNER“): „DORNER“ ist 6,15 Schrifthöhen breit → / 6.9 füllt knapp 90 % */
+      --name-fs: min(6.5rem, 100cqi / 6.9);
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
       grid-template-rows: auto auto 1fr auto;
@@ -370,13 +386,23 @@ const nameParts = [...site.name].map((ch, i, all) => ({
       grid-column: 2;
       grid-row: 2;
     }
+    /* jedes Wort in einer eigenen Zeile – auch in der Kopie fürs Fenster ins Foto */
+    .bm-name :global(.bm-w),
+    .bm-aside :global(.bm-window .bm-w) {
+      display: block;
+    }
     .bm-body {
       display: contents;
     }
+    /* Menü mittig zwischen Name und Fußzeile: gleich viel Luft zwischen den sichtbaren Buchstaben von „DORNER“,
+       den Menüpunkten und „Impressum“. Die Mindestabstände gleichen aus, dass die Schriften unterschiedlich weit in
+       ihren Zeilen sitzen. */
     .bm-body > nav {
       grid-column: 2;
       grid-row: 3;
-      margin-top: clamp(2.5rem, 9vh, 6rem);
+      align-self: center;
+      /* um 0,07 Schrifthöhen nach unten geschoben: „KONTAKT“ sitzt höher in seiner Zeile als „DORNER“ */
+      margin-block: calc(1.5rem + 0.07 * var(--bm-item)) calc(1.5rem - 0.07 * var(--bm-item));
     }
     .bm-aside {
       grid-column: 1 / -1;
@@ -385,7 +411,7 @@ const nameParts = [...site.name].map((ch, i, all) => ({
       margin-top: calc(-1 * var(--bm-pad)); /* bis an den oberen Bildschirmrand */
       --blend-w: 100%;
       /* 4:3 über die ganze Breite; auf niedrigen Bildschirmen etwas flacher, damit nichts scrollt */
-      --blend-h: min(75vw, 45svh);
+      --blend-h: min(75vw, 36svh);
       --blend-mask: linear-gradient(to bottom, #000 calc(100% - 0.4 * var(--name-fs)), transparent 100%);
     }
     .bm--aside .bm-name {
@@ -401,9 +427,10 @@ const nameParts = [...site.name].map((ch, i, all) => ({
       -webkit-background-clip: text;
       background-clip: text;
     }
-    .bm-foot {
+    /* .bm davor: sonst gewinnt die allgemeine Regel (padding-top 2,5rem), die weiter unten steht */
+    .bm .bm-foot {
       justify-content: center;
-      padding-top: 1.25rem;
+      padding-top: 0;
     }
   }
   /* Ab 700 px: Das Foto füllt den ganzen Bildschirm hinter Name und Menü; unten bleibt ein blauer Streifen (bündig
