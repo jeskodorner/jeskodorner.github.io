@@ -600,11 +600,10 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   rechts so weit wie der Text links), bis zur Grundlinie von „Kontakt“, links mit einem ganz kurzen Übergang (`--fade`); der
   Name ragt hinein, und wo er auf dem Foto liegt, zeigen seine Buchstaben das Foto als Negativ (wie „Kontakt“
   am Handy, Skript `addWindow` in `BlueMenu.astro`). Die Fotokante läuft dabei immer genau zwischen R und N
-  von „Dorner“: „DOR“ bleibt weiß, „NER“ liegt im Foto (Skript `layoutPhoto`; die Fotobreite passt sich an). Am Handy immer randlos über die ganze Breite (auf niedrigen
-  Bildschirmen etwas flacher als 4:3, damit nichts scrollt), es beginnt
-  halb hinter „Kontakt“ (das Foto beginnt mit kurzem weichem Rand an der Mitte der Buchstaben; „Kontakt“ ist oben
-  weiß, auf dem Foto zeigen die Buchstaben das Foto als Negativ – wie ein Fenster) und läuft unten weich aus (Verlauf:
-  `--blend-mask` in `BlueMenu.astro`). Mit „Bewegung reduzieren“
+  von „Dorner“: „DOR“ bleibt weiß, „NER“ liegt im Foto (Skript `layoutPhoto`; die Fotobreite passt sich an). Am Handy steht es ganz oben, randlos mit harten Kanten oben,
+  links und rechts (4:3, auf niedrigen Bildschirmen etwas flacher, damit nichts scrollt), und läuft unten weich in
+  den Namen aus: Das Foto endet mitten in den Buchstaben, deren obere Hälfte zeigt das Foto als Negativ, die untere ist
+  weiß (Verlauf: `--blend-mask` in `BlueMenu.astro`). Früher lag das Foto am Handy unten, halb hinter „Kontakt“. Mit „Bewegung reduzieren“
   oder ohne JavaScript bleibt ein festes Paar stehen. Früher waren die Fotos invertiert (Negativ) und die Buchstaben
   zeigten sie positiv; zurückholen: in `BlendLoop.astro` bei `.blend-layer` wieder `filter: invert(1);` ergänzen. Die frühere Startseite liegt in der Git-Geschichte.
 - **Ausprobierte Versionen (gemerkt):**
