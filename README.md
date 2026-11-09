@@ -645,7 +645,8 @@ Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer 
 **Schriften** (lokal, über Fontsource, Lizenz OFL):
 - **Instrument Serif**: Titel, Name, Menü und Schilder im Portfolio (nur eine Stärke, normal und kursiv). Auf der
   Startseite und im Menü in Großbuchstaben, die Menüpunkte kursiv außer „Portfolio“; der Name ist mit einer feinen
-  Kontur etwas fetter (`-webkit-text-stroke`). Überall sonst normal geschrieben. Vorher: Anybody, sehr fett und schmal.
+  Kontur etwas fetter (`-webkit-text-stroke`), einzelne Buchstabenpaare sind von Hand ausgeglichen (`KERN` in
+  `BlueMenu.astro`: D–O und O–R enger, R–N weiter). Überall sonst normal geschrieben. Vorher: Anybody, sehr fett und schmal.
 - **Archivo**: Fließtext, Beschriftungen und Werkschilder
 
 **Extenda einsetzen:** Extenda (Zetafonts) ist eine kommerzielle Schrift. Fürs Web brauchst du eine passende Lizenz.

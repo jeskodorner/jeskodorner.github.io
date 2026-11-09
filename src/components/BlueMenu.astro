@@ -31,6 +31,14 @@ const t = useTranslations();
 const links = await navLinks();
 const path = Astro.url.pathname;
 const hasAside = Astro.slots.has('aside');
+
+/* Optischer Ausgleich einzelner Buchstabenpaare im Namen (Großbuchstaben in Instrument Serif), in em: zusätzlicher
+   Abstand nach dem ersten Buchstaben des Paars. Gemessen standen „D–O–R“ zu luftig, „R–N“ berührten sich fast. */
+const KERN: Record<string, number> = { DO: -0.03, OR: -0.012, RN: 0.04 };
+const nameParts = [...site.name].map((ch, i, all) => ({
+  ch,
+  kern: KERN[(ch + (all[i + 1] ?? '')).toUpperCase()],
+}));
 ---
 
 <div class:list={['bm', 'container', { 'bm--overlay': overlay, 'bm--aside': hasAside }]}>
@@ -46,10 +54,12 @@ const hasAside = Astro.slots.has('aside');
   {
     overlay ? (
       <a class="bm-name display" href="/">
-        {site.name}
+        {nameParts.map((p) => (p.kern ? <span style={`letter-spacing:calc(-0.01em + ${p.kern}em)`}>{p.ch}</span> : p.ch))}
       </a>
     ) : (
-      <h1 class="bm-name display">{site.name}</h1>
+      <h1 class="bm-name display">
+        {nameParts.map((p) => (p.kern ? <span style={`letter-spacing:calc(-0.01em + ${p.kern}em)`}>{p.ch}</span> : p.ch))}
+      </h1>
     )
   }
   <div class="bm-body">
@@ -116,7 +126,7 @@ const hasAside = Astro.slots.has('aside');
     if (!source || !box) return null;
     const word = document.createElement('span');
     word.className = `bm-window bm-window--${kind} display`;
-    word.textContent = source.textContent?.trim() ?? '';
+    word.innerHTML = source.innerHTML; // samt Ausgleich einzelner Buchstabenpaare (Spans)
     box.append(word);
     // deckungsgleich über das echte Wort legen (auch nach Drehen, Größenänderung, Laden der Schrift)
     const place = () => {
