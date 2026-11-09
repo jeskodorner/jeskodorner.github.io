@@ -8,10 +8,9 @@
  * Handy (unter 700 px): der Name steht mittig, die Menüpunkte linksbündig an seiner linken Kante, die Fußzeile mittig.
  * Ab 700 px: alles linksbündig.
  * Slot „aside“ (Startseite: Bildfeld, BlendLoop.astro): am Handy ganz oben, randlos mit harten Kanten oben, links und
- * rechts, unten läuft es weich in den Namen aus (4:3, auf niedrigen Bildschirmen etwas flacher). Ab 700 px rechts
- * innerhalb der Seitenränder, der Name ragt hinein.
- * Fenster: Wo der Name auf dem Foto liegt, zeigen seine Buchstaben das Foto in umgekehrten Farben (Negativ) – am Handy
- * die obere Hälfte, am Laptop der rechte Teil „NER“ (Skript unten).
+ * rechts, unten läuft es weich in den Namen aus (4:3, auf niedrigen Bildschirmen etwas flacher). Ab 700 px füllt
+ * es den ganzen Bildschirm; die Schrift hebt sich mit einem Schatten ab, der sich dem Foto anpasst (Skript unten).
+ * Fenster (Handy): Die obere Hälfte des Namens liegt im Foto und zeigt es in umgekehrten Farben (Negativ).
  * Farben: Name und Menüpunkte in der Schriftfarbe des Menüs (weiß auf Blau), aktueller Menüpunkt unterstrichen;
  *   beim Überfahren rosa Feld.
  * Übergang: Name, Menüpunkte und Fußzeile tragen feste view-transition-Namen. Beim Wechsel Menü → Startseite
@@ -87,8 +86,8 @@ const hasAside = Astro.slots.has('aside');
      Bildfeld eine Kopie des Worts, die die Farben umkehrt (Weiß im Modus „Differenz“): Die Buchstaben zeigen das
      Foto als Negativ und bleiben so auf dem Foto lesbar. Die Kopie muss im Bildfeld liegen, weil sich Name und Menü wegen der
      Seitenübergänge nicht mit dem Foto mischen können. Ohne JavaScript bleiben die Wörter einfach einfarbig.
-       Handy:  der Name – die obere Hälfte liegt im Foto (CSS: Verlauf von oben nach unten)
-       Laptop: der Name – der rechte Teil ragt ins Foto (CSS: Schnitt bei --split, dem linken Fotorand) */
+       Handy: der Name – die obere Hälfte liegt im Foto (CSS: Verlauf von oben nach unten). Am Laptop (Foto über den
+       ganzen Bildschirm) wird die Kopie nicht gezeigt. */
   type Prop = 'fontSize' | 'lineHeight' | 'letterSpacing' | 'paddingTop' | 'paddingLeft' | 'paddingRight';
   const COPY: Prop[] = ['fontSize', 'lineHeight', 'letterSpacing', 'paddingTop', 'paddingLeft', 'paddingRight'];
 
@@ -107,61 +106,104 @@ const hasAside = Astro.slots.has('aside');
       const a = source.getBoundingClientRect();
       const b = box.getBoundingClientRect();
       word.style.translate = `${a.left - b.left}px ${a.top - b.top}px`;
-      source.style.setProperty('--split', `${(b.left - a.left).toFixed(1)}px`);
     };
     bm.classList.add(flag);
     return place;
   }
 
-  /* Laptop: Lage des Fotos. Die Fotokante (Mitte des kurzen Übergangs) läuft immer genau zwischen R und N von
-     „Dorner“ – „DOR“ bleibt blau, „NER“ liegt im Foto (die beiden Buchstaben stoßen in dieser Schrift aneinander,
-     der Übergang verteilt sich gleichmäßig auf beide Kanten). Unten endet das Foto auf der Grundlinie von „Kontakt“.
-     Setzt --photo-w (Breite) und --photo-b (Abstand unten); ohne JavaScript: Bildschirmmitte bzw. Fußzeile. */
+  /* Laptop: Das Foto füllt den Bildschirm, die weiße Schrift hebt sich mit einem weichen Schatten ab, der sich dem
+     Foto dahinter anpasst. Bei jedem Fotowechsel wird das sichtbare Bild (die beiden Fotos im Modus „Aufhellen“)
+     klein nachgezeichnet und für jedes Wort die Fläche dahinter gemessen: Helligkeit → Stärke des Schattens (auf
+     hellen Stellen kräftig, auf dunklen kaum), Farbe → ein dunkler Ton derselben Farbe. Gesetzt wird --sh je Wort;
+     der Schatten blendet dann im Takt der Fotos über (CSS). */
   const desk = matchMedia('(min-width: 700px)');
-  const baseline = (el: HTMLElement) => {
-    const probe = document.createElement('span');
-    probe.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline';
-    el.append(probe);
-    const y = probe.getBoundingClientRect().top;
-    probe.remove();
-    return y;
-  };
-  function layoutPhoto(bm: HTMLElement) {
-    const aside = bm.querySelector<HTMLElement>('.bm-aside');
-    const name = bm.querySelector<HTMLElement>('.bm-name');
-    const last = bm.querySelector<HTMLElement>('.bm-list li:last-child a');
-    if (!aside || !name) return;
-    aside.style.removeProperty('--photo-w');
-    aside.style.removeProperty('--photo-b');
-    if (!desk.matches) return;
-    // unten: Grundlinie von „Kontakt“
-    if (last) aside.style.setProperty('--photo-b', `${(bm.getBoundingClientRect().bottom - baseline(last)).toFixed(1)}px`);
-    // links: Grenze zwischen R und N
-    const node = [...name.childNodes].find((n) => n.nodeType === Node.TEXT_NODE && n.textContent?.trim());
-    const i = node?.textContent?.toLowerCase().lastIndexOf('rn') ?? -1;
-    if (!node || i < 0) return;
-    const range = document.createRange();
-    range.setStart(node, i + 1);
-    range.setEnd(node, i + 2);
-    const edge = range.getBoundingClientRect().left;
-    // Breite des Übergangs (CSS --fade) messen; die Kante ist seine Mitte
-    const probe = document.createElement('div');
-    probe.style.cssText = 'position:absolute;visibility:hidden;width:var(--fade)';
-    bm.append(probe);
-    const fade = probe.getBoundingClientRect().width;
-    probe.remove();
-    const right = aside.getBoundingClientRect().right;
-    aside.style.setProperty('--photo-w', `${(right - edge + fade / 2).toFixed(1)}px`);
+  const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
+
+  function initShadows(bm: HTMLElement) {
+    const box = bm.querySelector<HTMLElement>('[data-blend]');
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    if (!box || !ctx) return null;
+    const words = [...bm.querySelectorAll<HTMLElement>('.bm-name, .bm-list a, .bm-foot a')];
+
+    // ein Foto so zeichnen wie im Bildfeld: object-fit: cover mit object-position (Bildschwerpunkt)
+    const draw = (img: HTMLImageElement, w: number, h: number) => {
+      const iw = img.naturalWidth;
+      const ih = img.naturalHeight;
+      if (!img.complete || !iw || !ih) return;
+      const scale = Math.max(w / iw, h / ih);
+      const [fx = 50, fy = 50] = (img.style.objectPosition || '50% 50%').split(' ').map((v) => parseFloat(v));
+      const dw = iw * scale;
+      const dh = ih * scale;
+      ctx.drawImage(img, ((w - dw) * fx) / 100, ((h - dh) * fy) / 100, dw, dh);
+    };
+
+    const sample = () => {
+      if (!desk.matches) {
+        for (const el of words) el.style.removeProperty('--sh');
+        return;
+      }
+      const b = box.getBoundingClientRect();
+      if (!b.width || !b.height) return;
+      const W = 96;
+      const H = Math.max(1, Math.round((W * b.height) / b.width));
+      canvas.width = W;
+      canvas.height = H;
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = '#000';
+      ctx.fillRect(0, 0, W, H);
+      ctx.globalCompositeOperation = 'lighten';
+      let imgs = box.querySelectorAll<HTMLImageElement>('.blend-layer.is-on img');
+      if (!imgs.length) imgs = box.querySelectorAll<HTMLImageElement>('.blend-layer:nth-child(-n + 2) img');
+      for (const img of imgs) draw(img, W, H);
+      let data: Uint8ClampedArray;
+      try {
+        data = ctx.getImageData(0, 0, W, H).data;
+      } catch {
+        return; // Bild (noch) nicht lesbar – dann bleibt der neutrale Schatten aus dem CSS
+      }
+      for (const el of words) {
+        const r = el.getBoundingClientRect();
+        const x0 = clamp(Math.floor(((r.left - b.left) / b.width) * W), 0, W - 1);
+        const x1 = clamp(Math.ceil(((r.right - b.left) / b.width) * W), x0 + 1, W);
+        const y0 = clamp(Math.floor(((r.top - b.top) / b.height) * H), 0, H - 1);
+        const y1 = clamp(Math.ceil(((r.bottom - b.top) / b.height) * H), y0 + 1, H);
+        let R = 0;
+        let G = 0;
+        let B = 0;
+        let n = 0;
+        for (let y = y0; y < y1; y++) {
+          for (let x = x0; x < x1; x++) {
+            const i = (y * W + x) * 4;
+            R += data[i]!;
+            G += data[i + 1]!;
+            B += data[i + 2]!;
+            n++;
+          }
+        }
+        R /= n;
+        G /= n;
+        B /= n;
+        const light = (0.2126 * R + 0.7152 * G + 0.0722 * B) / 255;
+        const alpha = clamp((light - 0.15) * 1.2, 0.12, 0.85);
+        const k = 0.22; // dunkler Ton derselben Farbe
+        el.style.setProperty('--sh', `rgb(${Math.round(R * k)} ${Math.round(G * k)} ${Math.round(B * k)} / ${alpha.toFixed(2)})`);
+      }
+    };
+
+    // neu messen, sobald ein Foto dazukommt oder verschwindet und sobald Fotos geladen sind
+    new MutationObserver(sample).observe(box, { subtree: true, attributes: true, attributeFilter: ['class'] });
+    for (const img of box.querySelectorAll('img')) img.addEventListener('load', sample);
+    return sample;
   }
 
   for (const bm of document.querySelectorAll<HTMLElement>('.bm--aside')) {
-    const placers = [
-      addWindow(bm, bm.querySelector('.bm-name'), 'name', 'has-name-window'),
-    ];
-    // erst die Fotokante ausrichten, dann die Kopien darauf legen (auch nach Drehen, Größenänderung, Schrift geladen)
+    const place = addWindow(bm, bm.querySelector('.bm-name'), 'name', 'has-name-window');
+    const shade = initShadows(bm);
+    // neu ausrichten bzw. messen nach Drehen, Größenänderung, geladener Schrift
     const update = () => {
-      layoutPhoto(bm);
-      for (const place of placers) place?.();
+      place?.();
+      shade?.();
     };
     update();
     new ResizeObserver(update).observe(bm);
@@ -318,45 +360,56 @@ const hasAside = Astro.slots.has('aside');
       padding-top: 1.25rem;
     }
   }
-  /* Ab 700 px: geteilt – links auf Weiß Name, Menü und Fußzeile, rechts das Foto, innerhalb der Seitenränder (oben
-     so weit vom Rand wie der Name, rechts so weit wie der Text links), bis zur Grundlinie von „Kontakt“. Die linke Kante läuft zwischen R und N des Namens („DOR“ blau, „NER“
-     im Foto, Skript) und hat einen ganz kurzen Übergang (--fade). Wo der Name im Foto liegt, zeigen seine Buchstaben
-     das Foto positiv (Fenster), mit demselben kurzen Übergang. */
+  /* Ab 700 px: Das Foto füllt den ganzen Bildschirm hinter Name, Menü und Fußzeile. Die weiße Schrift hebt sich mit
+     einem weichen Schatten ab, der sich dem Foto dahinter anpasst (Farbe und Stärke setzt das Skript je Wort über
+     --sh; ohne Skript ein neutraler dunkler Schatten). Die geteilte Fassung (Foto rechts, Kante zwischen R und N)
+     liegt im Git-Tag alte-version-laptop-geteilt. */
   @media (min-width: 700px) {
     .bm-body {
       flex: none;
     }
     .bm--aside {
       position: relative;
-      --fade: clamp(0.75rem, 1.5vw, 1.5rem);
+      isolation: isolate; /* eigene Ebene: Foto (z-index -1) über dem Seitenhintergrund, unter der Schrift */
     }
     .bm-aside {
       position: absolute;
-      top: var(--bm-pad);
-      /* --photo-b (Skript): Grundlinie von „Kontakt“. Ohne Skript: Grundlinie der Fußzeile (unterer Seitenabstand
-         + 0,376 Schrifthöhen, gemessen) */
-      bottom: var(--photo-b, calc(max(1.5rem, env(safe-area-inset-bottom)) + 0.376 * var(--fs-xs)));
-      right: var(--gutter); /* rechter Seitenrand, gleich weit wie der Text links */
-      width: var(--photo-w, 50vw); /* --photo-w (Skript): Kante zwischen R und N des Namens */
+      top: 0;
+      bottom: 0;
+      left: calc(50% - 50vw); /* bis an die Bildschirmränder, auch wenn der Inhalt schmaler ist */
+      width: 100vw;
+      z-index: -1;
       --blend-w: 100%;
       --blend-h: 100%;
-      --blend-mask: linear-gradient(to right, transparent 0, #000 var(--fade));
     }
-    .bm--aside .bm-name {
-      position: relative;
-      z-index: 1; /* über dem Foto */
+    .bm-aside :global(.bm-window) {
+      display: none;
     }
-    /* Mit JavaScript: links vom Fotorand blau, auf dem Foto durchsichtig (dort scheint die Kopie durch); dazwischen
-       derselbe kurze Übergang wie am Fotorand, so blenden Blau und Foto ineinander */
-    .bm--aside.has-name-window .bm-name {
-      color: transparent;
-      background-image: linear-gradient(
-        to right,
-        var(--name-color) var(--split, 100%),
-        transparent calc(var(--split, 100%) + var(--fade))
-      );
-      -webkit-background-clip: text;
-      background-clip: text;
+    .bm--aside .bm-name,
+    .bm--aside .bm-list a {
+      --sh: rgb(10 12 20 / 0.45);
+      text-shadow:
+        0 0 0.35em var(--sh),
+        0 0 0.1em var(--sh);
+      transition:
+        text-shadow 1.5s var(--ease),
+        background-color 0.2s,
+        color 0.2s;
+    }
+    /* kleine Schrift: etwas breiterer Schatten, sonst geht sie auf hellen Stellen unter */
+    .bm--aside .bm-foot a {
+      --sh: rgb(10 12 20 / 0.45);
+      text-shadow:
+        0 0 0.6em var(--sh),
+        0 0 0.2em var(--sh);
+      transition:
+        text-shadow 1.5s var(--ease),
+        background-color 0.2s,
+        color 0.2s;
+    }
+    .bm--aside .bm-list a:hover,
+    .bm--aside .bm-foot a:hover {
+      text-shadow: none;
     }
   }
   .bm-list {

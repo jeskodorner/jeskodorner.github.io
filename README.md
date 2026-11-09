@@ -596,11 +596,11 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 - **Bildfeld auf der Startseite** (`src/components/BlendLoop.astro`): Fotos aus dem Portfolio (Liste `showroom`),
   in normalen Farben im Modus „Aufhellen“ übereinandergelegt (wie eine Doppelbelichtung), immer 4:3. Es sind immer zwei zu sehen. Alle
   2,8 Sekunden blendet ein neues oben ein und das unterste verschwindet, so entstehen laufend neue Bilder (Reihenfolge
-  bei jedem Besuch zufällig). Am Laptop (ab 700 px) steht es rechts innerhalb der Seitenränder (oben so weit vom Rand wie der Name,
-  rechts so weit wie der Text links), bis zur Grundlinie von „Kontakt“, links mit einem ganz kurzen Übergang (`--fade`); der
-  Name ragt hinein, und wo er auf dem Foto liegt, zeigen seine Buchstaben das Foto als Negativ (wie „Kontakt“
-  am Handy, Skript `addWindow` in `BlueMenu.astro`). Die Fotokante läuft dabei immer genau zwischen R und N
-  von „Dorner“: „DOR“ bleibt weiß, „NER“ liegt im Foto (Skript `layoutPhoto`; die Fotobreite passt sich an). Am Handy steht es ganz oben, randlos mit harten Kanten oben,
+  bei jedem Besuch zufällig). Am Laptop (ab 700 px) füllt es den ganzen Bildschirm hinter Name, Menü und
+  Fußzeile. Die weiße Schrift hebt sich mit einem weichen Schatten ab, der sich dem Foto anpasst: Bei jedem
+  Fotowechsel misst ein Skript (`initShadows` in `BlueMenu.astro`) die Fläche hinter jedem Wort – auf hellen Stellen
+  wird der Schatten kräftig, auf dunklen kaum sichtbar, und er nimmt einen dunklen Ton aus dem Foto an. Die vorherige
+  geteilte Fassung (Foto rechts, Kante zwischen R und N) liegt im Git-Tag `alte-version-laptop-geteilt`. Am Handy steht es ganz oben, randlos mit harten Kanten oben,
   links und rechts (4:3, auf niedrigen Bildschirmen etwas flacher, damit nichts scrollt), und läuft unten weich in
   den Namen aus: Das Foto endet mitten in den Buchstaben, deren obere Hälfte zeigt das Foto als Negativ, die untere ist
   weiß (Verlauf: `--blend-mask` in `BlueMenu.astro`). Früher lag das Foto am Handy unten, halb hinter „Kontakt“. Mit „Bewegung reduzieren“
