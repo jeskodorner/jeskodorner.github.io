@@ -1,6 +1,6 @@
 ---
 /**
- * Das Menü (früher blau, jetzt weiß mit schwarzer Schrift): oben groß der Name, darunter die Menüpunkte (etwas kleiner), unten Instagram,
+ * Das Menü (blau mit weißer Schrift, Farben in tokens.css): oben groß der Name, darunter die Menüpunkte (etwas kleiner), unten Instagram,
  * Impressum und Datenschutz. Zwei Einsätze:
  *   - als Startseite (pages/index.astro): der Name ist die Hauptüberschrift
  *   - als Menü (Header.astro, auf allen Geräten): mit Schließen-Knopf genau dort, wo der Menüknopf sitzt,
@@ -12,7 +12,8 @@
  * Seitenränder, der Name ragt hinein.
  * Fenster: Wo ein Wort auf dem Foto liegt, zeigen seine Buchstaben das Foto in umgekehrten Farben (Negativ) – am Handy
  * die untere Hälfte von „Kontakt“, am Laptop der Teil des Namens, der ins Foto ragt (Skript unten).
- * Farben: Name und Menüpunkte schwarz, aktueller Menüpunkt blau; beim Überfahren rosa Feld.
+ * Farben: Name und Menüpunkte in der Schriftfarbe des Menüs (weiß auf Blau), aktueller Menüpunkt unterstrichen;
+ *   beim Überfahren rosa Feld.
  * Übergang: Name, Menüpunkte und Fußzeile tragen feste view-transition-Namen. Beim Wechsel Menü → Startseite
  * gleiten sie an ihren neuen Platz; von der Startseite auf eine Unterseite gleitet der Name ins Logo oben links.
  */
@@ -172,7 +173,7 @@ const hasAside = Astro.slots.has('aside');
 </script>
 
 <style>
-  /* Weiße Fläche über den ganzen Bildschirm; Inhalt von oben nach unten: Name, Menü, Fußzeile */
+  /* Farbfläche über den ganzen Bildschirm; Inhalt von oben nach unten: Name, Menü, Fußzeile */
   .bm {
     /* Schriftgröße der Menüpunkte */
     --bm-item: clamp(2.3rem, 10.5vw, 4.75rem);
@@ -217,7 +218,7 @@ const hasAside = Astro.slots.has('aside');
     background: var(--ink);
     color: var(--pink);
   }
-  /* Name: eine Zeile, so breit wie der Platz (aber nicht riesig), in --name-color (schwarz). Im Menü ist er ein Link zur Startseite
+  /* Name: eine Zeile, so breit wie der Platz (aber nicht riesig), in --name-color (Schriftfarbe des Menüs). Im Menü ist er ein Link zur Startseite
      und bekommt beim Überfahren dasselbe rosa Feld wie die Menüpunkte. */
   .bm-name {
     view-transition-name: jd-name;
@@ -396,7 +397,7 @@ const hasAside = Astro.slots.has('aside');
     text-decoration: none;
     color: inherit;
   }
-  /* Aktueller Punkt (im Menü auf Unterseiten): blau. Überfahren: rosa Feld mit schwarzer Schrift. Das Feld steht
+  /* Aktueller Punkt (im Menü auf Unterseiten): unterstrichen. Überfahren: rosa Feld mit schwarzer Schrift. Das Feld steht
      links und rechts ein klein wenig über, die Schrift bleibt an ihrem Platz. */
   .bm-list a {
     padding-inline: 0.06em;
@@ -406,7 +407,9 @@ const hasAside = Astro.slots.has('aside');
       color 0.2s;
   }
   .bm-list a[aria-current='page'] {
-    color: var(--accent);
+    text-decoration: underline;
+    text-decoration-thickness: 0.07em;
+    text-underline-offset: 0.1em;
   }
   .bm-list a:hover {
     background-color: var(--pink);
@@ -420,7 +423,7 @@ const hasAside = Astro.slots.has('aside');
     margin-top: auto;
     padding-top: 2.5rem;
   }
-  /* Kleine Links schlicht schwarz, beim Überfahren rosa hinterlegt wie die Menüpunkte */
+  /* Kleine Links in der Schriftfarbe, beim Überfahren rosa hinterlegt wie die Menüpunkte */
   .bm-foot a {
     color: inherit;
   }

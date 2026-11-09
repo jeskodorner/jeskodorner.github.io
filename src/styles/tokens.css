@@ -2,17 +2,17 @@
  * Design-Tokens – „White Cube“: weiße Galeriewände, schwarze Schrift, sommerliche Farbflächen.
  *
  * Palette „Sommer“: warme, frische Galeriefarben (Koralle, Orange, Sonnengelb, klares Blau, Flieder), alle mit
- * schwarzer Schrift, dazu ein lebendiges Mittelblau für Links und ein kräftiges Orange nur fürs Überfahren.
- * Startseite und Menü sind weiß mit schwarzer Schrift, der korallenrote Name ist dort die einzige Farbe. Frühere Paletten (siehe README): Git-Tags alte-version-verblichene-farben (blass, kühl) und
+ * schwarzer Schrift, dazu ein kräftiges Blau mit leichtem Lila-Stich (Startseite, Menü, Links) und ein kräftiges
+ * Orange nur fürs Überfahren. Startseite und Menü: dieses Blau mit weißer Schrift. Frühere Paletten (siehe README): Git-Tags alte-version-verblichene-farben (blass, kühl) und
  * alte-version-knallige-galeriefarben (Neon).
  *
  * Kontraste (WCAG 2.x):
- *   Text #0B0B0B auf Weiß 19,6:1 · Nebentext #5C5C5C 6,7:1 · Links #4273B0 4,9:1
+ *   Text #0B0B0B auf Weiß 19,6:1 · Nebentext #5C5C5C 6,7:1 · Links #474EC4 6,7:1
  *   Farbflächen, alle mit schwarzer Schrift:
  *     Koralle #FF807F 8,1:1 · Orange #FFA44E 10,0:1 · Sonnengelb #F7E04F 14,7:1
  *     Blau #53A3F2 7,4:1 · Flieder #B98CEA 7,5:1
  *   Rosa/Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer Schrift.
- *   Startseite/Menü Weiß + Schwarz 19,6:1 · Akzent dort: Koralle-Fläche mit Schwarz 8,1:1
+ *   Startseite/Menü #474EC4 + Weiß 6,7:1 · Überfahren dort: Koralle-Fläche mit Schwarz 8,1:1
  *   Überfahren: Unterstrich bzw. Fläche in Orange #F25914 (Unterstrich auf Weiß 3,4:1, Fläche + Schwarz 5,8:1)
  */
 
@@ -37,10 +37,11 @@
   --on-pink: #0b0b0b;
   --blue: #53a3f2;
   --on-blue: #0b0b0b;
-  /* Hintergrund von Startseite und Menü: Weiß mit schwarzer Schrift. Akzent dort: Koralle (Felder mit schwarzer Schrift).
-     Ausprobiert: #2b3bff, #3d8aae, Schieferblau #58677f, Mittelblau #4273b0 (mit weißer Schrift) – siehe README. */
-  --menu-bg: #ffffff;
-  --on-menu: #0b0b0b;
+  /* Hintergrund von Startseite und Menü: kräftiges Blau mit leichtem Lila-Stich („Kobalt-lila“), weiße Schrift.
+     Ausprobiert: #2b3bff (zu künstlich), #3d8aae, Schieferblau #58677f, Mittelblau #4273b0, Weiß mit schwarzer
+     Schrift (Git-Tag alte-version-startseite-weiss) – siehe README. */
+  --menu-bg: #474ec4;
+  --on-menu: #ffffff;
   --lime: #f7e04f;
   --on-lime: #0b0b0b;
   --orange: #ffa44e;
@@ -52,7 +53,7 @@
   --paper: var(--wall);
   --paper-2: var(--wall-2);
   --sand: var(--wall-3);
-  --accent: #4273b0; /* Links, kleine Akzentschrift, Fokusrahmen – Mittelblau */
+  --accent: #474ec4; /* Links, kleine Akzentschrift, Fokusrahmen – dasselbe Blau wie die Startseite */
   --hover: #f25914; /* Überfahren: Unterstrich (Links) bzw. Fläche (Knöpfe) – kräftiges Orange */
   --accent-vivid: var(--pink); /* nur große Schrift und Flächen */
   --on-accent: #ffffff;

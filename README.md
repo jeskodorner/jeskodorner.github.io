@@ -577,17 +577,16 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   Palette „Sommer“, warm und frisch: Koralle `#FF807F` (`pink`), Orange `#FFA44E` (`orange`), Sonnengelb `#F7E04F`
   (`lime`), klares Blau `#53A3F2` (`blue`), Flieder `#B98CEA` (`violet`). Auf allen steht schwarze Schrift.
 - **Links und Überfahren:** Links und kleine Akzentschrift (z. B. die Jahreszahlen auf „Über mich“) sind in
-  Mittelblau `#4273B0` (Token `--accent`). Beim Überfahren bleibt die Schrift, der Unterstrich wird orange
+  Kobalt-lila `#474EC4` (Token `--accent`, dasselbe Blau wie die Startseite). Beim Überfahren bleibt die Schrift, der Unterstrich wird orange
   (Token `--hover`, `#F25914`); Knöpfe, Abspielen und die Knöpfe der Lightbox werden orange hinterlegt. In der schwarzen
   Fußzeile gibt es keine Unterstriche, beim Überfahren werden die Links blau, der große Schriftzug ist korallenrosa.
 - **Rosa** ist Koralle `#FF807F` (vorher kräftiges Pink `#FF3D8B`, dann Altrosa `#E59BB0` und verblichenes
   Korallenrosa `#EF9D9F`). Es gilt auch für Galerien mit `color: pink`.
-- **Startseite = das Menü** (`src/components/BlueMenu.astro`): weiß mit schwarzer Schrift (Token `--menu-bg` und
-  `--on-menu` in `tokens.css`; vorher Mittelblau `#4273B0` bzw. Schieferblau `#58677F` mit weißer Schrift). Der Name ist
-  schwarz (`--name-color` in `BlueMenu.astro`; vorher blau, davor rosa hinterlegt), der Menüpunkt der aktuellen
-  Seite blau. Beim Überfahren bekommen
+- **Startseite = das Menü** (`src/components/BlueMenu.astro`): kräftiges Blau mit leichtem Lila-Stich `#474EC4`
+  („Kobalt-lila“) mit weißer Schrift (Token `--menu-bg` und `--on-menu` in `tokens.css`). Der Name hat die
+  Schriftfarbe (`--name-color` in `BlueMenu.astro`), der Menüpunkt der aktuellen Seite ist unterstrichen. Beim Überfahren bekommen
   Menüpunkte und Name ein rosa Feld mit schwarzer Schrift, Menü- und Schließen-Knopf sind rosa Kreise. Instagram, Impressum und Datenschutz
-  unten sind schlicht schwarz (beim Überfahren rosa). Sparsam bleiben: mehr Rosa wirkt schnell zu viel. Die Fläche geht über den ganzen
+  unten sind schlicht in der Schriftfarbe (beim Überfahren rosa). Sparsam bleiben: mehr Rosa wirkt schnell zu viel. Die Fläche geht über den ganzen
   Bildschirm, oben groß der Name, darunter die Menüpunkte (Portfolio, Galerie, Film, Über mich, Kontakt), unten
   Instagram, Impressum und Datenschutz. Ohne Kopfleiste und ohne Scrollen. Dasselbe Menü öffnet sich auf allen
   Geräten über den rosa Menü-Knopf oben rechts: Die Fläche wächst als Kreis aus dem Knopf, der Schließen-Knopf sitzt an derselben Stelle,
@@ -601,7 +600,7 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   rechts so weit wie der Text links), bis zur Grundlinie von „Kontakt“, links mit einem ganz kurzen Übergang (`--fade`); der
   Name ragt hinein, und wo er auf dem Foto liegt, zeigen seine Buchstaben das Foto als Negativ (wie „Kontakt“
   am Handy, Skript `addWindow` in `BlueMenu.astro`). Die Fotokante läuft dabei immer genau zwischen R und N
-  von „Dorner“: „DOR“ bleibt schwarz, „NER“ liegt im Foto (Skript `layoutPhoto`; die Fotobreite passt sich an). Am Handy immer randlos über die ganze Breite (auf niedrigen
+  von „Dorner“: „DOR“ bleibt weiß, „NER“ liegt im Foto (Skript `layoutPhoto`; die Fotobreite passt sich an). Am Handy immer randlos über die ganze Breite (auf niedrigen
   Bildschirmen etwas flacher als 4:3, damit nichts scrollt), es beginnt
   halb hinter „Kontakt“ (das Foto beginnt mit kurzem weichem Rand an der Mitte der Buchstaben; „Kontakt“ ist oben
   weiß, auf dem Foto zeigen die Buchstaben das Foto als Negativ – wie ein Fenster) und läuft unten weich aus (Verlauf:
@@ -616,6 +615,8 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   - *Andere Hintergründe* (Fotos nur invertiert): kräftiges Blau `#2B3BFF` (mit Grün als Akzent) und Blaugrün
     `#3D8AAE`. Ausprobieren: in `tokens.css` z. B. `--menu-bg: var(--blue);` setzen. Der grüne Akzent war `var(--lime)`
     statt `var(--pink)` in `BlueMenu.astro` und beim Menü-Knopf in `Header.astro`.
+  - *Startseite weiß mit schwarzer Schrift* (November 2026, Name erst blau, dann schwarz, Links Mittelblau `#4273B0`):
+    Git-Tag `alte-version-startseite-weiss`; in `tokens.css` `--menu-bg: #ffffff; --on-menu: #0b0b0b;` setzen.
   - *Startseite in Mittelblau `#4273B0` mit weißer Schrift* (kurz im November 2026): in `tokens.css`
     `--menu-bg: #4273b0; --on-menu: #ffffff;` setzen.
   - *Verblichene, kühle Palette* (kurz im November 2026, wirkte zu traurig): Schieferblau `#58677F` für Startseite
@@ -630,9 +631,9 @@ Kontraste nach WCAG 2.x:
 | Farbe | Hex | Textfarbe darauf | Kontrast |
 |---|---|---|---|
 | Wand | `#FFFFFF` | Schwarz `#0B0B0B` / Nebentext `#5C5C5C` | 19,6 : 1 / 6,7 : 1 |
-| Links, kleine Akzente | Mittelblau `#4273B0` auf Weiß | – | 4,9 : 1 |
+| Links, kleine Akzente | Kobalt-lila `#474EC4` auf Weiß | – | 6,7 : 1 |
 | Koralle (`pink`) | `#FF807F` | Schwarz | 8,1 : 1 |
-| Startseite/Menü | Weiß `#FFFFFF` | Schwarz | 19,6 : 1 |
+| Startseite/Menü | Kobalt-lila `#474EC4` | Weiß | 6,7 : 1 |
 | Überfahren im Menü | Koralle `#FF807F` (Fläche) | Schwarz | 8,1 : 1 |
 | Orange (`orange`) | `#FFA44E` | Schwarz | 10,0 : 1 |
 | Sonnengelb (`lime`) | `#F7E04F` | Schwarz | 14,7 : 1 |
