@@ -7,12 +7,12 @@
  * alte-version-knallige-galeriefarben (Neon).
  *
  * Kontraste (WCAG 2.x):
- *   Text #0B0B0B auf Weiß 19,6:1 · Nebentext #5C5C5C 6,7:1 · Links #474EC4 6,7:1
+ *   Text #0B0B0B auf Weiß 19,6:1 · Nebentext #5C5C5C 6,7:1 · Links #3A45C8 7,3:1
  *   Farbflächen, alle mit schwarzer Schrift:
  *     Koralle #FF807F 8,1:1 · Orange #FFA44E 10,0:1 · Sonnengelb #F7E04F 14,7:1
  *     Blau #53A3F2 7,4:1 · Flieder #B98CEA 7,5:1
  *   Rosa/Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer Schrift.
- *   Startseite/Menü #474EC4 + Weiß 6,7:1 · Überfahren dort: Koralle-Fläche mit Schwarz 8,1:1
+ *   Startseite/Menü #3A45C8 + Weiß 7,3:1 · Überfahren dort: Koralle-Fläche mit Schwarz 8,1:1
  *   Überfahren: Unterstrich bzw. Fläche in Orange #F25914 (Unterstrich auf Weiß 3,4:1, Fläche + Schwarz 5,8:1)
  */
 
@@ -37,10 +37,11 @@
   --on-pink: #0b0b0b;
   --blue: #53a3f2;
   --on-blue: #0b0b0b;
-  /* Hintergrund von Startseite und Menü: kräftiges Blau mit leichtem Lila-Stich („Kobalt-lila“), weiße Schrift.
+  /* Hintergrund von Startseite und Menü: Ultramarin – kräftiges Blau mit leichtem Lila-Stich, weiße Schrift.
+     (Kurz ausprobiert: „Kobalt-lila“ #474ec4.)
      Ausprobiert: #2b3bff (zu künstlich), #3d8aae, Schieferblau #58677f, Mittelblau #4273b0, Weiß mit schwarzer
      Schrift (Git-Tag alte-version-startseite-weiss) – siehe README. */
-  --menu-bg: #474ec4;
+  --menu-bg: #3a45c8;
   --on-menu: #ffffff;
   --lime: #f7e04f;
   --on-lime: #0b0b0b;
@@ -53,7 +54,7 @@
   --paper: var(--wall);
   --paper-2: var(--wall-2);
   --sand: var(--wall-3);
-  --accent: #474ec4; /* Links, kleine Akzentschrift, Fokusrahmen – dasselbe Blau wie die Startseite */
+  --accent: #3a45c8; /* Links, kleine Akzentschrift, Fokusrahmen – dasselbe Blau wie die Startseite */
   --hover: #f25914; /* Überfahren: Unterstrich (Links) bzw. Fläche (Knöpfe) – kräftiges Orange */
   --accent-vivid: var(--pink); /* nur große Schrift und Flächen */
   --on-accent: #ffffff;

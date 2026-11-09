@@ -577,13 +577,13 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   Palette „Sommer“, warm und frisch: Koralle `#FF807F` (`pink`), Orange `#FFA44E` (`orange`), Sonnengelb `#F7E04F`
   (`lime`), klares Blau `#53A3F2` (`blue`), Flieder `#B98CEA` (`violet`). Auf allen steht schwarze Schrift.
 - **Links und Überfahren:** Links und kleine Akzentschrift (z. B. die Jahreszahlen auf „Über mich“) sind in
-  Kobalt-lila `#474EC4` (Token `--accent`, dasselbe Blau wie die Startseite). Beim Überfahren bleibt die Schrift, der Unterstrich wird orange
+  Ultramarin `#3A45C8` (Token `--accent`, dasselbe Blau wie die Startseite). Beim Überfahren bleibt die Schrift, der Unterstrich wird orange
   (Token `--hover`, `#F25914`); Knöpfe, Abspielen und die Knöpfe der Lightbox werden orange hinterlegt. In der schwarzen
   Fußzeile gibt es keine Unterstriche, beim Überfahren werden die Links blau, der große Schriftzug ist korallenrosa.
 - **Rosa** ist Koralle `#FF807F` (vorher kräftiges Pink `#FF3D8B`, dann Altrosa `#E59BB0` und verblichenes
   Korallenrosa `#EF9D9F`). Es gilt auch für Galerien mit `color: pink`.
-- **Startseite = das Menü** (`src/components/BlueMenu.astro`): kräftiges Blau mit leichtem Lila-Stich `#474EC4`
-  („Kobalt-lila“) mit weißer Schrift (Token `--menu-bg` und `--on-menu` in `tokens.css`). Der Name hat die
+- **Startseite = das Menü** (`src/components/BlueMenu.astro`): Ultramarin `#3A45C8` (kräftiges Blau
+  mit leichtem Lila-Stich, kurz ausprobiert: „Kobalt-lila“ `#474EC4`) mit weißer Schrift (Token `--menu-bg` und `--on-menu` in `tokens.css`). Der Name hat die
   Schriftfarbe (`--name-color` in `BlueMenu.astro`), der Menüpunkt der aktuellen Seite ist unterstrichen. Beim Überfahren bekommen
   Menüpunkte und Name ein rosa Feld mit schwarzer Schrift, Menü- und Schließen-Knopf sind rosa Kreise. Instagram, Impressum und Datenschutz
   unten sind schlicht in der Schriftfarbe (beim Überfahren rosa). Sparsam bleiben: mehr Rosa wirkt schnell zu viel. Die Fläche geht über den ganzen
@@ -630,9 +630,9 @@ Kontraste nach WCAG 2.x:
 | Farbe | Hex | Textfarbe darauf | Kontrast |
 |---|---|---|---|
 | Wand | `#FFFFFF` | Schwarz `#0B0B0B` / Nebentext `#5C5C5C` | 19,6 : 1 / 6,7 : 1 |
-| Links, kleine Akzente | Kobalt-lila `#474EC4` auf Weiß | – | 6,7 : 1 |
+| Links, kleine Akzente | Ultramarin `#3A45C8` auf Weiß | – | 7,3 : 1 |
 | Koralle (`pink`) | `#FF807F` | Schwarz | 8,1 : 1 |
-| Startseite/Menü | Kobalt-lila `#474EC4` | Weiß | 6,7 : 1 |
+| Startseite/Menü | Ultramarin `#3A45C8` | Weiß | 7,3 : 1 |
 | Überfahren im Menü | Koralle `#FF807F` (Fläche) | Schwarz | 8,1 : 1 |
 | Orange (`orange`) | `#FFA44E` | Schwarz | 10,0 : 1 |
 | Sonnengelb (`lime`) | `#F7E04F` | Schwarz | 14,7 : 1 |
