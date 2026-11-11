@@ -13,7 +13,9 @@
  * Fenster (Handy): Die obere Hälfte des Namens liegt im Foto und zeigt es in umgekehrten Farben (Negativ).
  * Farben: Name und Menüpunkte in der Schriftfarbe des Menüs (weiß auf Blau), aktueller Menüpunkt unterstrichen;
  *   beim Überfahren rosa Feld.
- * Übergang: Name, Menüpunkte und Fußzeile tragen feste view-transition-Namen. Beim Wechsel Menü → Startseite
+ * Übergang: Name (Wort für Wort: jd-name-1 „JESKO“, jd-name-2 „DORNER“), Menüpunkte und Fußzeile tragen feste
+ * view-transition-Namen. Wortweise, damit jedes Wort unverzerrt gleitet – auch vom zweizeiligen Namen am Handy in
+ * das einzeilige Logo. Beim Wechsel Menü → Startseite
  * gleiten sie an ihren neuen Platz; von der Startseite auf eine Unterseite gleitet der Name ins Logo oben links.
  */
 import { site } from '../config/site';
@@ -58,7 +60,7 @@ const nameWords = site.name.split(' ').map((word) =>
         {nameWords.map((w, i) => (
           <>
             {i > 0 && ' '}
-            <span class="bm-w">
+            <span class={`bm-w bm-w--${i + 1}`}>
               {w.map((p) => (p.kern ? <span style={`letter-spacing:calc(-0.01em + ${p.kern}em)`}>{p.ch}</span> : p.ch))}
             </span>
           </>
@@ -69,7 +71,7 @@ const nameWords = site.name.split(' ').map((word) =>
         {nameWords.map((w, i) => (
           <>
             {i > 0 && ' '}
-            <span class="bm-w">
+            <span class={`bm-w bm-w--${i + 1}`}>
               {w.map((p) => (p.kern ? <span style={`letter-spacing:calc(-0.01em + ${p.kern}em)`}>{p.ch}</span> : p.ch))}
             </span>
           </>
@@ -268,7 +270,6 @@ const nameWords = site.name.split(' ').map((word) =>
   /* Name: eine Zeile, so breit wie der Platz (aber nicht riesig), in --name-color (Schriftfarbe des Menüs). Im Menü ist er ein Link zur Startseite
      und bekommt beim Überfahren dasselbe rosa Feld wie die Menüpunkte. */
   .bm-name {
-    view-transition-name: jd-name;
     display: block;
     width: fit-content;
     font-size: var(--name-fs);
@@ -291,6 +292,17 @@ const nameWords = site.name.split(' ').map((word) =>
   a.bm-name:hover {
     background: var(--pink);
     color: var(--ink);
+  }
+  /* Jedes Wort ein eigener Kasten, genau so groß wie das Wort (wie im Logo der Kopfzeile, Header.astro): Beim
+     Seitenwechsel gleitet jedes Wort für sich an seinen Platz im Logo und wird dabei nur gleichmäßig kleiner. */
+  .bm-name :global(.bm-w) {
+    display: inline-block;
+  }
+  .bm-name :global(.bm-w--1) {
+    view-transition-name: jd-name-1;
+  }
+  .bm-name :global(.bm-w--2) {
+    view-transition-name: jd-name-2;
   }
   /* Menüpunkte: deutlich kleiner als der Name, mit Luft dazwischen */
   /* Menüpunkte, dazu optional das Bildfeld (Slot „aside“). Handy: Bildfeld mittig im freien Platz darunter. */
@@ -328,9 +340,10 @@ const nameWords = site.name.split(' ').map((word) =>
       grid-column: 2;
       grid-row: 2;
     }
-    /* jedes Wort in einer eigenen Zeile */
+    /* jedes Wort in einer eigenen Zeile (Kasten so breit wie das Wort, nicht wie die Zeile) */
     .bm-name :global(.bm-w) {
       display: block;
+      width: fit-content;
     }
     .bm-body {
       display: contents;

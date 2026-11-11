@@ -676,7 +676,11 @@ Buchstabe ist als Form gespeichert, damit er überall gleich aussieht.
 
 **Schriften** (lokal, über Fontsource, Lizenz OFL):
 - **Climate Crisis**: der Name „JESKO DORNER“ – groß auf Startseite und Menü, klein als Logo oben links auf allen
-  Unterseiten (Token `--font-name`). Sehr fett und
+  Unterseiten (Token `--font-name`). Die Schriftdatei wird vorab geladen (`BaseHead.astro`), damit das Logo beim
+  Seitenwechsel nie kurz in einer Ersatzschrift erscheint. Beim Wechsel Startseite → Unterseite gleitet der Name
+  Wort für Wort ins Logo („JESKO“ und „DORNER“ einzeln, Übergangsnamen `jd-name-1`/`jd-name-2`), so wird er nur
+  gleichmäßig kleiner und nie verzerrt – auch vom zweizeiligen Namen am Handy. Hinweis zum Testen: Im lokalen
+  `npm run preview` laufen die Seitenübergänge nicht, mit `npm run dev` und auf GitHub Pages schon. Sehr fett und
   breit; deshalb ist die Schriftgröße kleiner als bei den anderen Titeln. Am Handy steht der Name in zwei Zeilen
   („JESKO“ / „DORNER“), und das Menü sitzt mittig dazwischen: gleich viel Luft von „DORNER“ zu den Menüpunkten
   wie von den Menüpunkten zu Impressum und Datenschutz. Vorher: Instrument Serif mit feiner Kontur

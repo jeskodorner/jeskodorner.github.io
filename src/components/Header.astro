@@ -14,7 +14,14 @@ const isCurrent = (match: string[]) => current(path, match);
 <header class="site-header">
   <div class="bar container container--wide">
     <a class="logo" href="/" aria-label={`${site.name} – ${t.nav.home}`}>
-      <span class="logo-text">Jesko Dorner</span>
+      <span class="logo-text">
+        {site.name.split(' ').map((w, i) => (
+          <>
+            {i > 0 && ' '}
+            <span class={`logo-w logo-w--${i + 1}`}>{w}</span>
+          </>
+        ))}
+      </span>
     </a>
 
     <nav class="nav-desktop" aria-label={t.nav.label}>
@@ -73,18 +80,26 @@ const isCurrent = (match: string[]) => current(path, match);
     font-synthesis-weight: none;
     text-transform: uppercase;
     font-size: clamp(0.92rem, 0.78rem + 0.45vw, 1.3rem);
-    line-height: 1;
+    /* gleiche Zeilenhöhe wie der Name auf der Startseite: die Wortkästen haben dieselben Proportionen */
+    line-height: 0.9;
     letter-spacing: 0;
   }
   .logo:hover {
     color: var(--ink);
   }
-  /* Übergang: der große Name der Startseite gleitet ins Logo (und zurück). Bei offenem Handy-Menü trägt der
-     Name im Menü diesen Übergangsnamen – dann hier keiner, sonst gäbe es ihn doppelt. */
-  .logo-text {
-    view-transition-name: jd-name;
+  /* Übergang: der große Name der Startseite gleitet Wort für Wort ins Logo (und zurück). Jedes Wort ist ein eigener
+     Kasten wie in BlueMenu.astro, so wird es nur gleichmäßig kleiner, nie verzerrt. Bei offenem Menü trägt der Name
+     im Menü die Übergangsnamen – dann hier keine, sonst gäbe es sie doppelt. */
+  .logo-w {
+    display: inline-block;
   }
-  :global(html:has(#site-menu:popover-open)) .logo-text {
+  .logo-w--1 {
+    view-transition-name: jd-name-1;
+  }
+  .logo-w--2 {
+    view-transition-name: jd-name-2;
+  }
+  :global(html:has(#site-menu:popover-open)) .logo-w {
     view-transition-name: none;
   }
   /* Textmenü nur als Rückfall für Browser ohne Popover (siehe unten); sonst überall der Menüknopf */

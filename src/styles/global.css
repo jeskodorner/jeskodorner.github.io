@@ -380,18 +380,21 @@ a:hover .arrow,
   animation-duration: 0.35s;
   animation-timing-function: var(--ease);
 }
-/* Blaues Menü ↔ Startseite ↔ Logo: Name, Menüpunkte und Fußzeile gleiten an ihren neuen Platz */
-::view-transition-group(jd-name),
+/* Menü ↔ Startseite ↔ Logo: Name (Wort für Wort), Menüpunkte und Fußzeile gleiten an ihren neuen Platz.
+   Die Wortbilder behalten ihre Proportionen (Standard: volle Breite, Höhe automatisch) – sie werden nur
+   gleichmäßig größer oder kleiner, nie gestaucht. */
+::view-transition-group(jd-name-1),
+::view-transition-group(jd-name-2),
 ::view-transition-group(jd-menu),
 ::view-transition-group(jd-menu-foot) {
   animation-duration: 0.55s;
   animation-timing-function: var(--ease);
 }
-::view-transition-old(jd-name),
-::view-transition-new(jd-name) {
+::view-transition-old(jd-name-1),
+::view-transition-new(jd-name-1),
+::view-transition-old(jd-name-2),
+::view-transition-new(jd-name-2) {
   animation-duration: 0.55s;
-  height: 100%;
-  object-fit: fill;
 }
 @media (prefers-reduced-motion: reduce) {
   @view-transition {
