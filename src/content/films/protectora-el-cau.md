@@ -2,7 +2,7 @@
 # Titel und Text frei anpassbar. youtube: Link oder ID genügt.
 title: "Protectora el Cau"
 youtube: "https://youtu.be/yESSsgfX_DA"
-format: "Videotrailer"
+# format: nur angeben, wenn es mehr sagt als der Text darunter (z. B. "Kurzfilm", "Musikvideo")
 # year: 2026
 # roles: ["Kamera", "Schnitt"]
 # Vorschaubild (lokal gespeichert, damit beim Seitenaufruf nichts von YouTube geladen wird)

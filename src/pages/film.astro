@@ -5,6 +5,7 @@ import ParallaxImage from '../components/ParallaxImage.astro';
 import YouTube from '../components/YouTube.astro';
 import Icon from '../components/Icon.astro';
 import { useTranslations } from '../i18n';
+import { tidyTitle } from '../lib/text';
 
 const t = useTranslations();
 const films = (await getCollection('films')).sort((a, b) => a.data.order - b.data.order || (b.data.year ?? 0) - (a.data.year ?? 0));
@@ -13,7 +14,7 @@ const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (
 
 <BaseLayout title={t.film.title} description={`${t.film.title}: ${t.film.intro}`}>
   <section class="container container--wide head">
-    <h1 class="display display-1"><span class="stretch">{t.film.title}</span></h1>
+    <h1 class="display display-1">{t.film.title}</h1>
     <p class="lead muted">{t.film.intro}</p>
   </section>
 
@@ -48,12 +49,14 @@ const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (
             </div>
             <div class="info rise">
               {film.data.roles.length > 0 && <p class="label roles">{film.data.roles.join(' · ')}</p>}
-              <h2 class="display display-2">{film.data.title}</h2>
-              <p class="label muted meta-row">
-                {film.data.format && <span>{film.data.format}</span>}
-                {film.data.runtime && <span>{film.data.runtime}</span>}
-                {film.data.year && <span>{film.data.year}</span>}
-              </p>
+              <h2 class="display display-2">{tidyTitle(film.data.title)}</h2>
+              {(film.data.format || film.data.runtime || film.data.year) && (
+                <p class="label muted meta-row">
+                  {film.data.format && <span>{film.data.format}</span>}
+                  {film.data.runtime && <span>{film.data.runtime}</span>}
+                  {film.data.year && <span>{film.data.year}</span>}
+                </p>
+              )}
               {film.data.director && <p class="muted credit">Regie: {film.data.director}</p>}
               <div class="prose">
                 <Content />
@@ -88,11 +91,7 @@ const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (
 
 <style>
   .head {
-    padding-top: clamp(2.5rem, 6vw, 5rem);
     padding-bottom: clamp(2rem, 5vw, 4rem);
-  }
-  .lead {
-    margin-top: 1rem;
   }
   .films {
     list-style: none;
@@ -118,17 +117,21 @@ const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (
   }
   .film :global(.still) {
     width: 100%;
-    background: #120d0a;
+    background: var(--ink);
     box-shadow: var(--hang-shadow);
   }
+  /* Gruppen durch Abstand: Titel und Angaben gehören eng zusammen, Text und Knopf stehen mit mehr Luft darunter */
   .info {
     display: grid;
-    gap: 1rem;
+    gap: 0.5rem;
     justify-items: start;
     max-width: 40rem;
   }
-  /* Etwas mehr Luft zwischen Überschrift und Text */
   .info .prose {
+    margin-top: 1rem;
+  }
+  .info .btn,
+  .info .festivals {
     margin-top: 0.75rem;
   }
   .roles {
@@ -147,6 +150,6 @@ const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (
   .festivals li {
     padding: 0.4rem 0.7rem;
     border: 1.5px solid var(--line-strong);
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
   }
 </style>

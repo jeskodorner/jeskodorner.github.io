@@ -42,7 +42,7 @@ const firstName = site.name.split(' ')[0];
   {
     site.hqAlbums.baseUrl && (
       <a class="album-open" href="/album/">
-        {t.hqAlbum.haveCode} <span class="arrow" aria-hidden="true">→</span>
+        {t.hqAlbum.haveCode} <Icon name="arrow-right" class="arrow" />
       </a>
     )
   }
@@ -70,6 +70,9 @@ const firstName = site.name.split(' ')[0];
     max-width: 46ch;
   }
   .album-open {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
     margin-top: 0.2rem;
     font-size: var(--fs-sm);
     font-weight: 700;

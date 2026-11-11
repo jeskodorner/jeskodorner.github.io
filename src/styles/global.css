@@ -90,10 +90,10 @@ a {
 a:hover {
   text-decoration-color: var(--hover);
 }
+/* Der Rahmen folgt der Form des Elements (Radius außen = Radius innen + Abstand, das macht der Browser) */
 :focus-visible {
   outline: 3px solid var(--accent);
   outline-offset: 3px;
-  border-radius: var(--radius);
 }
 ::selection {
   background: var(--pink);
@@ -118,15 +118,14 @@ a:hover {
   top: 0.75rem;
   z-index: 200;
   padding: 0.75rem 1.1rem;
-  background: var(--lime);
-  color: var(--ink);
+  background: var(--accent);
+  color: var(--on-accent);
   font-weight: 800;
   text-decoration: none;
   transform: translateY(-200%);
 }
 .skip-link:focus {
   transform: none;
-  color: var(--ink);
 }
 .container {
   width: 100%;
@@ -139,6 +138,13 @@ a:hover {
 }
 .section {
   padding-block: var(--section);
+}
+/* Seitenkopf: auf allen Seiten gleicher Abstand nach oben, Überschrift in gleicher Größe, Einleitung direkt darunter */
+.head {
+  padding-top: clamp(2.5rem, 6vw, 5rem);
+}
+.head > .lead {
+  margin-top: 1rem;
 }
 /* Elemente, die nur mit bzw. nur ohne JavaScript sinnvoll sind */
 html:not(.js) .js-only {
@@ -167,6 +173,15 @@ html:not(.js) .js-only {
   font-synthesis-weight: none;
   line-height: 0.95;
   letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+/* Optisch bündig statt rechnerisch: Große Serifenbuchstaben haben links etwas Luft im Buchstabenfeld (gemessen
+   0,018 Schrifthöhen, bei 192 px also 3,5 px). Ohne Ausgleich wirkt die Überschrift gegenüber dem Text darunter
+   eingerückt. */
+.display-1,
+.display-2,
+.mega {
+  margin-left: -0.015em;
 }
 /* Etwas Luft nach oben: Bei enger Zeilenhöhe ragen Ä/Ö/Ü-Punkte sonst in die Zeile darüber */
 .display-1 {
@@ -184,10 +199,6 @@ html:not(.js) .js-only {
 .mega {
   font-size: var(--fs-mega);
   line-height: 0.8;
-}
-/* *Betonte* Wörter in großen Titeln: kursiv (z. B. „Über *mich*“) */
-.display em {
-  font-style: italic;
 }
 .lead {
   font-size: var(--fs-lead);
@@ -250,26 +261,6 @@ html:not(.js) .js-only {
   vertical-align: 0.2em;
 }
 
-/* Pille / Sticker-Etikett */
-/* Kleines Etikett (z. B. „28 Galerien“): schlicht mit feinem Rand statt Farbfläche */
-.pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4em;
-  padding: 0.35em 0.8em;
-  border: 1.5px solid currentColor;
-  border-radius: 999px;
-  background: transparent;
-  color: var(--ink);
-  font-size: var(--fs-xs);
-  font-weight: 800;
-  font-stretch: 80%;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  line-height: 1.2;
-  white-space: nowrap;
-}
-
 /* ---------- Buttons ---------- */
 .btn {
   display: inline-flex;
@@ -279,7 +270,7 @@ html:not(.js) .js-only {
   min-height: 3rem;
   padding: 0.8em 1.5em;
   border: 2.5px solid var(--ink);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--wall);
   color: var(--ink);
   font-family: var(--font-sans);
@@ -293,7 +284,12 @@ html:not(.js) .js-only {
   transition:
     background-color 0.2s,
     color 0.2s,
-    border-color 0.2s;
+    border-color 0.2s,
+    scale 0.15s var(--ease);
+}
+/* Rückmeldung beim Drücken: der Knopf gibt kurz nach */
+.btn:active {
+  scale: 0.96;
 }
 /* Knöpfe beim Überfahren einheitlich orange */
 .btn:hover {
@@ -307,16 +303,6 @@ html:not(.js) .js-only {
 .btn--solid:hover {
   background: var(--hover);
   border-color: var(--hover);
-  color: var(--ink);
-}
-.btn--accent {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #fff;
-}
-.btn--accent:hover {
-  background: var(--hover);
-  border-color: var(--ink);
   color: var(--ink);
 }
 .btn--small {
@@ -334,6 +320,21 @@ html:not(.js) .js-only {
   display: inline-block;
   transition: transform 0.3s var(--pop);
 }
+/* Ladeanzeige: kleiner Kreis, der sich dreht (z. B. beim Start eines Videos) */
+.spinner {
+  display: inline-block;
+  width: 1.1em;
+  height: 1.1em;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin {
+  to {
+    rotate: 1turn;
+  }
+}
 a:hover .arrow,
 .btn:hover .arrow {
   transform: translateX(0.3em);
@@ -345,10 +346,6 @@ a:hover .arrow,
   height: auto;
   background-size: cover;
   background-position: center;
-}
-/* Gehängtes Bild: Schatten wie an einer Galeriewand */
-.hang {
-  box-shadow: var(--hang-shadow);
 }
 
 /* ---------- Bewegung (nur wenn erwünscht und unterstützt) ---------- */

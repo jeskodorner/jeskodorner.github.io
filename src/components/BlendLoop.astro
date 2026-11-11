@@ -4,6 +4,7 @@
  * (lighten) übereinandergelegt, immer im Format 4:3. Es sind immer zwei Fotos zu sehen. Alle paar Sekunden
  * blendet ein neues Foto oben ein und das unterste verschwindet – so entstehen laufend neue Bilder.
  * Reihenfolge zufällig, bei jedem Besuch anders. Ohne JavaScript oder mit „Bewegung reduzieren“: ein festes Paar.
+ * Jedes Foto erscheint erst, wenn es fertig geladen ist; bis das erste Paar da ist, bleibt das Feld leer (Farbe der Seite).
  */
 import Picture from './Picture.astro';
 import type { WorkItem } from '../lib/showroom';
@@ -49,10 +50,25 @@ const { works } = Astro.props;
     return a;
   }
 
+  /* Ladezustand: Ein Foto wird erst gezeigt, wenn es fertig geladen ist – das Feld blendet mit dem ersten Paar
+     ein, statt leer zu starten oder halb geladene Fotos zu zeigen. */
+  const loaded = (layer: HTMLElement) => {
+    const img = layer.querySelector('img');
+    if (!img) return Promise.resolve();
+    img.loading = 'eager';
+    return img.decode().catch(() => undefined);
+  };
+  const timeout = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
+
   function initBlend(box: HTMLElement) {
     const layers = [...box.querySelectorAll<HTMLElement>('.blend-layer')];
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (layers.length < 3 || reduce) return; // dann bleibt das feste Paar aus dem CSS
+    const ready = () => box.classList.add('is-ready');
+    if (layers.length < 3 || reduce) {
+      // festes Paar aus dem CSS, sichtbar sobald geladen (spätestens nach 4 s)
+      Promise.race([Promise.all(layers.slice(0, 2).map(loaded)), timeout(4000)]).then(ready);
+      return;
+    }
 
     let z = 0;
     let queue: HTMLElement[] = [];
@@ -65,22 +81,26 @@ const { works } = Astro.props;
       el.classList.add('is-on');
     };
 
-    // Zufälliges Startpaar (unsichtbar getauscht, das Feld blendet erst danach ein)
+    // Zufälliges Startpaar; das Feld blendet ein, sobald beide Fotos geladen sind (spätestens nach 4 s)
     queue = shuffle(layers);
     let visible = [queue.shift()!, queue.shift()!];
-    visible.forEach(show);
     box.classList.add('is-live');
 
-    const tick = () => {
+    const tick = async () => {
       if (!document.hidden) {
         const incoming = next(visible);
+        await Promise.race([loaded(incoming), timeout(4000)]); // erst laden, dann einblenden
         show(incoming);
         visible[0]!.classList.remove('is-on'); // das unterste verschwindet
         visible = [visible[1]!, incoming];
       }
       setTimeout(tick, STEP);
     };
-    setTimeout(tick, STEP);
+    Promise.race([Promise.all(visible.map(loaded)), timeout(4000)]).then(() => {
+      visible.forEach(show);
+      ready();
+      setTimeout(tick, STEP);
+    });
   }
 
   for (const box of document.querySelectorAll<HTMLElement>('[data-blend]')) initBlend(box);
@@ -139,14 +159,11 @@ const { works } = Astro.props;
     opacity: 1;
     transform: none;
   }
-  @media (prefers-reduced-motion: no-preference) {
-    .blend {
-      animation: blend-in 1.2s 0.35s var(--ease) both;
-    }
+  /* Ladezustand: Mit JavaScript bleibt das Feld unsichtbar, bis das erste Fotopaar geladen ist, und blendet dann ein */
+  :global(.js) .blend {
+    transition: opacity 1.2s var(--ease);
   }
-  @keyframes blend-in {
-    from {
-      opacity: 0;
-    }
+  :global(.js) .blend:not(.is-ready) {
+    opacity: 0;
   }
 </style>

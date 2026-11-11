@@ -83,6 +83,8 @@ export interface LightboxOptions {
   fade?: boolean;
 }
 
+let warmed = false;
+
 export function initLightbox(opts: LightboxOptions = {}) {
   const galleryEl = opts.gallery ?? document.querySelector<HTMLElement>('[data-gallery]');
   if (!galleryEl) return;
@@ -111,6 +113,14 @@ export function initLightbox(opts: LightboxOptions = {}) {
     const side = viewport.x < 600 ? 16 : 32;
     return { top, bottom: open ? sheetH + 16 : 24, left: side, right: side };
   };
+
+  // Großansicht schon im Leerlauf vorladen – so öffnet sie beim ersten Klick sofort, ohne Wartepause
+  if (!warmed) {
+    warmed = true;
+    const warm = () => void import('photoswipe');
+    if ('requestIdleCallback' in window) requestIdleCallback(warm, { timeout: 4000 });
+    else setTimeout(warm, 2000);
+  }
 
   const lightbox = new PhotoSwipeLightbox({
     gallery: galleryEl,

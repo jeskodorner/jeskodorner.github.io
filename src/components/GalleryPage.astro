@@ -12,6 +12,7 @@ import { getNeighbours, type Gallery } from '../lib/galleries';
 import { ogImage, responsive } from '../lib/images';
 import { useTranslations, formatMonth } from '../i18n';
 import { site } from '../config/site';
+import { tidyTitle } from '../lib/text';
 
 export interface Props {
   gallery: Gallery;
@@ -82,7 +83,7 @@ const jsonLd = gallery.isUnlisted
           <span>{formatMonth(gallery.date)}</span>
           {gallery.location && <span>{gallery.location}</span>}
         </p>
-        <h1 class="display display-1 title" style={`view-transition-name: gt-${gallery.slug}`}>{gallery.title}</h1>
+        <h1 class="display display-1 title" style={`view-transition-name: gt-${gallery.slug}`}>{tidyTitle(gallery.title)}</h1>
       </div>
     </header>
 
@@ -135,7 +136,7 @@ const jsonLd = gallery.isUnlisted
             </span>
             <span class="nb-body">
               <Picture src={prev.cover.src} alt="" sizes="160px" color={prev.cover.color} lqip={prev.cover.lqip} class="nb-img" />
-              <span class="display display-3">{prev.title}</span>
+              <span class="display display-3">{tidyTitle(prev.title)}</span>
             </span>
           </a>
         )}
@@ -145,7 +146,7 @@ const jsonLd = gallery.isUnlisted
               {t.galleries.next} <Icon name="arrow-right" />
             </span>
             <span class="nb-body">
-              <span class="display display-3">{next.title}</span>
+              <span class="display display-3">{tidyTitle(next.title)}</span>
               <Picture src={next.cover.src} alt="" sizes="160px" color={next.cover.color} lqip={next.cover.lqip} class="nb-img" />
             </span>
           </a>
@@ -231,8 +232,11 @@ const jsonLd = gallery.isUnlisted
     height: 1px;
     background: var(--line);
   }
-  .g-foot > :global(.share) {
-    margin-left: auto;
+  /* Teilen steht rechts, wenn beides nebeneinander passt; untereinander (Handy) bleibt alles an der linken Kante */
+  @media (min-width: 760px) {
+    .g-foot > :global(.share) {
+      margin-left: auto;
+    }
   }
   .grid-wrap {
     padding-top: clamp(0.75rem, 2.5vw, 2.5rem);
@@ -245,7 +249,7 @@ const jsonLd = gallery.isUnlisted
     padding: 0.9rem 1.1rem;
     background: var(--ink);
     color: var(--wall);
-    border-left: 10px solid var(--c);
+    border-radius: var(--radius);
     font-size: var(--fs-sm);
     font-weight: 600;
   }

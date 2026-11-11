@@ -5,6 +5,8 @@
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hanging from '../components/Hanging.astro';
+import Icon from '../components/Icon.astro';
+import EmailLink from '../components/EmailLink.astro';
 import { getSelectedWorks } from '../lib/showroom';
 import { photoData } from '../lib/lightbox-data';
 import type { Gallery } from '../lib/galleries';
@@ -25,9 +27,7 @@ const albumData = await Promise.all(
 
 <BaseLayout title={t.selected.title} description={t.selected.intro} image={og}>
   <section class="container container--wide head">
-    <h1 class="display display-1 head-title">
-      <span class="stretch">{t.selected.title}</span>
-    </h1>
+    <h1 class="display display-1">{t.selected.title}</h1>
     <p class="lead muted rise">
       {t.selected.intro}
     </p>
@@ -51,9 +51,11 @@ const albumData = await Promise.all(
     ))
   }
 
+  {/* Abschluss: erst die wichtigste Handlung (schreiben), daneben der Weg zu allen Fotos */}
   <p class="container container--wide more">
+    <EmailLink class="btn btn--solid" text={t.selected.write} subject="Anfrage über die Website" />
     <a class="btn" href="/galerien/">
-      {t.selected.toGallery} <span class="arrow" aria-hidden="true">→</span>
+      {t.selected.toGallery} <Icon name="arrow-right" class="arrow" />
     </a>
   </p>
 </BaseLayout>
@@ -79,27 +81,15 @@ const albumData = await Promise.all(
 
 <style>
   .head {
-    /* Schriftgröße folgt der verfügbaren Breite (cqi), damit „PORTFOLIO“ auch gedehnt nie über den Rand ragt */
-    container-type: inline-size;
-    padding-top: clamp(2rem, 5vw, 4.5rem);
     padding-bottom: clamp(2.5rem, 6vw, 5.5rem);
   }
-  .head-title {
-    --stretch-from: 50%;
-    --stretch-to: 100%;
-    display: grid;
-    /* „PORTFOLIO“ ist bei voller Dehnung gut 6 Schrifthöhen breit */
-    font-size: min(16rem, 100cqi / 6.8);
-  }
   .lead {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.75rem;
     max-width: 52ch;
-    margin-top: 1rem;
   }
   .more {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
     padding-top: var(--section);
   }
 </style>

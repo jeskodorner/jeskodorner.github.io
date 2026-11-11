@@ -55,6 +55,8 @@
   --paper-2: var(--wall-2);
   --sand: var(--wall-3);
   --accent: #3a45c8; /* Links, kleine Akzentschrift, Fokusrahmen – dasselbe Blau wie die Startseite */
+  --accent-on-dark: #8da4ff; /* dasselbe Blau aufgehellt, für Schrift auf Schwarz (8,3:1; --accent hätte nur 2,7:1) */
+  --ink-soft-on-dark: #bdbdbd; /* Nebentext auf Schwarz */
   --hover: #f25914; /* Überfahren: Unterstrich (Links) bzw. Fläche (Knöpfe) – kräftiges Orange */
   --accent-vivid: var(--pink); /* nur große Schrift und Flächen */
   --on-accent: #ffffff;
@@ -85,7 +87,8 @@
   --max-text: 64ch;
   --header-h: 4.25rem;
 
-  --radius: 4px;
+  --radius: 4px; /* Flächen und Eingabefelder */
+  --radius-pill: 999px; /* Knöpfe und Etiketten */
   --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
   --pop: cubic-bezier(0.3, 1.6, 0.5, 1);
   /* Schatten eines gehängten Bildes an der Wand */

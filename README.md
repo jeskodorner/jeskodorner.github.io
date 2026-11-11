@@ -123,7 +123,7 @@ Ein Tippfehler bei `galerie` oder `bild` bricht den Build mit einer Meldung ab, 
 ---
 title: "Innehalten"
 youtube: "https://youtu.be/61yE6MHDz-o"   # Link oder ID genügt
-format: "Kurzfilm"
+format: "Kurzfilm"                        # nur angeben, wenn es mehr sagt als „Video“
 year: 2025
 # roles: ["Kamera", "Schnitt"]
 # still: ./images/innehalten.jpg           # eigenes Vorschaubild (optional)
@@ -435,15 +435,13 @@ haben keine Vor/Zurück-Navigation zu anderen Galerien und werden nicht von der 
 Alle Effekte sind reines CSS, ohne JavaScript, und laufen flüssig:
 
 - **Parallax:** Beschnittene Fotos (Film, Porträt) gleiten in ihrem Rahmen etwas langsamer als die Seite. Galerie-Fotos bewegen sich nicht, damit nichts beschnitten wird.
-- **Dehnende Titel:** Große Titel („Portfolio“, „Galerie“, „Film“, Footer) ziehen sich beim Scrollen von schmal auf breit.
 - **Weitere Effekte:** Texte steigen auf, der Fortschrittsbalken in Galerien zeigt die Galeriefarbe, und der Header wird kompakt.
 
 **Browser:** Chrome, Edge, Brave und Safari (ab Version 26) zeigen die Scroll-Bewegung. Firefox hatte diese Technik
 nach meinem Stand noch nicht standardmäßig aktiviert. Dort erscheint die Seite vollständig, nur ohne Scroll-Bewegung.
 Wer im System „Bewegung reduzieren“ eingestellt hat, bekommt bewusst eine ruhige Seite.
 
-Die Stärke der Effekte steht in `src/styles/motion.css`, z. B. `--px-scale` und `--px-from`/`--px-to` für Parallax
-oder `--stretch-from`/`--stretch-to` für die dehnenden Titel.
+Die Stärke der Effekte steht in `src/styles/motion.css`, z. B. `--px-scale` und `--px-from`/`--px-to` für Parallax.
 
 ## 8. Optionale Funktionen
 
@@ -579,7 +577,8 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 - **Links und Überfahren:** Links und kleine Akzentschrift (z. B. die Jahreszahlen auf „Über mich“) sind in
   Ultramarin `#3A45C8` (Token `--accent`, dasselbe Blau wie die Startseite). Beim Überfahren bleibt die Schrift, der Unterstrich wird orange
   (Token `--hover`, `#F25914`); Knöpfe, Abspielen und die Knöpfe der Lightbox werden orange hinterlegt. In der schwarzen
-  Fußzeile gibt es keine Unterstriche, beim Überfahren werden die Links blau, der große Schriftzug ist korallenrosa.
+  Fußzeile gibt es keine Unterstriche, beim Überfahren werden die Links blau (für Schwarz aufgehellt:
+  `--accent-on-dark`, `#8DA4FF`, sonst wäre der Kontrast zu gering), der große Schriftzug ist korallenrosa.
 - **Rosa** ist Koralle `#FF807F` (vorher kräftiges Pink `#FF3D8B`, dann Altrosa `#E59BB0` und verblichenes
   Korallenrosa `#EF9D9F`). Es gilt auch für Galerien mit `color: pink`.
 - **Startseite = das Menü** (`src/components/BlueMenu.astro`): Ultramarin `#3A45C8` (kräftiges Blau
@@ -642,6 +641,34 @@ Kontraste nach WCAG 2.x:
 | Überfahren | Orange `#F25914` | Schwarz / als Unterstrich auf Weiß | 5,8 : 1 / 3,4 : 1 |
 
 Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer Schrift.
+
+**Feinschliff-Regeln** (November 2026 einmal über die ganze Seite geprüft; bei neuen Seiten bitte beibehalten):
+
+- **Keine Füll-Etiketten:** Ein Etikett steht nur da, wenn es etwas Neues sagt. „Video“ auf der Filmseite,
+  „E-Mail“ über einer E-Mail-Adresse oder „Fehler 404“ über der Fehlerseite sind weg (für Screenreader bleiben
+  die Bezeichnungen unsichtbar erhalten).
+- **Kursiv nur mit Absicht:** Kursiv sind allein die Menüpunkte (außer „Portfolio“). Einzelne Wörter in
+  Überschriften sind nicht mehr kursiv.
+- **Ein System statt Einzelwerte:** Farben, Radien und Schriften kommen aus `src/styles/tokens.css`
+  (`--radius` 4 px für Flächen und Felder, `--radius-pill` für Knöpfe). Alle Seitenüberschriften haben dieselbe
+  Größe und denselben Abstand (Klasse `head` in `global.css`).
+- **Symbole aus einem Satz:** alle aus `Icon.astro` mit derselben Linienstärke, auch Pfeile (keine Pfeil-Zeichen
+  aus der Schrift mehr).
+- **Gruppen durch Abstand:** Was zusammengehört, steht enger (Filmtitel und Angaben), der nächste Block mit mehr Luft.
+- **Überschriften umbrechen sauber:** ausgeglichene Zeilen; ein Gedankenstrich bleibt beim Wort davor
+  (`tidyTitle` in `src/lib/text.ts`), Monat und Jahr werden nicht getrennt.
+- **Optisch bündig:** Große Überschriften sind um 0,015 Schrifthöhen nach links gerückt, weil Serifenbuchstaben
+  links Luft haben; Adressen und Rechtliches in der Fußzeile stehen auf einer Grundlinie.
+- **Gleich breite Ziffern** überall, wo Zahlen untereinander stehen oder sich ändern (Etiketten, Jahreszahlen,
+  Zähler in der Großansicht, Download-Fortschritt).
+- **Ladezustände:** Das Bildfeld der Startseite blendet erst ein, wenn das erste Fotopaar geladen ist, und zeigt
+  jedes weitere Foto erst fertig geladen. Ein Video zeigt nach dem Klick „Lädt …“ mit drehendem Kreis über dem
+  Vorschaubild, bis der Player da ist. Die Großansicht wird im Leerlauf vorgeladen und zeigt beim Blättern einen
+  Ladekreis.
+- **Rückmeldung:** Knöpfe geben beim Drücken kurz nach; „Link kopieren“ wird für zwei Sekunden zum Haken.
+- **Fokusrahmen** folgt der Form des Elements (runde Knöpfe bekommen einen runden Rahmen).
+- **Abschluss mit klarer Handlung:** Am Ende des Portfolios steht „Schreib mir“ als gefüllter Knopf, daneben der
+  Weg zur Galerie.
 
 **Browser-Symbol** (Favicon): ein weißes „J“ aus Instrument Serif auf Ultramarin, als `public/favicon.svg`, dazu
 `public/favicon.ico` (32 px, für ältere Browser) und `public/apple-touch-icon.png` (180 px, Home-Bildschirm). Der

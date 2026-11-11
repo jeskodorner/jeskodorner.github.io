@@ -2,7 +2,7 @@
 # Titel und Text frei anpassbar. youtube: Link oder ID genügt.
 title: "Lass ma Pasta kochn"
 youtube: "https://youtu.be/Qm-xUZpwJ7M"
-format: "Video"
+# format: nur angeben, wenn es mehr sagt als „Video“ (z. B. "Kurzfilm", "Musikvideo")
 # year: 2026
 # roles: ["Kamera", "Schnitt"]
 # Vorschaubild (lokal gespeichert, damit beim Seitenaufruf nichts von YouTube geladen wird)

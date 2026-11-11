@@ -110,7 +110,7 @@ const base = (import.meta.env.PUBLIC_HQ_ALBUM_BASE || site.hqAlbums.baseUrl || '
     min-height: 3rem;
     padding: 0.6rem 1rem;
     border: 2.5px solid var(--ink);
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: var(--wall);
     font: 700 1.15rem/1 var(--font-sans);
     letter-spacing: 0.12em;
@@ -126,6 +126,7 @@ const base = (import.meta.env.PUBLIC_HQ_ALBUM_BASE || site.hqAlbums.baseUrl || '
     font-size: var(--fs-sm);
     font-weight: 700;
     color: var(--accent);
+    font-variant-numeric: tabular-nums; /* „Lade 9 von 120 …“ zittert nicht */
   }
   .hq-msg:empty {
     min-height: 0;

@@ -60,40 +60,6 @@ a.px:focus-visible {
     translate: 0 0;
   }
 }
-@keyframes drift-in-left {
-  from {
-    translate: -14vw 0;
-  }
-  to {
-    translate: 0 0;
-  }
-}
-@keyframes drift-in-right {
-  from {
-    translate: 14vw 0;
-  }
-  to {
-    translate: 0 0;
-  }
-}
-/* Schrift zieht sich in die Breite */
-@keyframes stretch {
-  from {
-    font-stretch: var(--stretch-from, 50%);
-  }
-  to {
-    font-stretch: var(--stretch-to, 100%);
-  }
-}
-/* Leuchtmarker wischt über das Wort */
-@keyframes word-light {
-  from {
-    opacity: 0.12;
-  }
-  to {
-    opacity: 1;
-  }
-}
 
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
@@ -123,38 +89,6 @@ a.px:focus-visible {
       animation-fill-mode: forwards;
       animation-timeline: view();
       animation-range: entry 0% entry 45%;
-    }
-    .drift-left,
-    .drift-right {
-      animation-timing-function: linear;
-      animation-fill-mode: forwards;
-      animation-timeline: view();
-      animation-range: entry 0% entry 100%;
-    }
-    .drift-left {
-      animation-name: drift-in-left;
-    }
-    .drift-right {
-      animation-name: drift-in-right;
-    }
-    /* Breiten-Animation nur für einzeilige Titel (nowrap) – so verschiebt sich nichts drumherum */
-    .stretch {
-      white-space: nowrap;
-      animation-name: stretch;
-      animation-timing-function: linear;
-      animation-fill-mode: both;
-      animation-timeline: view();
-      animation-range: entry 10% cover 55%;
-    }
-    .words {
-      view-timeline-name: --words;
-    }
-    .words .w {
-      animation-name: word-light;
-      animation-timing-function: ease-in;
-      animation-fill-mode: forwards;
-      animation-timeline: --words;
-      animation-range: entry 0% cover calc(30% + var(--i) * var(--step, 3%));
     }
   }
 }

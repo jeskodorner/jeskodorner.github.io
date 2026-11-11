@@ -2,7 +2,7 @@
 # Titel und Text frei anpassbar. youtube: Link oder ID genügt.
 title: "Wuschewier"
 youtube: "https://youtu.be/a0CtVG4E8EE"
-format: "Video"
+# format: nur angeben, wenn es mehr sagt als „Video“ (z. B. "Kurzfilm", "Musikvideo")
 year: 2024
 # roles: ["Kamera", "Schnitt"]
 # Vorschaubild (lokal gespeichert, damit beim Seitenaufruf nichts von YouTube geladen wird)

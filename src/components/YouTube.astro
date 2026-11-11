@@ -4,11 +4,14 @@
  * - Beim Seitenaufruf wird NICHTS von YouTube/Google geladen (keine Cookies, keine Verbindung).
  * - Erst beim Klick auf „Abspielen“ wird der Player von youtube-nocookie.com eingebettet.
  * - Ohne JavaScript führt der Klick direkt zu YouTube (neuer Tab).
+ * - Ladezustand: Nach dem Klick bleibt das Vorschaubild stehen, der Knopf zeigt „Lädt …“ mit drehendem Kreis,
+ *   bis der Player geladen ist – kein leeres Feld dazwischen.
  * - Kein sichtbarer Hinweistext unter dem Video (wirkte unruhig); erklärt wird es in der Datenschutzerklärung,
  *   Screenreader hören „lädt YouTube“ im Namen des Abspielen-Links.
  */
 import type { ImageMetadata } from 'astro';
 import Picture from './Picture.astro';
+import Icon from './Icon.astro';
 import type { RoomColor } from '../lib/galleries';
 
 export interface Props {
@@ -37,8 +40,9 @@ const watchUrl = `https://www.youtube.com/watch?v=${id}`;
       )
     }
     <span class="yt-play" aria-hidden="true">
-      <svg viewBox="0 0 24 24" width="28" height="28"><path d="M8 5.5v13l11-6.5z" fill="currentColor" /></svg>
-      Abspielen
+      <Icon name="play" size={28} />
+      <span class="spinner"></span>
+      <span data-yt-label>Abspielen</span>
     </span>
   </a>
 </figure>
@@ -57,8 +61,21 @@ const watchUrl = `https://www.youtube.com/watch?v=${id}`;
       iframe.allowFullscreen = true;
       iframe.referrerPolicy = 'strict-origin-when-cross-origin';
       iframe.className = 'yt-frame';
-      poster.replaceWith(iframe);
-      iframe.focus();
+      // Ladezustand: Vorschaubild bleibt, der Player lädt unsichtbar darüber und wird erst gezeigt, wenn er da ist
+      if (fig.classList.contains('is-loading')) return;
+      fig.classList.add('is-loading');
+      poster.setAttribute('aria-busy', 'true');
+      const label = poster.querySelector<HTMLElement>('[data-yt-label]');
+      if (label) label.textContent = 'Lädt …';
+      const done = () => {
+        if (!poster.isConnected) return;
+        poster.remove();
+        fig.classList.remove('is-loading');
+        iframe.focus();
+      };
+      iframe.addEventListener('load', done, { once: true });
+      window.setTimeout(done, 6000); // falls der Browser kein Lade-Ereignis meldet
+      fig.append(iframe);
     });
   });
 </script>
@@ -104,7 +121,7 @@ const watchUrl = `https://www.youtube.com/watch?v=${id}`;
     align-items: center;
     gap: 0.4rem;
     padding: 0.7rem 1.3rem 0.7rem 1rem;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: var(--ink);
     color: var(--wall);
     font-size: var(--fs-sm);
@@ -125,5 +142,24 @@ const watchUrl = `https://www.youtube.com/watch?v=${id}`;
   }
   .yt-poster:focus-visible {
     outline-offset: 4px;
+  }
+  /* Ladezustand: Player liegt unsichtbar über dem Vorschaubild, Kreis statt Dreieck */
+  .yt-play :global(.spinner) {
+    display: none;
+  }
+  .yt.is-loading .yt-play :global(svg) {
+    display: none;
+  }
+  .yt.is-loading .yt-play :global(.spinner) {
+    display: inline-block;
+    margin: 0 0.35rem 0 0.25rem;
+  }
+  .yt.is-loading :global(.yt-frame) {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+  }
+  .yt.is-loading .yt-poster {
+    cursor: progress;
   }
 </style>

@@ -34,7 +34,7 @@ const jsonLd = {
   jsonLd={jsonLd}
 >
   <section class="container container--wide head">
-    <h1 class="display display-1">Über <em>mich</em></h1>
+    <h1 class="display display-1">{t.about.title}</h1>
   </section>
 
   <section class="container container--wide intro">
@@ -51,7 +51,7 @@ const jsonLd = {
         )
       }
       <p class="actions">
-        <EmailLink class="btn btn--solid" text="Schreib mir" />
+        <EmailLink class="btn btn--solid" text={t.selected.write} subject="Anfrage über die Website" />
         <a class="btn" href="/portfolio/">{t.home.cta}</a>
       </p>
     </div>
@@ -60,7 +60,7 @@ const jsonLd = {
   {
     stations.length > 0 && (
       <section class="container container--wide section stations" aria-labelledby="st-h">
-        <h2 id="st-h" class="display display-2 drift-right">{t.about.stations}</h2>
+        <h2 id="st-h" class="display display-2">{t.about.stations}</h2>
         <ol role="list">
           {stations.map((s) => (
             <li class="rise">
@@ -90,7 +90,6 @@ const jsonLd = {
 
 <style>
   .head {
-    padding-top: clamp(2.5rem, 6vw, 5rem);
     padding-bottom: clamp(2rem, 4vw, 3.5rem);
   }
   .intro {
@@ -145,10 +144,12 @@ const jsonLd = {
       align-items: baseline;
     }
   }
+  /* Jahreszahlen untereinander: gleich breite Ziffern */
   .yr {
     font-size: 2.25rem;
     color: var(--accent);
     line-height: 1;
+    font-variant-numeric: lining-nums tabular-nums;
   }
   .st-title {
     font-weight: 700;

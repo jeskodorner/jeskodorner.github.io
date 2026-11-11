@@ -98,7 +98,7 @@ const isCurrent = (match: string[]) => current(path, match);
   .nav-desktop a {
     display: inline-block;
     padding: 0.45rem 0.95rem;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     font-size: var(--fs-sm);
     font-weight: 750;
     font-stretch: 85%;
@@ -127,8 +127,14 @@ const isCurrent = (match: string[]) => current(path, match);
     border-radius: 50%;
     background: var(--pink);
     color: var(--ink);
+    transition:
+      background-color 0.2s,
+      color 0.2s,
+      scale 0.15s var(--ease);
   }
-
+  .menu-btn:active {
+    scale: 0.94;
+  }
   .menu-btn:hover {
     background: var(--ink);
     color: var(--pink);

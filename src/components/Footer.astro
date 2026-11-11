@@ -13,7 +13,7 @@ const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : 
   <div class="container container--wide">
     <div class="top">
       <div class="contact">
-        <p class="label">{t.nav.contact}</p>
+        <h2 class="visually-hidden">{t.nav.contact}</h2>
         <p class="links">
           <EmailLink class="big-link" />
           <a class="big-link" href={site.instagram.url} rel="me noopener" target="_blank">
@@ -24,7 +24,7 @@ const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : 
       <nav class="legal" aria-label="Rechtliches">
         <a href="/impressum/">{t.footer.imprint}</a>
         <a href="/datenschutz/">{t.footer.privacy}</a>
-        <a href="#top">{t.footer.top} ↑</a>
+        <a class="to-top" href="#top">{t.footer.top} <Icon name="arrow-up" /></a>
       </nav>
     </div>
 
@@ -47,22 +47,34 @@ const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : 
     color: var(--wall);
     overflow: hidden;
   }
-  /* Überfahren: einheitlich das Blau der Links (auch für den E-Mail-Link aus EmailLink.astro) */
+  /* Überfahren: einheitlich das Blau der Links, für Schwarz aufgehellt (auch für den E-Mail-Link aus EmailLink.astro) */
   .site-footer :global(a:hover) {
-    color: var(--accent);
+    color: var(--accent-on-dark);
   }
+  /* Adressen links, Rechtliches rechts – beide auf derselben Grundlinie (nicht an der Unterkante der Kästen) */
   .top {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: flex-end;
-    gap: 2rem;
+    align-items: last baseline;
+    gap: 1.5rem 2rem;
   }
   .links {
     display: flex;
     flex-wrap: wrap;
     gap: 0.4rem 2rem;
-    margin-top: 0.6rem;
+  }
+  .to-top {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+  }
+  .to-top :global(svg) {
+    transition: translate 0.3s var(--pop);
+  }
+  .to-top:hover :global(svg) {
+    translate: 0 -0.2em;
   }
   .contact :global(.big-link) {
     display: inline-flex;
@@ -106,7 +118,7 @@ const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : 
   }
   .copy {
     margin-top: 1.25rem;
-    color: #bdbdbd;
+    color: var(--ink-soft-on-dark);
   }
   .copy small {
     font-size: inherit;

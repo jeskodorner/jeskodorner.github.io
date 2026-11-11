@@ -13,6 +13,7 @@
  */
 import type { WorkItem } from '../lib/showroom';
 import Picture from './Picture.astro';
+import { tidyTitle } from '../lib/text';
 
 export interface Props {
   items: WorkItem[];
@@ -43,7 +44,7 @@ const { items } = Astro.props;
             />
           </a>
           <div class="work-label">
-            <p class="work-title">{it.name ?? it.album}</p>
+            <p class="work-title">{tidyTitle(it.name ?? it.album)}</p>
             {(it.name || it.meta) && <p class="work-meta">{[it.name && it.album, it.meta].filter(Boolean).join(' · ')}</p>}
           </div>
         </li>
@@ -97,6 +98,7 @@ const { items } = Astro.props;
     font-size: clamp(1.4rem, 1.15rem + 0.8vw, 2rem);
     line-height: 1.05;
     letter-spacing: -0.01em;
+    text-wrap: balance;
   }
   .work-meta {
     font-size: var(--fs-xs);

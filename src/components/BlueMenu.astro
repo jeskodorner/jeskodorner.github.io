@@ -47,7 +47,7 @@ const nameWords = site.name.split(' ').map((word) =>
     overlay && (
       <div class="bm-top">
         <button class="bm-close" type="button" popovertarget="site-menu" popovertargetaction="hide" aria-label={t.nav.close}>
-          <Icon name="close" size={30} />
+          <Icon name="close" size={28} />
         </button>
       </div>
     )
@@ -255,7 +255,11 @@ const nameWords = site.name.split(' ').map((word) =>
     cursor: pointer;
     transition:
       background-color 0.2s,
-      color 0.2s;
+      color 0.2s,
+      scale 0.15s var(--ease);
+  }
+  .bm-close:active {
+    scale: 0.94;
   }
   .bm-close:hover {
     background: var(--ink);

@@ -11,21 +11,23 @@ const t = useTranslations();
 
 <BaseLayout title={t.contact.title} description={`Kontakt zu ${site.name}: E-Mail und Instagram.`}>
   <section class="container container--wide head">
-    <h1 class="display display-1"><span class="stretch">{t.contact.title}</span></h1>
+    <h1 class="display display-1">{t.contact.title}</h1>
     <p class="lead muted">{t.contact.intro}</p>
   </section>
 
   <section class:list={['container container--wide grid', { 'has-form': Boolean(site.contactForm.endpoint) }]}>
     <dl class="channels">
       <div id="email">
-        <dt class="label muted">{t.contact.email}</dt>
-        <dd><EmailLink class="channel" icon={false} subject="Anfrage über die Website" /></dd>
+        <dt class="visually-hidden">{t.contact.email}</dt>
+        <dd><EmailLink class="channel" subject="Anfrage über die Website" /></dd>
       </div>
       <div>
-        <dt class="label muted">{t.contact.instagram}</dt>
+        <dt class="visually-hidden">{t.contact.instagram}</dt>
         <dd>
           <a class="channel" href={site.instagram.url} rel="me noopener" target="_blank">
-            @{site.instagram.handle} <Icon name="arrow-up-right" size="0.6em" />
+            <Icon name="instagram" size="0.9em" />
+            <span class="channel-text">{site.instagram.handle.toLowerCase()}</span>
+            <span class="visually-hidden">(Instagram, neuer Tab)</span>
           </a>
         </dd>
       </div>
@@ -36,11 +38,9 @@ const t = useTranslations();
 
 <style>
   .head {
-    padding-top: clamp(2.5rem, 6vw, 5rem);
     padding-bottom: clamp(2rem, 4vw, 3.5rem);
   }
   .lead {
-    margin-top: 1rem;
     max-width: 40ch;
   }
   .grid {
@@ -54,11 +54,21 @@ const t = useTranslations();
   }
   .channels {
     display: grid;
-    gap: 2rem;
+    gap: clamp(1rem, 2.5vw, 1.75rem);
     align-content: start;
+    justify-items: start;
   }
   .channels dd {
-    margin-top: 0.4rem;
+    margin: 0;
+  }
+  /* Symbol vor der Adresse: feine Linie passend zur Schrift, optisch auf die Mitte der Kleinbuchstaben gesetzt */
+  .channels :global(.channel svg) {
+    flex: none;
+    width: 0.62em;
+    height: 0.62em;
+    align-self: center;
+    stroke-width: 1.2;
+    translate: 0 0.06em;
   }
   .channels :global(.channel) {
     font-family: var(--font-display);
@@ -70,15 +80,20 @@ const t = useTranslations();
     overflow-wrap: break-word;
     display: inline-flex;
     align-items: baseline;
-    gap: 0.2em;
+    gap: 0.25em;
   }
-  /* Unterstrich im Blau der Links; beim Überfahren wächst er zur orangen Fläche */
-  .channels :global(.channel) {
-    background: linear-gradient(var(--accent), var(--accent)) no-repeat 0 100% / 100% 0.18em;
+  /* Unterstrich im Blau der Links, nur unter der Adresse (nicht unter dem Symbol); beim Überfahren wächst er zur
+     orangen Fläche */
+  .channels :global(.channel-text),
+  .channels :global(.email-text) {
+    background: linear-gradient(var(--accent), var(--accent)) no-repeat 0 100% / 100% 0.14em;
     transition: background-size 0.3s var(--pop);
   }
   .channels :global(.channel:hover) {
     color: var(--ink);
+  }
+  .channels :global(.channel:hover .channel-text),
+  .channels :global(.channel:hover .email-text) {
     background-image: linear-gradient(var(--hover), var(--hover));
     background-size: 100% 100%;
   }

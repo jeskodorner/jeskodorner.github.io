@@ -27,7 +27,7 @@ const mail = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURICompo
   <p class="label muted share-title">{compact ? t.share.album : t.share.title}</p>
   <div class="share-actions">
     <button class="btn btn--small js-only" type="button" data-copy={url} title={compact ? t.share.copy : undefined}>
-      <Icon name="link" /><span data-copy-label class:list={{ 'visually-hidden': compact }}>{t.share.copy}</span>
+      <Icon name="link" class="ic-link" /><Icon name="check" class="ic-check" /><span data-copy-label class:list={{ 'visually-hidden': compact }}>{t.share.copy}</span>
     </button>
     <button
       class="btn btn--small"
@@ -89,6 +89,10 @@ const mail = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURICompo
       btn.addEventListener('click', async () => {
         const ok = await copy(btn.dataset.copy!);
         const msg = ok ? de.share.copied : de.share.copyFailed;
+        if (ok) {
+          btn.classList.add('is-copied');
+          window.setTimeout(() => btn.classList.remove('is-copied'), 2200);
+        }
         if (status) {
           status.textContent = msg;
           window.setTimeout(() => (status.textContent = ''), 2600);
@@ -114,6 +118,27 @@ const mail = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURICompo
 </script>
 
 <style>
+  /* Rückmeldung beim Kopieren: das Kettenglied wird kurz zum Haken, der Knopf füllt sich */
+  .btn :global(.ic-check) {
+    display: none;
+  }
+  .btn.is-copied {
+    background: var(--ink);
+    color: var(--wall);
+  }
+  .btn.is-copied :global(.ic-link) {
+    display: none;
+  }
+  .btn.is-copied :global(.ic-check) {
+    display: block;
+    animation: check-in 0.3s var(--pop);
+  }
+  @keyframes check-in {
+    from {
+      scale: 0.4;
+      opacity: 0;
+    }
+  }
   .share-actions {
     display: flex;
     flex-wrap: wrap;

@@ -5,21 +5,9 @@ export function inlineMd(text = ''): string {
 }
 
 /**
- * Zerlegt einen kurzen Text in einzelne Wörter (<span class="w" style="--i:n">),
- * damit sie beim Scrollen nacheinander aufleuchten können. *Wort* wird kursiv (<em>).
+ * Titel sauber umbrechen: Ein Gedankenstrich bleibt beim Wort davor und beginnt nie eine Zeile
+ * („Kunst KEL –“ / „Malerei“ statt „Kunst KEL“ / „– Malerei“).
  */
-export function wordSpans(text = ''): string {
-  const esc = (s: string) =>
-    s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
-  let i = 0;
-  const out: string[] = [];
-  // Abwechselnd normale Teile und *kursive* Teile
-  text.split(/(\*[^*]+\*)/).forEach((part) => {
-    if (!part) return;
-    const italic = part.startsWith('*') && part.endsWith('*');
-    const words = (italic ? part.slice(1, -1) : part).split(/\s+/).filter(Boolean);
-    const spans = words.map((w) => `<span class="w" style="--i:${i++}">${esc(w)}</span>`).join(' ');
-    out.push(italic ? `<em>${spans}</em>` : spans);
-  });
-  return out.join(' ');
+export function tidyTitle(title = ''): string {
+  return title.replace(/ ([–—]) /g, '\u00A0$1 ');
 }

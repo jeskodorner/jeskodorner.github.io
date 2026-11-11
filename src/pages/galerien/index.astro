@@ -4,6 +4,7 @@ import Picture from '../../components/Picture.astro';
 import { getPublicGalleries } from '../../lib/galleries';
 import { ogImage } from '../../lib/images';
 import { useTranslations, formatMonth } from '../../i18n';
+import { tidyTitle } from '../../lib/text';
 
 const t = useTranslations();
 const galleries = await getPublicGalleries();
@@ -12,9 +13,7 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
 
 <BaseLayout title={t.galleries.title} description={`${t.galleries.title}: ${t.galleries.intro}`} image={og}>
   <section class="container container--wide head">
-    <h1 class="display display-1 head-title">
-      <span class="stretch">{t.galleries.title}</span>
-    </h1>
+    <h1 class="display display-1">{t.galleries.title}</h1>
     <p class="lead muted rise">{t.galleries.intro}</p>
   </section>
 
@@ -41,10 +40,11 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
                   />
                 </span>
                 <span class="card-title" style={`view-transition-name: gt-${g.slug}`}>
-                  {g.title}
+                  {tidyTitle(g.title)}
                 </span>
                 <span class="label card-meta">
-                  {t.galleries.images(g.images.length)} · {formatMonth(g.date)}
+                  {/* geschützte Leerzeichen: umbrochen wird nur am Punkt, nie zwischen Monat und Jahr */}
+                  {t.galleries.images(g.images.length).replace(' ', '\u00A0')} · {formatMonth(g.date).replace(' ', '\u00A0')}
                 </span>
               </a>
             </li>
@@ -61,20 +61,10 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
 
 <style>
   .head {
-    padding-top: clamp(2rem, 5vw, 4.5rem);
     padding-bottom: clamp(2.5rem, 6vw, 5.5rem);
   }
-  .head-title {
-    --stretch-from: 50%;
-    --stretch-to: 100%;
-    font-size: clamp(4rem, 0.5rem + 16vw, 20rem);
-  }
   .lead {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.75rem;
-    margin-top: 1rem;
+    max-width: 52ch;
   }
 
   /* ---------- Übersicht: Titelbilder in gleich hohen Reihen (wie Lightroom) ----------
@@ -133,7 +123,7 @@ const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
   }
   .card-meta {
     color: var(--ink-soft);
-    font-size: clamp(0.68rem, 0.62rem + 0.25vw, var(--fs-xs));
+    font-size: clamp(0.72rem, 0.66rem + 0.25vw, var(--fs-xs));
   }
   @media (hover: hover) {
     .card:hover :global(img) {

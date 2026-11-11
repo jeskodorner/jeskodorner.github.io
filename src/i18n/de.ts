@@ -45,6 +45,7 @@ export const de = {
     intro: 'Eine kleine, bewusst kuratierte Auswahl – die Fotos, die mir am meisten bedeuten. Alles andere liegt in der Galerie.',
     count: (n: number) => (n === 1 ? '1 Arbeit' : `${n} Arbeiten`),
     toGallery: 'Alle Fotos in der Galerie',
+    write: 'Schreib mir',
   },
   galleries: {
     title: 'Galerie',
