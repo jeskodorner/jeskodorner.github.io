@@ -675,12 +675,13 @@ Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer 
 Buchstabe ist als Form gespeichert, damit er überall gleich aussieht.
 
 **Schriften** (lokal, über Fontsource, Lizenz OFL):
-- **Climate Crisis**: nur der große Name „JESKO DORNER“ auf Startseite und Menü (Token `--font-name`). Sehr fett und
+- **Climate Crisis**: der Name „JESKO DORNER“ – groß auf Startseite und Menü, klein als Logo oben links auf allen
+  Unterseiten (Token `--font-name`). Sehr fett und
   breit; deshalb ist die Schriftgröße kleiner als bei den anderen Titeln. Am Handy steht der Name in zwei Zeilen
   („JESKO“ / „DORNER“), und das Menü sitzt mittig dazwischen: gleich viel Luft von „DORNER“ zu den Menüpunkten
   wie von den Menüpunkten zu Impressum und Datenschutz. Vorher: Instrument Serif mit feiner Kontur
   und von Hand ausgeglichenen Buchstabenpaaren (Werte stehen noch bei `KERN` in `BlueMenu.astro`).
-- **Instrument Serif**: Titel, Menü, Logo oben links, Schriftzug in der Fußzeile und Schilder im Portfolio (nur eine
+- **Instrument Serif**: Titel, Menü, Schriftzug in der Fußzeile und Schilder im Portfolio (nur eine
   Stärke, normal und kursiv). Auf der Startseite und im Menü in Großbuchstaben, die Menüpunkte kursiv außer
   „Portfolio“. Überall sonst normal geschrieben. Vorher: Anybody, sehr fett und schmal.
 - **Archivo**: Fließtext, Beschriftungen und Werkschilder

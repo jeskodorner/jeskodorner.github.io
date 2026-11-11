@@ -60,18 +60,21 @@ const isCurrent = (match: string[]) => current(path, match);
     justify-content: space-between;
     gap: 1.5rem;
   }
+  /* Logo in derselben Schrift wie der große Name auf der Startseite (Climate Crisis, Großbuchstaben) – so gleitet der
+     Name beim Seitenwechsel ohne Schriftwechsel ins Logo. Die Schrift ist sehr breit („JESKO DORNER“ = 11 Schrifthöhen),
+     deshalb ist die Schriftgröße klein: am Handy gut 160 px, am Laptop gut 230 px breit. */
   .logo {
     display: inline-flex;
-    align-items: baseline;
+    align-items: center;
     text-decoration: none;
     white-space: nowrap;
-    font-family: var(--font-display);
+    font-family: var(--font-name);
     font-weight: 400;
     font-synthesis-weight: none;
-    font-size: clamp(1.6rem, 1.3rem + 1.07vw, 2.25rem);
+    text-transform: uppercase;
+    font-size: clamp(0.92rem, 0.78rem + 0.45vw, 1.3rem);
     line-height: 1;
-    letter-spacing: -0.01em;
-    -webkit-text-stroke: 0.022em currentColor; /* etwas fetter, wie der Name auf der Startseite */
+    letter-spacing: 0;
   }
   .logo:hover {
     color: var(--ink);
