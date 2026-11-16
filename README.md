@@ -584,11 +584,11 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 - **Startseite = das Menü** (`src/components/BlueMenu.astro`): Ultramarin `#3A45C8` (kräftiges Blau
   mit leichtem Lila-Stich, kurz ausprobiert: „Kobalt-lila“ `#474EC4`) mit weißer Schrift (Token `--menu-bg` und `--on-menu` in `tokens.css`). Der Name hat die
   Schriftfarbe (`--name-color` in `BlueMenu.astro`), der Menüpunkt der aktuellen Seite ist unterstrichen. Beim Überfahren bekommen
-  Menüpunkte und Name ein rosa Feld mit schwarzer Schrift, Menü- und Schließen-Knopf sind rosa Kreise. Instagram, Impressum und Datenschutz
-  unten sind schlicht in der Schriftfarbe (beim Überfahren rosa). Sparsam bleiben: mehr Rosa wirkt schnell zu viel. Die Fläche geht über den ganzen
+  Menüpunkte und Name ein rosa Feld mit schwarzer Schrift, Menü- und Schließen-Knopf sind rosa Kreise. Instagram
+  unten ist schlicht in der Schriftfarbe (beim Überfahren rosa). Sparsam bleiben: mehr Rosa wirkt schnell zu viel. Die Fläche geht über den ganzen
   Bildschirm, oben groß der Name, darunter die Menüpunkte (Portfolio, Galerie, Film, Über mich, Kontakt), unten
-  Instagram – im Menü zusätzlich Impressum und Datenschutz, auf der Startseite nicht (dort erreicht man sie über jede
-  Unterseite, also mit zwei Klicks). Ohne Kopfleiste und ohne Scrollen. Dasselbe Menü öffnet sich auf allen
+  nur Instagram – auf der Startseite und im Menü gleich. Impressum und Datenschutz stehen in der Fußzeile jeder
+  Unterseite (von der Startseite aus also mit zwei Klicks). Ohne Kopfleiste und ohne Scrollen. Dasselbe Menü öffnet sich auf allen
   Geräten über den rosa Menü-Knopf oben rechts: Die Fläche wächst als Kreis aus dem Knopf, der Schließen-Knopf sitzt an derselben Stelle,
   der Name führt zur Startseite. Eine Textleiste mit Menüpunkten gibt es nur noch als Rückfall für sehr alte Browser.
   Am Handy (unter 700 px) steht der Name mittig, die Menüpunkte beginnen an seiner linken Kante, die Fußzeile ist
