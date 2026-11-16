@@ -32,7 +32,6 @@
   font-family: var(--font-sans);
   font-size: 0.8rem;
   font-weight: 800;
-  font-stretch: 85%;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-variant-numeric: tabular-nums;
@@ -225,7 +224,6 @@
 .jd-d-item dt {
   font-size: 0.75rem;
   font-weight: 750;
-  font-stretch: 85%;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-soft);

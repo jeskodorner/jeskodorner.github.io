@@ -95,6 +95,8 @@
   --radius-pill: 999px; /* Knöpfe und Etiketten */
   --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
   --pop: cubic-bezier(0.3, 1.6, 0.5, 1);
+  /* Fotos beim Überfahren: überall gleich stark vergrößert, im Rahmen (Album, Galerie, Portfolio) */
+  --hover-zoom: 1.03;
   /* Schatten eines gehängten Bildes an der Wand */
   --hang-shadow: 0 1px 2px rgb(0 0 0 / 0.08), 0 12px 30px -10px rgb(0 0 0 / 0.28), 0 40px 80px -30px rgb(0 0 0 / 0.25);
 

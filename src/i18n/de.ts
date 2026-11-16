@@ -24,7 +24,7 @@ export const de = {
   home: {
     /** Zeile unter dem Namen auf der Startseite: was Jesko macht (der erste Bildschirm sagt es sofort) */
     claim: 'Fotografie · Kamera · Film',
-    cta: 'Portfolio',
+    cta: 'Portfolio ansehen',
     galleryLink: 'Galerie',
     selected: 'Portfolio',
     allSelected: 'Zum Portfolio',
@@ -80,7 +80,7 @@ export const de = {
     copy: 'Link kopieren',
     copied: 'Link kopiert',
     copyFailed: 'Kopieren nicht möglich – bitte manuell kopieren.',
-    native: 'Teilen …',
+    native: 'Teilen',
     whatsapp: 'WhatsApp',
     mail: 'E-Mail',
     linkLabel: 'Link zur Galerie',

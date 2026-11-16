@@ -15,7 +15,7 @@ const endpoint = site.contactForm.endpoint;
 {
   endpoint && (
     <form class="form" action={endpoint} method="POST" data-contact-form>
-      <h2 class="label muted">{t.title}</h2>
+      <h2 class="subhead">{t.title}</h2>
       <label>
         <span>{t.name}</span>
         <input name="name" type="text" autocomplete="name" required maxlength="120" />

@@ -127,7 +127,7 @@ const og = cardImage('galerie', galleries[0]?.cover.alt);
   }
   @media (hover: hover) {
     .card:hover :global(img) {
-      transform: scale(1.04);
+      transform: scale(var(--hover-zoom));
     }
     .card:hover .card-title {
       text-decoration: underline;

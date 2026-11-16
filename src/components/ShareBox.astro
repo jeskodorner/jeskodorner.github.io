@@ -24,7 +24,7 @@ const mail = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURICompo
 ---
 
 <div class:list={['share', { 'share--compact': compact }]} data-share-box>
-  <p class="label muted share-title">{compact ? t.share.album : t.share.title}</p>
+  <p class="subhead share-title">{compact ? t.share.album : t.share.title}</p>
   <div class="share-actions">
     <button class="btn btn--small js-only" type="button" data-copy={url} title={compact ? t.share.copy : undefined}>
       <Icon name="link" class="ic-link" /><Icon name="check" class="ic-check" /><span data-copy-label class:list={{ 'visually-hidden': compact }}>{t.share.copy}</span>
