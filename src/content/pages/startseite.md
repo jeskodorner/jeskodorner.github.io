@@ -2,7 +2,7 @@
 # Die Startseite ist das blaue Menü – von dieser Datei wird nur noch die Liste „showroom“ (Portfolio) genutzt.
 # kicker, statement, note und aboutTeaser stammen von der früheren Startseite und werden zurzeit nicht angezeigt.
 # kicker: Wörter für die schlichte Zeile unter dem Statement (mit · getrennt)
-kicker: "Fotografie · Kamera · Film"
+kicker: "Fotografie"
 statement: "Fotografie, die *Bewegung* einfängt."
 note: "Porträts, Events, Setcards, Hochzeiten und Alltagsfotografie – Bilder, die Geschichten erzählen."
 aboutTeaser: "Platzhalter: kurzer Teaser-Text über dich."

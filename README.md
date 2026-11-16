@@ -658,7 +658,7 @@ Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer 
 - **Fotos beim Überfahren:** überall gleich, 3 % größer im Rahmen (Token `--hover-zoom`): Album, Galerie, Portfolio.
 - **Knöpfe sagen, was passiert:** Verb und Ding („Portfolio ansehen“, „Code anfordern“, „Schreib mir“), keine
   Auslassungspunkte.
-- **Erster Bildschirm sagt, worum es geht:** Unter dem Namen auf der Startseite steht „Fotografie · Kamera · Film“
+- **Erster Bildschirm sagt, worum es geht:** Unter dem Namen auf der Startseite steht „Fotografie“
   (`home.claim` in `src/i18n/de.ts`).
 - **Fotoreihen ohne Ruckeln:** Mit JavaScript erscheinen die Fotoreihen eines Albums erst, wenn `justify.ts` sie
   randvoll verteilt hat (sonst rückten sie nach dem ersten Bild einmal zur Seite); nach spätestens 1,5 s sind sie
