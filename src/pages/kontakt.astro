@@ -20,12 +20,12 @@ const t = useTranslations();
     <dl class="channels">
       <div id="email">
         <dt class="visually-hidden">{t.contact.email}</dt>
-        <dd><EmailLink class="channel" subject="Anfrage über die Website" /></dd>
+        <dd><EmailLink class="channel tap" subject="Anfrage über die Website" /></dd>
       </div>
       <div>
         <dt class="visually-hidden">{t.contact.instagram}</dt>
         <dd>
-          <a class="channel" href={site.instagram.url} rel="me noopener" target="_blank">
+          <a class="channel tap" href={site.instagram.url} rel="me noopener" target="_blank">
             <Icon name="instagram" size="0.9em" />
             <span class="channel-text">{site.instagram.handle.toLowerCase()}</span>
             <span class="visually-hidden">(Instagram, neuer Tab)</span>
@@ -55,7 +55,8 @@ const t = useTranslations();
   }
   .channels {
     display: grid;
-    gap: clamp(1rem, 2.5vw, 1.75rem);
+    gap: clamp(1.25rem, 2.5vw, 1.75rem); /* mindestens 20 px: die 44-px-Tippflächen überlappen nicht */
+
     align-content: start;
     justify-items: start;
   }

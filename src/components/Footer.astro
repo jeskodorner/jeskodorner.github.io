@@ -15,16 +15,16 @@ const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : 
       <div class="contact">
         <h2 class="visually-hidden">{t.nav.contact}</h2>
         <p class="links">
-          <EmailLink class="big-link" />
-          <a class="big-link" href={site.instagram.url} rel="me noopener" target="_blank">
+          <EmailLink class="big-link tap" />
+          <a class="big-link tap" href={site.instagram.url} rel="me noopener" target="_blank">
             <Icon name="instagram" size="0.9em" /> {site.instagram.handle.toLowerCase()}
           </a>
         </p>
       </div>
       <nav class="legal" aria-label="Rechtliches">
-        <a href="/impressum/">{t.footer.imprint}</a>
-        <a href="/datenschutz/">{t.footer.privacy}</a>
-        <a class="to-top" href="#top">{t.footer.top} <Icon name="arrow-up" /></a>
+        <a class="tap" href="/impressum/">{t.footer.imprint}</a>
+        <a class="tap" href="/datenschutz/">{t.footer.privacy}</a>
+        <a class="to-top tap" href="#top">{t.footer.top} <Icon name="arrow-up" /></a>
       </nav>
     </div>
 
@@ -63,7 +63,8 @@ const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : 
   .links {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem 2rem;
+    gap: 1.15rem 2rem; /* untereinander (Handy): Abstand so, dass die 44-px-Tippflächen nicht überlappen */
+
   }
   .to-top {
     display: inline-flex;
@@ -88,7 +89,8 @@ const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : 
   .legal {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem 1.75rem;
+    gap: 1.35rem 1.75rem; /* zweite Zeile am Handy: Tippflächen (44 px) überlappen nicht */
+
     font-size: var(--fs-sm);
     font-weight: 750;
     font-stretch: 85%;

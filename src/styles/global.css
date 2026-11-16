@@ -306,10 +306,21 @@ html:not(.js) .js-only {
   color: var(--ink);
 }
 .btn--small {
-  min-height: 2.5rem;
+  min-height: 2.75rem; /* 44 px: übliche Mindestgröße für einen Fingertipp */
   padding: 0.55em 1.05em;
   font-size: var(--fs-xs);
   border-width: 2px;
+}
+/* Kleine Textlinks (Logo, Fußzeile, Menü, Kontakt) bekommen eine unsichtbare Tippfläche: mindestens 44 px hoch und
+   breit, mittig um den Link. Die Schrift und der Abstand zu den Nachbarn bleiben, wo Links untereinander stehen, ist der
+   Abstand so gewählt, dass sich die Flächen nicht überlappen. */
+.tap {
+  position: relative;
+}
+.tap::after {
+  content: '';
+  position: absolute;
+  inset: min(0px, calc(50% - 22px));
 }
 .btn svg {
   width: 1.15em;

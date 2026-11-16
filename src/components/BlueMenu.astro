@@ -85,7 +85,7 @@ const nameWords = site.name.split(' ').map((word) =>
       {
         links.map((l) => (
           <li>
-            <a class="display" href={l.href} aria-current={isCurrent(path, l.match) ? 'page' : undefined}>
+            <a class="display tap" href={l.href} aria-current={isCurrent(path, l.match) ? 'page' : undefined}>
               {l.label}
             </a>
           </li>
@@ -102,13 +102,13 @@ const nameWords = site.name.split(' ').map((word) =>
     }
   </div>
   <p class="bm-foot label">
-    <a href={site.instagram.url} rel="me noopener" target="_blank">@{site.instagram.handle}</a>
+    <a class="tap" href={site.instagram.url} rel="me noopener" target="_blank">@{site.instagram.handle}</a>
     {
       /* Impressum und Datenschutz nur im Menü, nicht auf der Startseite (dort über jede Unterseite erreichbar) */
       overlay && (
         <>
-          <a href="/impressum/">{t.footer.imprint}</a>
-          <a href="/datenschutz/">{t.footer.privacy}</a>
+          <a class="tap" href="/impressum/">{t.footer.imprint}</a>
+          <a class="tap" href="/datenschutz/">{t.footer.privacy}</a>
         </>
       )
     }

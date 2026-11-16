@@ -52,7 +52,7 @@ const base = (import.meta.env.PUBLIC_HQ_ALBUM_BASE || site.hqAlbums.baseUrl || '
         )
       }
       <p class="hq-ask muted">
-        {h.noCode} <EmailLink class="hq-mail" text={h.askCode} icon={false} subject={t.album.subject('HQ-Album')} />
+        {h.noCode} <EmailLink class="hq-mail tap" text={h.askCode} icon={false} subject={t.album.subject('HQ-Album')} />
       </p>
     </div>
 
