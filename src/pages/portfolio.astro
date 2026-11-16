@@ -92,17 +92,9 @@ const albumData = await Promise.all(
     gap: 0.75rem;
     padding-top: var(--section);
   }
-  /* Handy: alles mittig – Überschrift, Einleitung, Fotos (Hanging.astro) und Knöpfe */
+  /* Handy: Überschrift und Einleitung linksbündig wie auf allen Seiten, nur der Inhalt mittig – Fotos mit Schildern
+     (Hanging.astro) und die Knöpfe am Ende */
   @media (max-width: 899.98px) {
-    .head {
-      text-align: center;
-    }
-    .head :global(.display-1) {
-      margin-left: 0;
-    }
-    .lead {
-      margin-inline: auto;
-    }
     .more {
       justify-content: center;
     }
