@@ -79,6 +79,8 @@ const nameWords = site.name.split(' ').map((word) =>
       </h1>
     )
   }
+  {/* Startseite: eine Zeile unter dem Namen sagt, was Jesko macht */}
+  {!overlay && <p class="bm-claim label">{t.home.claim}</p>}
   <div class="bm-body">
     <nav aria-label={t.nav.label}>
       <ul class="bm-list" role="list">
@@ -304,6 +306,13 @@ const nameWords = site.name.split(' ').map((word) =>
   .bm-name :global(.bm-w--2) {
     view-transition-name: jd-name-2;
   }
+  /* Zeile unter dem Namen (nur Startseite): klein, gesperrt, an der linken Kante des Namens */
+  .bm-claim {
+    margin-top: clamp(0.7rem, 1.6vw, 1.1rem);
+    font-size: var(--fs-sm);
+    letter-spacing: 0.14em;
+    color: var(--on-menu);
+  }
   /* Menüpunkte: deutlich kleiner als der Name, mit Luft dazwischen */
   /* Menüpunkte, dazu optional das Bildfeld (Slot „aside“). Handy: Bildfeld mittig im freien Platz darunter. */
   .bm-body {
@@ -331,7 +340,15 @@ const nameWords = site.name.split(' ').map((word) =>
       --name-fs: min(6.5rem, 100cqi / 6.9);
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-      grid-template-rows: auto auto 1fr auto;
+      /* Foto bzw. Schließen-Knopf · Name · Zeile darunter (nur Startseite) · Menüpunkte · Fußzeile */
+      grid-template-rows: auto auto auto 1fr auto;
+    }
+    .bm .bm-claim {
+      grid-column: 2;
+      grid-row: 3;
+    }
+    .bm .bm-foot {
+      grid-row: 5;
     }
     .bm > * {
       grid-column: 1 / -1;
@@ -353,7 +370,7 @@ const nameWords = site.name.split(' ').map((word) =>
        ihren Zeilen sitzen. */
     .bm-body > nav {
       grid-column: 2;
-      grid-row: 3;
+      grid-row: 4;
       align-self: center;
       /* um 0,07 Schrifthöhen nach unten geschoben: „KONTAKT“ sitzt höher in seiner Zeile als „DORNER“ */
       margin-block: calc(1.5rem + 0.07 * var(--bm-item)) calc(1.5rem - 0.07 * var(--bm-item));
@@ -416,6 +433,7 @@ const nameWords = site.name.split(' ').map((word) =>
        Schatten der Kontur (macht den Namen fetter) sonst über die Buchstaben – sie wirken dann innen grau. */
     /* Menüpunkte: Schatten auf dem ganzen Listenpunkt (beim Überfahren aus) */
     .bm--aside .bm-name,
+    .bm--aside .bm-claim,
     .bm--aside .bm-list li {
       --sh: rgb(10 12 20 / 0.45);
       filter: drop-shadow(0 0 0.35em var(--sh)) drop-shadow(0 0 0.1em var(--sh));

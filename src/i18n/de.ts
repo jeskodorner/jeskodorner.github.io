@@ -22,6 +22,8 @@ export const de = {
     top: 'Nach oben',
   },
   home: {
+    /** Zeile unter dem Namen auf der Startseite: was Jesko macht (der erste Bildschirm sagt es sofort) */
+    claim: 'Fotografie · Kamera · Film',
     cta: 'Portfolio',
     galleryLink: 'Galerie',
     selected: 'Portfolio',
