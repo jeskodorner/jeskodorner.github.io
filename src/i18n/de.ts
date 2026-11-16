@@ -56,7 +56,6 @@ export const de = {
     next: 'Nächste Galerie',
     unlisted:
       'Private Galerie – nur über den direkten Link erreichbar. Bitte nur mit Menschen teilen, die die Bilder sehen dürfen.',
-    progress: 'Lesefortschritt',
     view: 'Ansicht',
     viewLarge: 'Groß',
     viewTiles: 'Übersicht',

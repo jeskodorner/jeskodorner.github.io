@@ -8,6 +8,8 @@
  * - „← Vorheriges Bild“ / „Nächstes Bild →“ stehen direkt über dem Foto (nicht darauf), so breit wie das Foto.
  * - Oben eine einheitliche Leiste: alle Knöpfe gleich groß, rund, gleiche Linien-Symbole; nur „Schließen“ ist gefüllt.
  * - Teilbare URL: #bild-N öffnet direkt das Foto.
+ * - Handy quer (niedriger Bildschirm): Das Foto bekommt fast die ganze Höhe. Die Knöpfe stehen als schmale Spalte
+ *   rechts, die Pfeile unten in den Ecken, die Zahl oben links, die Details als Spalte rechts (wie am Desktop).
  */
 import PhotoSwipeLightbox from 'photoswipe/lightbox';
 import type PhotoSwipe from 'photoswipe';
@@ -36,6 +38,13 @@ const PANEL_W = 340;
 /** Höhe der Leiste oben und der Zeile mit „Vorheriges/Nächstes Bild“ (wie in lightbox.css) */
 const BAR_H = 64;
 const NAV_H = 48;
+/** Handy quer: niedriger als das und breiter als hoch (wie die Media-Query in lightbox.css) */
+const SHORT_H = 520;
+/** Breite der Knopf-Spalte bzw. Pfeil-Ecke im Querformat (wie in lightbox.css) */
+const SIDE_W = 60;
+const isShort = (v: { x: number; y: number }) => v.y < SHORT_H && v.x >= v.y;
+/** Breite der Detail-Spalte im Querformat (wie in lightbox.css: min(300px, 42vw)) */
+const shortPanelW = (vx: number) => Math.min(300, vx * 0.42);
 
 const ARROW = {
   prev: '<svg class="jd-step-icn" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12H5M11 6l-6 6 6 6"/></svg>',
@@ -106,6 +115,10 @@ export function initLightbox(opts: LightboxOptions = {}) {
 
   /** Weißer Rand ums Foto; Leiste, Pfeil-Zeile und offene Details bekommen ihren eigenen Platz */
   const paddingFor = (viewport: { x: number; y: number }) => {
+    if (isShort(viewport)) {
+      // Querformat: oben und unten nur ein schmaler Rand, links Pfeil-Ecke, rechts Knopf-Spalte (+ Details)
+      return { top: 8, bottom: 8, left: SIDE_W, right: SIDE_W + (open ? shortPanelW(viewport.x) + 8 : 0) };
+    }
     const top = BAR_H + (count > 1 ? NAV_H : 0) + 12;
     if (viewport.x >= WIDE) {
       return { top, bottom: 40, left: 56, right: open ? PANEL_W + 40 : 56 };
@@ -173,7 +186,9 @@ export function initLightbox(opts: LightboxOptions = {}) {
     pswp.element?.classList.toggle('jd-open', open);
     infoBtn?.setAttribute('aria-expanded', String(open));
     if (panel) panel.hidden = !open;
-    sheetH = open && panel && window.innerWidth < WIDE ? panel.offsetHeight : 0;
+    const short = isShort({ x: window.innerWidth, y: window.innerHeight });
+    pswp.element?.classList.toggle('jd-short', short);
+    sheetH = open && panel && window.innerWidth < WIDE && !short ? panel.offsetHeight : 0;
   };
   /** … und dem Foto sofort den passenden Platz geben */
   const apply = (pswp: PhotoSwipe) => {
@@ -231,6 +246,13 @@ export function initLightbox(opts: LightboxOptions = {}) {
         const place = () => {
           const s = pswp.currSlide;
           if (!s || !s.width || !s.panAreaSize) return;
+          // Querformat: Pfeile stehen fest unten in den Ecken (CSS), keine Zeile über dem Foto
+          if (isShort(pswp.viewportSize)) {
+            row.removeAttribute('style');
+            row.classList.remove('is-tight');
+            row.classList.toggle('is-hidden', s.currZoomLevel > s.zoomLevels.initial * 1.01);
+            return;
+          }
           const z = s.zoomLevels.initial;
           const w = s.width * z;
           const h = s.height * z;
@@ -284,7 +306,7 @@ export function initLightbox(opts: LightboxOptions = {}) {
         pswp.on('change', () => {
           render(pswp);
           // Auf dem Handy kann das Feld je nach Foto höher oder niedriger sein
-          if (open && window.innerWidth < WIDE && box.offsetHeight !== sheetH) apply(pswp);
+          if (open && window.innerWidth < WIDE && sheetH && box.offsetHeight !== sheetH) apply(pswp);
         });
       },
     });
@@ -382,11 +404,14 @@ export function initLightbox(opts: LightboxOptions = {}) {
     }
   });
 
-  // Auf dem Handy: Feldhöhe nach Drehen/Größenänderung neu messen
+  // Nach Drehen/Größenänderung: Hoch-/Querformat-Anordnung umschalten und Feldhöhe neu messen
   lightbox.on('resize', () => {
     const pswp = lightbox.pswp;
-    if (!pswp || !open || !panel) return;
-    const h = window.innerWidth < WIDE ? panel.offsetHeight : 0;
+    if (!pswp) return;
+    const short = isShort({ x: window.innerWidth, y: window.innerHeight });
+    if (short !== pswp.element?.classList.contains('jd-short')) return apply(pswp);
+    if (!open || !panel) return;
+    const h = window.innerWidth < WIDE && !short ? panel.offsetHeight : 0;
     if (h !== sheetH) apply(pswp);
   });
 

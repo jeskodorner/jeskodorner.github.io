@@ -66,8 +66,6 @@ const jsonLd = gallery.isUnlisted
   noReferrer={gallery.isUnlisted}
   jsonLd={jsonLd}
 >
-  <div class:list={['progress', `c-${gallery.color}`]} aria-hidden="true"></div>
-
   <article class={`c-${gallery.color}`}>
     <header class="g-band room">
       <div class="container container--wide">
@@ -157,30 +155,6 @@ const jsonLd = gallery.isUnlisted
 </BaseLayout>
 
 <style>
-  .progress {
-    position: fixed;
-    inset: 0 0 auto;
-    height: 6px;
-    z-index: 60;
-    background: var(--c);
-    transform-origin: 0 50%;
-    transform: scaleX(0);
-    pointer-events: none;
-  }
-  @supports (animation-timeline: scroll()) {
-    .progress {
-      animation-name: progress;
-      animation-timing-function: linear;
-      animation-fill-mode: both;
-      animation-timeline: scroll(root);
-    }
-  }
-  @keyframes progress {
-    to {
-      transform: scaleX(1);
-    }
-  }
-
   /* Farbband in der Galeriefarbe */
   .g-band {
     padding-block: clamp(1.5rem, 4vw, 3.5rem) clamp(2.5rem, 6vw, 5rem);

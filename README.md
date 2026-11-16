@@ -435,7 +435,7 @@ haben keine Vor/Zurück-Navigation zu anderen Galerien und werden nicht von der 
 Alle Effekte sind reines CSS, ohne JavaScript, und laufen flüssig:
 
 - **Parallax:** Beschnittene Fotos (Film, Porträt) gleiten in ihrem Rahmen etwas langsamer als die Seite. Galerie-Fotos bewegen sich nicht, damit nichts beschnitten wird.
-- **Weitere Effekte:** Texte steigen auf, der Fortschrittsbalken in Galerien zeigt die Galeriefarbe, und der Header wird kompakt.
+- **Weitere Effekte:** Texte steigen auf, und der Header wird kompakt. (Den Fortschrittsbalken oben in den Alben gibt es nicht mehr.)
 
 **Browser:** Chrome, Edge, Brave und Safari (ab Version 26) zeigen die Scroll-Bewegung. Firefox hatte diese Technik
 nach meinem Stand noch nicht standardmäßig aktiviert. Dort erscheint die Seite vollständig, nur ohne Scroll-Bewegung.
@@ -570,7 +570,7 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 - **Fotos werden nie beschnitten**: in Alben, Übersichten und der Lightbox immer im Originalformat, groß mit weißem
   Rand. Nichts ist schräg gestellt. Mutig sind Farben und Schrift, nicht die Anordnung.
 - **Jede Galerie hat eine eigene Farbe.** Die Farbe erscheint im Button auf der Seite „Galerie“, im Farbband oben auf
-  der Galerieseite, im Fortschrittsbalken und im Download-Kasten (Kundengalerien).
+  der Galerieseite und im Download-Kasten (Kundengalerien).
   Festlegen per `color: pink | blue | lime | orange | violet` in `index.md`. Ohne Angabe wechselt die Farbe automatisch reihum.
   Palette „Sommer“, warm und frisch: Koralle `#FF807F` (`pink`), Orange `#FFA44E` (`orange`), Sonnengelb `#F7E04F`
   (`lime`), klares Blau `#53A3F2` (`blue`), Flieder `#B98CEA` (`violet`). Auf allen steht schwarze Schrift.
@@ -665,6 +665,9 @@ Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer 
   jedes weitere Foto erst fertig geladen. Ein Video zeigt nach dem Klick „Lädt …“ mit drehendem Kreis über dem
   Vorschaubild, bis der Player da ist. Die Großansicht wird im Leerlauf vorgeladen und zeigt beim Blättern einen
   Ladekreis.
+- **Großansicht am Handy quer:** Das Foto bekommt fast die ganze Höhe; Knöpfe als Spalte rechts, Pfeile unten in
+  den Ecken, Details als Spalte rechts (`isShort` in `src/scripts/lightbox.ts`, Media-Query am Ende von
+  `src/styles/lightbox.css`).
 - **Rückmeldung:** Knöpfe geben beim Drücken kurz nach; „Link kopieren“ wird für zwei Sekunden zum Haken.
 - **Fokusrahmen** folgt der Form des Elements (runde Knöpfe bekommen einen runden Rahmen).
 - **Abschluss mit klarer Handlung:** Am Ende des Portfolios steht „Schreib mir“ als gefüllter Knopf, daneben der

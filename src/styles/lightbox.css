@@ -284,3 +284,76 @@
 .pswp__jd-toast:not(.is-on) {
   visibility: hidden;
 }
+
+/* ---------- Handy quer (niedriger Bildschirm) ----------
+   Gleiche Bedingung wie isShort() in scripts/lightbox.ts. Das Foto bekommt fast die ganze Höhe:
+   Knöpfe als Spalte rechts (Schließen oben), Zahl oben links, Pfeile unten in den Ecken ohne Beschriftung,
+   Details als Spalte links neben den Knöpfen. */
+@media (orientation: landscape) and (max-height: 519.98px) {
+  .pswp__top-bar {
+    left: auto;
+    right: 0;
+    width: 60px;
+    height: auto;
+    padding: 8px 0;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 6px;
+  }
+  .pswp__top-bar .pswp__button {
+    width: 40px;
+    height: 40px;
+  }
+  .pswp__top-bar .pswp__icn {
+    width: 18px;
+    height: 18px;
+  }
+  .pswp__top-bar .pswp__preloader {
+    width: 40px;
+    height: 40px;
+  }
+  .pswp__counter {
+    position: fixed;
+    top: 14px;
+    left: 0;
+    width: 60px;
+    margin: 0;
+    text-align: center;
+    font-size: 0.7rem;
+  }
+  .pswp__jd-nav {
+    top: auto;
+    bottom: 10px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    height: 36px;
+  }
+  .pswp__jd-nav .jd-step-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .pswp__jd-details {
+    left: auto;
+    right: 60px;
+    top: 0;
+    bottom: 0;
+    width: min(300px, 42vw);
+    max-height: none;
+    padding: 1rem 1.1rem;
+    border-top: 0;
+    border-left: 2px solid var(--ink);
+  }
+  .jd-d-list {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem 1rem;
+  }
+  .pswp__jd-toast {
+    top: 12px;
+  }
+}
