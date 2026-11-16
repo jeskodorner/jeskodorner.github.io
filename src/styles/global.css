@@ -432,6 +432,18 @@ a:hover .arrow,
    Gleich hohe Reihen, dicht gepackt (wie Lightroom). Jedes Foto bleibt im Originalformat:
    Breite ∝ Seitenverhältnis (flex-grow). scripts/justify.ts füllt jede Reihe, ohne JS bleibt die letzte ungestreckt (::after).
    scripts/justify.ts verteilt die Reihen genauer, ohne JavaScript übernimmt dieses CSS. */
+/* Mit JavaScript erscheinen Fotoreihen ([data-justify]) erst, wenn justify.ts sie randvoll verteilt hat – sonst
+   rücken die Fotos kurz nach dem ersten Bild einmal zur Seite (Layout-Verschiebung). Sicherheitsnetz: nach 1,5 s
+   werden sie in jedem Fall sichtbar. Ohne JavaScript gilt die CSS-Verteilung sofort. */
+.js [data-justify]:not([data-justified]) {
+  visibility: hidden;
+  animation: jd-show 0s 1.5s forwards;
+}
+@keyframes jd-show {
+  to {
+    visibility: visible;
+  }
+}
 .tiles {
   --row: clamp(95px, 55px + 12vw, 230px);
   /* So schmal wird kein Foto (Hochformate neben Querformaten bleiben erkennbar) */

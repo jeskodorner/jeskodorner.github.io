@@ -89,6 +89,8 @@ function layout(list: HTMLElement) {
       items[x]!.style.flex = fill ? `${units[x]} 1 ${w}px` : `0 0 ${w}px`;
     }
   }
+  // fertig verteilt: jetzt darf die Liste sichtbar werden (global.css, [data-justified])
+  list.dataset.justified = '';
 }
 
 /** Alle Listen sofort neu verteilen (z. B. direkt nach dem Einfügen neuer Fotos) */

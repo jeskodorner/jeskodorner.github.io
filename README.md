@@ -647,8 +647,22 @@ Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer 
 - **Keine Füll-Etiketten:** Ein Etikett steht nur da, wenn es etwas Neues sagt. „Video“ auf der Filmseite,
   „E-Mail“ über einer E-Mail-Adresse oder „Fehler 404“ über der Fehlerseite sind weg (für Screenreader bleiben
   die Bezeichnungen unsichtbar erhalten).
-- **Kursiv nur mit Absicht:** Kursiv sind allein die Menüpunkte (außer „Portfolio“). Einzelne Wörter in
-  Überschriften sind nicht mehr kursiv.
+- **Kursiv nur mit Absicht:** Kursiv sind die Menüpunkte (außer „Portfolio“) und kleine Zwischenüberschriften
+  wie „Album teilen“ (Klasse `subhead`). Einzelne Wörter in Überschriften sind nicht kursiv.
+- **Gesperrte Großbuchstaben nur für Angaben:** Die Klasse `label` (klein, fett, gesperrt) ist für Angaben wie
+  „6 Bilder · September 2026“, Knöpfe und Rechtliches da, nicht für Überschriften.
+- **Tippflächen mindestens 44 px:** Knöpfe sind mindestens 44 px hoch (`btn--small`, runde Teilen-Knöpfe 44 × 44).
+  Kleine Textlinks (Logo, Menüpunkte, Fußzeile, Kontakt) bekommen mit der Klasse `tap` eine unsichtbare Fläche um
+  den Link; die Schrift bleibt gleich. Wo solche Links untereinander stehen, ist der Abstand so groß, dass sich
+  die Flächen nicht überlappen (Fußzeile am Handy, Kontakt).
+- **Fotos beim Überfahren:** überall gleich, 3 % größer im Rahmen (Token `--hover-zoom`): Album, Galerie, Portfolio.
+- **Knöpfe sagen, was passiert:** Verb und Ding („Portfolio ansehen“, „Code anfordern“, „Schreib mir“), keine
+  Auslassungspunkte.
+- **Erster Bildschirm sagt, worum es geht:** Unter dem Namen auf der Startseite steht „Fotografie · Kamera · Film“
+  (`home.claim` in `src/i18n/de.ts`).
+- **Fotoreihen ohne Ruckeln:** Mit JavaScript erscheinen die Fotoreihen eines Albums erst, wenn `justify.ts` sie
+  randvoll verteilt hat (sonst rückten sie nach dem ersten Bild einmal zur Seite); nach spätestens 1,5 s sind sie
+  in jedem Fall sichtbar.
 - **Ein System statt Einzelwerte:** Farben, Radien und Schriften kommen aus `src/styles/tokens.css`
   (`--radius` 4 px für Flächen und Felder, `--radius-pill` für Knöpfe). Alle Seitenüberschriften haben dieselbe
   Größe und denselben Abstand (Klasse `head` in `global.css`).
@@ -675,7 +689,8 @@ Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer 
 
 **Vorschau beim Teilen** (WhatsApp, iMessage, Instagram, …): Jede Seite und jedes Album hat eine eigene
 Vorschaukarte (1200 × 630 px), die beim Bauen automatisch entsteht (`src/lib/og.ts`, Dateien unter `/og/…`). Links ein
-Feld in Ultramarin mit „JESKO DORNER“ (Climate Crisis) und dem Titel der Seite (Instrument Serif), rechts das Foto,
+Feld in Ultramarin mit „JESKO DORNER“ (Climate Crisis) und dem Titel der Seite (Bodoni Moda, Stärke 600, aus
+`src/assets/fonts/bodoni-moda-latin-600-normal.woff` – der Bildbau braucht eine feste Schriftdatei), rechts das Foto,
 zugeschnitten auf seinen Bildschwerpunkt (Feld `focus` beim Bild; ohne Angabe bei Hochformaten etwas über der Mitte).
 Startseite und Portfolio zeigen das erste Foto aus `showroom`, Galerie das neueste Album, Film das erste Standbild,
 Über mich das Porträt, jedes Album sein Vorschaubild (`cover`). Kontakt, Impressum, Datenschutz und die Albumseite mit
@@ -684,11 +699,14 @@ Code bekommen eine Karte nur in Ultramarin. Der Titel beim Teilen enthält immer
 Albums – mehr gibt eine statische Seite nicht her. WhatsApp und Co. merken sich alte Vorschauen eine Weile; neue
 Karten erscheinen dort manchmal erst nach Tagen.
 
-**Browser-Symbol** (Favicon): ein weißes „J“ aus Instrument Serif auf Ultramarin, als `public/favicon.svg`, dazu
+**Browser-Symbol** (Favicon): ein weißes „J“ aus Bodoni Moda (Stärke 700) auf Ultramarin, ganz sichtbar und mittig
+nach seinem Umriss gesetzt, als `public/favicon.svg`, dazu
 `public/favicon.ico` (32 px, für ältere Browser) und `public/apple-touch-icon.png` (180 px, Home-Bildschirm). Der
 Buchstabe ist als Form gespeichert, damit er überall gleich aussieht.
 
-**Schriften** (lokal, über Fontsource, Lizenz OFL):
+**Schriften** (alle lokal, keine Google-Fonts-Verbindung, Lizenz SIL OFL – frei, auch geschäftlich). Bewusst keine
+der Schriften, die auf sehr vielen KI-gebauten Seiten stehen (Inter, Geist, Space Grotesk, Instrument Serif,
+Playfair, Fraunces …):
 - **Climate Crisis**: der Name „JESKO DORNER“ – groß auf Startseite und Menü, klein als Logo oben links auf allen
   Unterseiten (Token `--font-name`). Die Schriftdatei wird vorab geladen (`BaseHead.astro`), damit das Logo beim
   Seitenwechsel nie kurz in einer Ersatzschrift erscheint. Beim Wechsel Startseite → Unterseite gleitet der Name
@@ -699,15 +717,21 @@ Buchstabe ist als Form gespeichert, damit er überall gleich aussieht.
   („JESKO“ / „DORNER“), und das Menü sitzt mittig dazwischen: gleich viel Luft von „DORNER“ zu den Menüpunkten
   wie von den Menüpunkten zu Impressum und Datenschutz. Vorher: Instrument Serif mit feiner Kontur
   und von Hand ausgeglichenen Buchstabenpaaren (Werte stehen noch bei `KERN` in `BlueMenu.astro`).
-- **Instrument Serif**: Titel, Menü, Schriftzug in der Fußzeile und Schilder im Portfolio (nur eine
-  Stärke, normal und kursiv). Auf der Startseite und im Menü in Großbuchstaben, die Menüpunkte kursiv außer
-  „Portfolio“. Überall sonst normal geschrieben. Vorher: Anybody, sehr fett und schmal.
-- **Archivo**: Fließtext, Beschriftungen und Werkschilder
+  Über npm (`@fontsource-variable/climate-crisis`).
+- **Bodoni Moda** (seit November 2026): Titel, Menü, Schriftzug in der Fußzeile, Schilder im Portfolio,
+  Zwischenüberschriften. Modemagazin-Antiqua mit zwei variablen Achsen: Stärke (Token `--display-wght`, 500) und
+  optische Größe (folgt der Schriftgröße: groß sehr feine Haarstriche). Die Menüpunkte sind auf eine kleine
+  optische Größe festgesetzt (`'opsz' 24`), damit die Haarstriche auf Foto und Blau stehen bleiben. Auf der
+  Startseite und im Menü in Großbuchstaben, die Menüpunkte kursiv außer „Portfolio“. Vorher: Instrument Serif,
+  davor Anybody. Kurz angeschaut und verworfen: Kugile (Demo nur privat nutzbar, ohne Umlaute).
+- **Libre Franklin** (seit November 2026): Fließtext, Knöpfe, Beschriftungen. Vorher: Archivo.
+- Bodoni Moda und Libre Franklin liegen als Dateien in `src/assets/fonts/` (aus den Fontsource-Paketen, nur
+  Zeichensatz „latin“ mit Ä, Ö, Ü, ß), eingebunden in `src/styles/fonts.css`, Lizenztexte daneben.
 
 **Extenda einsetzen:** Extenda (Zetafonts) ist eine kommerzielle Schrift. Fürs Web brauchst du eine passende Lizenz.
 Mit Lizenz:
 1. Die `.woff2`-Dateien nach `src/assets/fonts/` legen.
-2. In `src/styles/global.css` ganz oben ergänzen:
+2. In `src/styles/fonts.css` ergänzen:
    ```css
    @font-face {
      font-family: 'Extenda';
@@ -716,7 +740,7 @@ Mit Lizenz:
      font-display: swap;
    }
    ```
-3. In `src/styles/tokens.css` `--font-display: 'Extenda', 'Instrument Serif', serif;` setzen.
+3. In `src/styles/tokens.css` `--font-display: 'Extenda', 'Bodoni Moda Variable', serif;` setzen.
 4. Optional in `src/components/BaseHead.astro` die Preload-Zeile auf die neue Datei umstellen.
 
 ---
