@@ -4,8 +4,8 @@
  * weißen Wand, mit viel Platz daneben und einem schlichten Schild (Name und Angaben, kein Link).
  * Ein Klick aufs Foto öffnet die Lightbox mit dem ganzen Album ab diesem Foto – direkt hier, ohne die
  * Albumseite (Daten und Skript: pages/portfolio.astro). Ohne JavaScript führt der Link ins Album.
- *   Fotos linksbündig. Das Schild steht immer mittig zum Foto: Desktop rechts daneben auf halber Bildhöhe,
- *   Handy darunter, waagrecht mittig unter dem Foto.
+ *   Desktop: Fotos linksbündig, das Schild rechts daneben auf halber Bildhöhe.
+ *   Handy: alles mittig – jedes Foto steht in der Mitte, das Schild mittig darunter.
  *   Größe: deutlich kleiner als der Bildschirm (Hochformate höchstens gut halb so hoch, Querformate höchstens
  *   knapp die halbe Breite), damit jedes Foto mit Luft für sich steht.
  * Schild: Hat das Foto einen eigenen Namen (Showroom), steht er als Titel da und darunter der Album-Name.
@@ -62,13 +62,14 @@ const { items } = Astro.props;
     /* Höchstens gut halb so hoch wie der Bildschirm */
     --work-h: max(16rem, calc((100svh - var(--header-h)) * 0.6));
   }
+  /* Handy: Foto und Schild mittig */
   .work {
     display: grid;
+    justify-items: center;
     gap: 1.5rem;
   }
   .work-media {
     display: block;
-    justify-self: start;
     width: min(100%, calc(var(--work-h) * var(--r)));
   }
   .work-media {

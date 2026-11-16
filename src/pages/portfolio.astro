@@ -92,4 +92,19 @@ const albumData = await Promise.all(
     gap: 0.75rem;
     padding-top: var(--section);
   }
+  /* Handy: alles mittig – Überschrift, Einleitung, Fotos (Hanging.astro) und Knöpfe */
+  @media (max-width: 899.98px) {
+    .head {
+      text-align: center;
+    }
+    .head :global(.display-1) {
+      margin-left: 0;
+    }
+    .lead {
+      margin-inline: auto;
+    }
+    .more {
+      justify-content: center;
+    }
+  }
 </style>
