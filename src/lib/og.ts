@@ -3,7 +3,7 @@
  * (Route src/pages/og/[...card].jpg.ts, Datei z. B. /og/album/hilda-setcard.jpg).
  *
  * Aufbau wie die Startseite: links ein Feld in Ultramarin mit „JESKO / DORNER“ (Climate Crisis) oben und dem
- * Seitentitel (Instrument Serif) unten, rechts das Foto, zugeschnitten auf seinen Bildschwerpunkt (Feld `focus`).
+ * Seitentitel (Bodoni Moda, Stärke 600) unten, rechts das Foto, zugeschnitten auf seinen Bildschwerpunkt (Feld `focus`).
  * Seiten ohne Foto (Kontakt, Impressum, Datenschutz, HQ-Album): das ganze Feld in Ultramarin, Name groß.
  *
  * Die Schrift wird als Form (Pfad) eingesetzt – so braucht der Bildbau keine installierten Schriften.
@@ -46,11 +46,16 @@ const loadFont = (pkgFile: string) => {
   const buf = fs.readFileSync(require.resolve(pkgFile));
   return opentype.parse(buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength));
 };
+/** Feste Schriftdatei aus dem Projekt (opentype.js liest .woff, aber keine variablen .woff2) */
+const loadLocalFont = (file: string) => {
+  const buf = fs.readFileSync(path.join(process.cwd(), file));
+  return opentype.parse(buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength));
+};
 let fonts: { name: opentype.Font; serif: opentype.Font } | undefined;
 const getFonts = () =>
   (fonts ??= {
     name: loadFont('@fontsource/climate-crisis/files/climate-crisis-latin-400-normal.woff'),
-    serif: loadFont('@fontsource/instrument-serif/files/instrument-serif-latin-400-normal.woff'),
+    serif: loadLocalFont('src/assets/fonts/bodoni-moda-latin-600-normal.woff'),
   });
 
 const capHeight = (font: opentype.Font) => (font.tables.os2?.sCapHeight ?? font.unitsPerEm * 0.7) / font.unitsPerEm;
