@@ -10,11 +10,11 @@ import BlueMenu from '../components/BlueMenu.astro';
 import BlendLoop from '../components/BlendLoop.astro';
 import { site } from '../config/site';
 import { getSelectedWorks } from '../lib/showroom';
-import { ogImage } from '../lib/images';
+import { cardImage } from '../lib/og';
 
-// Vorschaubild für Link-Vorschauen (WhatsApp, Instagram …): erstes Foto aus dem Portfolio
+// Vorschaukarte für Link-Vorschauen (WhatsApp, Instagram …): src/lib/og.ts
 const works = await getSelectedWorks();
-const og = works[0] ? await ogImage(works[0].image.src) : undefined;
+const og = cardImage('start', `${site.name} – Fotografie, Kamera und Film`);
 
 const jsonLd = {
   '@context': 'https://schema.org',

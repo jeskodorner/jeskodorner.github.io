@@ -9,6 +9,7 @@ import EmailLink from '../components/EmailLink.astro';
 import Icon from '../components/Icon.astro';
 import { useTranslations } from '../i18n';
 import { site } from '../config/site';
+import { cardImage } from '../lib/og';
 
 const t = useTranslations();
 const h = t.hqAlbum;
@@ -16,7 +17,7 @@ const h = t.hqAlbum;
 const base = (import.meta.env.PUBLIC_HQ_ALBUM_BASE || site.hqAlbums.baseUrl || '').replace(/\/$/, '');
 ---
 
-<BaseLayout title={h.title} description={h.intro} noindex noReferrer>
+<BaseLayout title={h.title} description={h.intro} image={cardImage('album-code')} noindex noReferrer>
   <section class="container container--wide hq" data-hq data-base={base}>
     <!-- Schritt 1: Code eingeben -->
     <div class="hq-gate" data-gate>

@@ -22,7 +22,8 @@ export interface Props {
 const { title, description = site.description, image, noindex = false, noReferrer = false, type = 'website', jsonLd } =
   Astro.props;
 
-const fullTitle = title ? `${title} – ${site.name}` : `${site.name} – ${site.claim.replace(/\.$/, '')}`;
+// Titel mit Namen: im Browser-Tab und beim Teilen sieht man sofort, von wem der Link ist („Hilda – Setcard · Jesko Dorner“)
+const fullTitle = title ? `${title} · ${site.name}` : `${site.name} – ${site.claim.replace(/\.$/, '')}`;
 const is404 = Astro.url.pathname.startsWith('/404');
 const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
 const imageUrl = image ? new URL(image.url, Astro.site ?? site.url).href : undefined;
@@ -56,7 +57,7 @@ const ld = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 <meta property="og:site_name" content={site.name} />
 <meta property="og:locale" content={site.ogLocale} />
 <meta property="og:type" content={type} />
-<meta property="og:title" content={title ?? site.name} />
+<meta property="og:title" content={fullTitle} />
 <meta property="og:description" content={description} />
 {!is404 && <meta property="og:url" content={canonical} />}
 {
@@ -70,7 +71,7 @@ const ld = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
   )
 }
 <meta name="twitter:card" content={imageUrl ? 'summary_large_image' : 'summary'} />
-<meta name="twitter:title" content={title ?? site.name} />
+<meta name="twitter:title" content={fullTitle} />
 <meta name="twitter:description" content={description} />
 {imageUrl && <meta name="twitter:image" content={imageUrl} />}
 

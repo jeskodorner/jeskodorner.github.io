@@ -6,7 +6,7 @@ import EmailLink from '../components/EmailLink.astro';
 import portrait from '../assets/portrait.jpg';
 import { site } from '../config/site';
 import { useTranslations } from '../i18n';
-import { ogImage } from '../lib/images';
+import { cardImage } from '../lib/og';
 import { inlineMd } from '../lib/text';
 
 const t = useTranslations();
@@ -17,7 +17,7 @@ const Content = entry ? (await render(entry)).Content : null;
 const stations = data?.stations ?? [];
 const gear = data?.gear ?? [];
 const portraitAlt = data?.portraitAlt ?? `Porträt von ${site.name}`;
-const og = await ogImage(portrait);
+const og = cardImage('ueber-mich', portraitAlt);
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -29,7 +29,7 @@ const jsonLd = {
 <BaseLayout
   title={t.about.title}
   description={data?.lead ?? `Über ${site.name}`}
-  image={{ ...og, alt: portraitAlt }}
+  image={og}
   type="profile"
   jsonLd={jsonLd}
 >

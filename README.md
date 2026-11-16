@@ -104,7 +104,7 @@ photos.config.json          ← Einstellungen für die Bildverarbeitung (Größe
 **Portfolio:** In `startseite.md` legt die Liste `showroom` fest, welche Fotos ausgewählt sind, in welcher
 Reihenfolge und unter welchem Namen. Sie erscheinen auf der Seite **/portfolio/** als kleine Ausstellung (jedes Foto
 einzeln, linksbündig untereinander, der Name immer mittig zum Foto: am Laptop daneben auf halber Höhe, am Handy mittig darunter; ein Klick öffnet direkt dort die Lightbox mit dem ganzen Album ab diesem Foto, ohne die Albumseite)
-und liefern das Vorschaubild der Startseite für Link-Vorschauen.
+und liefern das Foto für die Vorschaukarte der Startseite (siehe „Vorschau beim Teilen“).
 
 ```yaml
 showroom:
@@ -672,6 +672,17 @@ Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer 
 - **Fokusrahmen** folgt der Form des Elements (runde Knöpfe bekommen einen runden Rahmen).
 - **Abschluss mit klarer Handlung:** Am Ende des Portfolios steht „Schreib mir“ als gefüllter Knopf, daneben der
   Weg zur Galerie.
+
+**Vorschau beim Teilen** (WhatsApp, iMessage, Instagram, …): Jede Seite und jedes Album hat eine eigene
+Vorschaukarte (1200 × 630 px), die beim Bauen automatisch entsteht (`src/lib/og.ts`, Dateien unter `/og/…`). Links ein
+Feld in Ultramarin mit „JESKO DORNER“ (Climate Crisis) und dem Titel der Seite (Instrument Serif), rechts das Foto,
+zugeschnitten auf seinen Bildschwerpunkt (Feld `focus` beim Bild; ohne Angabe bei Hochformaten etwas über der Mitte).
+Startseite und Portfolio zeigen das erste Foto aus `showroom`, Galerie das neueste Album, Film das erste Standbild,
+Über mich das Porträt, jedes Album sein Vorschaubild (`cover`). Kontakt, Impressum, Datenschutz und die Albumseite mit
+Code bekommen eine Karte nur in Ultramarin. Der Titel beim Teilen enthält immer den Namen, z. B.
+„Hilda – Setcard · Jesko Dorner“. Hinweis: Ein geteilter Link auf ein einzelnes Foto (`#bild-3`) zeigt die Karte des
+Albums – mehr gibt eine statische Seite nicht her. WhatsApp und Co. merken sich alte Vorschauen eine Weile; neue
+Karten erscheinen dort manchmal erst nach Tagen.
 
 **Browser-Symbol** (Favicon): ein weißes „J“ aus Instrument Serif auf Ultramarin, als `public/favicon.svg`, dazu
 `public/favicon.ico` (32 px, für ältere Browser) und `public/apple-touch-icon.png` (180 px, Home-Bildschirm). Der

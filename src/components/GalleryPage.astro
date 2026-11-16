@@ -9,7 +9,8 @@ import AlbumRequest from './AlbumRequest.astro';
 import Icon from './Icon.astro';
 import Picture from './Picture.astro';
 import { getNeighbours, type Gallery } from '../lib/galleries';
-import { ogImage, responsive } from '../lib/images';
+import { responsive } from '../lib/images';
+import { cardImage } from '../lib/og';
 import { useTranslations, formatMonth } from '../i18n';
 import { site } from '../config/site';
 import { tidyTitle } from '../lib/text';
@@ -21,7 +22,7 @@ export interface Props {
 const { gallery } = Astro.props;
 const t = useTranslations();
 const { prev, next } = await getNeighbours(gallery);
-const og = await ogImage(gallery.cover.src);
+const og = cardImage(`album/${gallery.slug}`, gallery.cover.alt);
 const absUrl = new URL(gallery.url, Astro.site ?? site.url).href;
 const hasBody = Boolean(gallery.entry.body?.trim());
 const { Content } = hasBody ? await render(gallery.entry) : { Content: null };
@@ -61,7 +62,7 @@ const jsonLd = gallery.isUnlisted
 <BaseLayout
   title={gallery.title}
   description={gallery.description}
-  image={{ ...og, alt: gallery.cover.alt }}
+  image={og}
   noindex={gallery.isUnlisted}
   noReferrer={gallery.isUnlisted}
   jsonLd={jsonLd}

@@ -10,12 +10,12 @@ import EmailLink from '../components/EmailLink.astro';
 import { getSelectedWorks } from '../lib/showroom';
 import { photoData } from '../lib/lightbox-data';
 import type { Gallery } from '../lib/galleries';
-import { ogImage } from '../lib/images';
+import { cardImage } from '../lib/og';
 import { useTranslations } from '../i18n';
 
 const t = useTranslations();
 const works = await getSelectedWorks();
-const og = works[0] ? await ogImage(works[0].image.src) : undefined;
+const og = cardImage('portfolio', works[0]?.image.alt);
 
 // Für jedes Album im Portfolio die Lightbox-Daten aller Fotos (unsichtbar) – so lässt sich das ganze Album
 // direkt hier durchblättern, ohne die Albumseite zu öffnen

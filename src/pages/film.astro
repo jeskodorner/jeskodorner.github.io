@@ -6,13 +6,14 @@ import YouTube from '../components/YouTube.astro';
 import Icon from '../components/Icon.astro';
 import { useTranslations } from '../i18n';
 import { tidyTitle } from '../lib/text';
+import { cardImage } from '../lib/og';
 
 const t = useTranslations();
 const films = (await getCollection('films')).sort((a, b) => a.data.order - b.data.order || (b.data.year ?? 0) - (a.data.year ?? 0));
 const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (await render(f)).Content })));
 ---
 
-<BaseLayout title={t.film.title} description={`${t.film.title}: ${t.film.intro}`}>
+<BaseLayout title={t.film.title} description={t.film.intro} image={cardImage('film', films.find((f) => f.data.still)?.data.stillAlt)}>
   <section class="container container--wide head">
     <h1 class="display display-1">{t.film.title}</h1>
     <p class="lead muted">{t.film.intro}</p>

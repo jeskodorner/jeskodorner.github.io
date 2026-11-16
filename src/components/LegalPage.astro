@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { useTranslations } from '../i18n';
+import { cardImage } from '../lib/og';
 
 export interface Props {
   title: string;
@@ -13,7 +14,7 @@ const html = await Astro.slots.render('default');
 const hasPlaceholders = /class="ph[\s"]/.test(html);
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} image={cardImage(title === 'Impressum' ? 'impressum' : 'datenschutz')}>
   <article class="container container--wide legal">
     <h1 class="display display-2">{title}</h1>
     {hasPlaceholders && <p class="warning" role="note"><strong>Hinweis:</strong> {t.legal.placeholder}</p>}

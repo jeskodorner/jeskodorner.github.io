@@ -2,16 +2,16 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Picture from '../../components/Picture.astro';
 import { getPublicGalleries } from '../../lib/galleries';
-import { ogImage } from '../../lib/images';
+import { cardImage } from '../../lib/og';
 import { useTranslations, formatMonth } from '../../i18n';
 import { tidyTitle } from '../../lib/text';
 
 const t = useTranslations();
 const galleries = await getPublicGalleries();
-const og = galleries[0] ? await ogImage(galleries[0].cover.src) : undefined;
+const og = cardImage('galerie', galleries[0]?.cover.alt);
 ---
 
-<BaseLayout title={t.galleries.title} description={`${t.galleries.title}: ${t.galleries.intro}`} image={og}>
+<BaseLayout title={t.galleries.title} description={t.galleries.intro} image={og}>
   <section class="container container--wide head">
     <h1 class="display display-1">{t.galleries.title}</h1>
     <p class="lead muted rise">{t.galleries.intro}</p>
