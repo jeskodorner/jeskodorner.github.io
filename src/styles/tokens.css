@@ -63,11 +63,15 @@
   --scrim: 11 11 11;
 
   /* Schriften – lokal eingebunden (keine Google-Fonts-CDN) */
-  /* Titel: Instrument Serif (nur eine Stärke, normal und kursiv); vorher Anybody, sehr fett und schmal */
-  --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  /* Titel und Menü: Bodoni Moda (Modemagazin-Antiqua, Stärke und optische Größe variabel, src/styles/fonts.css);
+     vorher Instrument Serif, davor Anybody */
+  --font-display: 'Bodoni Moda Variable', Didot, 'Bodoni 72', Georgia, serif;
+  /* Stärke der Titelschrift: etwas über „Regular“, damit die Haarstriche auf Fotos und Farbe stehen bleiben */
+  --display-wght: 500;
   /* nur der große Name auf Startseite und Menü: Climate Crisis, sehr fett und breit */
   --font-name: 'Climate Crisis Variable', 'Arial Black', sans-serif;
-  --font-sans: 'Archivo Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Text, Knöpfe, Etiketten: Libre Franklin (Franklin Gothic, Zeitungs- und Magazinklassiker); vorher Archivo */
+  --font-sans: 'Libre Franklin Variable', 'Franklin Gothic Medium', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   /* Fließende Schriftgrößen 360 px → 2560 px */
   --fs-xs: 0.8125rem;
