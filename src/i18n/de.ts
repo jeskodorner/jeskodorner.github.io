@@ -22,8 +22,8 @@ export const de = {
     top: 'Nach oben',
   },
   home: {
-    /** Bildunterschrift auf der Startseite: Link ins Album */
-    viewAlbum: 'Album ansehen',
+    /** Bildunterschrift auf der Startseite: Link zur Mappe des Albums */
+    viewMappe: 'Mappe ansehen',
     cta: 'Portfolio ansehen',
     galleryLink: 'Galerie',
     selected: 'Portfolio',
@@ -48,6 +48,12 @@ export const de = {
     count: (n: number) => (n === 1 ? '1 Arbeit' : `${n} Arbeiten`),
     toGallery: 'Galerie ansehen',
     write: 'Schreib mir',
+  },
+  mappe: {
+    /** Knopf unten auf der Mappe */
+    toAlbum: 'Ganzes Album ansehen',
+    /** Zeile darunter, z. B. „30 Bilder im Album“ */
+    inAlbum: (n: number) => (n === 1 ? '1 Bild im Album' : `${n} Bilder im Album`),
   },
   galleries: {
     title: 'Galerie',

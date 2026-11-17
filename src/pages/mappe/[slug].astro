@@ -1,0 +1,148 @@
+---
+/**
+ * Mappe: eine ruhige Übersicht zu einem Album aus dem Portfolio, wie eine Fotomappe zum Durchblättern – Titel, Monat,
+ * eine Auswahl der Fotos groß untereinander (jedes für sich, mit Schatten wie an der Wand), fast kein Text, unten
+ * „Ganzes Album ansehen →“. Erreichbar über „Mappe ansehen →“ auf der Startseite.
+ * Welche Fotos: src/lib/mappe.ts (Liste `mappe:` im Album oder automatisch bis zu 8). Ein Klick auf ein Foto öffnet
+ * die Lightbox mit dem ganzen Album ab diesem Foto, direkt hier (wie im Portfolio).
+ */
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Picture from '../../components/Picture.astro';
+import Icon from '../../components/Icon.astro';
+import { getMappen, mappeImages } from '../../lib/mappe';
+import type { Gallery, GalleryImage } from '../../lib/galleries';
+import { photoData } from '../../lib/lightbox-data';
+import { cardImage } from '../../lib/og';
+import { tidyTitle } from '../../lib/text';
+import { useTranslations, formatMonth } from '../../i18n';
+
+export async function getStaticPaths() {
+  const mappen = await getMappen();
+  return mappen.map(({ gallery, lead }) => ({ params: { slug: gallery.slug }, props: { gallery, lead } }));
+}
+
+interface Props {
+  gallery: Gallery;
+  lead: GalleryImage;
+}
+
+const { gallery: g, lead } = Astro.props;
+const t = useTranslations();
+const images = mappeImages(g, lead);
+const meta = [formatMonth(g.date), g.location].filter(Boolean).join(' · ');
+// Lightbox-Daten des ganzen Albums (unsichtbar): ein Klick auf ein Foto blättert durchs ganze Album
+const items = await Promise.all(g.images.map((img) => photoData(g, img)));
+const og = cardImage(`album/${g.slug}`, g.cover.alt);
+---
+
+<BaseLayout title={g.title} description={g.description} image={og}>
+  <section class="container container--wide head">
+    <h1 class="display display-1">{tidyTitle(g.title)}</h1>
+    <p class="label muted">{meta}</p>
+  </section>
+
+  <ol class="container container--wide mappe" role="list">
+    {
+      images.map((img) => {
+        const r = img.src.width / img.src.height;
+        return (
+          <li class="sheet" style={`--r:${r.toFixed(4)}`}>
+            <a class="sheet-link reveal" href={img.hashUrl} data-open-album={g.slug} data-photo={img.index}>
+              <Picture
+                src={img.src}
+                alt={img.alt}
+                sizes={r < 1 ? '(min-width: 700px) 50vw, 100vw' : '(min-width: 1100px) 1100px, 100vw'}
+                color={img.color}
+                lqip={img.lqip}
+                class="sheet-img"
+              />
+            </a>
+          </li>
+        );
+      })
+    }
+  </ol>
+
+  <ul class="album-src" hidden data-album-src={g.slug} data-count={g.images.length} data-title={g.title}>
+    {
+      items.map((it) => (
+        <li>
+          <a class="ph" href={it.set.largest.url} {...it.attrs}>
+            {g.title}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  {/* Ende der Mappe: der Weg ins ganze Album */}
+  <div class="container container--wide end">
+    <a class="btn btn--solid" href={g.url}>
+      {t.mappe.toAlbum} <Icon name="arrow-right" class="arrow" />
+    </a>
+    <p class="label muted">{t.mappe.inAlbum(g.images.length)}</p>
+  </div>
+</BaseLayout>
+
+<script>
+  import { initAlbumLinks } from '../../scripts/open-album';
+  initAlbumLinks();
+</script>
+
+<style>
+  .head {
+    padding-bottom: clamp(2.5rem, 6vw, 5rem);
+  }
+  /* Jedes Foto für sich, so groß, dass es fast einen Bildschirm füllt (Hochformate höchstens 78 % der
+     Bildschirmhöhe, Querformate höchstens 1100 px breit); dazwischen viel Luft wie beim Blättern in einer Mappe.
+     Wie im Portfolio: am Laptop linksbündig unter dem Titel, am Handy mittig. */
+  .mappe {
+    --mh: min(78svh, 52rem);
+    list-style: none;
+    display: grid;
+    justify-items: start;
+    gap: clamp(4rem, 9vw, 8rem);
+    margin: 0 auto;
+    padding-block: 0;
+  }
+  @media (max-width: 899.98px) {
+    .mappe {
+      justify-items: center;
+    }
+  }
+  .sheet {
+    display: contents;
+  }
+  .sheet-link {
+    display: block;
+    width: min(100%, 1100px, calc(var(--mh) * var(--r)));
+    overflow: hidden;
+    box-shadow: var(--hang-shadow);
+    cursor: zoom-in;
+    outline-offset: 4px;
+  }
+  .sheet-link :global(.sheet-img) {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: transform 0.9s var(--ease);
+  }
+  @media (hover: hover) {
+    .sheet-link:hover :global(.sheet-img) {
+      transform: scale(var(--hover-zoom));
+    }
+  }
+  /* Ende: Knopf unter dem letzten Foto (Laptop linksbündig, Handy mittig), darunter wie viele Bilder das Album hat */
+  .end {
+    display: grid;
+    justify-items: start;
+    gap: 0.9rem;
+    padding-top: var(--section);
+  }
+  @media (max-width: 899.98px) {
+    .end {
+      justify-items: center;
+      text-align: center;
+    }
+  }
+</style>

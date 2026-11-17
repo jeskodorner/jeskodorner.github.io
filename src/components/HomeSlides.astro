@@ -1,10 +1,11 @@
 ---
 /**
- * Fotofläche der Startseite (Richtung „Bild neben Name“): immer EIN Foto, ganz und scharf, darunter eine Zeile mit
- * Album, Monat, „Album ansehen →“ und dem Zähler. Die Fotos kommen aus dem Portfolio (Liste „showroom“ in
+ * Fotofläche der Startseite (Richtung „Bild neben Name“): immer EIN Foto, ganz und scharf, darunter die
+ * Bildunterschrift: Albumname, Monat und „Mappe ansehen →“. Die Fotos kommen aus dem Portfolio (Liste „showroom“ in
  * src/content/pages/startseite.md) in dieser Reihenfolge und wechseln alle 7 Sekunden mit einer ruhigen Überblendung.
  * Ein Foto wird erst gezeigt, wenn es fertig geladen ist. Ohne JavaScript oder mit „Bewegung reduzieren“: nur das
- * erste Foto. Ein Klick aufs Foto oder auf die Zeile öffnet genau dieses Foto im Album.
+ * erste Foto. Ein Klick aufs Foto oder auf die Bildunterschrift öffnet die Mappe des Albums (pages/mappe/[slug].astro):
+ * eine ruhige Übersicht mit einer Auswahl der Fotos, unten der Weg ins ganze Album.
  * Größe und Lage bestimmt BlueMenu.astro (Laptop: rechte Spalte, Handy: ganz oben, randlos).
  * Die frühere Doppelbelichtung (zwei Fotos im Modus „Aufhellen“) liegt im Git-Tag alte-version-startseite-ueberblendung.
  */
@@ -12,6 +13,7 @@ import Picture from './Picture.astro';
 import type { WorkItem } from '../lib/showroom';
 import { useTranslations, formatMonth } from '../i18n';
 import { tidyTitle } from '../lib/text';
+import { mappeUrl } from '../lib/mappe';
 
 export interface Props {
   works: WorkItem[];
@@ -23,15 +25,15 @@ const slides = works.map((w) => ({
   w,
   title: tidyTitle(w.name ?? w.album),
   meta: [formatMonth(w.gallery.date), w.gallery.location].filter(Boolean).join(' · '),
+  href: mappeUrl(w.gallery),
 }));
-const pad = (n: number) => String(n).padStart(2, '0');
 const first = slides[0];
 ---
 
 {
   first && (
     <div class="hs" data-slides>
-      <a class="hs-frame" href={first.w.photoHref} tabindex="-1" aria-hidden="true" data-slide-link>
+      <a class="hs-frame" href={first.href} tabindex="-1" aria-hidden="true" data-slide-link>
         {slides.map((s, i) => (
           <Picture
             src={s.w.image.src}
@@ -48,22 +50,17 @@ const first = slides[0];
         ))}
       </a>
       <p class="hs-cap">
-        <a class="hs-link" href={first.w.photoHref} data-slide-link>
+        <a class="hs-link" href={first.href} data-slide-link>
           <span class="hs-title" data-slide-title>{first.title}</span>
           <span class="hs-meta label">
-            <span class="hs-when"><span data-slide-meta>{first.meta}</span> · </span><span class="hs-go">{t.home.viewAlbum} →</span>
+            <span class="hs-when"><span data-slide-meta>{first.meta}</span> · </span><span class="hs-go">{t.home.viewMappe} →</span>
           </span>
         </a>
-        {slides.length > 1 && (
-          <span class="hs-count label" aria-hidden="true">
-            <span data-slide-n>{pad(1)}</span> / {pad(slides.length)}
-          </span>
-        )}
       </p>
       <script
         type="application/json"
         data-slide-data
-        set:html={JSON.stringify(slides.map((s) => ({ href: s.w.photoHref, title: s.title, meta: s.meta })))}
+        set:html={JSON.stringify(slides.map((s) => ({ href: s.href, title: s.title, meta: s.meta })))}
       />
     </div>
   )
@@ -90,7 +87,6 @@ const first = slides[0];
     const links = box.querySelectorAll<HTMLAnchorElement>('[data-slide-link]');
     const title = box.querySelector<HTMLElement>('[data-slide-title]');
     const meta = box.querySelector<HTMLElement>('[data-slide-meta]');
-    const num = box.querySelector<HTMLElement>('[data-slide-n]');
     const cap = box.querySelector<HTMLElement>('.hs-cap');
     let i = 0;
 
@@ -109,7 +105,6 @@ const first = slides[0];
             if (title) title.textContent = d.title;
             if (meta) meta.textContent = d.meta;
           }
-          if (num) num.textContent = String(n + 1).padStart(2, '0');
           cap?.classList.remove('is-changing');
         }, 350);
         i = n;
@@ -154,7 +149,7 @@ const first = slides[0];
     object-fit: cover;
   }
   /* Bildunterschrift, immer gleich aufgebaut (auch bei langen Albumnamen): oben der Albumname in der Titelschrift
-     kursiv (eine Zeile, notfalls mit …), darunter Monat · „Album ansehen →“; rechts der Zähler. So bleibt die
+     kursiv (eine Zeile, notfalls mit …), darunter Monat · „Mappe ansehen →“. So bleibt die
      Bildunterschrift immer gleich hoch und das Foto darüber springt beim Wechsel nicht. */
   .hs-cap {
     display: flex;
@@ -188,7 +183,7 @@ const first = slides[0];
   .hs-meta {
     white-space: nowrap;
   }
-  /* Überfahren: „Album ansehen →“ bekommt das Koralle-Feld (die Handlung, nicht der Name) */
+  /* Überfahren: „Mappe ansehen →“ bekommt das Koralle-Feld (die Handlung, nicht der Name) */
   .hs-go {
     padding: 0.15em 0.3em;
     margin: -0.15em -0.3em;
@@ -199,11 +194,6 @@ const first = slides[0];
   .hs-link:hover .hs-go {
     background: var(--hover);
     color: var(--ink);
-  }
-  .hs-count {
-    margin-left: auto;
-    flex: none;
-    font-variant-numeric: tabular-nums;
   }
   /* Handy: Monat weglassen, damit die Zeile in eine Zeile passt */
   @media (max-width: 599.98px) {

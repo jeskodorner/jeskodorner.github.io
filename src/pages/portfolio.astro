@@ -61,22 +61,9 @@ const albumData = await Promise.all(
 </BaseLayout>
 
 <script>
-  import { initLightbox } from '../scripts/lightbox';
-  // Ein Lightbox-Album pro Album; ein Klick auf ein Foto öffnet sein Album ab genau diesem Foto
-  const boxes = new Map<string, { lb: NonNullable<ReturnType<typeof initLightbox>>; list: HTMLElement }>();
-  for (const list of document.querySelectorAll<HTMLElement>('[data-album-src]')) {
-    const lb = initLightbox({ gallery: list, share: false, fade: true });
-    if (lb && list.dataset.albumSrc) boxes.set(list.dataset.albumSrc, { lb, list });
-  }
-  for (const a of document.querySelectorAll<HTMLAnchorElement>('[data-open-album]')) {
-    a.addEventListener('click', (e) => {
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
-      const box = boxes.get(a.dataset.openAlbum ?? '');
-      if (!box) return;
-      e.preventDefault();
-      box.lb.loadAndOpen(Number(a.dataset.photo) - 1, { gallery: box.list });
-    });
-  }
+  // Ein Klick auf ein Foto öffnet sein Album ab genau diesem Foto (gemeinsam mit der Mappe)
+  import { initAlbumLinks } from '../scripts/open-album';
+  initAlbumLinks();
 </script>
 
 <style>

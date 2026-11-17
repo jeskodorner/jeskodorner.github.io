@@ -210,6 +210,7 @@ und festen Seitenverhältnissen, damit beim Laden nichts springt.
 | `location` | | Ort |
 | `description` | ja | 1–2 Sätze für Kachel, Suchmaschinen und Link-Vorschau |
 | `cover` | | Dateiname des Vorschaubilds. Es erscheint in der Galerie-Übersicht und im Portfolio, wenn dort kein `bild` angegeben ist. Ohne Angabe wird das erste Bild genommen. |
+| `mappe` | | Nur für Alben im Portfolio: Fotos der Mappe (`/mappe/<slug>/`) als Liste von Dateinamen, z. B. `mappe: [a.jpg, b.jpg]`. Ohne Angabe: das Portfolio-Foto und bis zu 7 weitere, gleichmäßig über das Album verteilt. |
 | `visibility` | | `public` (Standard) oder `unlisted` |
 | `showExif` | | Aufnahmedaten in den Lightbox-Details zeigen (Standard `true`) |
 | `downloadUrl` | | Link zum Download der ganzen Galerie (ZIP/Ordner) |
@@ -605,8 +606,15 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   das Menü (etwa halb so groß wie der Name) und Instagram; rechts ein Foto aus dem Portfolio, ganz und
   unbeschnitten, unten links auf seiner Bildunterschrift stehend. Die Bildunterschrift ist immer gleich aufgebaut:
   oben der Albumname (Titelschrift kursiv, eine Zeile, bei sehr langen Namen am Handy mit „…“), darunter
-  Monat · „Album ansehen →“, rechts der Zähler „01 / 05“ – so bleibt sie immer gleich hoch und das Foto springt nicht.
-  Sie führt genau zu diesem Foto im Album; beim Überfahren bekommt „Album ansehen →“ das Koralle-Feld. Am Handy und Tablet
+  Monat · „Mappe ansehen →“ – so bleibt sie immer gleich hoch und das Foto springt nicht. Foto und Bildunterschrift
+  führen zur Mappe des Albums; beim Überfahren bekommt „Mappe ansehen →“ das Koralle-Feld.
+- **Mappe** (`src/pages/mappe/[slug].astro`, Auswahl in `src/lib/mappe.ts`): je Album aus dem Portfolio eine ruhige
+  Übersicht wie eine Fotomappe, einfacher als das Album: Titel und Monat (linksbündig wie auf allen Seiten), dann
+  eine Auswahl der Fotos groß untereinander, jedes für sich mit Schatten (am Laptop linksbündig, am Handy mittig),
+  fast ohne Text. Vorne das Foto von der Startseite, dazu bis zu 7 weitere gleichmäßig über das Album verteilt (oder
+  genau die Fotos aus `mappe:` im Album). Ein Klick auf ein Foto öffnet die Lightbox mit dem ganzen Album ab diesem
+  Foto (wie im Portfolio, gemeinsames Skript `src/scripts/open-album.ts`). Unten „Ganzes Album ansehen →“ und wie
+  viele Bilder das Album hat. Am Handy und Tablet
   hochkant steht das Foto ganz oben, randlos (hier im Ausschnitt nach dem Bildschwerpunkt), darunter die
   Bildunterschrift (ohne Monat), dann Name, Menü, Instagram – ohne Scrollen, auch auf kleinen Handys. Die Fotos
   wechseln alle 7 Sekunden mit einer ruhigen Überblendung, in der Reihenfolge der Liste `showroom`; ein Foto erscheint

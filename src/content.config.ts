@@ -62,6 +62,9 @@ const galleries = defineCollection({
       description: z.string().min(1, { error: 'Beschreibung fehlt.' }).max(300),
       /** Dateiname des Titelbilds; leer = erstes Bild */
       cover: z.string().optional(),
+      /** Fotos der „Mappe“ (Seite /mappe/<slug>/, nur Alben aus dem Portfolio), Dateinamen in Reihenfolge.
+       *  Leer = das Portfolio-Foto und bis zu 7 weitere, gleichmäßig über das Album verteilt. */
+      mappe: z.array(z.string()).optional(),
       /** Galeriefarbe der Galerie. Ohne Angabe wird automatisch durchgewechselt. */
       color: z.enum(['pink', 'blue', 'lime', 'orange', 'violet']).optional(),
       visibility: z.enum(['public', 'unlisted']).default('public'),
