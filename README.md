@@ -702,7 +702,8 @@ Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer 
 - **Symbole aus einem Satz:** alle aus `Icon.astro` mit derselben Linienstärke, auch Pfeile (keine Pfeil-Zeichen
   aus der Schrift mehr).
 - **Gruppen durch Abstand:** Was zusammengehört, steht enger (Filmtitel und Angaben), der nächste Block mit mehr Luft.
-- **Überschriften umbrechen sauber:** ausgeglichene Zeilen; ein Gedankenstrich bleibt beim Wort davor
+- **Überschriften umbrechen sauber:** nie mitten im Wort (die größte Überschrift ist am Handy so bemessen, dass
+  auch „Einzelbilder“ oder „Ausstellung“ in eine Zeile passen, `--fs-h1`); ausgeglichene Zeilen; ein Gedankenstrich bleibt beim Wort davor
   (`tidyTitle` in `src/lib/text.ts`), Monat und Jahr werden nicht getrennt.
 - **Optisch bündig:** Große Überschriften sind um 0,015 Schrifthöhen nach links gerückt, weil Serifenbuchstaben
   links Luft haben; Adressen und Rechtliches in der Fußzeile stehen auf einer Grundlinie.

@@ -84,7 +84,8 @@
   --fs-lead: clamp(1.25rem, 1.05rem + 0.8vw, 1.9rem);
   --fs-h3: clamp(1.9rem, 1.4rem + 2vw, 3.2rem);
   --fs-h2: clamp(2.8rem, 1.4rem + 6vw, 8rem);
-  --fs-h1: clamp(4rem, 1.2rem + 12vw, 14rem);
+  /* am Handy etwas kleiner: auch lange Wörter wie „Einzelbilder“ oder „Ausstellung“ passen in Bodoni in eine Zeile */
+  --fs-h1: clamp(2.9rem, 0.4rem + 13.3vw, 14rem);
   --fs-mega: clamp(4.5rem, 0.5rem + 18vw, 24rem);
 
   /* Abstände */

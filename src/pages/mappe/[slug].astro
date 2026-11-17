@@ -43,7 +43,7 @@ const og = cardImage(`album/${g.slug}`, g.cover.alt);
 
   <ol class="container container--wide mappe" role="list">
     {
-      images.map((img) => {
+      images.map((img, i) => {
         const r = img.src.width / img.src.height;
         return (
           <li class="sheet" style={`--r:${r.toFixed(4)}`}>
@@ -54,6 +54,8 @@ const og = cardImage(`album/${g.slug}`, g.cover.alt);
                 sizes={r < 1 ? '(min-width: 700px) 50vw, 100vw' : '(min-width: 1100px) 1100px, 100vw'}
                 color={img.color}
                 lqip={img.lqip}
+                loading={i === 0 ? 'eager' : 'lazy'}
+                fetchpriority={i === 0 ? 'high' : undefined}
                 class="sheet-img"
               />
             </a>
