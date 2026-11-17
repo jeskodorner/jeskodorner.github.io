@@ -24,6 +24,8 @@ export const de = {
   home: {
     /** Zeile unter dem Namen auf der Startseite: was Jesko macht (der erste Bildschirm sagt es sofort) */
     claim: 'Fotografie',
+    /** Bildunterschrift auf der Startseite: Link ins Album */
+    viewAlbum: 'Album ansehen',
     cta: 'Portfolio ansehen',
     galleryLink: 'Galerie',
     selected: 'Portfolio',
