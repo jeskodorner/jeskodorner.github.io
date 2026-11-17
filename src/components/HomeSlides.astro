@@ -2,7 +2,11 @@
 /**
  * Fotofläche der Startseite (Richtung „Bild neben Name“): immer EIN Foto, ganz und scharf, darunter die
  * Bildunterschrift: Albumname, Monat und „Mappe ansehen →“. Die Fotos kommen aus dem Portfolio (Liste „showroom“ in
- * src/content/pages/startseite.md) in dieser Reihenfolge und wechseln alle 7 Sekunden mit einer ruhigen Überblendung.
+ * src/content/pages/startseite.md) in dieser Reihenfolge und wechseln alle 7 Sekunden: Das neue Foto blendet weich
+ * über dem alten ein (das alte bleibt darunter stehen, bis das neue ganz da ist – keine leere Fläche dazwischen) und
+ * setzt sich dabei langsam aus einer leichten Vergrößerung. Alle Fotos füllen dieselbe Fläche (Laptop 4:3, Handy ein
+ * Streifen), zugeschnitten auf ihren Bildschwerpunkt – so gibt es keinen Formatwechsel; ganz zu sehen sind sie in
+ * der Mappe.
  * Ein Foto wird erst gezeigt, wenn es fertig geladen ist. Ohne JavaScript oder mit „Bewegung reduzieren“: nur das
  * erste Foto. Ein Klick aufs Foto oder auf die Bildunterschrift öffnet die Mappe des Albums (pages/mappe/[slug].astro):
  * eine ruhige Übersicht mit einer Auswahl der Fotos, unten der Weg ins ganze Album.
@@ -24,7 +28,7 @@ const t = useTranslations();
 const slides = works.map((w) => ({
   w,
   title: tidyTitle(w.name ?? w.album),
-  meta: [formatMonth(w.gallery.date), w.gallery.location].filter(Boolean).join(' · '),
+  meta: formatMonth(w.gallery.date), // Monat und Jahr (der Ort steht in der Mappe)
   href: mappeUrl(w.gallery),
 }));
 const first = slides[0];
@@ -68,6 +72,7 @@ const first = slides[0];
 
 <script>
   const STEP = 7000; // ein neues Foto alle 7 s
+  const FADE = 1800; // Dauer der Überblendung (wie im CSS)
   const decoded = (layer: HTMLElement) => {
     const img = layer.querySelector('img');
     if (!img) return Promise.resolve();
@@ -89,13 +94,20 @@ const first = slides[0];
     const meta = box.querySelector<HTMLElement>('[data-slide-meta]');
     const cap = box.querySelector<HTMLElement>('.hs-cap');
     let i = 0;
+    let z = 1;
+    layers[0]!.style.zIndex = String(z);
 
     const tick = async () => {
       if (!document.hidden) {
         const n = (i + 1) % layers.length;
         await Promise.race([decoded(layers[n]!), timeout(5000)]); // erst laden, dann überblenden
-        layers[n]!.classList.add('is-on');
-        layers[i]!.classList.remove('is-on');
+        // Das neue Foto liegt oben und blendet ein; das alte bleibt darunter voll sichtbar und geht erst, wenn das
+        // neue ganz da ist – so scheint nie die Fläche dahinter durch
+        const old = layers[i]!;
+        const next = layers[n]!;
+        next.style.zIndex = String(++z);
+        next.classList.add('is-on');
+        setTimeout(() => old.classList.remove('is-on'), FADE + 100);
         // Bildunterschrift kurz aus- und mit dem neuen Foto wieder einblenden
         cap?.classList.add('is-changing');
         setTimeout(() => {
@@ -130,14 +142,14 @@ const first = slides[0];
     display: block;
     min-height: 0;
     overflow: hidden;
-    background: rgb(0 0 0 / 0.12);
   }
+  /* Überblendung: weich (langsam an, langsam aus), 1,8 s; das neue Foto setzt sich dabei aus 4 % Vergrößerung */
   .hs :global(.hs-layer) {
     position: absolute;
     inset: 0;
     display: block;
     opacity: 0;
-    transition: opacity 1.2s var(--ease);
+    transition: opacity 1.8s cubic-bezier(0.45, 0, 0.25, 1);
   }
   .hs :global(.hs-layer.is-on) {
     opacity: 1;
@@ -147,6 +159,12 @@ const first = slides[0];
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transform: scale(1.04);
+    transition: transform 0s 1.9s; /* unsichtbar zurücksetzen, sobald das Foto ausgeblendet ist */
+  }
+  .hs :global(.hs-layer.is-on .hs-img) {
+    transform: none;
+    transition: transform 6s cubic-bezier(0.2, 0.6, 0.2, 1);
   }
   /* Bildunterschrift, immer gleich aufgebaut (auch bei langen Albumnamen): oben der Albumname in der Titelschrift
      kursiv (eine Zeile, notfalls mit …), darunter Monat · „Mappe ansehen →“. So bleibt die
@@ -180,42 +198,42 @@ const first = slides[0];
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  /* Überfahren: die ganze Zeile „Monat · Mappe ansehen →“ bekommt das Koralle-Feld (der Name bleibt) */
   .hs-meta {
+    justify-self: start;
     white-space: nowrap;
-  }
-  /* Überfahren: „Mappe ansehen →“ bekommt das Koralle-Feld (die Handlung, nicht der Name) */
-  .hs-go {
     padding: 0.15em 0.3em;
     margin: -0.15em -0.3em;
     transition:
       background-color 0.2s,
       color 0.2s;
   }
-  .hs-link:hover .hs-go {
+  .hs-link:hover .hs-meta {
     background: var(--hover);
     color: var(--ink);
   }
-  /* Handy: Monat weglassen, damit die Zeile in eine Zeile passt */
-  @media (max-width: 599.98px) {
-    .hs-when {
-      display: none;
+  /* sehr schmale Handys: etwas kleiner, damit „September 2026 · Mappe ansehen →“ in eine Zeile passt */
+  @media (max-width: 359.98px) {
+    .hs-meta {
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
     }
   }
-  /* Laptop: das Foto ganz zeigen (nicht beschneiden), unten links auf der Bildunterschrift stehend – Hoch- und
-     Querformate haben so dieselbe Unterkante und linke Kante */
+  /* Laptop: eine feste Fläche im Format 4:3, unten auf der Bildunterschrift stehend (auf niedrigen Bildschirmen
+     flacher) – jedes Foto füllt sie, Hoch- wie Querformat, also kein Formatwechsel beim Bildwechsel */
   @media (min-width: 1000px) {
     .hs-frame {
-      background: none;
-    }
-    .hs :global(.hs-img) {
-      object-fit: contain;
-      object-position: left bottom !important;
-      background: none !important;
+      align-self: end;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      max-height: 100%;
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .hs :global(.hs-layer) {
+    .hs :global(.hs-layer),
+    .hs :global(.hs-img) {
       transition: none;
+      transform: none;
     }
   }
 </style>

@@ -603,11 +603,13 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   mittig. Ab 700 px ist alles linksbündig.
 - **Startseite „Bild neben Name“** (seit 16. November 2026, `src/components/HomeSlides.astro` und `BlueMenu.astro`):
   Schrift steht nie auf dem Foto. Am Laptop (ab 1000 px) zwei Spalten: links auf Blau der Name zweizeilig, unten
-  das Menü (etwa halb so groß wie der Name) und Instagram; rechts ein Foto aus dem Portfolio, ganz und
-  unbeschnitten, unten links auf seiner Bildunterschrift stehend. Die Bildunterschrift ist immer gleich aufgebaut:
+  das Menü (etwa halb so groß wie der Name) und Instagram; rechts ein Foto aus dem Portfolio in einer festen Fläche
+  im Format 4:3, unten auf seiner Bildunterschrift stehend. Jedes Foto füllt diese Fläche (Ausschnitt nach dem
+  Bildschwerpunkt), so wechselt beim Bildwechsel nie das Format; ganz zu sehen sind die Fotos in der Mappe. Die Bildunterschrift ist immer gleich aufgebaut:
   oben der Albumname (Titelschrift kursiv, eine Zeile, bei sehr langen Namen am Handy mit „…“), darunter
-  Monat · „Mappe ansehen →“ – so bleibt sie immer gleich hoch und das Foto springt nicht. Foto und Bildunterschrift
-  führen zur Mappe des Albums; beim Überfahren bekommt „Mappe ansehen →“ das Koralle-Feld.
+  Monat und Jahr · „Mappe ansehen →“ – so bleibt sie immer gleich hoch und das Foto springt nicht. Foto und
+  Bildunterschrift führen zur Mappe des Albums; beim Überfahren bekommt die Zeile „Monat · Mappe ansehen →“ das
+  Koralle-Feld.
 - **Mappe** (`src/pages/mappe/[slug].astro`, Auswahl in `src/lib/mappe.ts`): je Album aus dem Portfolio eine ruhige
   Übersicht wie eine Fotomappe, einfacher als das Album: Titel und Monat (linksbündig wie auf allen Seiten), dann
   eine Auswahl der Fotos groß untereinander, jedes für sich mit Schatten (am Laptop linksbündig, am Handy mittig),
@@ -616,9 +618,10 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   Foto (wie im Portfolio, gemeinsames Skript `src/scripts/open-album.ts`). Unten „Ganzes Album ansehen →“ und wie
   viele Bilder das Album hat. Am Handy und Tablet
   hochkant steht das Foto ganz oben, randlos (hier im Ausschnitt nach dem Bildschwerpunkt), darunter die
-  Bildunterschrift (ohne Monat), dann Name, Menü, Instagram – ohne Scrollen, auch auf kleinen Handys. Die Fotos
-  wechseln alle 7 Sekunden mit einer ruhigen Überblendung, in der Reihenfolge der Liste `showroom`; ein Foto erscheint
-  erst fertig geladen. Mit „Bewegung reduzieren“ oder ohne JavaScript bleibt das erste Foto stehen.
+  Bildunterschrift, dann Name, Menü, Instagram – ohne Scrollen, auch auf kleinen Handys. Die Fotos wechseln alle
+  7 Sekunden in der Reihenfolge der Liste `showroom`: Das neue Foto blendet in 1,8 Sekunden weich über dem alten ein
+  und setzt sich dabei langsam aus einer leichten Vergrößerung; das alte bleibt darunter stehen, bis das neue ganz da
+  ist (nie eine leere Fläche dazwischen). Ein Foto erscheint erst fertig geladen. Mit „Bewegung reduzieren“ oder ohne JavaScript bleibt das erste Foto stehen.
 - **Frühere Startseite: Bildfeld mit Doppelbelichtung** (bis 16. November 2026, Git-Tag
   `alte-version-startseite-ueberblendung`, Datei `BlendLoop.astro`): Fotos aus dem Portfolio (Liste `showroom`),
   in normalen Farben im Modus „Aufhellen“ übereinandergelegt (wie eine Doppelbelichtung), immer 4:3. Es sind immer zwei zu sehen. Alle
