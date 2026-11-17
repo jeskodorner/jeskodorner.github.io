@@ -12,9 +12,13 @@ import HomeSlides from '../components/HomeSlides.astro';
 import { site } from '../config/site';
 import { getSelectedWorks } from '../lib/showroom';
 import { cardImage } from '../lib/og';
+import { preloadImage } from '../lib/images';
+import { HOME_SIZES, HOME_MAX_WIDTH } from '../lib/sizes';
 
 // Vorschaukarte für Link-Vorschauen (WhatsApp, Instagram …): src/lib/og.ts
 const works = await getSelectedWorks();
+// erstes Foto der Startseite schon im Kopf ankündigen
+const hero = works[0] ? await preloadImage(works[0].image.src, HOME_SIZES, HOME_MAX_WIDTH) : undefined;
 const og = cardImage('start', `${site.name} – Fotografie, Kamera und Film`);
 
 const jsonLd = {
@@ -27,7 +31,7 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout image={og} jsonLd={jsonLd} bare mainClass="home">
+<BaseLayout image={og} jsonLd={jsonLd} preload={hero} bare mainClass="home">
   <BlueMenu>
     <HomeSlides slot="aside" works={works} />
   </BlueMenu>

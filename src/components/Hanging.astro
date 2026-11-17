@@ -16,6 +16,7 @@ import type { WorkItem } from '../lib/showroom';
 import Picture from './Picture.astro';
 import { tidyTitle } from '../lib/text';
 import { mappeUrl } from '../lib/mappe';
+import { workSizes } from '../lib/sizes';
 
 export interface Props {
   items: WorkItem[];
@@ -26,7 +27,7 @@ const { items } = Astro.props;
 
 <ol class="hanging" role="list">
   {
-    items.map((it) => {
+    items.map((it, i) => {
       const r = it.image.src.width / it.image.src.height;
       return (
         <li class:list={['work', { 'work--portrait': r < 1 }]} style={`--r:${r.toFixed(4)}`}>
@@ -34,9 +35,11 @@ const { items } = Astro.props;
             <Picture
               src={it.image.src}
               alt={it.image.alt}
-              sizes={r < 1.2 ? '(min-width: 900px) 32vw, 90vw' : '(min-width: 900px) 46vw, 92vw'}
+              sizes={workSizes(r)}
               color={it.image.color}
               lqip={it.image.lqip}
+              loading={i === 0 ? 'eager' : 'lazy'}
+              fetchpriority={i === 0 ? 'high' : undefined}
               class="work-img"
             />
           </a>

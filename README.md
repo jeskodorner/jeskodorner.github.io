@@ -563,6 +563,23 @@ Falls du das je neu einrichten oder umziehen musst:
 
 `npm run optimize` zeigt die Gesamtgröße der Web-Versionen an. `npm run check-links` meldet die Größe der fertigen Seite.
 
+**Ladezeit (November 2026 optimiert, ohne Änderung am Aussehen).** Gemessen wie Google PageSpeed „Handy“ (langsames
+4G, gedrosselte CPU) wurde der Speed Index 1,4- bis 2,3-mal schneller, der erste sichtbare Inhalt kommt etwa doppelt
+so früh. Was dafür sorgt – bitte beibehalten:
+- **Stylesheets stehen direkt in jeder Seite** (`inlineStylesheets: 'always'` in `astro.config.mjs`): kein eigener Abruf
+  vor dem ersten Bild.
+- **Wichtigstes Bild im Kopf angekündigt** (`preload` an `BaseLayout`, erzeugt mit `preloadImage` aus `src/lib/images.ts`):
+  Startseite, Portfolio, Galerie, Über mich. Die `sizes`-Angaben dafür stehen in `src/lib/sizes.ts`, damit Bild und
+  Ankündigung genau gleich sind (sonst lädt der Browser doppelt).
+- **Schriften schlank:** Der Name nutzt die feste Climate Crisis (17 KB statt 49 KB, pixelgleich). Die kursive Bodoni
+  wird nur auf der Startseite vorab geladen.
+- **Startseite:** Nur das erste Foto lädt sofort, die übrigen eine Sekunde nach dem Laden der Seite.
+- **Fotoreihen sofort fertig:** Die Reihen in Alben und Galerie werden direkt nach der Liste im HTML verteilt
+  (`JustifyNow.astro`, Rechnung in `src/scripts/justify-layout.js`) statt erst nach dem Skript.
+- **Kleinste Bildgröße 320 px** (`WIDTHS` in `src/lib/images.ts`): Kacheln am Handy laden etwa halb so viele Daten.
+- **Nur sichtbare Bilder zuerst:** Erstes Portfolio-Foto, erste 4 Galerie-Kacheln und erste Album-Kacheln laden sofort,
+  der Rest erst beim Scrollen.
+
 ---
 
 ## 11. Design: Farben und Schriften

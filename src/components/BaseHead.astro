@@ -3,7 +3,7 @@ import displayFont from '../assets/fonts/bodoni-moda-latin-standard-normal.woff2
 import displayItalic from '../assets/fonts/bodoni-moda-latin-standard-italic.woff2?url';
 import sansFont from '../assets/fonts/libre-franklin-latin-wght-normal.woff2?url';
 // Name in der Kopfzeile: sofort laden, sonst steht das Logo beim Seitenwechsel kurz in einer Ersatzschrift
-import nameFont from '@fontsource-variable/climate-crisis/files/climate-crisis-latin-year-normal.woff2?url';
+import nameFont from '../assets/fonts/climate-crisis-latin-400-normal.woff2?url';
 import { site } from '../config/site';
 
 export interface Props {
@@ -17,14 +17,18 @@ export interface Props {
   noReferrer?: boolean;
   type?: 'website' | 'article' | 'profile';
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  /** Wichtigstes Bild der Seite (aus preloadImage in lib/images.ts): wird schon im Kopf angekündigt */
+  preload?: { srcset: string; sizes: string };
 }
 
-const { title, description = site.description, image, noindex = false, noReferrer = false, type = 'website', jsonLd } =
+const { title, description = site.description, image, noindex = false, noReferrer = false, type = 'website', jsonLd, preload } =
   Astro.props;
 
 // Titel mit Namen: im Browser-Tab und beim Teilen sieht man sofort, von wem der Link ist („Hilda – Setcard · Jesko Dorner“)
 const fullTitle = title ? `${title} · ${site.name}` : `${site.name} – ${site.claim.replace(/\.$/, '')}`;
 const is404 = Astro.url.pathname.startsWith('/404');
+// Kursive Titelschrift ist nur auf der Startseite sofort zu sehen (Menüpunkte, Bildunterschrift) – nur dort vorab laden
+const isHome = Astro.url.pathname === '/';
 const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
 const imageUrl = image ? new URL(image.url, Astro.site ?? site.url).href : undefined;
 const ld = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
@@ -48,8 +52,10 @@ const ld = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 <link rel="sitemap" href="/sitemap-index.xml" />
 <meta name="theme-color" content="#ffffff" />
 
+{/* Wichtigstes Bild zuerst ankündigen: lädt parallel zur Seite statt erst, wenn der Browser beim <img> ankommt */}
+{preload && <link rel="preload" as="image" type="image/avif" imagesrcset={preload.srcset} imagesizes={preload.sizes} fetchpriority="high" />}
 <link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin />
-<link rel="preload" href={displayItalic} as="font" type="font/woff2" crossorigin />
+{isHome && <link rel="preload" href={displayItalic} as="font" type="font/woff2" crossorigin />}
 <link rel="preload" href={sansFont} as="font" type="font/woff2" crossorigin />
 <link rel="preload" href={nameFont} as="font" type="font/woff2" crossorigin />
 

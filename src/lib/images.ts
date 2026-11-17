@@ -1,8 +1,9 @@
 import { getImage } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 
-/** Breiten, in denen jedes Bild erzeugt wird (srcset). Überall gleich → keine Doppelungen im Build. */
-export const WIDTHS = [480, 800, 1200, 1600, 2400] as const;
+/** Breiten, in denen jedes Bild erzeugt wird (srcset). Überall gleich → keine Doppelungen im Build.
+ *  320 für kleine Kacheln am Handy (Alben, Mappen, Galerie): spart dort gut die Hälfte der Daten. */
+export const WIDTHS = [320, 480, 800, 1200, 1600, 2400] as const;
 
 const AVIF_QUALITY = 55;
 const WEBP_QUALITY = 78;
@@ -18,6 +19,21 @@ export interface ResponsiveSet {
   webpVariants: { url: string; width: number }[];
   /** Größte WebP-Variante */
   largest: { url: string; width: number; height: number };
+}
+
+/** srcset auf Breiten ≤ maxWidth kürzen (mindestens die kleinste Variante bleibt) – gemeinsam für Picture und Vorladen */
+export function limitSrcset(srcset: string, maxWidth?: number) {
+  if (!maxWidth) return srcset;
+  const parts = srcset.split(', ');
+  const kept = parts.filter((p) => Number(p.match(/ (\d+)w$/)?.[1] ?? Infinity) <= maxWidth);
+  return (kept.length ? kept : parts.slice(0, 1)).join(', ');
+}
+
+/** Für <link rel="preload" as="image"> im Kopf der Seite: genau dieselbe AVIF-Auswahl wie im <picture>, damit der
+ *  Browser das wichtigste Bild schon parallel zur Seite holt (und nicht doppelt) */
+export async function preloadImage(src: ImageMetadata, sizes: string, maxWidth?: number) {
+  const set = await responsive(src);
+  return { srcset: limitSrcset(set.avif, maxWidth), sizes };
 }
 
 // Wichtig: nicht `src.src` lesen – Astro würde sonst das Master-Bild zusätzlich ausliefern.

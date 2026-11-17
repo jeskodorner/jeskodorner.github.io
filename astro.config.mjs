@@ -7,7 +7,8 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://jeskodorner.de',
   trailingSlash: 'always',
-  build: { format: 'directory' },
+  // Stylesheets direkt in jede Seite schreiben: kein eigener Abruf vor dem ersten Bild (schneller beim ersten Besuch)
+  build: { format: 'directory', inlineStylesheets: 'always' },
   integrations: [
     sitemap({
       // Unlisted-Galerien (/g/…), das HQ-Album (/album/) und die 404-Seite gehören nicht in die Sitemap.

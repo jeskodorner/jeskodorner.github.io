@@ -1,0 +1,12 @@
+---
+/**
+ * Direkt NACH einer Fotoliste mit [data-justify] einsetzen: verteilt die Fotos sofort beim Aufbau der Seite auf
+ * randvolle Reihen – noch bevor der Browser das erste Bild zeigt. So erscheinen die Fotos gleich an ihrem Platz
+ * (nichts springt, nichts muss bis zum Skript versteckt werden). Rechnung: src/scripts/justify-layout.js.
+ */
+import code from '../scripts/justify-layout.js?raw';
+
+const run = `${code}\ndocument.querySelectorAll('[data-justify]:not([data-justified])').forEach(function (l) { window.jdLayout(l); });`;
+---
+
+<script is:inline set:html={run} />

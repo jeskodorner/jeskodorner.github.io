@@ -9,15 +9,20 @@ import Icon from '../components/Icon.astro';
 import EmailLink from '../components/EmailLink.astro';
 import { getSelectedWorks } from '../lib/showroom';
 import { cardImage } from '../lib/og';
+import { preloadImage } from '../lib/images';
+import { workSizes } from '../lib/sizes';
 import { useTranslations } from '../i18n';
 
 const t = useTranslations();
 const works = await getSelectedWorks();
 const og = cardImage('portfolio', works[0]?.image.alt);
+// erstes gehängtes Foto schon im Kopf ankündigen
+const first = works[0]?.image.src;
+const hero = first ? await preloadImage(first, workSizes(first.width / first.height)) : undefined;
 
 ---
 
-<BaseLayout title={t.selected.title} description={t.selected.intro} image={og}>
+<BaseLayout title={t.selected.title} description={t.selected.intro} image={og} preload={hero}>
   <section class="container container--wide head">
     <h1 class="display display-1">{t.selected.title}</h1>
     <p class="lead muted rise">

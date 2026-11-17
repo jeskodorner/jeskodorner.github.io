@@ -1,3 +1,15 @@
+/* Name „JESKO DORNER“: Climate Crisis als feste Datei (17 KB). Die variable Fassung (49 KB, Achse „Jahr“) sah in der
+   genutzten Stufe pixelgleich aus – wir brauchen nur diese eine Stufe. SIL OFL 1.1, Datei aus @fontsource/climate-crisis. */
+@font-face {
+  font-family: 'Climate Crisis';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url('../assets/fonts/climate-crisis-latin-400-normal.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 /* Titel und Menü: Bodoni Moda, Text: Libre Franklin – beide variabel und unter der SIL Open Font License 1.1
    (Lizenztexte in src/assets/fonts). Dateien aus den Fontsource-Paketen @fontsource-variable/bodoni-moda und
    @fontsource-variable/libre-franklin 5.3.0, nur der Zeichensatz „latin“ (mit Ä, Ö, Ü, ß, €, Gedankenstrich).

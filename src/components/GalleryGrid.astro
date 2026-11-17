@@ -9,6 +9,7 @@
 import type { Gallery } from '../lib/galleries';
 import { photoData } from '../lib/lightbox-data';
 import Picture from './Picture.astro';
+import JustifyNow from './JustifyNow.astro';
 
 export interface Props {
   gallery: Gallery;
@@ -59,6 +60,8 @@ const items = await Promise.all(
       ))
     }
   </ul>
+  {/* Reihen sofort verteilen, noch vor dem ersten Bild */}
+  <JustifyNow />
 </div>
 
 <script>

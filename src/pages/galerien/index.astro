@@ -1,17 +1,23 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Picture from '../../components/Picture.astro';
+import JustifyNow from '../../components/JustifyNow.astro';
 import { getPublicGalleries } from '../../lib/galleries';
 import { cardImage } from '../../lib/og';
+import { preloadImage } from '../../lib/images';
+import { cardSizes } from '../../lib/sizes';
 import { useTranslations, formatMonth } from '../../i18n';
 import { tidyTitle } from '../../lib/text';
 
 const t = useTranslations();
 const galleries = await getPublicGalleries();
 const og = cardImage('galerie', galleries[0]?.cover.alt);
+// erstes Titelbild schon im Kopf ankündigen (gleiche Größenangabe und Höchstbreite wie in der Kachel)
+const c0 = galleries[0]?.cover.src;
+const hero = c0 ? await preloadImage(c0, cardSizes(c0.width / c0.height), 1200) : undefined;
 ---
 
-<BaseLayout title={t.galleries.title} description={t.galleries.intro} image={og}>
+<BaseLayout title={t.galleries.title} description={t.galleries.intro} image={og} preload={hero}>
   <section class="container container--wide head">
     <h1 class="display display-1">{t.galleries.title}</h1>
     <p class="lead muted rise">{t.galleries.intro}</p>
@@ -32,9 +38,9 @@ const og = cardImage('galerie', galleries[0]?.cover.alt);
                   <Picture
                     src={g.cover.src}
                     alt={g.cover.alt}
-                    sizes={`(min-width: 700px) ${Math.round(r * 330)}px, ${Math.round(Math.min(100, r * 50))}vw`}
+                    sizes={cardSizes(r)}
                     color={g.cover.color}
-                    loading={i < 8 ? 'eager' : 'lazy'}
+                    loading={i < 4 ? 'eager' : 'lazy'}
                     fetchpriority={i === 0 ? 'high' : undefined}
                     maxWidth={1200}
                   />
@@ -52,6 +58,8 @@ const og = cardImage('galerie', galleries[0]?.cover.alt);
         })
       }
     </ul>
+    {/* Reihen sofort verteilen, noch vor dem ersten Bild */}
+    <JustifyNow />
   </div>
 </BaseLayout>
 <script>

@@ -20,6 +20,7 @@ import type { WorkItem } from '../lib/showroom';
 import { useTranslations, formatMonth } from '../i18n';
 import { tidyTitle } from '../lib/text';
 import { mappeUrl } from '../lib/mappe';
+import { HOME_SIZES, HOME_MAX_WIDTH } from '../lib/sizes';
 
 export interface Props {
   works: WorkItem[];
@@ -44,8 +45,8 @@ const first = slides[0];
           <Picture
             src={s.w.image.src}
             alt=""
-            sizes="(min-width: 1000px) 58vw, 100vw"
-            maxWidth={2000}
+            sizes={HOME_SIZES}
+            maxWidth={HOME_MAX_WIDTH}
             color={s.w.image.color}
             loading={i === 0 ? 'eager' : 'lazy'}
             fetchpriority={i === 0 ? 'high' : 'low'}
@@ -130,11 +131,13 @@ const first = slides[0];
     const tick = async () => {
       if (!document.hidden) {
         const n = (i + 1) % layers.length;
+        layers[n]!.classList.add('is-ready');
         await Promise.race([decoded(layers[n]!), timeout(5000)]); // erst laden, dann überblenden
         // Das neue Foto liegt oben und blendet ein; das alte bleibt darunter voll sichtbar und geht erst, wenn das
         // neue ganz da ist – so scheint nie die Fläche dahinter durch
         const old = layers[i]!;
         const next = layers[n]!;
+        next.classList.add('is-ready');
         next.style.zIndex = String(++z);
         next.classList.add('is-on');
         remember(n);
@@ -155,6 +158,10 @@ const first = slides[0];
       timer = setTimeout(tick, STEP);
     };
     let timer = setTimeout(tick, STEP);
+    // Die übrigen Fotos erst nach dem Laden der Seite holen (in Ruhe, vor dem ersten Wechsel nach 7 s)
+    const prepare = () => layers.forEach((l) => l.classList.add('is-ready'));
+    if (document.readyState === 'complete') setTimeout(prepare, 1000);
+    else addEventListener('load', () => setTimeout(prepare, 1000), { once: true });
     // Zurück aus dem Browser-Speicher (Zurück-Knopf): Foto bleibt, das nächste kommt erst wieder nach vollen 7 s
     addEventListener('pageshow', (e) => {
       if (!e.persisted) return;
@@ -190,6 +197,11 @@ const first = slides[0];
   }
   .hs :global(.hs-layer.is-on) {
     opacity: 1;
+  }
+  /* Ladezeit: Die weiteren Fotos laden erst, wenn die Seite steht (das Skript setzt is-ready nach dem Laden) – so
+     teilt sich das erste Foto die Leitung nicht mit vier anderen */
+  .hs :global(.hs-layer:not(.is-on):not(.is-ready)) {
+    display: none;
   }
   .hs :global(.hs-img) {
     display: block;

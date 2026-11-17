@@ -8,6 +8,8 @@ import portrait from '../assets/portrait.jpg';
 import { site } from '../config/site';
 import { useTranslations } from '../i18n';
 import { cardImage } from '../lib/og';
+import { preloadImage } from '../lib/images';
+import { PORTRAIT_SIZES } from '../lib/sizes';
 import { inlineMd } from '../lib/text';
 
 const t = useTranslations();
@@ -19,6 +21,8 @@ const stations = data?.stations ?? [];
 const gear = data?.gear ?? [];
 const portraitAlt = data?.portraitAlt ?? `Porträt von ${site.name}`;
 const og = cardImage('ueber-mich', portraitAlt);
+// Porträt schon im Kopf ankündigen
+const hero = await preloadImage(portrait, PORTRAIT_SIZES);
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -33,6 +37,7 @@ const jsonLd = {
   image={og}
   type="profile"
   jsonLd={jsonLd}
+  preload={hero}
 >
   <section class="container container--wide head">
     <h1 class="display display-1">{t.about.title}</h1>
@@ -40,7 +45,7 @@ const jsonLd = {
 
   <section class="container container--wide intro">
     <div class="portrait">
-      <ParallaxImage src={portrait} alt={portraitAlt} sizes="(min-width: 900px) 40vw, 100vw" ratio="4 / 5" loading="eager" fetchpriority="high" soft />
+      <ParallaxImage src={portrait} alt={portraitAlt} sizes={PORTRAIT_SIZES} ratio="4 / 5" loading="eager" fetchpriority="high" soft />
     </div>
     <div class="text">
       {data?.lead && <p class="lead" set:html={inlineMd(data.lead)} />}

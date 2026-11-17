@@ -1,6 +1,6 @@
 ---
 import type { ImageMetadata } from 'astro';
-import { responsive } from '../lib/images';
+import { responsive, limitSrcset } from '../lib/images';
 
 export interface Props {
   src: ImageMetadata;
@@ -33,13 +33,7 @@ const {
 } = Astro.props;
 
 const set = await responsive(src);
-/** srcset auf Breiten ≤ maxWidth kürzen (mindestens die kleinste Variante bleibt) */
-const limit = (srcset: string) => {
-  if (!maxWidth) return srcset;
-  const parts = srcset.split(', ');
-  const kept = parts.filter((p) => Number(p.match(/ (\d+)w$/)?.[1] ?? Infinity) <= maxWidth);
-  return (kept.length ? kept : parts.slice(0, 1)).join(', ');
-};
+const limit = (srcset: string) => limitSrcset(srcset, maxWidth);
 const bg = `background-color:${color};${lqip ? `background-image:url(${lqip});` : ''}${style}`;
 ---
 
