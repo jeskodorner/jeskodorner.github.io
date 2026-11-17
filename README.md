@@ -614,8 +614,10 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   „Monat · Mappe ansehen →“ das Koralle-Feld.
   Die Fotos wechseln alle 7 Sekunden in der Reihenfolge der Liste `showroom`: Das neue Foto blendet in 1,8 Sekunden
   weich über dem alten ein und setzt sich dabei langsam aus einer leichten Vergrößerung; das alte bleibt darunter
-  stehen, bis das neue ganz da ist (nie eine leere Fläche dazwischen). Ein Foto erscheint erst fertig geladen. Mit
-  „Bewegung reduzieren“ oder ohne JavaScript bleibt das erste Foto stehen.
+  stehen, bis das neue ganz da ist (nie eine leere Fläche dazwischen). Ein Foto erscheint erst fertig geladen. Kommt
+  man aus einer Mappe (oder einer anderen Seite) zurück, geht es mit dem Foto weiter, das zuletzt zu sehen war
+  (gemerkt im Tab, `sessionStorage`); erst ein neuer Besuch beginnt wieder vorne. Mit „Bewegung reduzieren“ oder
+  ohne JavaScript bleibt das erste Foto stehen.
 - **Mappe** (`src/pages/mappe/[slug].astro`, Auswahl in `src/lib/mappe.ts`): je Album aus dem Portfolio eine ruhige
   Übersicht wie eine aufgeschlagene Fotomappe, einfacher als das Album. Erreichbar über „Mappe ansehen →“ auf der
   Startseite und über jedes Foto im Portfolio. Oben „← Zurück“ (führt dorthin zurück, wo man herkam, samt Stelle auf

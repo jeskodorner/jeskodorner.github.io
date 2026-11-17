@@ -7,6 +7,8 @@
  * setzt sich dabei langsam aus einer leichten Vergrößerung. Alle Fotos füllen dieselbe Fläche (Laptop 4:3, Handy ein
  * Streifen), zugeschnitten auf ihren Bildschwerpunkt – so gibt es keinen Formatwechsel; ganz zu sehen sind sie in
  * der Mappe.
+ * Die Stelle wird gemerkt (sessionStorage, nur in diesem Tab): Kommt man aus einer Mappe zurück, geht es mit dem Foto
+ * weiter, das zuletzt zu sehen war, nicht wieder am Anfang.
  * Ein Foto wird erst gezeigt, wenn es fertig geladen ist. Ohne JavaScript oder mit „Bewegung reduzieren“: nur das
  * erste Foto. Ein Klick aufs Foto oder auf die Bildunterschrift öffnet die Mappe des Albums (pages/mappe/[slug].astro):
  * eine ruhige Übersicht mit einer Auswahl der Fotos, unten der Weg ins ganze Album.
@@ -66,6 +68,26 @@ const first = slides[0];
         data-slide-data
         set:html={JSON.stringify(slides.map((s) => ({ href: s.href, title: s.title, meta: s.meta })))}
       />
+      {/* Sofort beim Aufbau (vor dem ersten Bild): zuletzt gesehenes Foto statt des ersten zeigen */}
+      <script is:inline>
+        (() => {
+          try {
+            const box = document.currentScript.closest('[data-slides]');
+            const n = Number(sessionStorage.getItem('jd-slide'));
+            const layers = box.querySelectorAll('.hs-layer');
+            if (!n || n >= layers.length) return;
+            const d = JSON.parse(box.querySelector('[data-slide-data]').textContent)[n];
+            const img = layers[n].querySelector('img');
+            if (img) img.loading = 'eager';
+            layers[0].classList.remove('is-on');
+            layers[n].classList.add('is-on');
+            box.querySelectorAll('[data-slide-link]').forEach((a) => (a.href = d.href));
+            box.querySelector('[data-slide-title]').textContent = d.title;
+            box.querySelector('[data-slide-meta]').textContent = d.meta;
+            box.dataset.start = String(n);
+          } catch {}
+        })();
+      </script>
     </div>
   )
 }
@@ -93,9 +115,17 @@ const first = slides[0];
     const title = box.querySelector<HTMLElement>('[data-slide-title]');
     const meta = box.querySelector<HTMLElement>('[data-slide-meta]');
     const cap = box.querySelector<HTMLElement>('.hs-cap');
-    let i = 0;
+    // Startfoto: das zuletzt gesehene (vom Skript direkt im HTML gesetzt) oder das erste
+    let i = Number(box.dataset.start) || 0;
     let z = 1;
-    layers[0]!.style.zIndex = String(z);
+    layers[i]!.style.zIndex = String(z);
+    const remember = (n: number) => {
+      try {
+        sessionStorage.setItem('jd-slide', String(n));
+      } catch {
+        /* privates Fenster o. Ä.: dann eben ohne Merken */
+      }
+    };
 
     const tick = async () => {
       if (!document.hidden) {
@@ -107,6 +137,7 @@ const first = slides[0];
         const next = layers[n]!;
         next.style.zIndex = String(++z);
         next.classList.add('is-on');
+        remember(n);
         setTimeout(() => old.classList.remove('is-on'), FADE + 100);
         // Bildunterschrift kurz aus- und mit dem neuen Foto wieder einblenden
         cap?.classList.add('is-changing');
@@ -121,9 +152,15 @@ const first = slides[0];
         }, 350);
         i = n;
       }
-      setTimeout(tick, STEP);
+      timer = setTimeout(tick, STEP);
     };
-    setTimeout(tick, STEP);
+    let timer = setTimeout(tick, STEP);
+    // Zurück aus dem Browser-Speicher (Zurück-Knopf): Foto bleibt, das nächste kommt erst wieder nach vollen 7 s
+    addEventListener('pageshow', (e) => {
+      if (!e.persisted) return;
+      clearTimeout(timer);
+      timer = setTimeout(tick, STEP);
+    });
   }
 
   for (const box of document.querySelectorAll<HTMLElement>('[data-slides]')) initSlides(box);
