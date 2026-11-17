@@ -96,10 +96,10 @@ export const de = {
   },
   album: {
     title: 'Ganzes Album anfordern',
-    text: 'Hier siehst du eine Auswahl. Das ganze Album in voller Auflösung gibt es mit Zugangscode – kontaktiere mich dafür kurz.',
-    request: 'Code anfordern',
+    text: 'Hier siehst du eine Auswahl. Das ganze Album in voller Auflösung schicke ich dir gern als Link – schreib mir dafür kurz.',
+    request: 'Album anfordern',
     open: 'Album öffnen',
-    subject: (title: string) => `Zugangscode für das Album „${title}“`,
+    subject: (title: string) => `Anfrage: ganzes Album „${title}“`,
     body: (title: string, name: string) =>
       `Hallo ${name},\n\nich möchte das ganze Album „${title}“ in voller Auflösung anfordern.\n\nKurz zu mir und wofür ich die Fotos brauche:\n\n`,
   },

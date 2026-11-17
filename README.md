@@ -217,7 +217,7 @@ und festen Seitenverhältnissen, damit beim Laden nichts springt.
 | `downloadSize` | | z. B. `1,2 GB` |
 | `downloadFormat` | | z. B. `ZIP · JPG in voller Auflösung` |
 | `downloadNote` | | Hinweiszeile, z. B. Nutzungsrechte, Gültigkeit, Passworthinweis |
-| `albumRequest` | | Zeile „Ganzes Album anfordern“ unter den Fotos mit Knopf „Code anfordern“. Standard: an bei öffentlichen, aus bei Unlisted-Galerien. `false` blendet ihn aus. Siehe Abschnitt 6. |
+| `albumRequest` | | Zeile „Ganzes Album anfordern“ unter den Fotos mit Knopf „Album anfordern“. Standard: an bei öffentlichen, aus bei Unlisted-Galerien. `false` blendet ihn aus. Siehe Abschnitt 6. |
 | `shareText` | | eigener Teilen-Text, `{title}` und `{url}` werden ersetzt |
 | `images` | ja | Liste der Bilder (siehe unten) |
 
@@ -292,7 +292,7 @@ Preise geprüft am 26.10.2026 auf den Seiten der Anbieter, inkl. MwSt. Bitte vor
 | Dropbox Plus | 2 GB | Plus hat **keine** Link-Passwörter, erst „Standard“ | – | ja | – |
 
 **Empfehlung:**
-- **Zum Start: Pixieset Free.** Galerie-Passwort plus Download-PIN passt genau zu „Code anfordern“, und es ist gratis.
+- **Zum Start: Pixieset Free.** Galerie-Passwort plus Download-PIN passt genau zu „Album anfordern“, und es ist gratis.
   Grenzen: 3 GB, Downloads gratis nur bis 3600 px. Volle Originale gibt es ab Basic (ca. 96 $/Jahr). Wo die Server stehen,
   gibt Pixieset nicht an.
 - **Datenschutz zuerst: ente.** 10 GB gratis, Server in der EU, verschlüsselt, Links mit Passwort und Ablauf.
@@ -338,14 +338,16 @@ images:
 Ohne `downloadUrl` bzw. `originalUrl` erscheint kein Download-Button. Alle Download-Links öffnen in einem neuen Tab
 mit `rel="noopener noreferrer"`.
 
-### „Ganzes Album anfordern“ (Zugangscode)
+### „Ganzes Album anfordern“
 
 Auf öffentlichen Galerien steht unter den Fotos, bewusst ruhig, **„Ganzes Album anfordern“**
 (rechts daneben „Album teilen“ mit kleinen Symbolen):
-„Hier siehst du eine Auswahl. Das ganze Album in voller Auflösung gibt es mit Zugangscode.“
+„Hier siehst du eine Auswahl. Das ganze Album in voller Auflösung schicke ich dir gern als Link – schreib mir dafür
+kurz.“
 
-- **Code anfordern** öffnet eine vorformulierte E-Mail an dich: Betreff mit dem Albumnamen und die Bitte,
-  kurz zu schreiben, wer man ist und wofür man die Fotos braucht.
+- **Album anfordern** öffnet eine vorformulierte E-Mail an dich (Betreff „Anfrage: ganzes Album „…““) mit der Bitte,
+  kurz zu schreiben, wer man ist und wofür man die Fotos braucht. Du antwortest mit einem Link zum Album (bis
+  November 2026 hieß der Knopf „Code anfordern“ und es ging um einen Zugangscode).
 - Mit eingerichteten **HQ-Alben** (siehe unten) steht darunter „Code erhalten? Album öffnen →“ und führt zu
   jeskodorner.de/album. Der Code ist dann der Code aus `npm run album`.
 - Ist stattdessen `downloadUrl` eingetragen, erscheint **Album öffnen** und führt zu einem externen Anbieter, der nach
@@ -361,7 +363,7 @@ So pflegst du das pro Album mit einem externen Anbieter (mit HQ-Alben siehe näc
 5. Zugang entziehen: beim Anbieter das Passwort ändern oder den Link löschen. Auf der Website musst du nichts ändern,
    solange der Link gleich bleibt.
 
-Ohne `downloadUrl` gibt es nur „Code anfordern“. Dann schickst du Link und Code zusammen per E-Mail.
+Ohne `downloadUrl` gibt es nur „Album anfordern“. Dann schickst du den Link (und falls nötig das Passwort) per E-Mail.
 Mit `albumRequest: false` verschwindet die Zeile für diese Galerie.
 Private Kundengalerien mit `downloadUrl` zeigen stattdessen oben den Download-Kasten, weil Kunden genau danach suchen.
 
@@ -694,7 +696,7 @@ Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer 
   den Link; die Schrift bleibt gleich. Wo solche Links untereinander stehen, ist der Abstand so groß, dass sich
   die Flächen nicht überlappen (Fußzeile am Handy, Kontakt).
 - **Fotos beim Überfahren:** überall gleich, 3 % größer im Rahmen (Token `--hover-zoom`): Album, Galerie, Portfolio.
-- **Knöpfe sagen, was passiert:** Verb und Ding („Portfolio ansehen“, „Galerie ansehen“, „Code anfordern“,
+- **Knöpfe sagen, was passiert:** Verb und Ding („Portfolio ansehen“, „Galerie ansehen“, „Album anfordern“,
   „Schreib mir“), keine Auslassungspunkte. Am Ende von Portfolio und Über mich steht dasselbe Paar (Klasse
   `btn-row`): „Schreib mir“ gefüllt, daneben der Weg weiter mit Pfeil; am Handy beide untereinander in voller Breite.
 - **Zurück aus dem Album:** „← Alle Galerien“ führt zur Stelle des Albums in der Übersicht (`/galerien/#album-…`),
