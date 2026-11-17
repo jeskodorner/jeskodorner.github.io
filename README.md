@@ -593,7 +593,7 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   mit leichtem Lila-Stich, kurz ausprobiert: „Kobalt-lila“ `#474EC4`) mit weißer Schrift (Token `--menu-bg` und `--on-menu` in `tokens.css`). Der Name hat die
   Schriftfarbe (`--name-color` in `BlueMenu.astro`), der Menüpunkt der aktuellen Seite ist unterstrichen. Beim Überfahren bekommen
   Menüpunkte und Name ein rosa Feld mit schwarzer Schrift, Menü- und Schließen-Knopf sind rosa Kreise. Instagram
-  unten sieht aus wie in der Fußzeile jeder Seite: Symbol und „jeskodorner“ (beim Überfahren rosa). Sparsam bleiben: mehr Rosa wirkt schnell zu viel. Die Fläche geht über den ganzen
+  unten wie in der Fußzeile jeder Seite mit Symbol und „jeskodorner“, aber klein (etwa so groß wie „Mappe ansehen →“; beim Überfahren rosa). Sparsam bleiben: mehr Rosa wirkt schnell zu viel. Die Fläche geht über den ganzen
   Bildschirm, oben groß der Name, darunter die Menüpunkte (Portfolio, Galerie, Film, Über mich, Kontakt), unten
   nur Instagram – auf der Startseite und im Menü gleich. Impressum und Datenschutz stehen in der Fußzeile jeder
   Unterseite (von der Startseite aus also mit zwei Klicks). Ohne Kopfleiste und ohne Scrollen. Dasselbe Menü öffnet sich auf allen
