@@ -625,7 +625,9 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 - **Startseite „Bild neben Name“** (seit 16. November 2026, `src/components/HomeSlides.astro` und `BlueMenu.astro`):
   Schrift steht nie auf dem Foto. Am Laptop (ab 1000 px) zwei Spalten: links auf Blau der Name zweizeilig, unten
   das Menü (etwa halb so groß wie der Name) und Instagram; rechts ein Foto aus dem Portfolio in einer festen Fläche
-  im Format 4:3, unten auf seiner Bildunterschrift stehend. Jedes Foto füllt diese Fläche (Ausschnitt nach dem
+  im Format 4:3, unten auf seiner Bildunterschrift stehend. Die Unterkante des Fotos liegt genau auf der Grundlinie von
+  „KONTAKT“, „jeskodorner“ steht auf derselben Linie wie „Monat · Mappe ansehen →“ (Foto und linke Spalte teilen sich
+  die Zeilen per subgrid, `BlueMenu.astro`). Jedes Foto füllt diese Fläche (Ausschnitt nach dem
   Bildschwerpunkt), so wechselt beim Bildwechsel nie das Format; ganz zu sehen sind die Fotos in der Mappe. Am Handy
   und Tablet hochkant steht das Foto ganz oben, randlos, darunter die Bildunterschrift, dann Name, Menü, Instagram –
   ohne Scrollen, auch auf kleinen Handys.

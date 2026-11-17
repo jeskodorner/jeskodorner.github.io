@@ -364,9 +364,12 @@ const nameWords = site.name.split(' ').map((word) =>
       /* „DORNER“ ist 6,15 Schrifthöhen breit → / 6.4 füllt die linke Spalte fast ganz */
       --name-fs: min(7.5rem, (100cqi - var(--col-gap)) * 5 / 12 / 6.4);
       --bm-item: calc(var(--name-fs) * 0.54);
+      /* Höhe der unteren Zeile = Bildunterschrift (Abstand + Albumname + Monat-Zeile, siehe HomeSlides.astro) – auf
+         Startseite und im Menü gleich, damit die Menüpunkte an derselben Stelle stehen */
+      --cap-h: calc(0.9rem + 1.1 * clamp(1.15rem, 1rem + 0.5vw, 1.5rem) + 0.25rem + 1.3 * var(--fs-xs));
       display: grid;
       grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-      grid-template-rows: auto auto 1fr auto auto;
+      grid-template-rows: auto auto 1fr auto minmax(var(--cap-h), auto);
       column-gap: var(--col-gap);
       height: 100dvh;
       min-height: 0;
@@ -386,10 +389,31 @@ const nameWords = site.name.split(' ').map((word) =>
       grid-column: 1;
       grid-row: 4;
     }
+    /* Unter der letzten Zeile („KONTAKT“) liegen 0,128 Schrifthöhen Luft bis zum Zeilenende (gemessen) – um genau so
+       viel ragt das Menü nach unten, damit die Grundlinie von „KONTAKT“ auf der Unterkante des Fotos liegt */
+    :is(.bm--aside, .bm--overlay) .bm-body > nav {
+      margin-bottom: calc(-0.128 * var(--bm-item));
+    }
+    /* Fotofläche und Bildunterschrift teilen sich die Zeilen der linken Spalte (subgrid): Die Unterkante des Fotos
+       liegt auf der Grundlinie von „KONTAKT“, die Bildunterschrift in der Zeile von Instagram */
     .bm--aside .bm-aside {
+      display: contents;
+    }
+    .bm--aside .bm-aside :global(.hs) {
       grid-column: 2;
       grid-row: 1 / -1;
+      grid-template-rows: subgrid;
+      gap: 0;
+      height: auto;
       min-height: 0;
+    }
+    .bm--aside .bm-aside :global(.hs-frame) {
+      grid-row: 1 / 5;
+    }
+    .bm--aside .bm-aside :global(.hs-cap) {
+      grid-row: 5;
+      align-self: last baseline;
+      padding-top: 0.9rem;
     }
     /* Menü: oben derselbe Abstand wie auf der Startseite; der Schließen-Knopf liegt darüber an der Stelle des
        Menüknopfs, ohne den Namen nach unten zu schieben */
@@ -397,15 +421,23 @@ const nameWords = site.name.split(' ').map((word) =>
       position: relative;
       padding-top: var(--bm-pad);
     }
+    /* so breit wie die Kopfzeile (container--wide, bis 2400 px), damit der Knopf auch auf sehr breiten Bildschirmen
+       genau auf dem Menüknopf liegt – das Menü selbst ist schmaler (container, bis 1760 px) */
     .bm--overlay .bm-top {
       position: absolute;
-      inset: 0 0 auto;
+      top: 0;
+      left: 50%;
+      translate: -50% 0;
+      width: 100vw;
+      max-width: 2400px;
       margin: 0;
       padding-inline: var(--gutter);
     }
+    /* Instagram und die untere Zeile der Bildunterschrift stehen auf derselben Grundlinie */
     :is(.bm--aside, .bm--overlay) .bm-foot {
       grid-column: 1;
       grid-row: 5;
+      align-self: last baseline;
       padding-top: clamp(1.25rem, 3vh, 2rem);
     }
   }
