@@ -269,12 +269,14 @@ const nameWords = site.name.split(' ').map((word) =>
     }
   }
 
-  /* ---------- Startseite: „Bild neben Name“ ---------- */
-  /* Handy und Tablet hochkant (bis 999 px): dasselbe Raster wie das Menü am Handy. Foto ganz oben, randlos mit
-     harten Kanten, darunter seine Bildunterschrift; dann Name, Menü (mittig im freien Platz) und
-     Instagram. */
+  /* ---------- Startseite „Bild neben Name“ – und das Menü genauso, nur ohne Foto ---------- */
+  /* Das Menü (Overlay) übernimmt Aufbau und Größen der Startseite: Name und Menüpunkte stehen an derselben Stelle und
+     sind gleich groß, statt des Fotos ist dort Blau. So wirkt das Öffnen des Menüs wie die Startseite.
+     Handy und Tablet hochkant (bis 999 px): dasselbe Raster wie das Menü am Handy. Foto (Menü: Leiste mit dem
+     Schließen-Knopf) ganz oben, randlos mit harten Kanten, darunter seine Bildunterschrift; dann Name, Menü (mittig
+     im freien Platz) und Instagram. */
   @media (max-width: 999.98px) {
-    .bm--aside {
+    :is(.bm--aside, .bm--overlay) {
       --name-fs: min(6.5rem, 100cqi / 6.9);
       /* Menü etwa halb bis zwei Drittel so groß wie der Name: klare Rangfolge */
       --bm-item: clamp(2rem, 8.6vw, 3.4rem);
@@ -282,29 +284,29 @@ const nameWords = site.name.split(' ').map((word) =>
       grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
       grid-template-rows: auto auto auto 1fr auto;
     }
-    .bm--aside > * {
+    :is(.bm--aside, .bm--overlay) > * {
       grid-column: 1 / -1;
     }
-    .bm--aside .bm-name {
+    :is(.bm--aside, .bm--overlay) .bm-name {
       grid-column: 2;
       grid-row: 2;
       margin-top: clamp(1.75rem, 5svh, 3rem);
     }
-    .bm--aside .bm-name :global(.bm-w) {
+    :is(.bm--aside, .bm--overlay) .bm-name :global(.bm-w) {
       display: block;
       width: fit-content;
     }
-    .bm--aside .bm-body {
+    :is(.bm--aside, .bm--overlay) .bm-body {
       display: contents;
     }
-    .bm--aside .bm-body > nav {
+    :is(.bm--aside, .bm--overlay) .bm-body > nav {
       grid-column: 2;
       grid-row: 4;
       align-self: center;
       margin-block: calc(1.5rem + 0.07 * var(--bm-item)) calc(1.5rem - 0.07 * var(--bm-item));
     }
     /* kleinere Menüpunkte: Abstand so, dass jede Zeile mindestens 44 px Tippfläche hat (Zeile 0,95 Schrifthöhen) */
-    .bm--aside .bm-list {
+    :is(.bm--aside, .bm--overlay) .bm-list {
       gap: max(clamp(0.35rem, 1.2vh, 0.9rem), 2.75rem - 0.95 * var(--bm-item));
     }
     .bm--aside .bm-aside {
@@ -324,7 +326,11 @@ const nameWords = site.name.split(' ').map((word) =>
     .bm--aside .bm-aside :global(.hs-cap) {
       padding-inline: var(--gutter);
     }
-    .bm--aside .bm-foot {
+    /* Menü: oben die Leiste mit dem Schließen-Knopf (an der Stelle des Menüknopfs), der Name direkt darunter */
+    .bm--overlay .bm-top {
+      grid-row: 1;
+    }
+    :is(.bm--aside, .bm--overlay) .bm-foot {
       grid-row: 5;
       justify-content: center;
       padding-top: 0;
@@ -332,23 +338,28 @@ const nameWords = site.name.split(' ').map((word) =>
   }
   /* Niedrige Handys (z. B. iPhone SE): etwas enger, damit die Startseite ohne Scrollen auf einen Bildschirm passt */
   @media (max-width: 999.98px) and (max-height: 700px) {
-    .bm--aside {
+    :is(.bm--aside, .bm--overlay) {
       --bm-item: clamp(1.8rem, 8vw, 3.4rem);
     }
-    .bm--aside .bm-name {
+    :is(.bm--aside, .bm--overlay) .bm-name {
       margin-top: 1.25rem;
     }
     .bm--aside .bm-aside :global(.hs-frame) {
       height: min(75vw, 28svh);
     }
-    .bm--aside .bm-body > nav {
+    :is(.bm--aside, .bm--overlay) .bm-body > nav {
       margin-block: calc(0.9rem + 0.07 * var(--bm-item)) calc(1.4rem - 0.07 * var(--bm-item));
     }
   }
+  @media (max-width: 999.98px) {
+    .bm--overlay .bm-name {
+      margin-top: 0;
+    }
+  }
   /* Laptop (ab 1000 px): zwei Spalten. Links (5/12) Name zweizeilig, unten Menü und Instagram;
-     rechts (7/12) das Foto über die ganze Höhe mit Bildunterschrift. Genau ein Bildschirm hoch. */
+     rechts (7/12) das Foto über die ganze Höhe mit Bildunterschrift (Menü: Blau). Genau ein Bildschirm hoch. */
   @media (min-width: 1000px) {
-    .bm--aside {
+    :is(.bm--aside, .bm--overlay) {
       --col-gap: clamp(2.5rem, 4vw, 4.5rem);
       /* „DORNER“ ist 6,15 Schrifthöhen breit → / 6.4 füllt die linke Spalte fast ganz */
       --name-fs: min(7.5rem, (100cqi - var(--col-gap)) * 5 / 12 / 6.4);
@@ -360,18 +371,18 @@ const nameWords = site.name.split(' ').map((word) =>
       height: 100dvh;
       min-height: 0;
     }
-    .bm--aside .bm-name {
+    :is(.bm--aside, .bm--overlay) .bm-name {
       grid-column: 1;
       grid-row: 1;
     }
-    .bm--aside .bm-name :global(.bm-w) {
+    :is(.bm--aside, .bm--overlay) .bm-name :global(.bm-w) {
       display: block;
       width: fit-content;
     }
-    .bm--aside .bm-body {
+    :is(.bm--aside, .bm--overlay) .bm-body {
       display: contents;
     }
-    .bm--aside .bm-body > nav {
+    :is(.bm--aside, .bm--overlay) .bm-body > nav {
       grid-column: 1;
       grid-row: 4;
     }
@@ -380,7 +391,19 @@ const nameWords = site.name.split(' ').map((word) =>
       grid-row: 1 / -1;
       min-height: 0;
     }
-    .bm--aside .bm-foot {
+    /* Menü: oben derselbe Abstand wie auf der Startseite; der Schließen-Knopf liegt darüber an der Stelle des
+       Menüknopfs, ohne den Namen nach unten zu schieben */
+    .bm--overlay {
+      position: relative;
+      padding-top: var(--bm-pad);
+    }
+    .bm--overlay .bm-top {
+      position: absolute;
+      inset: 0 0 auto;
+      margin: 0;
+      padding-inline: var(--gutter);
+    }
+    :is(.bm--aside, .bm--overlay) .bm-foot {
       grid-column: 1;
       grid-row: 5;
       padding-top: clamp(1.25rem, 3vh, 2rem);

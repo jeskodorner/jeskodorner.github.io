@@ -601,8 +601,10 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   Unterseite (von der Startseite aus also mit zwei Klicks). Ohne Kopfleiste und ohne Scrollen. Dasselbe Menü öffnet sich auf allen
   Geräten über den rosa Menü-Knopf oben rechts: Die Fläche wächst als Kreis aus dem Knopf, der Schließen-Knopf sitzt an derselben Stelle,
   der Name führt zur Startseite. Eine Textleiste mit Menüpunkten gibt es nur noch als Rückfall für sehr alte Browser.
-  Am Handy (unter 700 px) steht der Name mittig, die Menüpunkte beginnen an seiner linken Kante, die Fußzeile ist
-  mittig. Ab 700 px ist alles linksbündig.
+  Das Menü ist die Startseite ohne Foto: Name und Menüpunkte stehen an derselben Stelle und sind gleich groß
+  (Laptop ab 1000 px: Name zweizeilig oben links, Menüpunkte unten links, rechts Blau; darunter wie am Handy: Name
+  mittig, die Menüpunkte beginnen an seiner linken Kante, Instagram mittig unten). Der Schließen-Knopf sitzt genau
+  dort, wo der Menüknopf war (Regeln mit `:is(.bm--aside, .bm--overlay)` in `BlueMenu.astro`).
 - **Startseite „Bild neben Name“** (seit 16. November 2026, `src/components/HomeSlides.astro` und `BlueMenu.astro`):
   Schrift steht nie auf dem Foto. Am Laptop (ab 1000 px) zwei Spalten: links auf Blau der Name zweizeilig, unten
   das Menü (etwa halb so groß wie der Name) und Instagram; rechts ein Foto aus dem Portfolio in einer festen Fläche
