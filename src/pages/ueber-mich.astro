@@ -3,6 +3,7 @@ import { getEntry, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ParallaxImage from '../components/ParallaxImage.astro';
 import EmailLink from '../components/EmailLink.astro';
+import Icon from '../components/Icon.astro';
 import portrait from '../assets/portrait.jpg';
 import { site } from '../config/site';
 import { useTranslations } from '../i18n';
@@ -50,9 +51,11 @@ const jsonLd = {
           </div>
         )
       }
-      <p class="actions">
+      <p class="actions btn-row">
         <EmailLink class="btn btn--solid" text={t.selected.write} subject="Anfrage über die Website" />
-        <a class="btn" href="/portfolio/">{t.home.cta}</a>
+        <a class="btn" href="/portfolio/">
+          {t.home.cta} <Icon name="arrow-right" class="arrow" />
+        </a>
       </p>
     </div>
   </section>
@@ -118,11 +121,6 @@ const jsonLd = {
   .text .lead {
     font-size: clamp(1.6rem, 1.1rem + 1.8vw, 3rem);
     line-height: 1.18;
-  }
-  .actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
   }
   .stations ol {
     list-style: none;

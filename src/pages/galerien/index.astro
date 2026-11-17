@@ -26,7 +26,7 @@ const og = cardImage('galerie', galleries[0]?.cover.alt);
         galleries.map((g, i) => {
           const r = g.cover.src.width / g.cover.src.height;
           return (
-            <li class:list={['card-item', `c-${g.color}`]} style={`--r:${r.toFixed(4)}`}>
+            <li class:list={['card-item', `c-${g.color}`]} id={`album-${g.slug}`} style={`--r:${r.toFixed(4)}`}>
               <a class="card" href={g.url} data-index={i + 1}>
                 <span class="card-frame">
                   <Picture
@@ -57,6 +57,10 @@ const og = cardImage('galerie', galleries[0]?.cover.alt);
 <script>
   import { initJustify } from '../../scripts/justify';
   initJustify();
+  // Aus einem Album zurück („Alle Galerien“, Adresse /galerien/#album-…): nach dem Verteilen der Reihen das Album
+  // mittig zeigen – der Sprung des Browsers beim Laden passt nicht mehr, sobald die Reihen neu verteilt sind
+  const target = location.hash.startsWith('#album-') ? document.getElementById(location.hash.slice(1)) : null;
+  if (target) requestAnimationFrame(() => target.scrollIntoView({ block: 'center', behavior: 'instant' }));
 </script>
 
 <style>

@@ -584,8 +584,8 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   Ultramarin `#3A45C8` (Token `--accent`, dasselbe Blau wie die Startseite). Beim Überfahren überall dieselbe Antwort
   wie im Menü: ein korallenrotes Feld mit schwarzer Schrift (Token `--hover`) – Links im Text, Knöpfe, Abspielen,
   Knöpfe der Lightbox, Kontakt-Adressen. In der schwarzen Fußzeile werden die Links beim Überfahren korallenrot.
-  Bewusst dezenter: Titel neben Fotos (Galerie-Übersicht, nächstes/vorheriges Album) bekommen nur einen orangen
-  Unterstrich (Token `--hover-line`, `#F25914`). Vorher war Orange die Farbe fürs Überfahren überall.
+  Bewusst dezenter: Titel neben Fotos (Galerie-Übersicht, nächstes/vorheriges Album) bekommen nur einen
+  Unterstrich in Koralle (Token `--hover-line`). Vorher war Orange `#F25914` die Farbe fürs Überfahren überall.
 - **Rosa** ist Koralle `#FF807F` (vorher kräftiges Pink `#FF3D8B`, dann Altrosa `#E59BB0` und verblichenes
   Korallenrosa `#EF9D9F`). Es gilt auch für Galerien mit `color: pink`.
 - **Startseite = das Menü** (`src/components/BlueMenu.astro`): Ultramarin `#3A45C8` (kräftiges Blau
@@ -658,7 +658,7 @@ Kontraste nach WCAG 2.x:
 | Überfahren | Koralle `#FF807F` (Fläche) | Schwarz | 8,1 : 1 |
 | Überfahren in der Fußzeile | Koralle `#FF807F` als Schrift auf Schwarz | – | 8,1 : 1 |
 | Albumtöne | aus den Fotos, OKLCH-Helligkeit 0,83 | Schwarz | mindestens 9 : 1 |
-| Titel-Unterstrich beim Überfahren | Orange `#F25914` | – (nur Linie) | – |
+| Titel-Unterstrich beim Überfahren | Koralle `#FF807F` | – (nur Linie) | – |
 
 Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer Schrift.
 
@@ -676,8 +676,11 @@ Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer 
   den Link; die Schrift bleibt gleich. Wo solche Links untereinander stehen, ist der Abstand so groß, dass sich
   die Flächen nicht überlappen (Fußzeile am Handy, Kontakt).
 - **Fotos beim Überfahren:** überall gleich, 3 % größer im Rahmen (Token `--hover-zoom`): Album, Galerie, Portfolio.
-- **Knöpfe sagen, was passiert:** Verb und Ding („Portfolio ansehen“, „Code anfordern“, „Schreib mir“), keine
-  Auslassungspunkte.
+- **Knöpfe sagen, was passiert:** Verb und Ding („Portfolio ansehen“, „Galerie ansehen“, „Code anfordern“,
+  „Schreib mir“), keine Auslassungspunkte. Am Ende von Portfolio und Über mich steht dasselbe Paar (Klasse
+  `btn-row`): „Schreib mir“ gefüllt, daneben der Weg weiter mit Pfeil; am Handy beide untereinander in voller Breite.
+- **Zurück aus dem Album:** „← Alle Galerien“ führt zur Stelle des Albums in der Übersicht (`/galerien/#album-…`),
+  nicht an ihren Anfang. Der Zurück-Knopf des Browsers stellt die Position ohnehin wieder her.
 - **Erster Bildschirm sagt, worum es geht:** Unter dem Namen auf der Startseite steht „Fotografie“
   (`home.claim` in `src/i18n/de.ts`).
 - **Fotoreihen ohne Ruckeln:** Mit JavaScript erscheinen die Fotoreihen eines Albums erst, wenn `justify.ts` sie

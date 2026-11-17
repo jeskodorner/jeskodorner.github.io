@@ -60,8 +60,8 @@
   --ink-soft-on-dark: #bdbdbd; /* Nebentext auf Schwarz */
   --hover: var(--pink); /* Überfahren: überall Koralle als Fläche, Schrift schwarz (wie im Menü) */
   /* Ausnahme, bewusst dezenter: Titel neben Fotos (Galerie-Übersicht, nächstes/vorheriges Album) bekommen beim
-     Überfahren nur einen orangen Unterstrich */
-  --hover-line: #f25914;
+     Überfahren nur einen Unterstrich in Koralle (bis 16.11.2026 Orange #f25914) */
+  --hover-line: var(--pink);
   --accent-vivid: var(--pink); /* nur große Schrift und Flächen */
   --on-accent: #ffffff;
   --scrim: 11 11 11;

@@ -72,7 +72,8 @@ const jsonLd = gallery.isUnlisted
       <div class="container container--wide">
         {
           !gallery.isUnlisted && (
-            <a class="back btn btn--small" href="/galerien/">
+            /* zurück an die Stelle dieses Albums in der Übersicht, nicht an den Anfang */
+            <a class="back btn btn--small" href={`/galerien/#album-${gallery.slug}`}>
               <Icon name="arrow-left" /> {t.galleries.back}
             </a>
           )

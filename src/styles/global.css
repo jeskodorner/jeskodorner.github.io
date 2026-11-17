@@ -325,6 +325,18 @@ html:not(.js) .js-only {
   font-size: var(--fs-xs);
   border-width: 2px;
 }
+/* Zwei Knöpfe am Ende einer Seite („Schreib mir“ + Weg weiter, Portfolio und Über mich gleich): nebeneinander,
+   am Handy untereinander in voller Breite */
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+@media (max-width: 599.98px) {
+  .btn-row > .btn {
+    flex: 1 1 100%;
+  }
+}
 /* Kleine Textlinks (Logo, Fußzeile, Menü, Kontakt) bekommen eine unsichtbare Tippfläche: mindestens 44 px hoch und
    breit, mittig um den Link. Die Schrift und der Abstand zu den Nachbarn bleiben, wo Links untereinander stehen, ist der
    Abstand so gewählt, dass sich die Flächen nicht überlappen. */
