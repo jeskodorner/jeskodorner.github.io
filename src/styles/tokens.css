@@ -1,9 +1,10 @@
 /*
  * Design-Tokens – „White Cube“: weiße Galeriewände, schwarze Schrift, sommerliche Farbflächen.
  *
- * Palette „Sommer“: warme, frische Galeriefarben (Koralle, Orange, Sonnengelb, klares Blau, Flieder), alle mit
- * schwarzer Schrift, dazu ein kräftiges Blau mit leichtem Lila-Stich (Startseite, Menü, Links) und ein kräftiges
- * Orange nur fürs Überfahren. Startseite und Menü: dieses Blau mit weißer Schrift. Frühere Paletten (siehe README): Git-Tags alte-version-verblichene-farben (blass, kühl) und
+ * Drei Rollen: Ultramarin ist die Bühne (Startseite, Menü, Links), Koralle heißt „hier kannst du klicken“
+ * (Überfahren überall als Fläche mit schwarzer Schrift, Menü-Knopf), alles andere ist Schwarz, Weiß und das Foto.
+ * Die Fläche über einem Album bekommt ihren Ton aus den Fotos (src/lib/color.ts). Die Palette „Sommer“ (Koralle,
+ * Orange, Sonnengelb, klares Blau, Flieder) gilt nur noch für Filme und Alben mit ausdrücklichem `color:`. Startseite und Menü: dieses Blau mit weißer Schrift. Frühere Paletten (siehe README): Git-Tags alte-version-verblichene-farben (blass, kühl) und
  * alte-version-knallige-galeriefarben (Neon).
  *
  * Kontraste (WCAG 2.x):
@@ -13,7 +14,8 @@
  *     Blau #53A3F2 7,4:1 · Flieder #B98CEA 7,5:1
  *   Rosa/Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer Schrift.
  *   Startseite/Menü #3A45C8 + Weiß 7,3:1 · Überfahren dort: Koralle-Fläche mit Schwarz 8,1:1
- *   Überfahren: Unterstrich bzw. Fläche in Orange #F25914 (Unterstrich auf Weiß 3,4:1, Fläche + Schwarz 5,8:1)
+ *   Überfahren: Koralle-Fläche mit schwarzer Schrift 8,1:1 (früher Orange #F25914, Git-Tag alte-version-startseite-ueberblendung)
+ *   Albumtöne: OKLCH-Helligkeit 0,83 mit schwarzer Schrift, mindestens 9:1
  */
 
 :root {
@@ -55,9 +57,11 @@
   --paper-2: var(--wall-2);
   --sand: var(--wall-3);
   --accent: #3a45c8; /* Links, kleine Akzentschrift, Fokusrahmen – dasselbe Blau wie die Startseite */
-  --accent-on-dark: #8da4ff; /* dasselbe Blau aufgehellt, für Schrift auf Schwarz (8,3:1; --accent hätte nur 2,7:1) */
   --ink-soft-on-dark: #bdbdbd; /* Nebentext auf Schwarz */
-  --hover: #f25914; /* Überfahren: Unterstrich (Links) bzw. Fläche (Knöpfe) – kräftiges Orange */
+  --hover: var(--pink); /* Überfahren: überall Koralle als Fläche, Schrift schwarz (wie im Menü) */
+  /* Ausnahme, bewusst dezenter: Titel neben Fotos (Galerie-Übersicht, nächstes/vorheriges Album) bekommen beim
+     Überfahren nur einen orangen Unterstrich */
+  --hover-line: #f25914;
   --accent-vivid: var(--pink); /* nur große Schrift und Flächen */
   --on-accent: #ffffff;
   --scrim: 11 11 11;

@@ -67,7 +67,7 @@ const jsonLd = gallery.isUnlisted
   noReferrer={gallery.isUnlisted}
   jsonLd={jsonLd}
 >
-  <article class={`c-${gallery.color}`}>
+  <article class={`c-${gallery.color}`} style={gallery.tone ? `--c:${gallery.tone};--on-c:var(--ink)` : undefined}>
     <header class="g-band room">
       <div class="container container--wide">
         {
@@ -277,7 +277,7 @@ const jsonLd = gallery.isUnlisted
   }
   .nb:hover .display {
     text-decoration: underline;
-    text-decoration-color: var(--hover);
+    text-decoration-color: var(--hover-line);
     text-decoration-thickness: 0.08em;
     text-underline-offset: 0.1em;
   }

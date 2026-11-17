@@ -86,9 +86,15 @@ a {
     color 0.2s,
     background-color 0.2s;
 }
-/* Überfahren: Schrift bleibt, der Unterstrich wird orange */
+/* Überfahren – überall dieselbe Antwort wie im Menü: korallenrotes Feld, schwarze Schrift. Hier für Links im Text;
+   Knöpfe, Karten, Fotos, Menü und Fußzeile haben eigene Regeln. */
 a:hover {
-  text-decoration-color: var(--hover);
+  text-decoration-color: currentColor;
+}
+a:not([class]):hover,
+a.email-link:not(.btn, .channel, .big-link):hover {
+  background-color: var(--hover);
+  color: var(--ink);
 }
 /* Der Rahmen folgt der Form des Elements (Radius außen = Radius innen + Abstand, das macht der Browser) */
 :focus-visible {
@@ -299,7 +305,7 @@ html:not(.js) .js-only {
 .btn:active {
   scale: 0.96;
 }
-/* Knöpfe beim Überfahren einheitlich orange */
+/* Knöpfe beim Überfahren: Koralle mit schwarzer Schrift */
 .btn:hover {
   color: var(--ink);
   background: var(--hover);

@@ -564,21 +564,28 @@ Falls du das je neu einrichten oder umziehen musst:
 
 ## 11. Design: Farben und Schriften
 
-Look „White Cube“: weiße Galeriewände, schwarze Schrift, sommerliche Farbflächen. Definiert in `src/styles/tokens.css`.
+Look „White Cube“: weiße Galeriewände, schwarze Schrift, Farbe kommt aus den Fotos. Definiert in `src/styles/tokens.css`.
+Drei Rollen (seit 16. November 2026): **Ultramarin ist die Bühne** (Startseite, Menü, Links), **Koralle heißt „hier
+kannst du klicken“** (Überfahren, Menü-Knopf), alles andere ist Schwarz, Weiß und das Foto.
 Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 
 - **Fotos werden nie beschnitten**: in Alben, Übersichten und der Lightbox immer im Originalformat, groß mit weißem
   Rand. Nichts ist schräg gestellt. Mutig sind Farben und Schrift, nicht die Anordnung.
-- **Jede Galerie hat eine eigene Farbe.** Die Farbe erscheint im Button auf der Seite „Galerie“, im Farbband oben auf
-  der Galerieseite und im Download-Kasten (Kundengalerien).
-  Festlegen per `color: pink | blue | lime | orange | violet` in `index.md`. Ohne Angabe wechselt die Farbe automatisch reihum.
-  Palette „Sommer“, warm und frisch: Koralle `#FF807F` (`pink`), Orange `#FFA44E` (`orange`), Sonnengelb `#F7E04F`
-  (`lime`), klares Blau `#53A3F2` (`blue`), Flieder `#B98CEA` (`violet`). Auf allen steht schwarze Schrift.
+- **Jedes Album hat seinen Ton aus den Fotos.** Die Fläche oben auf der Albumseite und der Download-Kasten bekommen
+  einen hellen, gedämpften Ton, der beim Bauen aus den Durchschnittsfarben der Fotos berechnet wird (`src/lib/color.ts`):
+  Farbton vom Titelbild, Buntheit danach, wie bunt die Fotos im Schnitt sind, Helligkeit immer gleich (OKLCH 0,83,
+  schwarze Schrift mindestens 9 : 1). Hilda bekommt so ein warmes Pfirsich-Rost, Ecuador ein Salbei, der DS-Kurs das
+  Rosaviolett seines Bühnenlichts; fast farblose Alben (Nacht, Schwarzweiß) ein warmes Papiergrau.
+  Wer für ein Album doch eine feste Farbe will: `color: pink | blue | lime | orange | violet` in `index.md` (Palette
+  „Sommer“: Koralle `#FF807F`, Orange `#FFA44E`, Sonnengelb `#F7E04F`, klares Blau `#53A3F2`, Flieder `#B98CEA`).
+  Filme nutzen die Palette weiter. Vorher bekam jedes Album reihum eine Sommerfarbe (Git-Tag
+  `alte-version-startseite-ueberblendung`).
 - **Links und Überfahren:** Links und kleine Akzentschrift (z. B. die Jahreszahlen auf „Über mich“) sind in
-  Ultramarin `#3A45C8` (Token `--accent`, dasselbe Blau wie die Startseite). Beim Überfahren bleibt die Schrift, der Unterstrich wird orange
-  (Token `--hover`, `#F25914`); Knöpfe, Abspielen und die Knöpfe der Lightbox werden orange hinterlegt. In der schwarzen
-  Fußzeile gibt es keine Unterstriche, beim Überfahren werden die Links blau (für Schwarz aufgehellt:
-  `--accent-on-dark`, `#8DA4FF`, sonst wäre der Kontrast zu gering), der große Schriftzug ist korallenrosa.
+  Ultramarin `#3A45C8` (Token `--accent`, dasselbe Blau wie die Startseite). Beim Überfahren überall dieselbe Antwort
+  wie im Menü: ein korallenrotes Feld mit schwarzer Schrift (Token `--hover`) – Links im Text, Knöpfe, Abspielen,
+  Knöpfe der Lightbox, Kontakt-Adressen. In der schwarzen Fußzeile werden die Links beim Überfahren korallenrot.
+  Bewusst dezenter: Titel neben Fotos (Galerie-Übersicht, nächstes/vorheriges Album) bekommen nur einen orangen
+  Unterstrich (Token `--hover-line`, `#F25914`). Vorher war Orange die Farbe fürs Überfahren überall.
 - **Rosa** ist Koralle `#FF807F` (vorher kräftiges Pink `#FF3D8B`, dann Altrosa `#E59BB0` und verblichenes
   Korallenrosa `#EF9D9F`). Es gilt auch für Galerien mit `color: pink`.
 - **Startseite = das Menü** (`src/components/BlueMenu.astro`): Ultramarin `#3A45C8` (kräftiges Blau
@@ -593,7 +600,17 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   der Name führt zur Startseite. Eine Textleiste mit Menüpunkten gibt es nur noch als Rückfall für sehr alte Browser.
   Am Handy (unter 700 px) steht der Name mittig, die Menüpunkte beginnen an seiner linken Kante, die Fußzeile ist
   mittig. Ab 700 px ist alles linksbündig.
-- **Bildfeld auf der Startseite** (`src/components/BlendLoop.astro`): Fotos aus dem Portfolio (Liste `showroom`),
+- **Startseite „Bild neben Name“** (seit 16. November 2026, `src/components/HomeSlides.astro` und `BlueMenu.astro`):
+  Schrift steht nie auf dem Foto. Am Laptop (ab 1000 px) zwei Spalten: links auf Blau der Name zweizeilig,
+  „Fotografie“, unten das Menü (etwa halb so groß wie der Name) und Instagram; rechts ein Foto aus dem Portfolio,
+  ganz und unbeschnitten, unten links auf seiner Bildunterschrift stehend. Die Bildunterschrift nennt Album, Monat
+  und „Album ansehen →“ und führt genau zu diesem Foto im Album; rechts der Zähler „01 / 05“. Am Handy und Tablet
+  hochkant steht das Foto ganz oben, randlos (hier im Ausschnitt nach dem Bildschwerpunkt), darunter die
+  Bildunterschrift (ohne Monat), dann Name, Menü, Instagram – ohne Scrollen, auch auf kleinen Handys. Die Fotos
+  wechseln alle 7 Sekunden mit einer ruhigen Überblendung, in der Reihenfolge der Liste `showroom`; ein Foto erscheint
+  erst fertig geladen. Mit „Bewegung reduzieren“ oder ohne JavaScript bleibt das erste Foto stehen.
+- **Frühere Startseite: Bildfeld mit Doppelbelichtung** (bis 16. November 2026, Git-Tag
+  `alte-version-startseite-ueberblendung`, Datei `BlendLoop.astro`): Fotos aus dem Portfolio (Liste `showroom`),
   in normalen Farben im Modus „Aufhellen“ übereinandergelegt (wie eine Doppelbelichtung), immer 4:3. Es sind immer zwei zu sehen. Alle
   2,8 Sekunden blendet ein neues oben ein und das unterste verschwindet, so entstehen laufend neue Bilder (Reihenfolge
   bei jedem Besuch zufällig). Am Laptop (ab 700 px) füllt es den ganzen Bildschirm hinter Name und Menü;
@@ -638,7 +655,10 @@ Kontraste nach WCAG 2.x:
 | Sonnengelb (`lime`) | `#F7E04F` | Schwarz | 14,7 : 1 |
 | Blau (`blue`) | `#53A3F2` | Schwarz | 7,4 : 1 |
 | Flieder (`violet`) | `#B98CEA` | Schwarz | 7,5 : 1 |
-| Überfahren | Orange `#F25914` | Schwarz / als Unterstrich auf Weiß | 5,8 : 1 / 3,4 : 1 |
+| Überfahren | Koralle `#FF807F` (Fläche) | Schwarz | 8,1 : 1 |
+| Überfahren in der Fußzeile | Koralle `#FF807F` als Schrift auf Schwarz | – | 8,1 : 1 |
+| Albumtöne | aus den Fotos, OKLCH-Helligkeit 0,83 | Schwarz | mindestens 9 : 1 |
+| Titel-Unterstrich beim Überfahren | Orange `#F25914` | – (nur Linie) | – |
 
 Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer Schrift.
 
@@ -675,8 +695,7 @@ Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer 
   links Luft haben; Adressen und Rechtliches in der Fußzeile stehen auf einer Grundlinie.
 - **Gleich breite Ziffern** überall, wo Zahlen untereinander stehen oder sich ändern (Etiketten, Jahreszahlen,
   Zähler in der Großansicht, Download-Fortschritt).
-- **Ladezustände:** Das Bildfeld der Startseite blendet erst ein, wenn das erste Fotopaar geladen ist, und zeigt
-  jedes weitere Foto erst fertig geladen. Ein Video zeigt nach dem Klick „Lädt …“ mit drehendem Kreis über dem
+- **Ladezustände:** Die Startseite zeigt jedes Foto erst fertig geladen. Ein Video zeigt nach dem Klick „Lädt …“ mit drehendem Kreis über dem
   Vorschaubild, bis der Player da ist. Die Großansicht wird im Leerlauf vorgeladen und zeigt beim Blättern einen
   Ladekreis.
 - **Großansicht am Handy quer:** Das Foto bekommt fast die ganze Höhe; Knöpfe als Spalte rechts, Pfeile unten in

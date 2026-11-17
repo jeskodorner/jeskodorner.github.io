@@ -1,4 +1,5 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { albumTone } from './color';
 import type { ImageMetadata } from 'astro';
 import { site } from '../config/site';
 
@@ -44,8 +45,10 @@ export type RoomColor = (typeof ROOM_COLORS)[number];
 
 export interface Gallery {
   id: string;
-  /** Galeriefarbe (CSS-Klasse c-<farbe>) */
+  /** Galeriefarbe (CSS-Klasse c-<farbe>) – nur noch, wenn im Album ausdrücklich `color:` steht */
   color: RoomColor;
+  /** Albumfarbe aus den Fotos (heller, gedämpfter Ton, src/lib/color.ts); fehlt, wenn `color:` gesetzt ist */
+  tone?: string;
   folder: string;
   slug: string;
   title: string;
@@ -150,6 +153,8 @@ async function load(): Promise<Gallery[]> {
       location: d.location,
       description: d.description,
       color: d.color ?? 'pink',
+      // Fläche über dem Album: Farbe aus den Fotos, außer im Album steht ausdrücklich eine Galeriefarbe
+      tone: d.color ? undefined : albumTone(images.map((i) => i.color), cover.color),
       visibility: d.visibility,
       isUnlisted: d.visibility === 'unlisted',
       showExif: d.showExif,
