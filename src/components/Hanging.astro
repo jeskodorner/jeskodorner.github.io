@@ -1,9 +1,10 @@
 ---
 /**
  * „Hängung“ (Seite „Portfolio“): Jedes Foto hängt unbeschnitten in seinem Originalformat an der
- * weißen Wand, mit viel Platz daneben und einem schlichten Schild (Name und Angaben, kein Link).
- * Ein Klick aufs Foto öffnet die Mappe des Albums (pages/mappe/[slug].astro): eine ruhige Übersicht mit einer
- * Auswahl der Fotos, von dort geht es ins ganze Album – dieselbe Mappe wie von der Startseite.
+ * weißen Wand, mit viel Platz daneben und einem schlichten Schild (Name und Angaben).
+ * Ein Klick aufs Foto oder aufs Schild öffnet die Mappe des Albums (pages/mappe/[slug].astro): eine ruhige Übersicht
+ * mit einer Auswahl der Fotos, von dort geht es ins ganze Album – dieselbe Mappe wie von der Startseite. Das Schild
+ * ändert sich beim Überfahren nicht (ruhig).
  *   Desktop: Fotos linksbündig, das Schild rechts daneben auf halber Bildhöhe.
  *   Handy: alles mittig – jedes Foto steht in der Mitte, das Schild mittig darunter.
  *   Größe: deutlich kleiner als der Bildschirm (Hochformate höchstens gut halb so hoch, Querformate höchstens
@@ -39,10 +40,11 @@ const { items } = Astro.props;
               class="work-img"
             />
           </a>
-          <div class="work-label">
-            <p class="work-title">{tidyTitle(it.name ?? it.album)}</p>
-            {(it.name || it.meta) && <p class="work-meta">{[it.name && it.album, it.meta].filter(Boolean).join(' · ')}</p>}
-          </div>
+          {/* Das Schild führt ebenfalls zur Mappe – ruhig, ohne sichtbare Änderung beim Überfahren */}
+          <a class="work-label" href={mappeUrl(it.gallery)}>
+            <span class="work-title">{tidyTitle(it.name ?? it.album)}</span>
+            {(it.name || it.meta) && <span class="work-meta">{[it.name && it.album, it.meta].filter(Boolean).join(' · ')}</span>}
+          </a>
         </li>
       );
     })
@@ -88,13 +90,15 @@ const { items } = Astro.props;
 
   /* ---------- Schild: mittig unter dem Foto (so breit wie das Foto) ---------- */
   .work-label {
+    color: inherit;
+    text-decoration: none;
     display: grid;
     gap: 0.25rem;
     justify-items: center;
     text-align: center;
     width: min(100%, calc(var(--work-h) * var(--r)));
   }
-  /* Titel auf dem Schild in der Titelschrift (Instrument Serif), wie die Überschriften */
+  /* Titel auf dem Schild in der Titelschrift (Bodoni Moda), wie die Überschriften */
   .work-title {
     font-family: var(--font-display);
     font-weight: var(--display-wght);

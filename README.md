@@ -103,7 +103,7 @@ photos.config.json          ← Einstellungen für die Bildverarbeitung (Größe
 
 **Portfolio:** In `startseite.md` legt die Liste `showroom` fest, welche Fotos ausgewählt sind, in welcher
 Reihenfolge und unter welchem Namen. Sie erscheinen auf der Seite **/portfolio/** als kleine Ausstellung (jedes Foto
-einzeln untereinander: am Laptop linksbündig mit dem Namen daneben auf halber Höhe, am Handy Fotos, Schilder und Knöpfe mittig, Überschrift und Einleitung linksbündig wie auf allen Seiten; ein Klick öffnet die Mappe des Albums, eine ruhige Übersicht mit einer Auswahl der Fotos)
+einzeln untereinander: am Laptop linksbündig mit dem Namen daneben auf halber Höhe, am Handy Fotos, Schilder und Knöpfe mittig, Überschrift und Einleitung linksbündig wie auf allen Seiten; ein Klick aufs Foto oder auf den Namen daneben öffnet die Mappe des Albums, eine ruhige Übersicht mit einer Auswahl der Fotos – der Name ändert sich beim Überfahren nicht)
 und liefern das Foto für die Vorschaukarte der Startseite (siehe „Vorschau beim Teilen“).
 
 ```yaml
