@@ -103,7 +103,7 @@ photos.config.json          ← Einstellungen für die Bildverarbeitung (Größe
 
 **Portfolio:** In `startseite.md` legt die Liste `showroom` fest, welche Fotos ausgewählt sind, in welcher
 Reihenfolge und unter welchem Namen. Sie erscheinen auf der Seite **/portfolio/** als kleine Ausstellung (jedes Foto
-einzeln untereinander: am Laptop linksbündig mit dem Namen daneben auf halber Höhe, am Handy Fotos, Schilder und Knöpfe mittig, Überschrift und Einleitung linksbündig wie auf allen Seiten; ein Klick öffnet direkt dort die Lightbox mit dem ganzen Album ab diesem Foto, ohne die Albumseite)
+einzeln untereinander: am Laptop linksbündig mit dem Namen daneben auf halber Höhe, am Handy Fotos, Schilder und Knöpfe mittig, Überschrift und Einleitung linksbündig wie auf allen Seiten; ein Klick öffnet die Mappe des Albums, eine ruhige Übersicht mit einer Auswahl der Fotos)
 und liefern das Foto für die Vorschaukarte der Startseite (siehe „Vorschau beim Teilen“).
 
 ```yaml
@@ -605,23 +605,26 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   Schrift steht nie auf dem Foto. Am Laptop (ab 1000 px) zwei Spalten: links auf Blau der Name zweizeilig, unten
   das Menü (etwa halb so groß wie der Name) und Instagram; rechts ein Foto aus dem Portfolio in einer festen Fläche
   im Format 4:3, unten auf seiner Bildunterschrift stehend. Jedes Foto füllt diese Fläche (Ausschnitt nach dem
-  Bildschwerpunkt), so wechselt beim Bildwechsel nie das Format; ganz zu sehen sind die Fotos in der Mappe. Die Bildunterschrift ist immer gleich aufgebaut:
-  oben der Albumname (Titelschrift kursiv, eine Zeile, bei sehr langen Namen am Handy mit „…“), darunter
-  Monat und Jahr · „Mappe ansehen →“ – so bleibt sie immer gleich hoch und das Foto springt nicht. Foto und
-  Bildunterschrift führen zur Mappe des Albums; beim Überfahren bekommt die Zeile „Monat · Mappe ansehen →“ das
-  Koralle-Feld.
+  Bildschwerpunkt), so wechselt beim Bildwechsel nie das Format; ganz zu sehen sind die Fotos in der Mappe. Am Handy
+  und Tablet hochkant steht das Foto ganz oben, randlos, darunter die Bildunterschrift, dann Name, Menü, Instagram –
+  ohne Scrollen, auch auf kleinen Handys.
+  Die Bildunterschrift ist immer gleich aufgebaut: oben der Albumname (Titelschrift kursiv, eine Zeile, bei sehr
+  langen Namen am Handy mit „…“), darunter Monat und Jahr · „Mappe ansehen →“ – so bleibt sie immer gleich hoch und
+  das Foto springt nicht. Foto und Bildunterschrift führen zur Mappe des Albums; beim Überfahren bekommt die Zeile
+  „Monat · Mappe ansehen →“ das Koralle-Feld.
+  Die Fotos wechseln alle 7 Sekunden in der Reihenfolge der Liste `showroom`: Das neue Foto blendet in 1,8 Sekunden
+  weich über dem alten ein und setzt sich dabei langsam aus einer leichten Vergrößerung; das alte bleibt darunter
+  stehen, bis das neue ganz da ist (nie eine leere Fläche dazwischen). Ein Foto erscheint erst fertig geladen. Mit
+  „Bewegung reduzieren“ oder ohne JavaScript bleibt das erste Foto stehen.
 - **Mappe** (`src/pages/mappe/[slug].astro`, Auswahl in `src/lib/mappe.ts`): je Album aus dem Portfolio eine ruhige
-  Übersicht wie eine Fotomappe, einfacher als das Album: Titel und Monat (linksbündig wie auf allen Seiten), dann
-  eine Auswahl der Fotos groß untereinander, jedes für sich mit Schatten (am Laptop linksbündig, am Handy mittig),
-  fast ohne Text. Vorne das Foto von der Startseite, dazu bis zu 7 weitere gleichmäßig über das Album verteilt (oder
-  genau die Fotos aus `mappe:` im Album). Ein Klick auf ein Foto öffnet die Lightbox mit dem ganzen Album ab diesem
-  Foto (wie im Portfolio, gemeinsames Skript `src/scripts/open-album.ts`). Unten „Ganzes Album ansehen →“ und wie
-  viele Bilder das Album hat. Am Handy und Tablet
-  hochkant steht das Foto ganz oben, randlos (hier im Ausschnitt nach dem Bildschwerpunkt), darunter die
-  Bildunterschrift, dann Name, Menü, Instagram – ohne Scrollen, auch auf kleinen Handys. Die Fotos wechseln alle
-  7 Sekunden in der Reihenfolge der Liste `showroom`: Das neue Foto blendet in 1,8 Sekunden weich über dem alten ein
-  und setzt sich dabei langsam aus einer leichten Vergrößerung; das alte bleibt darunter stehen, bis das neue ganz da
-  ist (nie eine leere Fläche dazwischen). Ein Foto erscheint erst fertig geladen. Mit „Bewegung reduzieren“ oder ohne JavaScript bleibt das erste Foto stehen.
+  Übersicht wie eine aufgeschlagene Fotomappe, einfacher als das Album. Erreichbar über „Mappe ansehen →“ auf der
+  Startseite und über jedes Foto im Portfolio. Oben „← Zurück“ (führt dorthin zurück, wo man herkam, samt Stelle auf
+  der Seite; ohne Vorgeschichte zur Startseite), Titel und Monat linksbündig wie auf allen Seiten. Darunter die Fotos
+  als Abzüge in gleich großen Feldern (5:4), Laptop 4, Tablet 3, Handy 2 pro Reihe – jedes ganz und unbeschnitten,
+  mittig im Feld, mit Schatten, viel Luft dazwischen, kein Text. Vorne das Foto aus dem Portfolio, dazu bis zu 7
+  weitere gleichmäßig über das Album verteilt (oder genau die Fotos aus `mappe:` im Album). Ein Klick auf ein Foto
+  öffnet die Lightbox mit dem ganzen Album ab diesem Foto (`src/scripts/open-album.ts`). Unten „Ganzes Album
+  ansehen →“ und wie viele Bilder das Album hat.
 - **Frühere Startseite: Bildfeld mit Doppelbelichtung** (bis 16. November 2026, Git-Tag
   `alte-version-startseite-ueberblendung`, Datei `BlendLoop.astro`): Fotos aus dem Portfolio (Liste `showroom`),
   in normalen Farben im Modus „Aufhellen“ übereinandergelegt (wie eine Doppelbelichtung), immer 4:3. Es sind immer zwei zu sehen. Alle

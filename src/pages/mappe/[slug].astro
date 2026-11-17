@@ -1,8 +1,9 @@
 ---
 /**
- * Mappe: eine ruhige Übersicht zu einem Album aus dem Portfolio, wie eine Fotomappe zum Durchblättern – Titel, Monat,
- * eine Auswahl der Fotos groß untereinander (jedes für sich, mit Schatten wie an der Wand), fast kein Text, unten
- * „Ganzes Album ansehen →“. Erreichbar über „Mappe ansehen →“ auf der Startseite.
+ * Mappe: eine ruhige Übersicht zu einem Album aus dem Portfolio, wie eine aufgeschlagene Fotomappe – „← Zurück“,
+ * Titel, Monat, eine Auswahl der Fotos als Abzüge nebeneinander (jedes ganz, mit Schatten, in gleich großen Feldern),
+ * fast kein Text, unten „Ganzes Album ansehen →“. Erreichbar über „Mappe ansehen →“ auf der Startseite und über die
+ * Fotos im Portfolio.
  * Welche Fotos: src/lib/mappe.ts (Liste `mappe:` im Album oder automatisch bis zu 8). Ein Klick auf ein Foto öffnet
  * die Lightbox mit dem ganzen Album ab diesem Foto, direkt hier (wie im Portfolio).
  */
@@ -37,6 +38,10 @@ const og = cardImage(`album/${g.slug}`, g.cover.alt);
 
 <BaseLayout title={g.title} description={g.description} image={og}>
   <section class="container container--wide head">
+    {/* Zurück dorthin, wo man herkam (Startseite oder Portfolio); ohne Vorgeschichte zur Startseite */}
+    <a class="back btn btn--small" href="/" data-back>
+      <Icon name="arrow-left" /> {t.mappe.back}
+    </a>
     <h1 class="display display-1">{tidyTitle(g.title)}</h1>
     <p class="label muted">{meta}</p>
   </section>
@@ -51,10 +56,10 @@ const og = cardImage(`album/${g.slug}`, g.cover.alt);
               <Picture
                 src={img.src}
                 alt={img.alt}
-                sizes={r < 1 ? '(min-width: 700px) 50vw, 100vw' : '(min-width: 1100px) 1100px, 100vw'}
+                sizes="(min-width: 1000px) 22vw, (min-width: 600px) 30vw, 46vw"
                 color={img.color}
                 lqip={img.lqip}
-                loading={i === 0 ? 'eager' : 'lazy'}
+                loading={i < 4 ? 'eager' : 'lazy'}
                 fetchpriority={i === 0 ? 'high' : undefined}
                 class="sheet-img"
               />
@@ -89,35 +94,57 @@ const og = cardImage(`album/${g.slug}`, g.cover.alt);
 <script>
   import { initAlbumLinks } from '../../scripts/open-album';
   initAlbumLinks();
+  // „Zurück“: kam man von dieser Website (Startseite, Portfolio), geht es genau dorthin zurück – samt Stelle auf der Seite
+  for (const a of document.querySelectorAll<HTMLAnchorElement>('[data-back]')) {
+    a.addEventListener('click', (e) => {
+      const ref = document.referrer ? new URL(document.referrer) : null;
+      if (ref && ref.origin === location.origin && ref.pathname !== location.pathname && history.length > 1) {
+        e.preventDefault();
+        history.back();
+      }
+    });
+  }
 </script>
 
 <style>
   .head {
     padding-bottom: clamp(2.5rem, 6vw, 5rem);
   }
-  /* Jedes Foto für sich, so groß, dass es fast einen Bildschirm füllt (Hochformate höchstens 78 % der
-     Bildschirmhöhe, Querformate höchstens 1100 px breit); dazwischen viel Luft wie beim Blättern in einer Mappe.
-     Wie im Portfolio: am Laptop linksbündig unter dem Titel, am Handy mittig. */
+  .back {
+    margin-bottom: clamp(1.25rem, 3vw, 2rem);
+  }
+  /* Übersicht wie eine aufgeschlagene Mappe: gleich große Felder (5:4) in Reihen – Laptop 4, Tablet 3, Handy 2.
+     In jedem Feld liegt ein Abzug ganz (unbeschnitten), so groß wie das Feld es zulässt, mittig, mit Schatten.
+     Viel Luft zwischen den Abzügen. */
   .mappe {
-    --mh: min(78svh, 52rem);
     list-style: none;
     display: grid;
-    justify-items: start;
-    gap: clamp(4rem, 9vw, 8rem);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(2.5rem, 5vw, 4.5rem) clamp(1.75rem, 4vw, 3.5rem);
     margin: 0 auto;
     padding-block: 0;
   }
-  @media (max-width: 899.98px) {
+  @media (max-width: 999.98px) {
     .mappe {
-      justify-items: center;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 599.98px) {
+    .mappe {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 2rem 1.25rem;
     }
   }
   .sheet {
-    display: contents;
+    aspect-ratio: 5 / 4;
+    container-type: size;
+    display: grid;
+    place-items: center;
   }
   .sheet-link {
     display: block;
-    width: min(100%, 1100px, calc(var(--mh) * var(--r)));
+    /* Querformat füllt die Breite, Hochformat die Höhe des Felds */
+    width: min(100cqw, 100cqh * var(--r));
     overflow: hidden;
     box-shadow: var(--hang-shadow);
     cursor: zoom-in;

@@ -50,6 +50,8 @@ export const de = {
     write: 'Schreib mir',
   },
   mappe: {
+    /** Knopf oben auf der Mappe */
+    back: 'Zurück',
     /** Knopf unten auf der Mappe */
     toAlbum: 'Ganzes Album ansehen',
     /** Zeile darunter, z. B. „30 Bilder im Album“ */

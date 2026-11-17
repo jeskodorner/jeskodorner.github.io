@@ -2,8 +2,8 @@
 /**
  * „Hängung“ (Seite „Portfolio“): Jedes Foto hängt unbeschnitten in seinem Originalformat an der
  * weißen Wand, mit viel Platz daneben und einem schlichten Schild (Name und Angaben, kein Link).
- * Ein Klick aufs Foto öffnet die Lightbox mit dem ganzen Album ab diesem Foto – direkt hier, ohne die
- * Albumseite (Daten und Skript: pages/portfolio.astro). Ohne JavaScript führt der Link ins Album.
+ * Ein Klick aufs Foto öffnet die Mappe des Albums (pages/mappe/[slug].astro): eine ruhige Übersicht mit einer
+ * Auswahl der Fotos, von dort geht es ins ganze Album – dieselbe Mappe wie von der Startseite.
  *   Desktop: Fotos linksbündig, das Schild rechts daneben auf halber Bildhöhe.
  *   Handy: alles mittig – jedes Foto steht in der Mitte, das Schild mittig darunter.
  *   Größe: deutlich kleiner als der Bildschirm (Hochformate höchstens gut halb so hoch, Querformate höchstens
@@ -14,6 +14,7 @@
 import type { WorkItem } from '../lib/showroom';
 import Picture from './Picture.astro';
 import { tidyTitle } from '../lib/text';
+import { mappeUrl } from '../lib/mappe';
 
 export interface Props {
   items: WorkItem[];
@@ -28,12 +29,7 @@ const { items } = Astro.props;
       const r = it.image.src.width / it.image.src.height;
       return (
         <li class:list={['work', { 'work--portrait': r < 1 }]} style={`--r:${r.toFixed(4)}`}>
-          <a
-            class="work-media reveal"
-            href={it.photoHref}
-            data-open-album={it.gallery.slug}
-            data-photo={it.image.index}
-          >
+          <a class="work-media reveal" href={mappeUrl(it.gallery)}>
             <Picture
               src={it.image.src}
               alt={it.image.alt}
@@ -74,7 +70,6 @@ const { items } = Astro.props;
   }
   /* Rahmen mit dem Schatten an der Wand; beim Überfahren wird das Foto darin leicht größer (wie in den Alben) */
   .work-media {
-    cursor: zoom-in;
     outline-offset: 4px;
     overflow: hidden;
     box-shadow: var(--hang-shadow);

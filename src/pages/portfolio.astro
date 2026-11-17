@@ -1,15 +1,13 @@
 ---
 /**
  * Portfolio: die kuratierte Auswahl aus startseite.md (Liste "showroom") als kleine Ausstellung.
- * Gegenpol zur Galerie (offenes Archiv). Jedes Foto hängt einzeln an der Wand; ein Klick öffnet es im Album.
+ * Gegenpol zur Galerie (offenes Archiv). Jedes Foto hängt einzeln an der Wand; ein Klick öffnet die Mappe seines Albums.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hanging from '../components/Hanging.astro';
 import Icon from '../components/Icon.astro';
 import EmailLink from '../components/EmailLink.astro';
 import { getSelectedWorks } from '../lib/showroom';
-import { photoData } from '../lib/lightbox-data';
-import type { Gallery } from '../lib/galleries';
 import { cardImage } from '../lib/og';
 import { useTranslations } from '../i18n';
 
@@ -17,12 +15,6 @@ const t = useTranslations();
 const works = await getSelectedWorks();
 const og = cardImage('portfolio', works[0]?.image.alt);
 
-// Für jedes Album im Portfolio die Lightbox-Daten aller Fotos (unsichtbar) – so lässt sich das ganze Album
-// direkt hier durchblättern, ohne die Albumseite zu öffnen
-const albums = [...new Map(works.map((w) => [w.gallery.slug, w.gallery] as [string, Gallery])).values()];
-const albumData = await Promise.all(
-  albums.map(async (g) => ({ g, items: await Promise.all(g.images.map((img) => photoData(g, img))) })),
-);
 ---
 
 <BaseLayout title={t.selected.title} description={t.selected.intro} image={og}>
@@ -37,20 +29,6 @@ const albumData = await Promise.all(
     <Hanging items={works} />
   </div>
 
-  {
-    albumData.map(({ g, items }) => (
-      <ul class="album-src" hidden data-album-src={g.slug} data-count={g.images.length} data-title={g.title}>
-        {items.map((it) => (
-          <li>
-            <a class="ph" href={it.set.largest.url} {...it.attrs}>
-              {g.title}
-            </a>
-          </li>
-        ))}
-      </ul>
-    ))
-  }
-
   {/* Abschluss: erst die wichtigste Handlung (schreiben), daneben der Weg zu allen Fotos */}
   <p class="container container--wide more btn-row">
     <EmailLink class="btn btn--solid" text={t.selected.write} subject="Anfrage über die Website" />
@@ -59,12 +37,6 @@ const albumData = await Promise.all(
     </a>
   </p>
 </BaseLayout>
-
-<script>
-  // Ein Klick auf ein Foto öffnet sein Album ab genau diesem Foto (gemeinsam mit der Mappe)
-  import { initAlbumLinks } from '../scripts/open-album';
-  initAlbumLinks();
-</script>
 
 <style>
   .head {

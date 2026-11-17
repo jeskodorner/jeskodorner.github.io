@@ -1,5 +1,5 @@
 /**
- * Fotos, die direkt hier ihr ganzes Album in der Lightbox öffnen (Portfolio, Mappe), ohne die Albumseite.
+ * Fotos, die direkt hier ihr ganzes Album in der Lightbox öffnen (Mappe), ohne die Albumseite.
  * Die Seite enthält je Album eine unsichtbare Liste [data-album-src="<slug>"] mit den Lightbox-Daten aller Fotos;
  * ein Link mit data-open-album="<slug>" und data-photo="<Nummer>" öffnet das Album ab genau diesem Foto.
  * Ohne JavaScript führt der Link ins Album (#bild-<Nummer>).
