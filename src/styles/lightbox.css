@@ -1,4 +1,25 @@
 /* PhotoSwipe als weiße Galeriewand */
+/* Großansicht am Handy: oben und unten an den Bildschirmrand geheftet (statt 100 % Höhe) und darunter ein Streifen
+   in der Hintergrundfarbe – klappt Firefox oder Safari die Leiste ein, scheint unten nie die Seite durch. Die Seite
+   dahinter lässt sich währenddessen nicht scrollen. */
+.pswp {
+  top: 0;
+  bottom: 0;
+  height: auto;
+}
+.pswp::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 100vh;
+  background: var(--pswp-bg);
+  pointer-events: none;
+}
+html:has(.pswp--open) {
+  overflow: hidden;
+}
 .pswp {
   --pswp-bg: var(--wall);
   --pswp-placeholder-bg: var(--wall-2);

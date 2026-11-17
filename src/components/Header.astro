@@ -162,14 +162,16 @@ const isCurrent = (match: string[]) => current(path, match);
   }
 
   /* Menü als Popover (funktioniert ohne JavaScript), auf allen Geräten gleich. Inhalt: BlueMenu.astro.
-     So hoch wie der größte Bildschirmbereich (lvh): kein Streifen der Seite darunter, auch wenn die
-     Adressleiste im Handy-Browser eingeklappt ist. Dahinter lässt sich nicht scrollen. */
+     Oben und unten an den Bildschirmrand geheftet (inset: 0) statt einer gemessenen Höhe: So wächst es mit, wenn
+     Safari oder Firefox am Handy ihre Leisten einklappen. Zur Sicherheit liegt darunter noch ein Streifen im selben
+     Blau (Schatten), damit auch während des Einklappens nie die Seite durchscheint. Dahinter lässt sich nicht
+     scrollen. */
   .menu {
     position: fixed;
-    inset: 0 0 auto;
+    inset: 0;
     width: 100%;
-    height: 100vh;
-    height: 100lvh;
+    height: auto;
+    box-shadow: 0 100vh 0 0 var(--menu-bg);
     max-width: none;
     max-height: none;
     margin: 0;

@@ -593,7 +593,7 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   mit leichtem Lila-Stich, kurz ausprobiert: „Kobalt-lila“ `#474EC4`) mit weißer Schrift (Token `--menu-bg` und `--on-menu` in `tokens.css`). Der Name hat die
   Schriftfarbe (`--name-color` in `BlueMenu.astro`), der Menüpunkt der aktuellen Seite ist unterstrichen. Beim Überfahren bekommen
   Menüpunkte und Name ein rosa Feld mit schwarzer Schrift, Menü- und Schließen-Knopf sind rosa Kreise. Instagram
-  unten ist schlicht in der Schriftfarbe (beim Überfahren rosa). Sparsam bleiben: mehr Rosa wirkt schnell zu viel. Die Fläche geht über den ganzen
+  unten sieht aus wie in der Fußzeile jeder Seite: Symbol und „jeskodorner“ (beim Überfahren rosa). Sparsam bleiben: mehr Rosa wirkt schnell zu viel. Die Fläche geht über den ganzen
   Bildschirm, oben groß der Name, darunter die Menüpunkte (Portfolio, Galerie, Film, Über mich, Kontakt), unten
   nur Instagram – auf der Startseite und im Menü gleich. Impressum und Datenschutz stehen in der Fußzeile jeder
   Unterseite (von der Startseite aus also mit zwei Klicks). Ohne Kopfleiste und ohne Scrollen. Dasselbe Menü öffnet sich auf allen
@@ -720,6 +720,9 @@ Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer 
 - **Ladezustände:** Die Startseite zeigt jedes Foto erst fertig geladen. Ein Video zeigt nach dem Klick „Lädt …“ mit drehendem Kreis über dem
   Vorschaubild, bis der Player da ist. Die Großansicht wird im Leerlauf vorgeladen und zeigt beim Blättern einen
   Ladekreis.
+- **Menü und Großansicht bis ganz unten:** Beide sind oben und unten an den Bildschirmrand geheftet (nicht auf eine
+  gemessene Höhe gesetzt) und haben darunter einen Streifen in ihrer Farbe. Klappen Safari oder Firefox am Handy
+  ihre Leisten ein, scheint unten nie die Seite durch. Hinter der Großansicht lässt sich die Seite nicht scrollen.
 - **Großansicht am Handy quer:** Das Foto bekommt fast die ganze Höhe; Knöpfe als Spalte rechts, Pfeile unten in
   den Ecken, Details als Spalte rechts (`isShort` in `src/scripts/lightbox.ts`, Media-Query am Ende von
   `src/styles/lightbox.css`).
