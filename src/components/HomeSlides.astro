@@ -51,7 +51,7 @@ const first = slides[0];
         <a class="hs-link" href={first.w.photoHref} data-slide-link>
           <span class="hs-title" data-slide-title>{first.title}</span>
           <span class="hs-meta label">
-            <span class="hs-when"><span data-slide-meta>{first.meta}</span> · </span>{t.home.viewAlbum} →
+            <span class="hs-when"><span data-slide-meta>{first.meta}</span> · </span><span class="hs-go">{t.home.viewAlbum} →</span>
           </span>
         </a>
         {slides.length > 1 && (
@@ -153,11 +153,13 @@ const first = slides[0];
     height: 100%;
     object-fit: cover;
   }
-  /* Zeile unter dem Foto: Album (Titelschrift kursiv), Monat · „Album ansehen →“, rechts der Zähler */
+  /* Bildunterschrift, immer gleich aufgebaut (auch bei langen Albumnamen): oben der Albumname in der Titelschrift
+     kursiv (eine Zeile, notfalls mit …), darunter Monat · „Album ansehen →“; rechts der Zähler. So bleibt die
+     Bildunterschrift immer gleich hoch und das Foto darüber springt beim Wechsel nicht. */
   .hs-cap {
     display: flex;
-    align-items: baseline;
-    gap: 0.4rem 1rem;
+    align-items: flex-end;
+    gap: 1rem;
     color: var(--on-menu);
     transition: opacity 0.35s var(--ease);
   }
@@ -165,13 +167,11 @@ const first = slides[0];
     opacity: 0;
   }
   .hs-link {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0.2rem 0.9rem;
+    display: grid;
+    gap: 0.25rem;
     min-width: 0;
     min-height: 2.75rem; /* Tippfläche */
-    align-content: center;
+    align-content: end;
     color: inherit;
     text-decoration: none;
   }
@@ -181,8 +181,22 @@ const first = slides[0];
     font-style: italic;
     font-size: clamp(1.15rem, 1rem + 0.5vw, 1.5rem);
     line-height: 1.1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  .hs-link:hover .hs-title {
+  .hs-meta {
+    white-space: nowrap;
+  }
+  /* Überfahren: „Album ansehen →“ bekommt das Koralle-Feld (die Handlung, nicht der Name) */
+  .hs-go {
+    padding: 0.15em 0.3em;
+    margin: -0.15em -0.3em;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+  }
+  .hs-link:hover .hs-go {
     background: var(--hover);
     color: var(--ink);
   }

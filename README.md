@@ -601,10 +601,12 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   Am Handy (unter 700 px) steht der Name mittig, die Menüpunkte beginnen an seiner linken Kante, die Fußzeile ist
   mittig. Ab 700 px ist alles linksbündig.
 - **Startseite „Bild neben Name“** (seit 16. November 2026, `src/components/HomeSlides.astro` und `BlueMenu.astro`):
-  Schrift steht nie auf dem Foto. Am Laptop (ab 1000 px) zwei Spalten: links auf Blau der Name zweizeilig,
-  „Fotografie“, unten das Menü (etwa halb so groß wie der Name) und Instagram; rechts ein Foto aus dem Portfolio,
-  ganz und unbeschnitten, unten links auf seiner Bildunterschrift stehend. Die Bildunterschrift nennt Album, Monat
-  und „Album ansehen →“ und führt genau zu diesem Foto im Album; rechts der Zähler „01 / 05“. Am Handy und Tablet
+  Schrift steht nie auf dem Foto. Am Laptop (ab 1000 px) zwei Spalten: links auf Blau der Name zweizeilig, unten
+  das Menü (etwa halb so groß wie der Name) und Instagram; rechts ein Foto aus dem Portfolio, ganz und
+  unbeschnitten, unten links auf seiner Bildunterschrift stehend. Die Bildunterschrift ist immer gleich aufgebaut:
+  oben der Albumname (Titelschrift kursiv, eine Zeile, bei sehr langen Namen am Handy mit „…“), darunter
+  Monat · „Album ansehen →“, rechts der Zähler „01 / 05“ – so bleibt sie immer gleich hoch und das Foto springt nicht.
+  Sie führt genau zu diesem Foto im Album; beim Überfahren bekommt „Album ansehen →“ das Koralle-Feld. Am Handy und Tablet
   hochkant steht das Foto ganz oben, randlos (hier im Ausschnitt nach dem Bildschwerpunkt), darunter die
   Bildunterschrift (ohne Monat), dann Name, Menü, Instagram – ohne Scrollen, auch auf kleinen Handys. Die Fotos
   wechseln alle 7 Sekunden mit einer ruhigen Überblendung, in der Reihenfolge der Liste `showroom`; ein Foto erscheint
@@ -681,8 +683,8 @@ Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer 
   `btn-row`): „Schreib mir“ gefüllt, daneben der Weg weiter mit Pfeil; am Handy beide untereinander in voller Breite.
 - **Zurück aus dem Album:** „← Alle Galerien“ führt zur Stelle des Albums in der Übersicht (`/galerien/#album-…`),
   nicht an ihren Anfang. Der Zurück-Knopf des Browsers stellt die Position ohnehin wieder her.
-- **Erster Bildschirm sagt, worum es geht:** Unter dem Namen auf der Startseite steht „Fotografie“
-  (`home.claim` in `src/i18n/de.ts`).
+- **Erster Bildschirm sagt, worum es geht:** über die Fotos mit Bildunterschrift. Eine Zeile „Fotografie“ unter dem
+  Namen gab es kurz, sie ist wieder weg.
 - **Fotoreihen ohne Ruckeln:** Mit JavaScript erscheinen die Fotoreihen eines Albums erst, wenn `justify.ts` sie
   randvoll verteilt hat (sonst rückten sie nach dem ersten Bild einmal zur Seite); nach spätestens 1,5 s sind sie
   in jedem Fall sichtbar.

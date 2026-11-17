@@ -8,7 +8,7 @@
  * Menü – Handy (unter 700 px): der Name steht mittig, die Menüpunkte linksbündig an seiner linken Kante, die Fußzeile
  * mittig. Ab 700 px: alles linksbündig.
  * Startseite (Slot „aside“ mit der Fotofläche HomeSlides.astro) – Richtung „Bild neben Name“: Schrift steht nie auf
- * dem Foto. Ab 1000 px zwei Spalten: links Name, „Fotografie“, Menü und Instagram auf Blau, rechts ein scharfes Foto
+ * dem Foto. Ab 1000 px zwei Spalten: links Name, Menü und Instagram auf Blau, rechts ein scharfes Foto
  * mit Bildunterschrift. Darunter (Handy, Tablet hochkant): Foto ganz oben randlos mit harten Kanten, darunter
  * Bildunterschrift, Name, Menü, Instagram. Das Menü ist hier etwa halb so groß wie der Name.
  * Frühere Fassungen in Git-Tags: alte-version-startseite-ueberblendung (Doppelbelichtung, Schrift auf dem Foto mit
@@ -81,8 +81,6 @@ const nameWords = site.name.split(' ').map((word) =>
       </h1>
     )
   }
-  {/* Startseite: eine Zeile unter dem Namen sagt, was Jesko macht */}
-  {!overlay && <p class="bm-claim label">{t.home.claim}</p>}
   <div class="bm-body">
     <nav aria-label={t.nav.label}>
       <ul class="bm-list" role="list">
@@ -205,13 +203,6 @@ const nameWords = site.name.split(' ').map((word) =>
   .bm-name :global(.bm-w--2) {
     view-transition-name: jd-name-2;
   }
-  /* Zeile unter dem Namen (nur Startseite): klein, gesperrt, an der linken Kante des Namens */
-  .bm-claim {
-    margin-top: clamp(0.7rem, 1.6vw, 1.1rem);
-    font-size: var(--fs-sm);
-    letter-spacing: 0.14em;
-    color: var(--on-menu);
-  }
   /* Menüpunkte: deutlich kleiner als der Name, mit Luft dazwischen */
   /* Menüpunkte, dazu optional das Bildfeld (Slot „aside“). Handy: Bildfeld mittig im freien Platz darunter. */
   .bm-body {
@@ -225,7 +216,7 @@ const nameWords = site.name.split(' ').map((word) =>
   }
   /* Handy – Menü und Startseite: Raster mit drei Spalten. Die mittlere ist genau so breit wie der Name, so steht er
      mittig und die Menüpunkte beginnen an seiner linken Kante. Reihen: Foto (Startseite) bzw. Schließen-Knopf
-     (Menü) · Name · Zeile darunter (nur Startseite) · Menüpunkte · Fußzeile (mittig ganz unten). Die Startseite
+     (Menü) · Name · (frei) · Menüpunkte · Fußzeile (mittig ganz unten). Die Startseite
      nutzt dasselbe Raster bis 999 px (Regeln weiter unten). */
   @media (max-width: 699.98px) {
     .bm {
@@ -233,12 +224,8 @@ const nameWords = site.name.split(' ').map((word) =>
       --name-fs: min(6.5rem, 100cqi / 6.9);
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-      /* Foto bzw. Schließen-Knopf · Name · Zeile darunter (nur Startseite) · Menüpunkte · Fußzeile */
+      /* Foto bzw. Schließen-Knopf · Name · (frei, früher „Fotografie“) · Menüpunkte · Fußzeile */
       grid-template-rows: auto auto auto 1fr auto;
-    }
-    .bm .bm-claim {
-      grid-column: 2;
-      grid-row: 3;
     }
     .bm .bm-foot {
       grid-row: 5;
@@ -282,7 +269,7 @@ const nameWords = site.name.split(' ').map((word) =>
 
   /* ---------- Startseite: „Bild neben Name“ ---------- */
   /* Handy und Tablet hochkant (bis 999 px): dasselbe Raster wie das Menü am Handy. Foto ganz oben, randlos mit
-     harten Kanten, darunter seine Bildunterschrift; dann Name, „Fotografie“, Menü (mittig im freien Platz) und
+     harten Kanten, darunter seine Bildunterschrift; dann Name, Menü (mittig im freien Platz) und
      Instagram. */
   @media (max-width: 999.98px) {
     .bm--aside {
@@ -304,10 +291,6 @@ const nameWords = site.name.split(' ').map((word) =>
     .bm--aside .bm-name :global(.bm-w) {
       display: block;
       width: fit-content;
-    }
-    .bm--aside .bm-claim {
-      grid-column: 2;
-      grid-row: 3;
     }
     .bm--aside .bm-body {
       display: contents;
@@ -360,7 +343,7 @@ const nameWords = site.name.split(' ').map((word) =>
       margin-block: calc(0.9rem + 0.07 * var(--bm-item)) calc(1.4rem - 0.07 * var(--bm-item));
     }
   }
-  /* Laptop (ab 1000 px): zwei Spalten. Links (5/12) Name zweizeilig, „Fotografie“, unten Menü und Instagram;
+  /* Laptop (ab 1000 px): zwei Spalten. Links (5/12) Name zweizeilig, unten Menü und Instagram;
      rechts (7/12) das Foto über die ganze Höhe mit Bildunterschrift. Genau ein Bildschirm hoch. */
   @media (min-width: 1000px) {
     .bm--aside {
@@ -382,10 +365,6 @@ const nameWords = site.name.split(' ').map((word) =>
     .bm--aside .bm-name :global(.bm-w) {
       display: block;
       width: fit-content;
-    }
-    .bm--aside .bm-claim {
-      grid-column: 1;
-      grid-row: 2;
     }
     .bm--aside .bm-body {
       display: contents;
