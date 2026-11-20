@@ -65,11 +65,11 @@
   --scrim: 26 0 137;
 
   /* Schriften – lokal eingebunden (keine Google-Fonts-CDN) */
-  /* Titel und Menü: Cyrene (fein, ohne Serifen, echte Kleinbuchstaben; src/styles/fonts.css). Vorher Migha Display,
-     Bodoni Moda, Instrument Serif und Anybody */
-  --font-display: 'Cyrene', 'Helvetica Neue', Arial, sans-serif;
-  /* Stärke der Titelschrift (Cyrene hat nur einen Schnitt, die Angabe bleibt für einen späteren Wechsel) */
-  --display-wght: 400;
+  /* Titel und Menü: Melodrama (schmal, starker Kontrast, echte Kleinbuchstaben; src/styles/fonts.css). Vorher Cyrene,
+     Migha Display, Bodoni Moda, Instrument Serif und Anybody */
+  --font-display: 'Melodrama', 'Didot', 'Bodoni 72', Georgia, serif;
+  /* Stärke der Titelschrift: Melodrama ist variabel (300–700), 500 = Medium */
+  --display-wght: 500;
   /* der Name „JESKO DORNER“ (Startseite, Menü, Logo, Fußzeile): Migha Black, vorher Climate Crisis */
   --font-name: 'Migha Black', 'Migha', 'Arial Narrow', sans-serif;
   /* Text, Knöpfe, Etiketten: Libre Franklin (Franklin Gothic, Zeitungs- und Magazinklassiker); vorher Archivo */

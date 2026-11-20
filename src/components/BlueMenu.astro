@@ -440,16 +440,16 @@ const nameWords = site.name.split(' ').map((word) =>
       grid-column: 1;
       grid-row: 4;
     }
-    /* Unter der letzten Zeile („Kontakt“) liegen in Cyrene 0,185 Schrifthöhen Luft bis zum Zeilenende (gemessen) – um
-       genau so viel ragt das Menü nach unten, damit die Grundlinie von „Kontakt“ auf der Linie der Bildunterschrift
-       liegt (Migha: 0,15, Bodoni: 0,128) */
+    /* Unter der letzten Zeile („Kontakt“) liegen 0,185 Schrifthöhen Luft bis zum Zeilenende (gemessen; Melodrama hat
+       dafür in fonts.css dieselben Zeilenmaße wie vorher Cyrene) – um genau so viel ragt das Menü nach unten, damit die
+       Grundlinie von „Kontakt“ auf der Linie der Bildunterschrift liegt (Migha: 0,15, Bodoni: 0,128) */
     :is(.bm--aside, .bm--overlay) .bm-body > nav {
       margin-bottom: calc(-0.185 * var(--bm-item));
     }
     /* Foto mit Bildunterschrift rechts neben Name und Menü: Die Bildunterschrift („Albumname – Monat Jahr“, eine
        Zeile) steht auf derselben Grundlinie wie „KONTAKT“; das Foto steht darüber. Unter beiden nur Instagram. Unter
-       der Grundlinie liegen 0,33 Schrifthöhen des Datums plus 0,06 Schrifthöhen des Albumnamens bis zur Unterkante –
-       um so viel ragt der Block nach unten (gemessen, ±0,5 px). */
+       der Grundlinie liegen 0,26 Schrifthöhen des Albumnamens bis zur Unterkante (er reicht tiefer als das Datum) – um
+       so viel ragt der Block nach unten (gemessen, ±0,5 px). */
     .bm--aside .bm-aside {
       display: contents;
     }
@@ -458,7 +458,7 @@ const nameWords = site.name.split(' ').map((word) =>
       grid-row: 1 / 5;
       height: auto;
       min-height: 0;
-      margin-bottom: calc(-0.33 * var(--fs-xs) - 0.06 * clamp(1.15rem, 1rem + 0.5vw, 1.5rem));
+      margin-bottom: calc(-0.26 * clamp(1.15rem, 1rem + 0.5vw, 1.5rem));
     }
     /* Menü: oben derselbe Abstand wie auf der Startseite; der Schließen-Knopf liegt darüber an der Stelle des
        Menüknopfs, ohne den Namen nach unten zu schieben */
@@ -504,7 +504,7 @@ const nameWords = site.name.split(' ').map((word) =>
     text-decoration: none;
     color: inherit;
   }
-  /* Großbuchstaben, gerade (seit 20.11.2026 in Cyrene; in Migha waren alle bis auf „Portfolio“ kursiv) */
+  /* Großbuchstaben, gerade (seit 20.11.2026; in Migha waren alle bis auf „Portfolio“ kursiv) */
   /* Aktueller Punkt (im Menü auf Unterseiten): unterstrichen. Überfahren: oranges Feld mit heller Schrift. Das Feld steht
      links und rechts ein klein wenig über, die Schrift bleibt an ihrem Platz. */
   .bm-list a {

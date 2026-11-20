@@ -591,9 +591,9 @@ so früh. Was dafür sorgt – bitte beibehalten:
 - **Wichtigstes Bild im Kopf angekündigt** (`preload` an `BaseLayout`, erzeugt mit `preloadImage` aus `src/lib/images.ts`):
   Startseite, Portfolio, Galerie, Über mich. Die `sizes`-Angaben dafür stehen in `src/lib/sizes.ts`, damit Bild und
   Ankündigung genau gleich sind (sonst lädt der Browser doppelt).
-- **Schriften:** Migha Black (Name, gut 20 KB) und Cyrene (Titel, 124 KB als OTF) werden vorab geladen. Cyrene ließe
-  sich als WOFF2 und nur mit den nötigen Zeichen noch deutlich verkleinern (dafür bräuchte es ein Werkzeug wie
-  fontTools).
+- **Schriften:** Migha Black (Name, gut 20 KB) und Melodrama (Titel, 40 KB als WOFF2) werden vorab geladen.
+  Melodrama darf laut Lizenz nicht verkleinert oder umgewandelt werden – die Datei bleibt so, wie Fontshare sie
+  liefert.
 - **Startseite:** Nur das erste Foto lädt sofort, die übrigen eine Sekunde nach dem Laden der Seite.
 - **Fotoreihen sofort fertig:** Die Reihen in Alben und Galerie werden direkt nach der Liste im HTML verteilt
   (`JustifyNow.astro`, Rechnung in `src/scripts/justify-layout.js`) statt erst nach dem Skript.
@@ -734,7 +734,7 @@ Orange nie als Schriftfarbe auf White Chocolate (2,5 : 1), nur als Fläche oder 
 - **Keine Füll-Etiketten:** Ein Etikett steht nur da, wenn es etwas Neues sagt. „Video“ auf der Filmseite,
   „E-Mail“ über einer E-Mail-Adresse oder „Fehler 404“ über der Fehlerseite sind weg (für Screenreader bleiben
   die Bezeichnungen unsichtbar erhalten).
-- **Keine Kursive in der Titelschrift:** Cyrene hat keinen kursiven Schnitt; „kursiv“ zeigt dieselben geraden
+- **Keine Kursive in der Titelschrift:** Melodrama hat keinen kursiven Schnitt; „kursiv“ zeigt dieselben geraden
   Buchstaben (fonts.css), der Browser rechnet nichts schräg. Menüpunkte stehen in Großbuchstaben, Titel normal
   geschrieben. (In Migha waren die Menüpunkte außer „Portfolio“ und kleine Zwischenüberschriften kursiv.)
 - **Gesperrte Großbuchstaben nur für Angaben:** Die Klasse `label` (klein, fett, gesperrt) ist für Angaben wie
@@ -806,14 +806,14 @@ nach seinem Umriss gesetzt, als `public/favicon.svg`, dazu
 Buchstabe ist als Form gespeichert, damit er überall gleich aussieht.
 
 **Schriften** (alle lokal, keine Google-Fonts-Verbindung, alle frei auch für geschäftliche Nutzung: Libre
-Franklin unter SIL OFL, Migha laut Lizenz von Seniors Studio, Cyrene laut Schriftdatei „Copyright Free“ – siehe
-`src/assets/fonts/LIZENZ-cyrene.txt`). Bewusst keine
+Franklin unter SIL OFL, Migha laut Lizenz von Seniors Studio, Melodrama unter der ITF Free Font License – siehe
+`src/assets/fonts/LIZENZ-melodrama.txt`). Bewusst keine
 der Schriften, die auf sehr vielen KI-gebauten Seiten stehen (Inter, Geist, Space Grotesk, Instrument Serif,
 Playfair, Fraunces …):
 - **Migha Black** (seit 20.11.2026): der Name „JESKO DORNER“ – groß auf Startseite und Menü, klein als Logo oben
   links auf allen Unterseiten, als Schriftzug unten in der Fußzeile, auf den Vorschaukarten (Token `--font-name`,
   eigener Familienname `Migha Black`, damit kein Titel aus Versehen in Black erscheint). Kräftig und schmal als
-  bewusster Gegenpol zu den feinen Titeln in Cyrene. Die Datei wird vorab
+  bewusster Gegenpol zu den feinen Titeln in Melodrama. Die Datei wird vorab
   geladen (`BaseHead.astro`), damit das Logo beim Seitenwechsel nie kurz in einer Ersatzschrift erscheint. Beim
   Wechsel Startseite → Unterseite gleitet der Name Wort für Wort ins Logo („JESKO“ und „DORNER“ einzeln,
   Übergangsnamen `jd-name-1`/`jd-name-2`), so wird er nur gleichmäßig kleiner und nie verzerrt. Hinweis zum Testen:
@@ -825,18 +825,23 @@ Playfair, Fraunces …):
   kleiner. Das Menü ist gleich aufgebaut, der Name dort gleich groß.
   Vorher: Climate Crisis (sehr fett und breit, bis 20.11.2026, Git-Tag `alte-version-ultramarin-climate-crisis`),
   davor Instrument Serif mit von Hand ausgeglichenen Buchstabenpaaren (Werte bei `KERN` in `BlueMenu.astro`).
-- **Cyrene** (seit 20.11.2026, Riccardo Agostinelli): Titel, Menü (in Großbuchstaben), Kopfleiste, Schilder im
-  Portfolio, Bild- und Filmtitel, Zwischenüberschriften, Titel auf den Vorschaukarten. Feine, eher breite Schrift
-  ohne Serifen mit echten Kleinbuchstaben – Jesko wollte weniger Großbuchstaben. Ein Schnitt, keine Kursive.
-  `size-adjust: 131 %` in `fonts.css`: Cyrenes Großbuchstaben sind von Haus aus klein (0,639 der Schriftgröße); so
-  sind sie so hoch wie vorher in Migha und alle Größen der Seite gelten weiter. Ausgewählt nach einem Vergleich mit
-  Melodrama, New Title (Fontshare) und anderen; Kombination „Titel und Menü in Cyrene, Name in Migha Black“.
-  Vorher: Migha Display Regular/Slant (20.11.2026, Git-Tag `alte-version-migha-titel`), Bodoni Moda (16.–20.11.2026,
-  Git-Tag `alte-version-bodoni`), davor Instrument Serif und Anybody. Kurz angeschaut und verworfen: Kugile (Demo
-  nur privat nutzbar, ohne Umlaute), Murmure.
+- **Melodrama** (seit 20.11.2026, Shaily Patel / Indian Type Foundry, über Fontshare): Titel, Menü (in
+  Großbuchstaben), Kopfleiste, Schilder im Portfolio, Bild- und Filmtitel, Zwischenüberschriften, Titel auf den
+  Vorschaukarten. Schmal, mit starkem Kontrast zwischen feinen und kräftigen Strichen, echte Kleinbuchstaben. Stärke
+  Medium (500) aus der variablen Datei (300–700, `--display-wght` in `tokens.css`), keine Kursive. In `fonts.css`:
+  `size-adjust: 120 %`, damit die Großbuchstaben so hoch sind wie vorher (0,838 der Schriftgröße), und
+  `ascent-/descent-override`, damit die Schrift in ihrer Zeile genau wie vorher sitzt – so gelten alle Größen,
+  Abstände und Grundlinien-Ausgleiche der Seite unverändert, und große Titel ragen mit g/p nicht in den Text darunter.
+  Lizenz: frei auch geschäftlich, selbst hosten erlaubt; die Dateien dürfen aber nicht verändert (auch nicht
+  verkleinert) oder weitergegeben werden. Die Vorschaukarten nutzen die feste Datei `melodrama-medium.otf`.
+  Vorher: Cyrene (20.11.2026, Git-Tag `alte-version-cyrene-titel`), Migha Display Regular/Slant (20.11.2026,
+  Git-Tag `alte-version-migha-titel`), Bodoni Moda (16.–20.11.2026, Git-Tag `alte-version-bodoni`), davor Instrument
+  Serif und Anybody. Verglichen und nicht gewählt: Sporting Grotesque (zu breit neben dem schmalen Namen), New Title,
+  Zodiak, Boska u. a. Kurz angeschaut und verworfen: Kugile (Demo nur privat nutzbar, ohne Umlaute), Murmure.
 - **Libre Franklin** (seit November 2026): Fließtext, Knöpfe, Beschriftungen. Vorher: Archivo.
 - Alle Schriften liegen als Dateien in `src/assets/fonts/` (Libre Franklin aus dem Fontsource-Paket, nur
-  Zeichensatz „latin“ mit Ä, Ö, Ü, ß; Migha Black und Cyrene als OTF aus dem Download), eingebunden in
+  Zeichensatz „latin“ mit Ä, Ö, Ü, ß; Migha Black als OTF, Melodrama als WOFF2 und OTF unverändert aus dem
+  Download), eingebunden in
   `src/styles/fonts.css`, Lizenztexte daneben.
 
 **Extenda einsetzen:** Extenda (Zetafonts) ist eine kommerzielle Schrift. Fürs Web brauchst du eine passende Lizenz.

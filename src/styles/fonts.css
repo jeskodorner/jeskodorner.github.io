@@ -9,28 +9,40 @@
   src: url('../assets/fonts/migha-black.otf') format('opentype');
 }
 
-/* Titel und Menü: Cyrene (Riccardo Agostinelli, frei – src/assets/fonts/LIZENZ-cyrene.txt), seit 20.11.2026. Feine,
-   eher breite Schrift ohne Serifen mit echten Kleinbuchstaben – neben dem kräftigen Namen in Migha Black.
-   - size-adjust 131 %: Cyrene hat kleine Großbuchstaben (0,639 der Schriftgröße, Migha 0,838). So sind sie bei
-     derselben Schriftgröße so hoch wie vorher – alle Größen und Abstände der Seite gelten unverändert weiter.
-   - Nur ein Schnitt: dieselbe Datei auch für „kursiv“, damit der Browser nichts schräg rechnet (die Menüpunkte und
-     Bildunterschriften stehen gerade), und für alle Stärken, damit nichts künstlich fett wird.
-   Vorher Migha Display (Git-Tag alte-version-migha-titel), davor Bodoni Moda und Instrument Serif. */
+/* Titel und Menü: Melodrama (Shaily Patel, Indian Type Foundry, über Fontshare – frei auch geschäftlich, selbst hosten
+   erlaubt, Datei aber nicht verändern; src/assets/fonts/LIZENZ-melodrama.txt), seit 20.11.2026. Schmale Schrift mit
+   starkem Kontrast (sehr feine und kräftige Striche) und echten Kleinbuchstaben – neben dem Namen in Migha Black.
+   - Variable Datei (Stärke 300–700, unverändert von Fontshare); benutzt wird 500 (Medium, --display-wght in tokens.css).
+   - size-adjust 120 %: Melodrama hat Großbuchstaben von 0,70 der Schriftgröße, die Seite ist auf 0,838 (Migha)
+     eingerichtet. So bleiben alle Größen und Abstände der Seite unverändert.
+   - ascent-/descent-override: Melodrama bringt viel Luft über und unter der Schrift mit (0,98/0,28). Damit stünde die
+     Schrift tiefer in ihrer Zeile als vorher, und Unterlängen (g, p) großer Titel ragten in den Text darunter. Die
+     Werte setzen die Zeile wie vorher mit Cyrene (0,847/0,257 der Schriftgröße; angegeben geteilt durch 1,2, weil der
+     Browser sie mit size-adjust malnimmt) – so stehen Titel, Menü und Bildunterschriften genau wie bisher, auf Mac und
+     Windows gleich.
+   - Kein kursiver Schnitt: dieselbe Datei auch für „kursiv“, damit der Browser nichts schräg rechnet.
+   Vorher Cyrene (Git-Tag alte-version-cyrene-titel), Migha Display (alte-version-migha-titel), Bodoni Moda. */
 @font-face {
-  font-family: 'Cyrene';
+  font-family: 'Melodrama';
   font-style: normal;
   font-display: swap;
-  font-weight: 100 900;
-  size-adjust: 131%;
-  src: url('../assets/fonts/cyrene-regular.otf') format('opentype');
+  font-weight: 300 700;
+  size-adjust: 120%;
+  ascent-override: 70.6%;
+  descent-override: 21.4%;
+  line-gap-override: 0%;
+  src: url('../assets/fonts/melodrama-variable.woff2') format('woff2');
 }
 @font-face {
-  font-family: 'Cyrene';
+  font-family: 'Melodrama';
   font-style: italic;
   font-display: swap;
-  font-weight: 100 900;
-  size-adjust: 131%;
-  src: url('../assets/fonts/cyrene-regular.otf') format('opentype');
+  font-weight: 300 700;
+  size-adjust: 120%;
+  ascent-override: 70.6%;
+  descent-override: 21.4%;
+  line-gap-override: 0%;
+  src: url('../assets/fonts/melodrama-variable.woff2') format('woff2');
 }
 
 /* Text: Libre Franklin – variabel, SIL Open Font License 1.1 (Lizenztext in src/assets/fonts), aus dem Fontsource-Paket
