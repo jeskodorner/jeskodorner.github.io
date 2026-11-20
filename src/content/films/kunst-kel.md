@@ -8,7 +8,7 @@ youtube: "https://youtu.be/BGQW-PVmkUM"
 # Vorschaubild (lokal gespeichert, damit beim Seitenaufruf nichts von YouTube geladen wird)
 still: ./images/kunst-kel.jpg
 stillAlt: "Eine Person steht in einem hellen Zimmer mit Kleiderständer, Fahrrad und Zimmerpflanzen."
-color: blue
+color: green
 order: 1
 ---
 

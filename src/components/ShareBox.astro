@@ -122,9 +122,10 @@ const mail = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURICompo
   .btn :global(.ic-check) {
     display: none;
   }
+  /* Kopiert: June Bud wie ein Haken („erledigt“) – nicht Orange, das ist schon das Überfahren */
   .btn.is-copied {
-    background: var(--ink);
-    color: var(--wall);
+    background: var(--green);
+    color: var(--ink);
   }
   .btn.is-copied :global(.ic-link) {
     display: none;

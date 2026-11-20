@@ -231,8 +231,9 @@ const jsonLd = gallery.isUnlisted
     align-items: baseline;
     margin-top: 2rem;
     padding: 0.9rem 1.1rem;
-    background: var(--ink);
-    color: var(--wall);
+    /* Hinweis mit Rand statt blauer Fläche (weniger Blau, wie der Hinweis auf Impressum/Datenschutz) */
+    border: 2px solid var(--ink);
+    color: var(--ink);
     border-radius: var(--radius);
     font-size: var(--fs-sm);
     font-weight: 600;

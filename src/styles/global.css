@@ -124,8 +124,8 @@ a.email-link:not(.btn, .channel, .big-link):hover {
   top: 0.75rem;
   z-index: 200;
   padding: 0.75rem 1.1rem;
-  background: var(--accent);
-  color: var(--on-accent);
+  background: var(--hover);
+  color: var(--ink);
   font-weight: 800;
   text-decoration: none;
   transform: translateY(-200%);

@@ -118,20 +118,20 @@ html:has(.pswp--open) {
   outline: 3px solid var(--accent);
   outline-offset: 2px;
 }
-/* Schließen und aktive Details: gefüllt */
+/* Schließen und aktive Details: gefüllt – Orange wie der Menüknopf, beim Überfahren blau (vorher blau gefüllt) */
 .pswp__top-bar .pswp__button--close,
 .pswp__top-bar .pswp__button--jd-info[aria-expanded='true'] {
-  background: var(--ink);
+  background: var(--hover);
 }
 .pswp__top-bar .pswp__button--close .pswp__icn,
 .pswp__top-bar .pswp__button--jd-info[aria-expanded='true'] .pswp__icn {
-  color: var(--wall);
+  color: var(--ink);
 }
 .pswp__top-bar .pswp__button--close:hover {
-  background: var(--hover);
+  background: var(--ink);
 }
 .pswp__top-bar .pswp__button--close:hover .pswp__icn {
-  color: var(--ink);
+  color: var(--wall);
 }
 
 /* ---------- „← Vorheriges Bild“ / „Nächstes Bild →“: direkt über dem Foto ----------
@@ -288,8 +288,8 @@ html:has(.pswp--open) {
   translate: -50% 0;
   padding: 0.5rem 0.95rem;
   border-radius: var(--radius-pill);
-  background: var(--ink);
-  color: var(--wall);
+  background: var(--green);
+  color: var(--ink);
   font-size: 0.85rem;
   font-weight: 700;
   opacity: 0;
