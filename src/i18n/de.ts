@@ -55,7 +55,6 @@ export const de = {
     /** Knopf unten auf der Mappe */
     toAlbum: 'Ganzes Album ansehen',
     /** Zeile darunter, z. B. „30 Bilder im Album“ */
-    inAlbum: (n: number) => (n === 1 ? '1 Bild im Album' : `${n} Bilder im Album`),
   },
   galleries: {
     title: 'Galerie',

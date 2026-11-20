@@ -660,8 +660,8 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
   Spalten als Fotos – eine Mappe mit einem Foto (Einzelbilder) zeigt es groß. Kein Feld wird höher als drei Viertel
   des Bildschirms. Vorne das Foto aus dem Portfolio, dazu bis zu 7
   weitere gleichmäßig über das Album verteilt (oder genau die Fotos aus `mappe:` im Album). Ein Klick auf ein Foto
-  öffnet die Lightbox mit dem ganzen Album ab diesem Foto (`src/scripts/open-album.ts`). Unten „Ganzes Album
-  ansehen →“ und wie viele Bilder das Album hat.
+  öffnet die Lightbox mit dem ganzen Album ab diesem Foto (`src/scripts/open-album.ts`). Unten nur „Ganzes Album
+  ansehen →“ (keine Bildanzahl).
 - **Frühere Startseite: Bildfeld mit Doppelbelichtung** (bis 16. November 2026, Git-Tag
   `alte-version-startseite-ueberblendung`, Datei `BlendLoop.astro`): Fotos aus dem Portfolio (Liste `showroom`),
   in normalen Farben im Modus „Aufhellen“ übereinandergelegt (wie eine Doppelbelichtung), immer 4:3. Es sind immer zwei zu sehen. Alle

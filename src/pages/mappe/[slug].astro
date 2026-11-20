@@ -107,7 +107,6 @@ const og = cardImage(`album/${g.slug}`, g.cover.alt);
     <a class="btn btn--solid" href={g.url}>
       {t.mappe.toAlbum} <Icon name="arrow-right" class="arrow" />
     </a>
-    <p class="label muted">{t.mappe.inAlbum(g.images.length)}</p>
   </div>
 </BaseLayout>
 
@@ -191,7 +190,8 @@ const og = cardImage(`album/${g.slug}`, g.cover.alt);
       transform: scale(var(--hover-zoom));
     }
   }
-  /* Ende: Knopf unter dem letzten Foto (Laptop linksbündig, Handy mittig), darunter wie viele Bilder das Album hat */
+  /* Ende: Knopf unter dem letzten Foto (Laptop linksbündig, Handy in voller Breite). Bis 20.11.2026 stand darunter,
+     wie viele Bilder das Album hat. */
   .end {
     display: grid;
     justify-items: start;
