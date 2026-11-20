@@ -30,7 +30,7 @@ const { items } = Astro.props;
     items.map((it, i) => {
       const r = it.image.src.width / it.image.src.height;
       return (
-        <li class:list={['work', { 'work--portrait': r < 1 }]} style={`--r:${r.toFixed(4)}`}>
+        <li class:list={['work', { 'work--portrait': r < 1 }]} id={`werk-${i + 1}`} style={`--r:${r.toFixed(4)}`}>
           <a class="work-media reveal" href={mappeUrl(it.gallery)}>
             <Picture
               src={it.image.src}
@@ -65,6 +65,8 @@ const { items } = Astro.props;
   }
   /* Handy: Foto und Schild mittig */
   .work {
+    /* Sprungziel von der Startseite (#werk-<n>): nicht unter der Kopfleiste verstecken */
+    scroll-margin-top: calc(var(--header-h) + 1.5rem);
     display: grid;
     justify-items: center;
     gap: 1.5rem;

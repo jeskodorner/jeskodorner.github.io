@@ -1,7 +1,7 @@
 ---
 /**
  * Fotofläche der Startseite (Richtung „Bild neben Name“): immer EIN Foto, ganz und scharf, darunter die
- * Bildunterschrift: Albumname, Monat und „Mappe ansehen →“. Die Fotos kommen aus dem Portfolio (Liste „showroom“ in
+ * Bildunterschrift: Albumname und Monat (bis 20.11.2026 auch „Mappe ansehen →“). Die Fotos kommen aus dem Portfolio (Liste „showroom“ in
  * src/content/pages/startseite.md) in dieser Reihenfolge und wechseln alle 7 Sekunden: Das neue Foto blendet weich
  * über dem alten ein (das alte bleibt darunter stehen, bis das neue ganz da ist – keine leere Fläche dazwischen) und
  * setzt sich dabei langsam aus einer leichten Vergrößerung. Alle Fotos füllen dieselbe Fläche (Laptop 4:3, Handy ein
@@ -10,16 +10,15 @@
  * Die Stelle wird gemerkt (sessionStorage, nur in diesem Tab): Kommt man aus einer Mappe zurück, geht es mit dem Foto
  * weiter, das zuletzt zu sehen war, nicht wieder am Anfang.
  * Ein Foto wird erst gezeigt, wenn es fertig geladen ist. Ohne JavaScript oder mit „Bewegung reduzieren“: nur das
- * erste Foto. Ein Klick aufs Foto oder auf die Bildunterschrift öffnet die Mappe des Albums (pages/mappe/[slug].astro):
- * eine ruhige Übersicht mit einer Auswahl der Fotos, unten der Weg ins ganze Album.
+ * erste Foto. Ein Klick aufs Foto oder auf die Bildunterschrift führt ins Portfolio, genau zu diesem Foto
+ * (#werk-<n>); die Mappen erreicht man nur noch übers Portfolio.
  * Größe und Lage bestimmt BlueMenu.astro (Laptop: rechte Spalte, Handy: ganz oben, randlos).
  * Die frühere Doppelbelichtung (zwei Fotos im Modus „Aufhellen“) liegt im Git-Tag alte-version-startseite-ueberblendung.
  */
 import Picture from './Picture.astro';
 import type { WorkItem } from '../lib/showroom';
-import { useTranslations, formatMonth } from '../i18n';
+import { formatMonth } from '../i18n';
 import { tidyTitle } from '../lib/text';
-import { mappeUrl } from '../lib/mappe';
 import { HOME_SIZES, HOME_MAX_WIDTH } from '../lib/sizes';
 
 export interface Props {
@@ -27,12 +26,12 @@ export interface Props {
 }
 
 const { works } = Astro.props;
-const t = useTranslations();
-const slides = works.map((w) => ({
+// Die Fotos stehen im Portfolio in derselben Reihenfolge (getSelectedWorks) – #werk-<n> ist ihr Platz dort
+const slides = works.map((w, i) => ({
   w,
   title: tidyTitle(w.name ?? w.album),
-  meta: formatMonth(w.gallery.date), // Monat und Jahr (der Ort steht in der Mappe)
-  href: mappeUrl(w.gallery),
+  meta: formatMonth(w.gallery.date),
+  href: `/portfolio/#werk-${i + 1}`,
 }));
 const first = slides[0];
 ---
@@ -59,9 +58,7 @@ const first = slides[0];
       <p class="hs-cap">
         <a class="hs-link" href={first.href} data-slide-link>
           <span class="hs-title" data-slide-title>{first.title}</span>
-          <span class="hs-meta label">
-            <span class="hs-when"><span data-slide-meta>{first.meta}</span> · </span><span class="hs-go">{t.home.viewMappe} →</span>
-          </span>
+          <span class="hs-meta label" data-slide-meta>{first.meta}</span>
         </a>
       </p>
       <script
@@ -247,26 +244,16 @@ const first = slides[0];
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  /* Überfahren: die ganze Zeile „Monat · Mappe ansehen →“ bekommt das orange Feld (der Name bleibt) */
   .hs-meta {
     justify-self: start;
     white-space: nowrap;
-    padding: 0.15em 0.3em;
-    margin: -0.15em -0.3em;
-    transition:
-      background-color 0.2s,
-      color 0.2s;
   }
-  .hs-link:hover .hs-meta {
-    background: var(--hover);
-    color: var(--on-hover);
-  }
-  /* sehr schmale Handys: etwas kleiner, damit „September 2026 · Mappe ansehen →“ in eine Zeile passt */
-  @media (max-width: 359.98px) {
-    .hs-meta {
-      font-size: 0.72rem;
-      letter-spacing: 0.06em;
-    }
+  /* Überfahren: der Titel bekommt den orangen Unterstrich wie alle Titel neben Fotos */
+  .hs-link:hover .hs-title {
+    text-decoration: underline;
+    text-decoration-color: var(--hover-line);
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.14em;
   }
   /* Laptop: eine feste Fläche im Format 4:3, unten auf der Bildunterschrift stehend (auf niedrigen Bildschirmen
      flacher) – jedes Foto füllt sie, Hoch- wie Querformat, also kein Formatwechsel beim Bildwechsel */

@@ -632,12 +632,14 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
   (Token `--menu-bg` und `--on-menu` in `tokens.css`). Der Name hat die
   Schriftfarbe (`--name-color` in `BlueMenu.astro`), der Menüpunkt der aktuellen Seite ist unterstrichen. Beim Überfahren bekommen
   Menüpunkte ein oranges Feld mit heller Schrift, der Name im Menü ein oranges Feld gleichmäßig um beide Zeilen (nur mit Maus – am Handy blieb es beim Antippen stehen und schnitt beim Übergang in „DORNER“), Menü- und Schließen-Knopf sind orange Kreise. Instagram
-  unten wie in der Fußzeile jeder Seite mit Symbol und „jeskodorner“, aber klein (etwa so groß wie „Mappe ansehen →“; beim Überfahren orange). Sparsam bleiben: mehr Orange wirkt schnell zu viel. Die Fläche geht über den ganzen
+  unten wie in der Fußzeile jeder Seite mit Symbol und „jeskodorner“, aber klein (etwa so groß wie das Datum unter dem Foto; beim Überfahren orange). Sparsam bleiben: mehr Orange wirkt schnell zu viel. Die Fläche geht über den ganzen
   Bildschirm, oben groß der Name, darunter die Menüpunkte (Portfolio, Galerie, Film, Über mich, Kontakt), unten
   nur Instagram – auf der Startseite und im Menü gleich. Impressum und Datenschutz stehen in der Fußzeile jeder
-  Unterseite (von der Startseite aus also mit zwei Klicks). Ohne Kopfleiste und ohne Scrollen. Dasselbe Menü öffnet sich auf allen
-  Geräten über den orangen Menü-Knopf oben rechts: Die Fläche wächst als Kreis aus dem Knopf, der Schließen-Knopf sitzt an derselben Stelle,
-  der Name führt zur Startseite. Eine Textleiste mit Menüpunkten gibt es nur noch als Rückfall für sehr alte Browser.
+  Unterseite (von der Startseite aus also mit zwei Klicks). Ohne Kopfleiste und ohne Scrollen. Am Handy und
+  Tablet öffnet sich dasselbe Menü über den orangen Menü-Knopf oben rechts: Die Fläche wächst als Kreis aus dem Knopf, der Schließen-Knopf sitzt an derselben Stelle,
+  der Name führt zur Startseite. **Am Laptop (ab 1000 px) klassisch** (seit 20.11.2026): die fünf Bereiche als
+  Wörter rechts in der Kopfleiste (Titelschrift, Großbuchstaben), der aktuelle unterstrichen, Überfahren oranges
+  Feld; kein Menüknopf (`Header.astro`, `.nav-desktop`).
   Das Menü ist die Startseite ohne Foto: Name und Menüpunkte stehen an derselben Stelle und sind gleich groß
   (Laptop ab 1000 px: Name zweizeilig oben links, Menüpunkte unten links, rechts Blau; darunter wie am Handy: Name
   mittig, die Menüpunkte beginnen an seiner linken Kante, Instagram mittig unten). Der Schließen-Knopf sitzt genau
@@ -645,16 +647,17 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
 - **Startseite „Bild neben Name“** (seit 16. November 2026, `src/components/HomeSlides.astro` und `BlueMenu.astro`):
   Schrift steht nie auf dem Foto. Am Laptop (ab 1000 px) zwei Spalten: links auf Blau der Name zweizeilig, unten
   das Menü (etwa halb so groß wie der Name) und Instagram; rechts ein Foto aus dem Portfolio in einer festen Fläche
-  im Format 4:3, unten auf seiner Bildunterschrift stehend. Die untere Zeile der Bildunterschrift („Monat · Mappe
-  ansehen →“) endet genau auf der Grundlinie von „KONTAKT“; darunter steht links nur noch „jeskodorner“
+  im Format 4:3, unten auf seiner Bildunterschrift stehend. Die untere Zeile der Bildunterschrift (Monat und Jahr)
+  endet genau auf der Grundlinie von „KONTAKT“; darunter steht links nur noch „jeskodorner“
   (`BlueMenu.astro`). Vorher lag die Unterkante des Fotos auf „KONTAKT“ (Commit e565eee). Jedes Foto füllt diese Fläche (Ausschnitt nach dem
-  Bildschwerpunkt), so wechselt beim Bildwechsel nie das Format; ganz zu sehen sind die Fotos in der Mappe. Am Handy
-  und Tablet hochkant steht das Foto ganz oben, randlos, darunter die Bildunterschrift, dann Name, Menü, Instagram –
-  ohne Scrollen, auch auf kleinen Handys.
+  Bildschwerpunkt), so wechselt beim Bildwechsel nie das Format; ganz zu sehen sind die Fotos im Portfolio. Am Handy
+  und Tablet hochkant steht das Foto ganz oben, randlos, darunter die Bildunterschrift, dann Name (eine Zeile), Menü,
+  Instagram – ohne Scrollen, auch auf kleinen Handys. Das Foto hat dort Vorrang (30–45 % der Höhe, höchstens 4:3).
   Die Bildunterschrift ist immer gleich aufgebaut: oben der Albumname (Titelschrift kursiv, eine Zeile, bei sehr
-  langen Namen am Handy mit „…“), darunter Monat und Jahr · „Mappe ansehen →“ – so bleibt sie immer gleich hoch und
-  das Foto springt nicht. Foto und Bildunterschrift führen zur Mappe des Albums; beim Überfahren bekommt die Zeile
-  „Monat · Mappe ansehen →“ das orange Feld.
+  langen Namen am Handy mit „…“), darunter Monat und Jahr – so bleibt sie immer gleich hoch und das Foto springt
+  nicht. Foto und Bildunterschrift führen ins Portfolio genau zu diesem Foto (`/portfolio/#werk-<n>`); beim
+  Überfahren bekommt der Titel den orangen Unterstrich. Bis 20.11.2026 stand dort „Mappe ansehen →“ und führte zur
+  Mappe – die Mappen erreicht man jetzt nur noch übers Portfolio.
   Die Fotos wechseln alle 7 Sekunden in der Reihenfolge der Liste `showroom`: Das neue Foto blendet in 1,8 Sekunden
   weich über dem alten ein und setzt sich dabei langsam aus einer leichten Vergrößerung; das alte bleibt darunter
   stehen, bis das neue ganz da ist (nie eine leere Fläche dazwischen). Ein Foto erscheint erst fertig geladen. Kommt
@@ -668,8 +671,8 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
   Beschreibung stand groß darunter, und am Laptop sah man bei langen Titeln nur die Überschrift.
 - **Mappe** (`src/pages/mappe/[slug].astro`, Auswahl in `src/lib/mappe.ts`): je Album aus dem Portfolio eine ruhige
   Übersicht wie eine aufgeschlagene Fotomappe, einfacher als das Album. Kopf kompakt wie auf der Albumseite (Titel
-  mit `display-compact`, `global.css`), damit die Fotos beim Öffnen sofort zu sehen sind. Erreichbar über „Mappe ansehen →“ auf der
-  Startseite und über jedes Foto im Portfolio. Oben „← Zurück“ (führt dorthin zurück, wo man herkam, samt Stelle auf
+  mit `display-compact`, `global.css`), damit die Fotos beim Öffnen sofort zu sehen sind. Erreichbar nur über das Portfolio (Foto oder
+  Schild). Oben „← Zurück“ (führt dorthin zurück, wo man herkam, samt Stelle auf
   der Seite; ohne Vorgeschichte zur Startseite), Titel und Monat linksbündig wie auf allen Seiten. Darunter die Fotos
   als Abzüge in gleich großen Feldern – jedes ganz und unbeschnitten, mittig im Feld, mit Schatten, kein Text. Die
   Felder haben die Form der meisten Fotos der Mappe (mittleres Seitenverhältnis, zwischen 3:4 und 3:2; vorher immer
@@ -812,12 +815,11 @@ Playfair, Fraunces …):
   Wechsel Startseite → Unterseite gleitet der Name Wort für Wort ins Logo („JESKO“ und „DORNER“ einzeln,
   Übergangsnamen `jd-name-1`/`jd-name-2`), so wird er nur gleichmäßig kleiner und nie verzerrt. Hinweis zum Testen:
   Im lokalen `npm run preview` laufen die Seitenübergänge nicht, mit `npm run dev` und auf GitHub Pages schon.
-  Größen (`BlueMenu.astro`): Laptop zweizeilig, „DORNER“ füllt die linke Spalte; Handy zweizeilig, knapp 90 % der
-  Breite; Tablet hochkant (600–999 px) einzeilig über die ganze Breite. Am Handy und Tablet ist der Name zusätzlich
-  höchstens so groß, dass die Startseite ohne Scrollen auf einen Bildschirm passt – auch im Handy-Browser mit
-  eingeblendeten Leisten (Rechnung bei `--frame-h` und `--name-fs`). Zuerst gibt das Foto oben nach: höchstens 34 %,
-  mindestens 20 % der Höhe, sonst so hoch, wie neben dem Namen in voller Breite Platz ist. Erst auf sehr kurzen
-  Bildschirmen wird auch der Name kleiner. Das Menü ist gleich aufgebaut, der Name dort gleich groß.
+  Größen (`BlueMenu.astro`): Laptop zweizeilig, „DORNER“ füllt die linke Spalte; Handy und Tablet einzeilig, knapp
+  90 % der Breite (bis 20.11.2026 am Handy zweizeilig – dann blieb fürs Foto nur ein Streifen). Die Startseite passt
+  ohne Scrollen auf einen Bildschirm, auch im Handy-Browser mit eingeblendeten Leisten (Rechnung bei `--frame-h` und
+  `--name-fs`): Das Foto hat Vorrang (mindestens 30 % der Höhe); erst auf sehr kurzen Bildschirmen wird der Name
+  kleiner. Das Menü ist gleich aufgebaut, der Name dort gleich groß.
   Vorher: Climate Crisis (sehr fett und breit, bis 20.11.2026, Git-Tag `alte-version-ultramarin-climate-crisis`),
   davor Instrument Serif mit von Hand ausgeglichenen Buchstabenpaaren (Werte bei `KERN` in `BlueMenu.astro`).
 - **Migha Display** (seit 20.11.2026, Seniors Studio): Titel, Menü, Schriftzug in der Fußzeile, Schilder im

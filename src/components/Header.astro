@@ -102,25 +102,34 @@ const isCurrent = (match: string[]) => current(path, match);
   :global(html:has(#site-menu:popover-open)) .logo-w {
     view-transition-name: none;
   }
-  /* Textmenü nur als Rückfall für Browser ohne Popover (siehe unten); sonst überall der Menüknopf */
+  /* Klassisches Menü (seit 20.11.2026): am Laptop (ab 1000 px) stehen die fünf Bereiche als Wörter rechts in der
+     Kopfleiste, in der Titelschrift wie im blauen Menü; der aktuelle Bereich ist unterstrichen, Überfahren wie
+     überall: oranges Feld. Handy und Tablet: weiter der runde Menüknopf. Ohne Popover-Unterstützung (sehr alte
+     Browser) überall die Wörter. */
   .nav-desktop {
     display: none;
     margin-left: auto;
   }
+  @media (min-width: 1000px) {
+    .nav-desktop {
+      display: block;
+    }
+  }
   .nav-desktop ul {
     display: flex;
-    gap: 0.35rem;
+    gap: clamp(0.4rem, 1.2vw, 1.25rem);
     list-style: none;
     padding: 0;
   }
   .nav-desktop a {
     display: inline-block;
-    padding: 0.45rem 0.95rem;
-    border-radius: var(--radius-pill);
-    font-size: var(--fs-sm);
-    font-weight: 750;
+    padding: 0.12em 0.25em;
+    font-family: var(--font-display);
+    font-weight: var(--display-wght);
+    font-synthesis-weight: none;
+    font-size: clamp(1.25rem, 0.85rem + 0.7vw, 1.75rem);
+    line-height: 1;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
     text-decoration: none;
     transition:
       background-color 0.2s,
@@ -131,8 +140,9 @@ const isCurrent = (match: string[]) => current(path, match);
     color: var(--on-hover);
   }
   .nav-desktop a[aria-current='page'] {
-    background: var(--ink);
-    color: var(--wall);
+    text-decoration: underline;
+    text-decoration-thickness: 0.07em;
+    text-underline-offset: 0.12em;
   }
 
   .menu-btn {
@@ -155,6 +165,12 @@ const isCurrent = (match: string[]) => current(path, match);
   .menu-btn:hover {
     background: var(--ink);
     color: var(--hover);
+  }
+  /* Laptop: statt des Knopfs die Wörter (.nav-desktop) */
+  @media (min-width: 1000px) {
+    .menu-btn {
+      display: none;
+    }
   }
   .menu-btn:focus-visible {
     outline: 3px solid var(--ink);

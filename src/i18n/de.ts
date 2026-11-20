@@ -23,7 +23,6 @@ export const de = {
   },
   home: {
     /** Bildunterschrift auf der Startseite: Link zur Mappe des Albums */
-    viewMappe: 'Mappe ansehen',
     cta: 'Portfolio ansehen',
     galleryLink: 'Galerie',
     selected: 'Portfolio',

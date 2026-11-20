@@ -127,36 +127,34 @@ const jsonLd = {
     font-size: clamp(1.6rem, 1.1rem + 1.8vw, 3rem);
     line-height: 1.18;
   }
+  /* Stationen als schlichte Liste mit feinen Linien (bis 20.11.2026 graue Kästen – wirkte wie ein Formular):
+     Jahr · was · Zeitraum. Laptop drei Spalten, Handy untereinander. */
   .stations ol {
     list-style: none;
     padding: 0;
-    margin-top: clamp(1.5rem, 4vw, 3rem);
-    display: grid;
-    gap: 0.75rem;
+    margin-top: clamp(1.25rem, 3vw, 2rem);
+    border-bottom: 1px solid var(--line);
   }
   .stations li {
     display: grid;
-    gap: 0.25rem 2rem;
-    padding: 1.25rem 1.5rem;
-    background: var(--wall-2);
-    border-radius: var(--radius);
+    gap: 0.15rem 2rem;
+    padding-block: 0.9rem;
+    border-top: 1px solid var(--line);
   }
   @media (min-width: 760px) {
     .stations li {
-      grid-template-columns: 8rem 1fr 1fr;
+      grid-template-columns: 7rem minmax(0, 1.2fr) minmax(0, 1fr);
       align-items: baseline;
     }
   }
   /* Jahreszahlen untereinander: gleich breite Ziffern */
   .yr {
-    font-size: 2.25rem;
-    color: var(--accent);
+    font-size: 1.5rem;
     line-height: 1;
     font-variant-numeric: lining-nums tabular-nums;
   }
   .st-title {
-    font-weight: 700;
-    font-size: 1.15em;
+    font-weight: 600;
   }
   .gear ul {
     margin-top: 0.75rem;

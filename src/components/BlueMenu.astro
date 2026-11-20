@@ -306,10 +306,11 @@ const nameWords = site.name.split(' ').map((word) =>
       --name-mt: clamp(1.25rem, 3svh, 2.25rem);
       --nav-my: 2.5rem;
       --list-gap: max(clamp(0.35rem, 1.2vh, 0.9rem), 2.75rem - 0.95 * var(--bm-item));
-      /* Handy: Name zweizeilig, „DORNER“ 3,18 Schrifthöhen breit → / 3.57 füllt knapp 90 % der Breite; zwei Zeilen à
-         0,9 plus Innenabstände sind 1,88 Schrifthöhen hoch. Tablet (ab 600 px): einzeilig, Werte weiter unten. */
-      --name-div: 3.57;
-      --name-lines: 1.88;
+      /* Handy und Tablet: Name in einer Zeile über die Breite – „JESKO DORNER“ ist 5,90 Schrifthöhen breit → / 6.6
+         füllt knapp 90 %; eine Zeile mit Innenabständen ist 0,98 Schrifthöhen hoch. Bis 20.11.2026 am Handy zweizeilig
+         (/ 3.57, 1,88 hoch) – dann blieb fürs Foto nur ein Streifen; das Foto hat Vorrang. */
+      --name-div: 6.6;
+      --name-lines: 0.98;
       /* Alles außer Foto und Name: Abstand und Bildunterschrift (0,75rem + 2,75rem), Abstand über dem Namen, Menü
          (5 Punkte à 0,95 Schrifthöhen, 4 Abstände, Ränder), Instagram (1,125rem) und Rand unten, 0,5rem Reserve */
       --rest-h: calc(
@@ -317,12 +318,12 @@ const nameWords = site.name.split(' ').map((word) =>
           var(--foot-pad) + 0.5rem
       );
       /* Die Startseite passt ohne Scrollen auf einen Bildschirm – auch im Handy-Browser mit seinen Leisten (svh = die
-         Höhe, die bei eingeblendeten Leisten bleibt). Zuerst gibt das Foto nach: Es ist höchstens 34 % der Höhe hoch
-         (und nie höher als 3:4 der Breite), mindestens 20 %, sonst so hoch, wie neben dem Namen in voller Breite Platz
-         ist. Erst wenn das Foto schon ganz flach ist, wird der Name kleiner (sehr kurze Bildschirme). Das Menü
-         (Overlay) rechnet gleich, so ist der Name dort genauso groß wie auf der Startseite. */
-      --frame-max: min(75vw, 34svh);
-      --frame-min: 20svh;
+         Höhe, die bei eingeblendeten Leisten bleibt). Das Foto hat Vorrang: mindestens 30 % der Höhe, sonst so hoch,
+         wie neben Name und Menü Platz ist, höchstens 45 % (und nie höher als 3:4 der Breite). Erst wenn das Foto bei
+         30 % ist, wird der Name kleiner (sehr kurze Bildschirme). Das Menü (Overlay) rechnet gleich, so ist der Name
+         dort genauso groß wie auf der Startseite. */
+      --frame-max: min(75vw, 45svh);
+      --frame-min: 30svh;
       --name-fs-w: min(12.5rem, 100cqi / var(--name-div));
       --frame-h: clamp(
         var(--frame-min),
@@ -346,8 +347,7 @@ const nameWords = site.name.split(' ').map((word) =>
       margin-top: var(--name-mt);
     }
     :is(.bm--aside, .bm--overlay) .bm-name :global(.bm-w) {
-      display: block;
-      width: fit-content;
+      display: inline-block;
     }
     :is(.bm--aside, .bm--overlay) .bm-body {
       display: contents;
@@ -394,8 +394,8 @@ const nameWords = site.name.split(' ').map((word) =>
     :is(.bm--aside, .bm--overlay) {
       --bm-item: clamp(1.8rem, 8vw, 3.4rem);
       --name-mt: 1rem;
-      --frame-max: min(75vw, 25svh);
-      --frame-min: 18svh;
+      --frame-max: min(75vw, 40svh);
+      --frame-min: 28svh;
       --nav-my: 2.3rem;
     }
     /* etwas mehr Luft über als unter dem Menü */
@@ -406,18 +406,6 @@ const nameWords = site.name.split(' ').map((word) =>
   @media (max-width: 999.98px) {
     .bm--overlay .bm-name {
       margin-top: 0;
-    }
-  }
-  /* Tablet hochkant (600–999 px): der Name in einer Zeile über die ganze Breite – zweizeilig wäre er hier so hoch, dass
-     er für einen Bildschirm ohne Scrollen zu klein werden müsste. „JESKO DORNER“ ist 5,90 Schrifthöhen breit → / 6.6
-     füllt knapp 90 %; eine Zeile mit Innenabständen ist 0,98 Schrifthöhen hoch. */
-  @media (min-width: 600px) and (max-width: 999.98px) {
-    :is(.bm--aside, .bm--overlay) {
-      --name-div: 6.6;
-      --name-lines: 0.98;
-    }
-    :is(.bm--aside, .bm--overlay) .bm-name :global(.bm-w) {
-      display: inline-block;
     }
   }
   /* Laptop (ab 1000 px): zwei Spalten. Links (5/12) Name zweizeilig, unten Menü und Instagram;
