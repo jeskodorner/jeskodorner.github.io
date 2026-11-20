@@ -169,7 +169,8 @@ const nameWords = site.name.split(' ').map((word) =>
     color: var(--hover);
   }
   /* Name: eine Zeile, so breit wie der Platz (aber nicht riesig), in --name-color (Schriftfarbe des Menüs). Im Menü ist er ein Link zur Startseite
-     und bekommt beim Überfahren dasselbe orange Feld wie die Menüpunkte. */
+     und wird beim Überfahren orange – ohne Feld: ein Kasten hinter zwei so großen Zeilen wirkte wie ein Klotz und
+     schnitt in die zweite Zeile (bis 20.11.2026 oranges Feld wie bei den Menüpunkten). */
   .bm-name {
     display: block;
     width: fit-content;
@@ -191,8 +192,7 @@ const nameWords = site.name.split(' ').map((word) =>
       color 0.2s;
   }
   a.bm-name:hover {
-    background: var(--hover);
-    color: var(--ink);
+    color: var(--hover);
   }
   /* Jedes Wort ein eigener Kasten, genau so groß wie das Wort (wie im Logo der Kopfzeile, Header.astro): Beim
      Seitenwechsel gleitet jedes Wort für sich an seinen Platz im Logo und wird dabei nur gleichmäßig kleiner. */

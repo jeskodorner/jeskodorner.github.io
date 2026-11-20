@@ -590,7 +590,7 @@ Vier Farben, sonst nichts (seit 20. November 2026). Definiert in `src/styles/tok
 |---|---|---|
 | Dark Blue | `#1A0089` | Schrift überall (statt Schwarz), Bühne: Startseite, Menü, Fußzeile; Links (unterstrichen), Fokusrahmen, Vorschaukarten, Browser-Symbol |
 | White Chocolate | `#EFE7D3` | Wände: Hintergrund aller Seiten; Schrift auf Dark Blue |
-| Portland Orange | `#FF5E33` | „hier kannst du klicken“: Menü-Knopf, Überfahren als Fläche mit blauer Schrift, Unterstrich beim Überfahren von Titeln |
+| Portland Orange | `#FF5E33` | „hier kannst du klicken“: Menü-Knopf, volle Knöpfe (Ganzes Album ansehen, Schreib mir, Senden; beim Überfahren blau), Überfahren als Fläche mit blauer Schrift, Unterstrich beim Überfahren von Titeln |
 | June Bud | `#B7CF4F` | Fläche oben auf jeder Albumseite, Download-Kasten, Schriftzug in der Fußzeile |
 
 Dazu nur dunklere Stufen von White Chocolate für Platzhalter und Kästen (`--wall-2`, `--wall-3`). Es gibt bewusst nur
@@ -611,7 +611,7 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
 - **Startseite = das Menü** (`src/components/BlueMenu.astro`): Dark Blue `#1A0089` mit Schrift in White Chocolate
   (Token `--menu-bg` und `--on-menu` in `tokens.css`). Der Name hat die
   Schriftfarbe (`--name-color` in `BlueMenu.astro`), der Menüpunkt der aktuellen Seite ist unterstrichen. Beim Überfahren bekommen
-  Menüpunkte und Name ein oranges Feld mit blauer Schrift, Menü- und Schließen-Knopf sind orange Kreise. Instagram
+  Menüpunkte ein oranges Feld mit blauer Schrift, der Name im Menü wird nur orange (ein Feld hinter zwei so großen Zeilen wirkte wie ein Klotz), Menü- und Schließen-Knopf sind orange Kreise. Instagram
   unten wie in der Fußzeile jeder Seite mit Symbol und „jeskodorner“, aber klein (etwa so groß wie „Mappe ansehen →“; beim Überfahren orange). Sparsam bleiben: mehr Orange wirkt schnell zu viel. Die Fläche geht über den ganzen
   Bildschirm, oben groß der Name, darunter die Menüpunkte (Portfolio, Galerie, Film, Über mich, Kontakt), unten
   nur Instagram – auf der Startseite und im Menü gleich. Impressum und Datenschutz stehen in der Fußzeile jeder

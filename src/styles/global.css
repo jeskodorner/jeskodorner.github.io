@@ -317,14 +317,18 @@ html:not(.js) .js-only {
   color: var(--ink);
   background: var(--hover);
 }
+/* Voller Knopf (Hauptaktion: Ganzes Album ansehen, Schreib mir, Senden): Orange mit blauer Schrift wie der
+   Menüknopf, beim Überfahren Blau. Vorher blau gefüllt – zusammen mit blauer Schrift und blauer Fußzeile war das zu
+   viel Blau (20.11.2026). */
 .btn--solid {
-  background: var(--ink);
-  color: var(--wall);
-}
-.btn--solid:hover {
   background: var(--hover);
   border-color: var(--hover);
   color: var(--ink);
+}
+.btn--solid:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--wall);
 }
 .btn--small {
   min-height: 2.75rem; /* 44 px: übliche Mindestgröße für einen Fingertipp */
