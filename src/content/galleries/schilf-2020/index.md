@@ -9,7 +9,7 @@ date: 2020-12-29
 description: "Trockenes Schilf am Wasser, fotografiert Ende Dezember 2020:
   Halme, Spiegelungen des Himmels und treibende Blätter."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: green
+# color: cream
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex
 visibility: public
 # Aufnahmedaten (Kamera, Blende …) anzeigen

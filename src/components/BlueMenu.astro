@@ -311,10 +311,11 @@ const nameWords = site.name.split(' ').map((word) =>
          (/ 3.57, 1,88 hoch) – dann blieb fürs Foto nur ein Streifen; das Foto hat Vorrang. */
       --name-div: 6.6;
       --name-lines: 0.98;
-      /* Alles außer Foto und Name: Abstand und Bildunterschrift (0,75rem + 2,75rem), Abstand über dem Namen, Menü
-         (5 Punkte à 0,95 Schrifthöhen, 4 Abstände, Ränder), Instagram (1,125rem) und Rand unten, 0,5rem Reserve */
+      /* Alles außer Foto und Name: Abstand und Bildunterschrift (0,75rem + eine Zeile 1,25rem), Abstand über dem
+         Namen, Menü (5 Punkte à 0,95 Schrifthöhen, 4 Abstände, Ränder), Instagram (1,125rem) und Rand unten,
+         0,5rem Reserve */
       --rest-h: calc(
-        3.5rem + var(--name-mt) + var(--nav-my) + 4.75 * var(--bm-item) + 4 * var(--list-gap) + 1.125rem +
+        2rem + var(--name-mt) + var(--nav-my) + 4.75 * var(--bm-item) + 4 * var(--list-gap) + 1.125rem +
           var(--foot-pad) + 0.5rem
       );
       /* Die Startseite passt ohne Scrollen auf einen Bildschirm – auch im Handy-Browser mit seinen Leisten (svh = die
@@ -445,10 +446,10 @@ const nameWords = site.name.split(' ').map((word) =>
     :is(.bm--aside, .bm--overlay) .bm-body > nav {
       margin-bottom: calc(-0.15 * var(--bm-item));
     }
-    /* Foto mit Bildunterschrift rechts neben Name und Menü: Die untere Zeile der Bildunterschrift („Monat · Mappe
-       ansehen →“) endet auf derselben Grundlinie wie „KONTAKT“; das Foto steht darüber. Unter beiden nur Instagram.
-       Unter der Zeile „Monat · …“ liegen 0,33 ihrer Schrifthöhen bis zur Unterkante – um so viel ragt der Block nach
-       unten (gemessen). */
+    /* Foto mit Bildunterschrift rechts neben Name und Menü: Die Bildunterschrift („Albumname – Monat Jahr“, eine
+       Zeile) steht auf derselben Grundlinie wie „KONTAKT“; das Foto steht darüber. Unter beiden nur Instagram. Unter
+       der Grundlinie liegen 0,33 Schrifthöhen des Datums plus 0,06 Schrifthöhen des Albumnamens bis zur Unterkante –
+       um so viel ragt der Block nach unten (gemessen, ±0,5 px). */
     .bm--aside .bm-aside {
       display: contents;
     }
@@ -457,7 +458,7 @@ const nameWords = site.name.split(' ').map((word) =>
       grid-row: 1 / 5;
       height: auto;
       min-height: 0;
-      margin-bottom: calc(-0.33 * var(--fs-xs));
+      margin-bottom: calc(-0.33 * var(--fs-xs) - 0.06 * clamp(1.15rem, 1rem + 0.5vw, 1.5rem));
     }
     /* Menü: oben derselbe Abstand wie auf der Startseite; der Schließen-Knopf liegt darüber an der Stelle des
        Menüknopfs, ohne den Namen nach unten zu schieben */

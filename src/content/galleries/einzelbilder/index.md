@@ -8,7 +8,7 @@ date: 2025-02-10
 # Kurzbeschreibung (1–2 Sätze) – erscheint auf der Kachel und in Link-Vorschauen
 description: "Einzelne Fotos, die für sich stehen."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: green
+# color: cream
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex
 visibility: public
 # Aufnahmedaten (Kamera, Blende …) anzeigen

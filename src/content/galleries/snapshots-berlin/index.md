@@ -9,7 +9,7 @@ date: 2024-09-30
 description: "Beobachtungen aus dem Berliner Alltag: Straßen, Bahnen,
   Ausstellungen, Nächte und Menschen aus der Nähe."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: green
+# color: cream
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex
 visibility: public
 # Aufnahmedaten (Kamera, Blende …) anzeigen

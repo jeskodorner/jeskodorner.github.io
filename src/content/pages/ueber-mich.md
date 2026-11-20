@@ -3,25 +3,9 @@
 lead: "Fotografie mit sportlicher Perspektive."
 portraitAlt: "Porträt von Jesko Dorner in orangefarbener Fleecejacke vor dichtem Grün, Blick zur Seite"
 # Stationen (neueste zuerst). Leere Liste [] = Abschnitt wird ausgeblendet.
-stations:
-  - year: "2026"
-    title: "Abitur"
-    text: "Schule bis Sommer 2026, Abschluss mit dem Abitur."
-  - year: "2024–25"
-    title: "Zweite Kamera – Kurzspielfilm „Flossenengel“"
-    text: "Oktober 2024 bis Juni 2025."
-  - year: "2024"
-    title: "Regie – Kurzfilm „Innehalten“"
-    text: "Dezember 2024."
-  - year: "2024"
-    title: "Kameraassistenz – Kurzfilme „One Hit Wonder“ und „Platzhalter: Film von Liv“"
-    text: "Dezember 2024."
-  - year: "2023"
-    title: "Kamera – Kurzfilm „Siehst du dich“"
-    text: "Dezember 2023."
-  - year: "seit 2019"
-    title: "Fotodokumentation"
-    text: "Theaterstücke, Filmsets und Porträts – bis heute."
+# Seit 20.11.2026 ausgeblendet; die frühere Liste (Abitur, Flossenengel, Innehalten …) steht in der Git-Geschichte.
+# Wieder zeigen: Einträge wie  - year: "2024"  /  title: "Regie – Kurzfilm „Innehalten“"  /  text: "Dezember 2024."
+stations: []
 # Ausrüstung (optional). Leere Liste [] = Abschnitt wird ausgeblendet.
 gear: []
 ---

@@ -5,7 +5,7 @@ date: 2026-01-18
 # location: "Ort"
 description: "Nachts unterwegs: Hoodie-Shooting mit Anouk und Yael."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: green
+# color: cream
 visibility: public
 showExif: true
 # downloadUrl: https://…

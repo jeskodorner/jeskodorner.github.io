@@ -10,7 +10,7 @@ description: "Dänemark im Februar, überwiegend in Schwarzweiß: verschneite
   Küste, Doppelbelichtungen am Meer, Menschen im Schneefall und Fische unter
   Wasser."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: green
+# color: cream
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex
 visibility: public
 # Aufnahmedaten (Kamera, Blende …) anzeigen

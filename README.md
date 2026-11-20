@@ -136,7 +136,7 @@ Kurzer Text zum Video.
 **Film-Übersicht** (`/film/`, `src/pages/film.astro`): je Film ein Vorschaubild (16:9), der Titel klein darunter,
 ein kurzer Text in Grau und „Mehr ansehen →“ – kein Player. Laptop 3, Tablet 2, Handy 1 pro Reihe.
 **Seite je Film** (`/film/<dateiname>/`, `src/pages/film/[slug].astro`): aufgebaut wie die Albumseite – oben ein
-Band in June Bud mit „← Alle Filme“, Titel und dem ganzen Text in Grau, dazu der Player mit „Abspielen“ (am Laptop
+hellgraues Band mit „← Alle Filme“, Titel und dem ganzen Text in Grau, dazu der Player mit „Abspielen“ (am Laptop
 ab 1000 px nebeneinander, Text links, Video rechts; am Handy und Tablet untereinander, der Player dann so groß, dass
 er auf den ersten Bildschirm passt). Unten „Nächster Film →“ mit Vorschaubild, gleich aufgebaut wie „Nächste
 Galerie“ beim Album (`src/components/NeighbourNav.astro`), nur in eine Richtung; nach dem letzten Film kommt der
@@ -611,7 +611,7 @@ Vier Farben, sonst nichts (seit 20. November 2026). Definiert in `src/styles/tok
 | Dark Blue | `#1A0089` | Schrift überall (statt Schwarz), Bühne: Startseite und Menü; Links (unterstrichen), Fokusrahmen, Vorschaukarten, Browser-Symbol. Als Fläche sonst nirgends (seit 20.11.2026: Knöpfe, Abspielen, Fußzeile waren blau – zu viel Blau) |
 | White Chocolate | `#EFE7D3` | Wände: Hintergrund aller Seiten; Schrift auf Dark Blue |
 | Portland Orange | `#E8481F` | „hier kannst du klicken“: Menü-Knopf, volle Knöpfe (Ganzes Album ansehen, Schreib mir, Senden; beim Überfahren blau), Überfahren als Fläche – immer mit heller Schrift (White Chocolate), Unterstrich beim Überfahren von Titeln. Einen Hauch tiefer als im Palettenbild (`#FF5E33`), damit helle Schrift darauf lesbar ist; blaue Schrift auf Orange mochte Jesko nicht |
-| June Bud | `#B7CF4F` | Fußzeile (mit blauer Schrift), Fläche oben auf jeder Albumseite, Download-Kasten, „Link kopiert“ |
+| June Bud | `#B7CF4F` | Fußzeile (mit blauer Schrift), „Link kopiert“. Die Fläche oben auf Album- und Filmseiten ist seit 20.11.2026 hellgrau (`--wall-2`, Klasse `c-cream`) – mit grüner Fußzeile war es vorher zu viel Grün |
 
 Dazu nur dunklere Stufen von White Chocolate für Platzhalter und Kästen (`--wall-2`, `--wall-3`). Es gibt bewusst nur
 eine helle Ansicht und keinen Dunkelmodus. Vorher (bis 20.11.2026): weiße Wände, schwarze Schrift, Ultramarin
@@ -621,7 +621,7 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
 - **Fotos werden nie beschnitten**: in Alben, Übersichten und der Lightbox immer im Originalformat, groß mit hellem
   Rand. Nichts ist schräg gestellt. Mutig sind Farben und Schrift, nicht die Anordnung.
 - **Farbflächen** (`color:` in `index.md` eines Albums oder bei einem Film): `blue | orange | green | cream` (Klassen
-  `c-blue` … in `tokens.css`). Ohne Angabe bekommt jedes Album June Bud (`green`). Bei Filmen ist es die Farbe der
+  `c-blue` … in `tokens.css`). Ohne Angabe bekommt jedes Album ein helles Grau (`cream`). Bei Filmen ist es die Farbe der
   Vorschau ohne Standbild.
 - **Links und Überfahren:** Links sind blau wie der Text und unterstrichen (Token `--accent`). Beim Überfahren
   überall dieselbe Antwort wie im Menü: ein oranges Feld mit heller Schrift (Token `--hover`, Schrift `--on-hover`) – Links im Text,
@@ -664,7 +664,7 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
   man aus einer Mappe (oder einer anderen Seite) zurück, geht es mit dem Foto weiter, das zuletzt zu sehen war
   (gemerkt im Tab, `sessionStorage`); erst ein neuer Besuch beginnt wieder vorne. Mit „Bewegung reduzieren“ oder
   ohne JavaScript bleibt das erste Foto stehen.
-- **Albumseite** (`src/components/GalleryPage.astro`): oben ein kompaktes Band in June Bud mit „← Alle Galerien“,
+- **Albumseite** (`src/components/GalleryPage.astro`): oben ein kompaktes hellgraues Band mit „← Alle Galerien“,
   Anzahl · Monat · Ort, dem Titel und der Beschreibung in normaler Textgröße, direkt darunter die Fotos. Wer ein Album
   öffnet, sieht so sofort Fotos (am Laptop etwa die Hälfte des ersten Bildschirms, am Handy über die Hälfte). Der
   Titel ist dafür kleiner als auf den Hauptseiten. Vorher (bis 20.11.2026) war der Titel so groß wie „Galerie“, die
@@ -724,7 +724,7 @@ Kontraste nach WCAG 2.x:
 | Dark Blue (Startseite, Menü) | White Chocolate | 12,1 : 1 |
 | Dark Blue | Orange (Menü-Knopf beim Überfahren) | 3,8 : 1 |
 | Portland Orange `#E8481F` (Überfahren, Knöpfe, Menü-Knopf) | White Chocolate | 3,2 : 1 – reicht für fette und große Schrift und Symbole, nicht für langen Text |
-| June Bud `#B7CF4F` (Fußzeile, Albumfläche) | Dark Blue | 8,6 : 1 |
+| June Bud `#B7CF4F` (Fußzeile) | Dark Blue | 8,6 : 1 |
 
 Orange nie als Schriftfarbe auf White Chocolate (2,5 : 1), nur als Fläche oder Linie.
 

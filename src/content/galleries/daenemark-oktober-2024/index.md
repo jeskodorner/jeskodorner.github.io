@@ -10,7 +10,7 @@ description: "Zwei Blicke auf die Küste im Oktober: goldenes Licht über dem Me
   mit Wasservögeln zwischen den Steinen und eine steile Felsklippe in
   Schwarzweiß."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: green
+# color: cream
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex
 visibility: public
 # Aufnahmedaten (Kamera, Blende …) anzeigen

@@ -44,7 +44,8 @@ export type RoomColor = (typeof ROOM_COLORS)[number];
 
 export interface Gallery {
   id: string;
-  /** Farbe der Fläche über dem Album (CSS-Klasse c-<farbe>): ohne Angabe June Bud (grün) */
+  /** Farbe der Fläche über dem Album (CSS-Klasse c-<farbe>): ohne Angabe ein helles Grau (`cream`, seit 20.11.2026;
+   *  vorher June Bud – mit der grünen Fußzeile war das zu viel Grün) */
   color: RoomColor;
   folder: string;
   slug: string;
@@ -149,7 +150,7 @@ async function load(): Promise<Gallery[]> {
       date: d.date,
       location: d.location,
       description: d.description,
-      color: d.color ?? 'green',
+      color: d.color ?? 'cream',
       visibility: d.visibility,
       isUnlisted: d.visibility === 'unlisted',
       showExif: d.showExif,

@@ -1,7 +1,7 @@
 ---
 /**
  * Fotofläche der Startseite (Richtung „Bild neben Name“): immer EIN Foto, ganz und scharf, darunter die
- * Bildunterschrift: Albumname und Monat (bis 20.11.2026 auch „Mappe ansehen →“). Die Fotos kommen aus dem Portfolio (Liste „showroom“ in
+ * Bildunterschrift in einer Zeile: „Albumname – Monat Jahr“ (bis 20.11.2026 zweizeilig mit „Mappe ansehen →“). Die Fotos kommen aus dem Portfolio (Liste „showroom“ in
  * src/content/pages/startseite.md) in dieser Reihenfolge und wechseln alle 7 Sekunden: Das neue Foto blendet weich
  * über dem alten ein (das alte bleibt darunter stehen, bis das neue ganz da ist – keine leere Fläche dazwischen) und
  * setzt sich dabei langsam aus einer leichten Vergrößerung. Alle Fotos füllen dieselbe Fläche (Laptop 4:3, Handy ein
@@ -58,6 +58,7 @@ const first = slides[0];
       <p class="hs-cap">
         <a class="hs-link" href={first.href} data-slide-link>
           <span class="hs-title" data-slide-title>{first.title}</span>
+          <span class="hs-dash" aria-hidden="true">–</span>
           <span class="hs-meta label" data-slide-meta>{first.meta}</span>
         </a>
       </p>
@@ -225,16 +226,25 @@ const first = slides[0];
   .hs-cap.is-changing {
     opacity: 0;
   }
+  /* Eine Zeile „Albumname – Monat Jahr“, auf einer Grundlinie; ein sehr langer Albumname wird mit „…“ gekürzt, das
+     Datum bleibt immer ganz. Die Tippfläche reicht unsichtbar über die Zeile hinaus (mindestens 44 px hoch). */
   .hs-link {
-    display: grid;
-    gap: 0.25rem;
+    position: relative;
+    display: flex;
+    align-items: baseline;
+    gap: 0.45em;
     min-width: 0;
-    min-height: 2.75rem; /* Tippfläche */
-    align-content: end;
     color: inherit;
     text-decoration: none;
   }
+  .hs-link::after {
+    content: '';
+    position: absolute;
+    inset: -0.75rem -0.5rem;
+  }
   .hs-title {
+    flex: 0 1 auto;
+    min-width: 0;
     font-family: var(--font-display);
     font-weight: var(--display-wght);
     font-style: italic;
@@ -244,8 +254,14 @@ const first = slides[0];
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  .hs-dash {
+    flex: none;
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 1rem + 0.5vw, 1.5rem);
+    line-height: 1.1;
+  }
   .hs-meta {
-    justify-self: start;
+    flex: none;
     white-space: nowrap;
   }
   /* Überfahren: der Titel bekommt den orangen Unterstrich wie alle Titel neben Fotos */

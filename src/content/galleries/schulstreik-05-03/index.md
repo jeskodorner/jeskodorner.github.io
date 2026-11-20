@@ -5,7 +5,7 @@ date: 2026-03-05
 location: "Berlin"
 description: "Schulstreik gegen die Wehrpflicht am Potsdamer Platz."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: green
+# color: cream
 visibility: public
 showExif: true
 # downloadUrl: https://…

@@ -9,7 +9,7 @@ date: 2024-10-03
 description: "Produktfotos für WEYE Bags: aus Jeansstoff genähte Taschen,
   getragen auf einer Brücke, am Uferweg, auf der Parkbank und an der Haustür."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: green
+# color: cream
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex
 visibility: public
 # Aufnahmedaten (Kamera, Blende …) anzeigen
