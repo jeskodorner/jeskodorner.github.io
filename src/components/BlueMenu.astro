@@ -168,9 +168,8 @@ const nameWords = site.name.split(' ').map((word) =>
     background: var(--ink);
     color: var(--hover);
   }
-  /* Name: eine Zeile, so breit wie der Platz (aber nicht riesig), in --name-color (Schriftfarbe des Menüs). Im Menü ist er ein Link zur Startseite
-     und wird beim Überfahren orange – ohne Feld: ein Kasten hinter zwei so großen Zeilen wirkte wie ein Klotz und
-     schnitt in die zweite Zeile (bis 20.11.2026 oranges Feld wie bei den Menüpunkten). */
+  /* Name: eine Zeile, so breit wie der Platz (aber nicht riesig), in --name-color (Schriftfarbe des Menüs). Im Menü
+     ist er ein Link zur Startseite und bekommt beim Überfahren ein oranges Feld um beide Zeilen (Regeln unten). */
   .bm-name {
     display: block;
     width: fit-content;
@@ -191,8 +190,30 @@ const nameWords = site.name.split(' ').map((word) =>
       background-color 0.2s,
       color 0.2s;
   }
-  a.bm-name:hover {
-    color: var(--hover);
+  /* Oranges Feld beim Überfahren: ein eigenes Feld (::before), das gleichmäßig um beide Zeilen liegt – rundum etwa
+     0,1 Schrifthöhen Luft um die Großbuchstaben (oben ragen die Buchstaben in Migha Black etwas über die Zeile,
+     unten ist die Zeile tiefer als die Grundlinie, daher die ungleichen Werte). Nur mit Maus: Am Handy führt
+     Antippen sofort zur Startseite, und ein stehen gebliebenes Feld schnitt dort beim Übergang in „DORNER“. */
+  a.bm-name {
+    position: relative;
+    isolation: isolate;
+  }
+  a.bm-name::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: -0.09em 0.02em 0.17em;
+    background: var(--hover);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  @media (hover: hover) {
+    a.bm-name:hover {
+      color: var(--ink);
+    }
+    a.bm-name:hover::before {
+      opacity: 1;
+    }
   }
   /* Jedes Wort ein eigener Kasten, genau so groß wie das Wort (wie im Logo der Kopfzeile, Header.astro): Beim
      Seitenwechsel gleitet jedes Wort für sich an seinen Platz im Logo und wird dabei nur gleichmäßig kleiner. */

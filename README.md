@@ -611,7 +611,7 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
 - **Startseite = das Menü** (`src/components/BlueMenu.astro`): Dark Blue `#1A0089` mit Schrift in White Chocolate
   (Token `--menu-bg` und `--on-menu` in `tokens.css`). Der Name hat die
   Schriftfarbe (`--name-color` in `BlueMenu.astro`), der Menüpunkt der aktuellen Seite ist unterstrichen. Beim Überfahren bekommen
-  Menüpunkte ein oranges Feld mit blauer Schrift, der Name im Menü wird nur orange (ein Feld hinter zwei so großen Zeilen wirkte wie ein Klotz), Menü- und Schließen-Knopf sind orange Kreise. Instagram
+  Menüpunkte ein oranges Feld mit blauer Schrift, der Name im Menü ein oranges Feld gleichmäßig um beide Zeilen (nur mit Maus – am Handy blieb es beim Antippen stehen und schnitt beim Übergang in „DORNER“), Menü- und Schließen-Knopf sind orange Kreise. Instagram
   unten wie in der Fußzeile jeder Seite mit Symbol und „jeskodorner“, aber klein (etwa so groß wie „Mappe ansehen →“; beim Überfahren orange). Sparsam bleiben: mehr Orange wirkt schnell zu viel. Die Fläche geht über den ganzen
   Bildschirm, oben groß der Name, darunter die Menüpunkte (Portfolio, Galerie, Film, Über mich, Kontakt), unten
   nur Instagram – auf der Startseite und im Menü gleich. Impressum und Datenschutz stehen in der Fußzeile jeder
