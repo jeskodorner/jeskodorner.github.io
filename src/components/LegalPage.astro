@@ -16,7 +16,7 @@ const hasPlaceholders = /class="ph[\s"]/.test(html);
 
 <BaseLayout title={title} description={description} image={cardImage(title === 'Impressum' ? 'impressum' : 'datenschutz')}>
   <article class="container container--wide legal">
-    <h1 class="display display-2">{title}</h1>
+    <h1 class="display display-1 display-compact">{title}</h1>
     {hasPlaceholders && <p class="warning" role="note"><strong>Hinweis:</strong> {t.legal.placeholder}</p>}
     <div class:list={['prose', { 'prose--final': !hasPlaceholders }]} set:html={html} />
   </article>

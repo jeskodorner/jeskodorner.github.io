@@ -46,7 +46,7 @@ const { items } = Astro.props;
           {/* Das Schild führt ebenfalls zur Mappe – ruhig, ohne sichtbare Änderung beim Überfahren */}
           <a class="work-label" href={mappeUrl(it.gallery)}>
             <span class="work-title">{tidyTitle(it.name ?? it.album)}</span>
-            {(it.name || it.meta) && <span class="work-meta">{[it.name && it.album, it.meta].filter(Boolean).join(' · ')}</span>}
+            {(it.name || it.meta) && <span class="label work-meta">{[it.name && it.album, it.meta].filter(Boolean).join(' · ')}</span>}
           </a>
         </li>
       );
@@ -111,10 +111,10 @@ const { items } = Astro.props;
     letter-spacing: -0.01em;
     text-wrap: balance;
   }
+  /* Datum als kleines Etikett wie in der Galerie-Übersicht (vorher normale Schrift mit Bildanzahl) */
   .work-meta {
-    font-size: var(--fs-xs);
     color: var(--ink-soft);
-    font-variant-numeric: tabular-nums;
+    font-size: clamp(0.72rem, 0.66rem + 0.25vw, var(--fs-xs));
   }
 
   /* ---------- Desktop: Foto links, Schild rechts daneben auf halber Bildhöhe ---------- */

@@ -19,7 +19,7 @@ import { HOME_SIZES, HOME_MAX_WIDTH } from '../lib/sizes';
 const works = await getSelectedWorks();
 // erstes Foto der Startseite schon im Kopf ankündigen
 const hero = works[0] ? await preloadImage(works[0].image.src, HOME_SIZES, HOME_MAX_WIDTH) : undefined;
-const og = cardImage('start', `${site.name} – Fotografie, Kamera und Film`);
+const og = cardImage('start', `${site.name} – Fotografie`);
 
 const jsonLd = {
   '@context': 'https://schema.org',

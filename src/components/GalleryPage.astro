@@ -7,7 +7,7 @@ import ShareBox from './ShareBox.astro';
 import DownloadBox from './DownloadBox.astro';
 import AlbumRequest from './AlbumRequest.astro';
 import Icon from './Icon.astro';
-import Picture from './Picture.astro';
+import NeighbourNav from './NeighbourNav.astro';
 import { getNeighbours, type Gallery } from '../lib/galleries';
 import { responsive } from '../lib/images';
 import { cardImage } from '../lib/og';
@@ -129,34 +129,13 @@ const jsonLd = gallery.isUnlisted
     </footer>
   </article>
 
-  {
-    (prev || next) && (
-      <nav class="neighbours container container--wide" aria-label="Weitere Galerien">
-        {prev && (
-          <a class="nb nb--prev" href={prev.url}>
-            <span class="label muted">
-              <Icon name="arrow-left" /> {t.galleries.prev}
-            </span>
-            <span class="nb-body">
-              <Picture src={prev.cover.src} alt="" sizes="160px" color={prev.cover.color} lqip={prev.cover.lqip} class="nb-img" />
-              <span class="display display-3">{tidyTitle(prev.title)}</span>
-            </span>
-          </a>
-        )}
-        {next && (
-          <a class="nb nb--next" href={next.url}>
-            <span class="label muted">
-              {t.galleries.next} <Icon name="arrow-right" />
-            </span>
-            <span class="nb-body">
-              <span class="display display-3">{tidyTitle(next.title)}</span>
-              <Picture src={next.cover.src} alt="" sizes="160px" color={next.cover.color} lqip={next.cover.lqip} class="nb-img" />
-            </span>
-          </a>
-        )}
-      </nav>
-    )
-  }
+  <NeighbourNav
+    label="Weitere Galerien"
+    prevLabel={t.galleries.prev}
+    nextLabel={t.galleries.next}
+    prev={prev && { url: prev.url, title: prev.title, img: { src: prev.cover.src, color: prev.cover.color, lqip: prev.cover.lqip } }}
+    next={next && { url: next.url, title: next.title, img: { src: next.cover.src, color: next.cover.color, lqip: next.cover.lqip } }}
+  />
 </BaseLayout>
 
 <style>
@@ -173,11 +152,16 @@ const jsonLd = gallery.isUnlisted
   .title {
     margin-top: 0.5rem;
   }
+  /* Beschreibung und Datum grau wie überall (auf June Bud 5,0:1) */
   .band-lead {
     max-width: 60ch;
     margin-top: clamp(0.75rem, 1.5vw, 1.25rem);
     font-size: var(--fs-base);
     line-height: 1.5;
+    color: var(--ink-soft);
+  }
+  .g-band .meta-row {
+    color: var(--ink-soft);
   }
   .g-head {
     padding-top: clamp(1.25rem, 2.5vw, 2rem);
@@ -241,54 +225,5 @@ const jsonLd = gallery.isUnlisted
   .private :global(svg) {
     flex: none;
     translate: 0 0.15em;
-  }
-
-  .neighbours {
-    display: grid;
-    gap: 1rem;
-    margin-top: var(--section);
-  }
-  @media (min-width: 760px) {
-    .neighbours {
-      grid-template-columns: 1fr 1fr;
-    }
-    .nb--next {
-      grid-column: 2;
-      text-align: right;
-      justify-items: end;
-    }
-  }
-  .nb {
-    display: grid;
-    gap: 1rem;
-    text-decoration: none;
-  }
-  .nb .label {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5em;
-  }
-  .nb-body {
-    display: flex;
-    align-items: center;
-    gap: 1.25rem;
-  }
-  /* Vorschaubild unbeschnitten im Originalformat, mit leichtem Schatten */
-  .nb :global(.nb-img) {
-    width: auto;
-    height: clamp(72px, 9vw, 130px);
-    box-shadow:
-      0 1px 2px rgb(0 0 0 / 0.08),
-      0 8px 20px -8px rgb(0 0 0 / 0.32);
-    transition: translate 0.4s var(--ease);
-  }
-  .nb:hover :global(.nb-img) {
-    translate: 0 -3px;
-  }
-  .nb:hover .display {
-    text-decoration: underline;
-    text-decoration-color: var(--hover-line);
-    text-decoration-thickness: 0.08em;
-    text-underline-offset: 0.1em;
   }
 </style>

@@ -135,10 +135,12 @@ Kurzer Text zum Video.
 
 **Film-Übersicht** (`/film/`, `src/pages/film.astro`): je Film ein Vorschaubild (16:9), der Titel klein darunter,
 ein kurzer Text in Grau und „Mehr ansehen →“ – kein Player. Laptop 3, Tablet 2, Handy 1 pro Reihe.
-**Seite je Film** (`/film/<dateiname>/`, `src/pages/film/[slug].astro`): „← Alle Filme“, Titel und der ganze Text
-in Grau, dazu der Player mit „Abspielen“ – am Laptop (ab 1000 px) nebeneinander, Text links, Video rechts; am Handy
-und Tablet untereinander, der Player dann so groß, dass er auf den ersten Bildschirm passt. Mit eigener
-Vorschaukarte fürs Teilen.
+**Seite je Film** (`/film/<dateiname>/`, `src/pages/film/[slug].astro`): aufgebaut wie die Albumseite – oben ein
+Band in June Bud mit „← Alle Filme“, Titel und dem ganzen Text in Grau, dazu der Player mit „Abspielen“ (am Laptop
+ab 1000 px nebeneinander, Text links, Video rechts; am Handy und Tablet untereinander, der Player dann so groß, dass
+er auf den ersten Bildschirm passt). Unten „Nächster Film →“ mit Vorschaubild, gleich aufgebaut wie „Nächste
+Galerie“ beim Album (`src/components/NeighbourNav.astro`), nur in eine Richtung; nach dem letzten Film kommt der
+erste. Mit eigener Vorschaukarte fürs Teilen. Die Mappe bleibt bewusst anders: ruhiger, ohne Band.
 
 Felder dafür (alle optional):
 
@@ -474,8 +476,9 @@ Alles in `src/config/site.ts`:
    Formspree sitzt in den USA.
 
 **Statistik mit GoatCounter (cookielos)**
+Seit 20.11.2026 aktiv mit dem Code `jeskodorner` (Auswertung auf https://jeskodorner.goatcounter.com).
 1. Bei [goatcounter.com](https://www.goatcounter.com) einen Zugang anlegen, z. B. mit dem Code `jeskodorner`.
-2. Eintragen: `analytics: { goatcounter: 'jeskodorner' }`.
+2. Eintragen in `src/config/site.ts`: `analytics: { goatcounter: 'jeskodorner' }`.
 3. Das Skript wird nur auf öffentlichen Seiten geladen, nicht auf Unlisted-Galerien. Die Datenschutzerklärung bekommt automatisch einen Abschnitt.
    Hinweis: Der gehostete Dienst ist laut GoatCounter für nicht-kommerzielle Nutzung kostenlos.
    Wenn du über die Seite Aufträge akquirierst, prüfe bitte die Bedingungen.
@@ -730,7 +733,11 @@ Orange nie als Schriftfarbe auf White Chocolate (2,5 : 1), nur als Fläche oder 
 - **Kursiv nur mit Absicht:** Kursiv sind die Menüpunkte (außer „Portfolio“) und kleine Zwischenüberschriften
   wie „Album teilen“ (Klasse `subhead`). Einzelne Wörter in Überschriften sind nicht kursiv.
 - **Gesperrte Großbuchstaben nur für Angaben:** Die Klasse `label` (klein, fett, gesperrt) ist für Angaben wie
-  „6 Bilder · September 2026“, Knöpfe und Rechtliches da, nicht für Überschriften.
+  „September 2026“, Knöpfe und Rechtliches da, nicht für Überschriften.
+- **Nur das Datum:** Unter Titeln steht überall nur Monat und Jahr – keine Anzahl der Fotos, kein Ort, kein
+  Videotyp (Galerie, Album, Mappe, Portfolio, Film).
+- **Text immer grau:** Einleitungen, Beschreibungen und Fließtext stehen in Grau (`--ink-soft`, Klassen `lead` und
+  `prose`); Überschriften, Links, Etiketten und Knöpfe in Blau.
 - **Tippflächen mindestens 44 px:** Knöpfe sind mindestens 44 px hoch (`btn--small`, runde Teilen-Knöpfe 44 × 44).
   Kleine Textlinks (Logo, Menüpunkte, Fußzeile, Kontakt) bekommen mit der Klasse `tap` eine unsichtbare Fläche um
   den Link; die Schrift bleibt gleich. Wo solche Links untereinander stehen, ist der Abstand so groß, dass sich
@@ -747,11 +754,14 @@ Orange nie als Schriftfarbe auf White Chocolate (2,5 : 1), nur als Fläche oder 
   randvoll verteilt hat (sonst rückten sie nach dem ersten Bild einmal zur Seite); nach spätestens 1,5 s sind sie
   in jedem Fall sichtbar.
 - **Ein System statt Einzelwerte:** Farben, Radien und Schriften kommen aus `src/styles/tokens.css`
-  (`--radius` 4 px für Flächen und Felder, `--radius-pill` für Knöpfe). Alle Seitenüberschriften haben dieselbe
-  Größe und denselben Abstand (Klasse `head` in `global.css`).
+  (`--radius` 4 px für Flächen und Felder, `--radius-pill` für Knöpfe).
+- **Zwei Titelgrößen:** groß (`display-1`) auf den fünf Hauptseiten (Portfolio, Galerie, Film, Über mich, Kontakt)
+  und der Fehlerseite; kompakt (`display-1 display-compact`) auf allen anderen: Album, Mappe, Film, Impressum,
+  Datenschutz, Album öffnen. Zwischenüberschriften (`display-3`, z. B. „Stationen“) sind immer kleiner als der
+  kompakte Titel. Abstand oben überall gleich (Klasse `head` in `global.css`).
 - **Symbole aus einem Satz:** alle aus `Icon.astro` mit derselben Linienstärke, auch Pfeile (keine Pfeil-Zeichen
   aus der Schrift mehr).
-- **Gruppen durch Abstand:** Was zusammengehört, steht enger (Filmtitel und Angaben), der nächste Block mit mehr Luft.
+- **Gruppen durch Abstand:** Was zusammengehört, steht enger (Titel und Datum), der nächste Block mit mehr Luft.
 - **Überschriften umbrechen sauber:** nie mitten im Wort (die größte Überschrift ist am Handy so bemessen, dass
   auch „Einzelbilder“ oder „Ausstellung“ in eine Zeile passen, `--fs-h1`); ausgeglichene Zeilen; ein Gedankenstrich bleibt beim Wort davor
   (`tidyTitle` in `src/lib/text.ts`), Monat und Jahr werden nicht getrennt.

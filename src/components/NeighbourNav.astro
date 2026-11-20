@@ -1,0 +1,107 @@
+---
+/**
+ * „← Vorheriges … / Nächstes … →“ unter einem Album oder Film: Etikett, Vorschaubild und Titel. Gleich aufgebaut
+ * auf Album- und Filmseiten (bei Filmen nur „Nächster Film →“). Vorher nur in GalleryPage.astro.
+ */
+import type { ImageMetadata } from 'astro';
+import Icon from './Icon.astro';
+import Picture from './Picture.astro';
+import { tidyTitle } from '../lib/text';
+
+interface Item {
+  url: string;
+  title: string;
+  img?: { src: ImageMetadata; color?: string; lqip?: string };
+}
+
+export interface Props {
+  prev?: Item;
+  next?: Item;
+  prevLabel?: string;
+  nextLabel: string;
+  /** Name der Navigation für Screenreader, z. B. „Weitere Galerien“ */
+  label: string;
+}
+
+const { prev, next, prevLabel, nextLabel, label } = Astro.props;
+---
+
+{
+  (prev || next) && (
+    <nav class="neighbours container container--wide" aria-label={label}>
+      {prev && (
+        <a class="nb nb--prev" href={prev.url}>
+          <span class="label muted">
+            <Icon name="arrow-left" /> {prevLabel}
+          </span>
+          <span class="nb-body">
+            {prev.img && <Picture src={prev.img.src} alt="" sizes="240px" color={prev.img.color} lqip={prev.img.lqip} class="nb-img" />}
+            <span class="display display-3">{tidyTitle(prev.title)}</span>
+          </span>
+        </a>
+      )}
+      {next && (
+        <a class="nb nb--next" href={next.url}>
+          <span class="label muted">
+            {nextLabel} <Icon name="arrow-right" />
+          </span>
+          <span class="nb-body">
+            <span class="display display-3">{tidyTitle(next.title)}</span>
+            {next.img && <Picture src={next.img.src} alt="" sizes="240px" color={next.img.color} lqip={next.img.lqip} class="nb-img" />}
+          </span>
+        </a>
+      )}
+    </nav>
+  )
+}
+
+<style>
+  .neighbours {
+    display: grid;
+    gap: 1rem;
+    margin-top: var(--section);
+  }
+  @media (min-width: 760px) {
+    .neighbours {
+      grid-template-columns: 1fr 1fr;
+    }
+    .nb--next {
+      grid-column: 2;
+      text-align: right;
+      justify-items: end;
+    }
+  }
+  .nb {
+    display: grid;
+    gap: 1rem;
+    text-decoration: none;
+  }
+  .nb .label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+  }
+  .nb-body {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+  /* Vorschaubild unbeschnitten im Originalformat, mit leichtem Schatten */
+  .nb :global(.nb-img) {
+    width: auto;
+    height: clamp(72px, 9vw, 130px);
+    box-shadow:
+      0 1px 2px rgb(0 0 0 / 0.08),
+      0 8px 20px -8px rgb(0 0 0 / 0.32);
+    transition: translate 0.4s var(--ease);
+  }
+  .nb:hover :global(.nb-img) {
+    translate: 0 -3px;
+  }
+  .nb:hover .display {
+    text-decoration: underline;
+    text-decoration-color: var(--hover-line);
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.1em;
+  }
+</style>

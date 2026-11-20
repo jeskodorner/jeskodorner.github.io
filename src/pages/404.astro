@@ -5,8 +5,8 @@ const t = useTranslations().notFound;
 ---
 
 <BaseLayout title={t.title} description={t.text} noindex>
-  <section class="container container--wide nf">
-    <h1 class="display mega">Unter&shy;belichtet.</h1>
+  <section class="container container--wide head nf">
+    <h1 class="display display-1">Unter&shy;belichtet.</h1>
     <p class="lead">{t.text}</p>
     <p class="actions">
       <a class="btn btn--solid" href="/">{t.home}</a>
@@ -17,7 +17,6 @@ const t = useTranslations().notFound;
 
 <style>
   .nf {
-    padding-top: clamp(3rem, 8vw, 7rem);
     display: grid;
     gap: 1.75rem;
     justify-items: start;

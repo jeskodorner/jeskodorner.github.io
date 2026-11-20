@@ -149,6 +149,7 @@ export const de = {
     watch: 'Ansehen',
     more: 'Mehr ansehen',
     back: 'Alle Filme',
+    next: 'Nächster Film',
     empty: 'Filmarbeiten folgen.',
   },
   about: { title: 'Über mich', stations: 'Stationen', gear: 'Ausrüstung' },

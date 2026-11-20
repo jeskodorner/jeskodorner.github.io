@@ -5,7 +5,7 @@
  */
 import { getEntry, type CollectionEntry } from 'astro:content';
 import { getPublicGalleries, type Gallery, type GalleryImage } from './galleries';
-import { useTranslations, formatMonth } from '../i18n';
+import { formatMonth } from '../i18n';
 
 export interface WorkItem {
   image: GalleryImage;
@@ -23,7 +23,6 @@ export interface WorkItem {
 }
 
 export async function getSelectedWorks(): Promise<WorkItem[]> {
-  const t = useTranslations();
   const text: Partial<CollectionEntry<'pages'>['data']> = (await getEntry('pages', 'startseite'))?.data ?? {};
   const galleries = await getPublicGalleries();
   const workFor = (g: Gallery, image: GalleryImage = g.cover, name?: string): WorkItem => ({
@@ -33,9 +32,8 @@ export async function getSelectedWorks(): Promise<WorkItem[]> {
     photoHref: image.hashUrl,
     album: g.title,
     name,
-    meta: (name ? [formatMonth(g.date), g.location] : [t.galleries.images(g.images.length), formatMonth(g.date), g.location])
-      .filter(Boolean)
-      .join(' · '),
+    // Unter dem Titel nur das Datum – überall auf der Website ohne Anzahl der Fotos und ohne Ort (seit 20.11.2026)
+    meta: formatMonth(g.date),
   });
   const error = (msg: string) => new Error(`startseite.md → showroom: ${msg}`);
   const showroom = text.showroom;

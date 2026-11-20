@@ -8,11 +8,11 @@ export const site = {
   lang: 'de',
   ogLocale: 'de_DE',
 
-  /** Kurzer Claim unter dem Namen (Startseite). PLATZHALTER */
-  claim: 'Fotografie, Kamera und Film.',
-  /** Standard-Beschreibung für Suchmaschinen. PLATZHALTER */
-  description:
-    'Jesko Dorner – Fotografie, Kamera und Film. Portfolio mit Galerien, Filmarbeiten und Kontakt.',
+  /** Kurzer Claim: steht im Seitentitel der Startseite („Jesko Dorner – Fotografie“) und auf der Vorschaukarte.
+   *  Bis 20.11.2026 „Fotografie, Kamera und Film.“ – jetzt nur noch Fotografie */
+  claim: 'Fotografie.',
+  /** Standard-Beschreibung für Suchmaschinen */
+  description: 'Jesko Dorner – Fotograf. Portfolio, Galerien, Filme und Kontakt.',
   /** Berufsbezeichnung für strukturierte Daten (Schema.org Person) */
   jobTitle: 'Fotograf',
 
@@ -42,7 +42,7 @@ export const site = {
    * GoatCounter (optional, cookielos). Nur den Code eintragen,
    * z. B. 'jeskodorner' für https://jeskodorner.goatcounter.com
    */
-  analytics: { goatcounter: '' },
+  analytics: { goatcounter: 'jeskodorner' },
 
   /** Vorformulierter Teilen-Text. {title} und {url} werden ersetzt. */
   shareText: 'Hallo! Hier sind die Bilder von „{title}“: {url}',

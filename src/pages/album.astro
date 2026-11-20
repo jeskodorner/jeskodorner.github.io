@@ -21,7 +21,7 @@ const base = (import.meta.env.PUBLIC_HQ_ALBUM_BASE || site.hqAlbums.baseUrl || '
   <section class="container container--wide hq" data-hq data-base={base}>
     <!-- Schritt 1: Code eingeben -->
     <div class="hq-gate" data-gate>
-      <h1 class="display display-2 hq-title">{h.title}</h1>
+      <h1 class="display display-1 display-compact hq-title">{h.title}</h1>
       <p class="lead hq-intro">{h.intro}</p>
       {
         base ? (
@@ -60,8 +60,7 @@ const base = (import.meta.env.PUBLIC_HQ_ALBUM_BASE || site.hqAlbums.baseUrl || '
     <div class="hq-album" data-album hidden>
       <header class="hq-head">
         <div>
-          <p class="label muted" data-meta></p>
-          <h2 class="display display-2 hq-title" data-title></h2>
+          <h2 class="display display-1 display-compact hq-title" data-title></h2>
         </div>
         <div class="hq-actions">
           <button class="btn btn--solid" type="button" data-all>

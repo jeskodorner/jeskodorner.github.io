@@ -216,7 +216,7 @@ export function initHqAlbum() {
     albumEl.hidden = false;
     document.title = `${manifest.title} – ${document.title}`;
     root!.querySelector('[data-title]')!.textContent = manifest.title;
-    root!.querySelector('[data-meta]')!.textContent = `${h.photos(files.length)} · ${mb(manifest.total)}`;
+    // Keine Anzahl der Fotos (wie überall); die Größe steht im Knopf „Alle herunterladen“
     allLabel.textContent = `${h.downloadAll} (${mb(manifest.total)})`;
     list.dataset.gallery = '';
     list.dataset.count = String(files.length);

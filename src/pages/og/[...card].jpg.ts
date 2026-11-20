@@ -21,7 +21,7 @@ export const getStaticPaths = (async () => {
   const newest = publicGalleries[0];
 
   const cards: Card[] = [
-    { key: 'start', title: 'Fotografie, Kamera, Film', photo: work && { src: work.image.src, focus: work.image.focus } },
+    { key: 'start', title: 'Fotografie', photo: work && { src: work.image.src, focus: work.image.focus } },
     { key: 'portfolio', title: t.selected.title, photo: work && { src: work.image.src, focus: work.image.focus } },
     { key: 'galerie', title: t.galleries.title, photo: newest && { src: newest.cover.src, focus: newest.cover.focus } },
     { key: 'film', title: t.film.title, photo: films[0] && { src: (films[0].data.cover ?? films[0].data.still)! } },

@@ -1,29 +1,35 @@
 ---
 /**
- * Seite je Film (/film/<name>/): „← Alle Filme“, Titel, der Text zum Film in Grau und darunter der Player –
- * datensparsam, erst ein Klick auf „Abspielen“ lädt YouTube (src/components/YouTube.astro). Filme ohne YouTube,
- * aber mit Link (z. B. Vimeo): Standbild und ein Knopf zum Film.
+ * Seite je Film (/film/<name>/) – aufgebaut wie die Albumseite: oben ein Band in June Bud mit „← Alle Filme“, Titel
+ * und Text (grau), am Laptop daneben der Player, am Handy darunter. Datensparsam: erst ein Klick auf „Abspielen“ lädt
+ * YouTube (src/components/YouTube.astro). Unten „Nächster Film →“ wie „Nächste Galerie“ beim Album (nur in eine
+ * Richtung; nach dem letzten Film kommt wieder der erste). Filme ohne YouTube, aber mit Link (z. B. Vimeo):
+ * Standbild und ein Knopf zum Film.
  */
 import { render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import YouTube from '../../components/YouTube.astro';
 import Picture from '../../components/Picture.astro';
 import Icon from '../../components/Icon.astro';
+import NeighbourNav from '../../components/NeighbourNav.astro';
 import { useTranslations } from '../../i18n';
 import { tidyTitle } from '../../lib/text';
 import { cardImage } from '../../lib/og';
-import { getFilms, filmTeaser, type Film } from '../../lib/films';
+import { getFilms, filmTeaser, filmUrl, filmPreview, type Film } from '../../lib/films';
 
 export async function getStaticPaths() {
   const films = await getFilms();
-  return films.map((film) => ({ params: { slug: film.id }, props: { film } }));
+  // Nächster Film in der Reihenfolge der Übersicht, nach dem letzten wieder der erste
+  return films.map((film, i) => ({ params: { slug: film.id }, props: { film, next: films.length > 1 ? films[(i + 1) % films.length] : undefined } }));
 }
 
 interface Props {
   film: Film;
+  next?: Film;
 }
 
-const { film } = Astro.props;
+const { film, next } = Astro.props;
+const nextPreview = next && filmPreview(next);
 const t = useTranslations();
 const { Content } = await render(film);
 const d = film.data;
@@ -31,48 +37,60 @@ const playerSizes = '(min-width: 1000px) 56vw, 92vw';
 ---
 
 <BaseLayout title={d.title} description={filmTeaser(film) || t.film.intro} image={cardImage(`film/${film.id}`, d.stillAlt ?? d.coverAlt)}>
-  <article class="container container--wide film">
-    {/* zurück an die Stelle dieses Films in der Übersicht */}
-    <a class="back btn btn--small" href={`/film/#${film.id}`}>
-      <Icon name="arrow-left" /> {t.film.back}
-    </a>
-    <header class="intro">
-      <h1 class="display display-1 display-compact" style={`view-transition-name: ft-${film.id}`}>{tidyTitle(d.title)}</h1>
-      <div class="prose text">
-        <Content />
-      </div>
-    </header>
+  <article class="c-green">
+    <div class="g-band room">
+      <div class="container container--wide film">
+        {/* zurück an die Stelle dieses Films in der Übersicht */}
+        <a class="back btn btn--small" href={`/film/#${film.id}`}>
+          <Icon name="arrow-left" /> {t.film.back}
+        </a>
+        <header class="intro">
+          <h1 class="display display-1 display-compact" style={`view-transition-name: ft-${film.id}`}>{tidyTitle(d.title)}</h1>
+          <div class="prose text">
+            <Content />
+          </div>
+        </header>
 
-    <div class="player">
-      {
-        d.youtube ? (
-          <YouTube id={d.youtube} title={d.title} still={d.still} stillAlt={d.stillAlt} color={d.color} eager sizes={playerSizes} />
-        ) : (
-          <>
-            {d.still && (
-              <Picture src={d.still} alt={d.stillAlt ?? ''} sizes={playerSizes} loading="eager" fetchpriority="high" class="still" />
-            )}
-            {d.link && (
-              <a class="btn btn--solid watch" href={d.link} target="_blank" rel="noopener noreferrer">
-                {d.linkLabel ?? t.film.watch} <Icon name="arrow-up-right" />
-                <span class="visually-hidden">(externe Seite, neuer Tab)</span>
-              </a>
-            )}
-          </>
-        )
-      }
+        <div class="player">
+          {
+            d.youtube ? (
+              <YouTube id={d.youtube} title={d.title} still={d.still} stillAlt={d.stillAlt} color={d.color} eager sizes={playerSizes} />
+            ) : (
+              <>
+                {d.still && (
+                  <Picture src={d.still} alt={d.stillAlt ?? ''} sizes={playerSizes} loading="eager" fetchpriority="high" class="still" />
+                )}
+                {d.link && (
+                  <a class="btn btn--solid watch" href={d.link} target="_blank" rel="noopener noreferrer">
+                    {d.linkLabel ?? t.film.watch} <Icon name="arrow-up-right" />
+                    <span class="visually-hidden">(externe Seite, neuer Tab)</span>
+                  </a>
+                )}
+              </>
+            )
+          }
+        </div>
+      </div>
     </div>
   </article>
+
+  <NeighbourNav
+    label="Weitere Filme"
+    nextLabel={t.film.next}
+    next={next && { url: filmUrl(next), title: next.data.title, img: nextPreview && { src: nextPreview.src } }}
+  />
 </BaseLayout>
 
 <style>
-  /* Oben „← Alle Filme“, darunter Titel und Text und der Player. Handy und Tablet untereinander, Laptop (ab 1000 px)
-     nebeneinander: links Titel und Text, rechts das Video, oben bündig (untereinander mochte Jesko am Laptop nicht).
-     Kopf kompakt wie auf Album- und Mappenseiten: der Film soll schnell zu sehen sein. */
+  /* Band in June Bud wie auf der Albumseite (gleiche Ränder wie .g-band in GalleryPage.astro). Darin oben
+     „← Alle Filme“, darunter Titel und Text und der Player. Handy und Tablet untereinander, Laptop (ab 1000 px)
+     nebeneinander: links Titel und Text, rechts das Video, oben bündig (untereinander mochte Jesko am Laptop nicht). */
+  .g-band {
+    padding-block: clamp(1rem, 2.5vw, 2rem) clamp(1.5rem, 3vw, 2.75rem);
+  }
   .film {
     display: grid;
     gap: clamp(1.5rem, 3vw, 2.5rem);
-    padding-top: clamp(1rem, 2.5vw, 2rem);
   }
   .back {
     justify-self: start;

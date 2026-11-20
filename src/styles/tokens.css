@@ -12,7 +12,7 @@
  * Koralle, Albumton aus den Fotos), alte-version-verblichene-farben, alte-version-knallige-galeriefarben.
  *
  * Kontraste (WCAG 2.x):
- *   Dark Blue auf White Chocolate 12,1:1 · Nebentext #55507A auf White Chocolate 6,1:1
+ *   Dark Blue auf White Chocolate 12,1:1 · Text-Grau #4B4672 auf White Chocolate 7,1:1, auf June Bud 5,0:1
  *   White Chocolate auf Dark Blue 12,1:1 · White Chocolate auf Orange 3,2:1 (nur fette oder große Schrift, Symbole) ·
  *   Dark Blue auf June Bud 8,6:1 · Orange auf Dark Blue 3,8:1
  *   Orange nie als Schriftfarbe auf White Chocolate (2,5:1), nur als Fläche oder Linie.
@@ -35,7 +35,9 @@
 
   /* Schrift: Dark Blue statt Schwarz (Name --ink bleibt, er steht in vielen Komponenten) */
   --ink: var(--blue);
-  --ink-soft: #55507a;
+  /* Grau für allen Fließtext (Einleitungen, Beschreibungen, Texte) – Überschriften, Links und Etiketten bleiben blau.
+     Etwas dunkler als zuerst (#55507a), damit es auch auf June Bud lesbar ist (5,0:1; auf White Chocolate 7,1:1) */
+  --ink-soft: #4b4672;
   --line: rgb(26 0 137 / 0.14);
   --line-strong: var(--blue);
 
