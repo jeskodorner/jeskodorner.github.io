@@ -1,0 +1,11 @@
+Cyrene (Regular Advanced, Version 1.012)
+Gestaltung: Riccardo Agostinelli, Mailand – https://www.riccardoagostinelli.com/
+
+Lizenzangabe in der Schriftdatei selbst (Feld „License“): „Copyright Free“.
+Mehrere Verzeichnisse nennen Cyrene frei für private und geschäftliche Nutzung (Stand 20.11.2026), z. B.:
+- https://befonts.com/cyrene-free-font.html
+- https://www.dafontfree.io/cyrene-free-sans-serif-font/
+- https://luc.devroye.org/fonts-103950.html („free classy sans display typeface Cyrene (2020)“)
+
+Eine eigene Lizenzdatei des Gestalters lag nicht bei. Im Zweifel beim Gestalter nachfragen.
+Nicht verwechseln mit „CF Cyrene Syla“ oder „Cyrena“ – das sind andere Schriften mit anderen Lizenzen.

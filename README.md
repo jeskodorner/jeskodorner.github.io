@@ -591,8 +591,9 @@ so früh. Was dafür sorgt – bitte beibehalten:
 - **Wichtigstes Bild im Kopf angekündigt** (`preload` an `BaseLayout`, erzeugt mit `preloadImage` aus `src/lib/images.ts`):
   Startseite, Portfolio, Galerie, Über mich. Die `sizes`-Angaben dafür stehen in `src/lib/sizes.ts`, damit Bild und
   Ankündigung genau gleich sind (sonst lädt der Browser doppelt).
-- **Schriften schlank:** Je Schnitt eine kleine Datei (Migha Regular, Slant und Black je gut 20 KB). Die schräge Migha
-  (Slant) wird nur auf der Startseite vorab geladen.
+- **Schriften:** Migha Black (Name, gut 20 KB) und Cyrene (Titel, 124 KB als OTF) werden vorab geladen. Cyrene ließe
+  sich als WOFF2 und nur mit den nötigen Zeichen noch deutlich verkleinern (dafür bräuchte es ein Werkzeug wie
+  fontTools).
 - **Startseite:** Nur das erste Foto lädt sofort, die übrigen eine Sekunde nach dem Laden der Seite.
 - **Fotoreihen sofort fertig:** Die Reihen in Alben und Galerie werden direkt nach der Liste im HTML verteilt
   (`JustifyNow.astro`, Rechnung in `src/scripts/justify-layout.js`) statt erst nach dem Skript.
@@ -653,9 +654,9 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
   Bildschwerpunkt), so wechselt beim Bildwechsel nie das Format; ganz zu sehen sind die Fotos im Portfolio. Am Handy
   und Tablet hochkant steht das Foto ganz oben, randlos, darunter die Bildunterschrift, dann Name (eine Zeile), Menü,
   Instagram – ohne Scrollen, auch auf kleinen Handys. Das Foto hat dort Vorrang (30–45 % der Höhe, höchstens 4:3).
-  Die Bildunterschrift ist immer gleich aufgebaut: oben der Albumname (Titelschrift kursiv, eine Zeile, bei sehr
-  langen Namen am Handy mit „…“), darunter Monat und Jahr – so bleibt sie immer gleich hoch und das Foto springt
-  nicht. Foto und Bildunterschrift führen ins Portfolio genau zu diesem Foto (`/portfolio/#werk-<n>`); beim
+  Die Bildunterschrift ist immer gleich aufgebaut: eine Zeile „Albumname – Monat Jahr“ (Albumname in
+  der Titelschrift, bei sehr langen Namen mit „…“ gekürzt, das Datum bleibt ganz) – so bleibt sie immer gleich hoch
+  und das Foto springt nicht. Foto und Bildunterschrift führen ins Portfolio genau zu diesem Foto (`/portfolio/#werk-<n>`); beim
   Überfahren bekommt der Titel den orangen Unterstrich. Bis 20.11.2026 stand dort „Mappe ansehen →“ und führte zur
   Mappe – die Mappen erreicht man jetzt nur noch übers Portfolio.
   Die Fotos wechseln alle 7 Sekunden in der Reihenfolge der Liste `showroom`: Das neue Foto blendet in 1,8 Sekunden
@@ -733,8 +734,9 @@ Orange nie als Schriftfarbe auf White Chocolate (2,5 : 1), nur als Fläche oder 
 - **Keine Füll-Etiketten:** Ein Etikett steht nur da, wenn es etwas Neues sagt. „Video“ auf der Filmseite,
   „E-Mail“ über einer E-Mail-Adresse oder „Fehler 404“ über der Fehlerseite sind weg (für Screenreader bleiben
   die Bezeichnungen unsichtbar erhalten).
-- **Kursiv nur mit Absicht:** Kursiv sind die Menüpunkte (außer „Portfolio“) und kleine Zwischenüberschriften
-  wie „Album teilen“ (Klasse `subhead`). Einzelne Wörter in Überschriften sind nicht kursiv.
+- **Keine Kursive in der Titelschrift:** Cyrene hat keinen kursiven Schnitt; „kursiv“ zeigt dieselben geraden
+  Buchstaben (fonts.css), der Browser rechnet nichts schräg. Menüpunkte stehen in Großbuchstaben, Titel normal
+  geschrieben. (In Migha waren die Menüpunkte außer „Portfolio“ und kleine Zwischenüberschriften kursiv.)
 - **Gesperrte Großbuchstaben nur für Angaben:** Die Klasse `label` (klein, fett, gesperrt) ist für Angaben wie
   „September 2026“, Knöpfe und Rechtliches da, nicht für Überschriften.
 - **Nur das Datum:** Unter Titeln steht überall nur Monat und Jahr – keine Anzahl der Fotos, kein Ort, kein
@@ -804,13 +806,14 @@ nach seinem Umriss gesetzt, als `public/favicon.svg`, dazu
 Buchstabe ist als Form gespeichert, damit er überall gleich aussieht.
 
 **Schriften** (alle lokal, keine Google-Fonts-Verbindung, alle frei auch für geschäftliche Nutzung: Libre
-Franklin unter SIL OFL, Migha laut Lizenz von Seniors Studio). Bewusst keine
+Franklin unter SIL OFL, Migha laut Lizenz von Seniors Studio, Cyrene laut Schriftdatei „Copyright Free“ – siehe
+`src/assets/fonts/LIZENZ-cyrene.txt`). Bewusst keine
 der Schriften, die auf sehr vielen KI-gebauten Seiten stehen (Inter, Geist, Space Grotesk, Instrument Serif,
 Playfair, Fraunces …):
 - **Migha Black** (seit 20.11.2026): der Name „JESKO DORNER“ – groß auf Startseite und Menü, klein als Logo oben
   links auf allen Unterseiten, als Schriftzug unten in der Fußzeile, auf den Vorschaukarten (Token `--font-name`,
-  eigener Familienname `Migha Black`, damit kein Titel aus Versehen in Black erscheint). Dieselbe Schriftfamilie wie
-  Titel und Menü, nur im kräftigsten Schnitt – so gibt es keinen Bruch zwischen Name und Menü. Die Datei wird vorab
+  eigener Familienname `Migha Black`, damit kein Titel aus Versehen in Black erscheint). Kräftig und schmal als
+  bewusster Gegenpol zu den feinen Titeln in Cyrene. Die Datei wird vorab
   geladen (`BaseHead.astro`), damit das Logo beim Seitenwechsel nie kurz in einer Ersatzschrift erscheint. Beim
   Wechsel Startseite → Unterseite gleitet der Name Wort für Wort ins Logo („JESKO“ und „DORNER“ einzeln,
   Übergangsnamen `jd-name-1`/`jd-name-2`), so wird er nur gleichmäßig kleiner und nie verzerrt. Hinweis zum Testen:
@@ -822,17 +825,18 @@ Playfair, Fraunces …):
   kleiner. Das Menü ist gleich aufgebaut, der Name dort gleich groß.
   Vorher: Climate Crisis (sehr fett und breit, bis 20.11.2026, Git-Tag `alte-version-ultramarin-climate-crisis`),
   davor Instrument Serif mit von Hand ausgeglichenen Buchstabenpaaren (Werte bei `KERN` in `BlueMenu.astro`).
-- **Migha Display** (seit 20.11.2026, Seniors Studio): Titel, Menü, Schriftzug in der Fußzeile, Schilder im
-  Portfolio, Zwischenüberschriften, Vorschaukarten, Browser-Symbol. Schmale, hohe Titelschrift; Kleinbuchstaben
-  erscheinen als Kapitälchen (fast so hoch wie Großbuchstaben). Zwei Schnitte eingebunden: Regular und Slant
-  (schräg, für die kursiven Menüpunkte). Im Paket gibt es noch Light, Medium, Bold, Kontrast (CNTR) und
-  Condensed, jeweils auch breiter (Semi Expanded, Expanded) – bei Bedarf Datei aus dem Paket nach `src/assets/fonts/` legen und in `fonts.css` eintragen. Lizenz
-  (frei, auch geschäftlich): `src/assets/fonts/LIZENZ-migha.txt`. Vorher: Bodoni Moda (16.–20.11.2026, Git-Tag
-  `alte-version-bodoni`), davor Instrument Serif und Anybody. Kurz angeschaut und verworfen: Kugile (Demo nur
-  privat nutzbar, ohne Umlaute), Murmure.
+- **Cyrene** (seit 20.11.2026, Riccardo Agostinelli): Titel, Menü (in Großbuchstaben), Kopfleiste, Schilder im
+  Portfolio, Bild- und Filmtitel, Zwischenüberschriften, Titel auf den Vorschaukarten. Feine, eher breite Schrift
+  ohne Serifen mit echten Kleinbuchstaben – Jesko wollte weniger Großbuchstaben. Ein Schnitt, keine Kursive.
+  `size-adjust: 131 %` in `fonts.css`: Cyrenes Großbuchstaben sind von Haus aus klein (0,639 der Schriftgröße); so
+  sind sie so hoch wie vorher in Migha und alle Größen der Seite gelten weiter. Ausgewählt nach einem Vergleich mit
+  Melodrama, New Title (Fontshare) und anderen; Kombination „Titel und Menü in Cyrene, Name in Migha Black“.
+  Vorher: Migha Display Regular/Slant (20.11.2026, Git-Tag `alte-version-migha-titel`), Bodoni Moda (16.–20.11.2026,
+  Git-Tag `alte-version-bodoni`), davor Instrument Serif und Anybody. Kurz angeschaut und verworfen: Kugile (Demo
+  nur privat nutzbar, ohne Umlaute), Murmure.
 - **Libre Franklin** (seit November 2026): Fließtext, Knöpfe, Beschriftungen. Vorher: Archivo.
 - Alle Schriften liegen als Dateien in `src/assets/fonts/` (Libre Franklin aus dem Fontsource-Paket, nur
-  Zeichensatz „latin“ mit Ä, Ö, Ü, ß; Migha als OTF aus dem Download), eingebunden in
+  Zeichensatz „latin“ mit Ä, Ö, Ü, ß; Migha Black und Cyrene als OTF aus dem Download), eingebunden in
   `src/styles/fonts.css`, Lizenztexte daneben.
 
 **Extenda einsetzen:** Extenda (Zetafonts) ist eine kommerzielle Schrift. Fürs Web brauchst du eine passende Lizenz.

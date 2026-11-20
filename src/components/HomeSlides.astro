@@ -216,10 +216,13 @@ const first = slides[0];
   /* Bildunterschrift, immer gleich aufgebaut (auch bei langen Albumnamen): oben der Albumname in der Titelschrift
      kursiv (eine Zeile, notfalls mit …), darunter Monat · „Mappe ansehen →“. So bleibt die
      Bildunterschrift immer gleich hoch und das Foto darüber springt beim Wechsel nicht. */
+  /* contain: inline-size – die Zeile bestimmt nie die Breite der Seite; ein zu langer Albumname wird mit „…“ gekürzt
+     (sonst schob „Hilda – Setcard – September 2026“ die Startseite auf 320 px breiten Handys seitlich auf) */
   .hs-cap {
     display: flex;
     align-items: flex-end;
     gap: 1rem;
+    contain: inline-size;
     color: var(--on-menu);
     transition: opacity 0.35s var(--ease);
   }
@@ -247,7 +250,6 @@ const first = slides[0];
     min-width: 0;
     font-family: var(--font-display);
     font-weight: var(--display-wght);
-    font-style: italic;
     font-size: clamp(1.15rem, 1rem + 0.5vw, 1.5rem);
     line-height: 1.1;
     white-space: nowrap;

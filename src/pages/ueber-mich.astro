@@ -45,7 +45,9 @@ const jsonLd = {
 
   <section class="container container--wide intro">
     <div class="portrait">
-      <ParallaxImage src={portrait} alt={portraitAlt} sizes={PORTRAIT_SIZES} ratio="4 / 5" loading="eager" fetchpriority="high" soft />
+      {/* Ohne Einblenden (reveal): Das Porträt steht oben auf der Seite und war beim Laden schon halb im Bild – es blieb
+          dann blass, bis man scrollte. Die leichte Bewegung beim Scrollen bleibt. */}
+      <ParallaxImage src={portrait} alt={portraitAlt} sizes={PORTRAIT_SIZES} ratio="4 / 5" loading="eager" fetchpriority="high" soft reveal={false} />
     </div>
     <div class="text">
       {data?.lead && <p class="lead" set:html={inlineMd(data.lead)} />}

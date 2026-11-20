@@ -3,7 +3,7 @@
  * (Route src/pages/og/[...card].jpg.ts, Datei z. B. /og/album/hilda-setcard.jpg).
  *
  * Aufbau wie die Startseite: links ein Feld in Dark Blue mit „JESKO / DORNER“ (Migha Black, wie auf der Website) oben und dem
- * Seitentitel (Migha, wie die Titel der Website) unten, rechts das Foto, zugeschnitten auf seinen Bildschwerpunkt (Feld `focus`).
+ * Seitentitel (Cyrene, wie die Titel der Website) unten, rechts das Foto, zugeschnitten auf seinen Bildschwerpunkt (Feld `focus`).
  * Seiten ohne Foto (Kontakt, Impressum, Datenschutz, HQ-Album): das ganze Feld in Dark Blue, Name groß.
  *
  * Die Schrift wird als Form (Pfad) eingesetzt – so braucht der Bildbau keine installierten Schriften.
@@ -49,7 +49,7 @@ let fonts: { name: opentype.Font; serif: opentype.Font } | undefined;
 const getFonts = () =>
   (fonts ??= {
     name: loadLocalFont('src/assets/fonts/migha-black.otf'),
-    serif: loadLocalFont('src/assets/fonts/migha-regular.otf'),
+    serif: loadLocalFont('src/assets/fonts/cyrene-regular.otf'),
   });
 
 const capHeight = (font: opentype.Font) => (font.tables.os2?.sCapHeight ?? font.unitsPerEm * 0.7) / font.unitsPerEm;
@@ -132,9 +132,11 @@ export async function renderCard(card: Card): Promise<Buffer> {
   const nameD = line(name, first, pad, nameTop, nameSize) + line(name, second, pad, nameTop + nameLead, nameSize);
 
   // Titel unten, Grundlinie der letzten Zeile auf dem unteren Rand
-  const { size: ts, lines } = fitTitle(serif, card.title, panelW - 2 * pad, withPhoto ? 78 : 100, 44);
-  const tLead = ts * 1.0;
-  const lastBase = OG_H - pad - ts * 0.04;
+  // Titel in Cyrene: kleine Großbuchstaben (0,639 der Schriftgröße) – darum größer gesetzt als vorher in Migha (78/100,
+  // ×1,31 wie size-adjust in fonts.css). Unter der letzten Grundlinie bleibt Platz für Unterlängen (0,2).
+  const { size: ts, lines } = fitTitle(serif, card.title, panelW - 2 * pad, withPhoto ? 102 : 131, 56);
+  const tLead = ts * 0.95;
+  const lastBase = OG_H - pad - ts * 0.2;
   const titleD = lines.map((l, i) => line(serif, l, pad, lastBase - (lines.length - 1 - i) * tLead, ts)).join('');
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${panelW}" height="${OG_H}">

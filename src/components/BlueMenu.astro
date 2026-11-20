@@ -440,11 +440,11 @@ const nameWords = site.name.split(' ').map((word) =>
       grid-column: 1;
       grid-row: 4;
     }
-    /* Unter der letzten Zeile („KONTAKT“) liegen in Migha 0,15 Schrifthöhen Luft bis zum Zeilenende (gemessen) – um
-       genau so viel ragt das Menü nach unten, damit die Grundlinie von „KONTAKT“ auf der Linie der Bildunterschrift
-       liegt (Bodoni: 0,128) */
+    /* Unter der letzten Zeile („Kontakt“) liegen in Cyrene 0,185 Schrifthöhen Luft bis zum Zeilenende (gemessen) – um
+       genau so viel ragt das Menü nach unten, damit die Grundlinie von „Kontakt“ auf der Linie der Bildunterschrift
+       liegt (Migha: 0,15, Bodoni: 0,128) */
     :is(.bm--aside, .bm--overlay) .bm-body > nav {
-      margin-bottom: calc(-0.15 * var(--bm-item));
+      margin-bottom: calc(-0.185 * var(--bm-item));
     }
     /* Foto mit Bildunterschrift rechts neben Name und Menü: Die Bildunterschrift („Albumname – Monat Jahr“, eine
        Zeile) steht auf derselben Grundlinie wie „KONTAKT“; das Foto steht darüber. Unter beiden nur Instagram. Unter
@@ -501,14 +501,10 @@ const nameWords = site.name.split(' ').map((word) =>
     font-size: var(--bm-item);
     line-height: 0.95;
     text-transform: uppercase;
-    font-style: italic;
     text-decoration: none;
     color: inherit;
   }
-  /* „Portfolio“ hebt sich ab: als einziger Punkt gerade, die anderen kursiv */
-  .bm-list a[href='/portfolio/'] {
-    font-style: normal;
-  }
+  /* Großbuchstaben, gerade (seit 20.11.2026 in Cyrene; in Migha waren alle bis auf „Portfolio“ kursiv) */
   /* Aktueller Punkt (im Menü auf Unterseiten): unterstrichen. Überfahren: oranges Feld mit heller Schrift. Das Feld steht
      links und rechts ein klein wenig über, die Schrift bleibt an ihrem Platz. */
   .bm-list a {

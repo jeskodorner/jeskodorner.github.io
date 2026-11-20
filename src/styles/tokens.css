@@ -65,10 +65,10 @@
   --scrim: 26 0 137;
 
   /* Schriften – lokal eingebunden (keine Google-Fonts-CDN) */
-  /* Titel und Menü: Migha Display (schmal, hoch, Kapitälchen; src/styles/fonts.css). Vorher Bodoni Moda, davor
-     Instrument Serif und Anybody */
-  --font-display: 'Migha', 'Arial Narrow', 'Helvetica Neue', sans-serif;
-  /* Stärke der Titelschrift (Migha hat nur einen Schnitt je Lage, die Angabe bleibt für einen späteren Wechsel) */
+  /* Titel und Menü: Cyrene (fein, ohne Serifen, echte Kleinbuchstaben; src/styles/fonts.css). Vorher Migha Display,
+     Bodoni Moda, Instrument Serif und Anybody */
+  --font-display: 'Cyrene', 'Helvetica Neue', Arial, sans-serif;
+  /* Stärke der Titelschrift (Cyrene hat nur einen Schnitt, die Angabe bleibt für einen späteren Wechsel) */
   --display-wght: 400;
   /* der Name „JESKO DORNER“ (Startseite, Menü, Logo, Fußzeile): Migha Black, vorher Climate Crisis */
   --font-name: 'Migha Black', 'Migha', 'Arial Narrow', sans-serif;

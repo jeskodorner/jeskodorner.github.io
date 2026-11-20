@@ -1,6 +1,6 @@
-/* Name „JESKO DORNER“ (Startseite, Menü, Logo, Fußzeile): Migha Black – dieselbe Schriftfamilie wie Titel und Menü,
-   nur im kräftigsten Schnitt (seit 20.11.2026; vorher Climate Crisis, Git-Tag alte-version-ultramarin-climate-crisis).
-   Eigener Familienname, damit nirgends aus Versehen ein Titel in Black erscheint. */
+/* Name „JESKO DORNER“ (Startseite, Menü, Logo, Fußzeile): Migha Black (Seniors Studio, frei auch geschäftlich –
+   src/assets/fonts/LIZENZ-migha.txt), kräftig, schmal, Großbuchstaben (seit 20.11.2026; vorher Climate Crisis, Git-Tag
+   alte-version-ultramarin-climate-crisis). Eigener Familienname, damit nirgends aus Versehen ein Titel in Black erscheint. */
 @font-face {
   font-family: 'Migha Black';
   font-style: normal;
@@ -9,23 +9,28 @@
   src: url('../assets/fonts/migha-black.otf') format('opentype');
 }
 
-/* Titel und Menü: Migha Display (Seniors Studio, frei auch für geschäftliche Nutzung – src/assets/fonts/LIZENZ-migha.txt).
-   Schmale, hohe Titelschrift mit Kapitälchen statt Kleinbuchstaben. Zwei Schnitte: Regular und Slant (schräg, für die
-   kursiven Menüpunkte und Zwischenüberschriften). Je eine Datei für alle Stärken (font-weight 100–900), damit der
-   Browser nichts künstlich fetter rechnet. Vorher Bodoni Moda, davor Instrument Serif. */
+/* Titel und Menü: Cyrene (Riccardo Agostinelli, frei – src/assets/fonts/LIZENZ-cyrene.txt), seit 20.11.2026. Feine,
+   eher breite Schrift ohne Serifen mit echten Kleinbuchstaben – neben dem kräftigen Namen in Migha Black.
+   - size-adjust 131 %: Cyrene hat kleine Großbuchstaben (0,639 der Schriftgröße, Migha 0,838). So sind sie bei
+     derselben Schriftgröße so hoch wie vorher – alle Größen und Abstände der Seite gelten unverändert weiter.
+   - Nur ein Schnitt: dieselbe Datei auch für „kursiv“, damit der Browser nichts schräg rechnet (die Menüpunkte und
+     Bildunterschriften stehen gerade), und für alle Stärken, damit nichts künstlich fett wird.
+   Vorher Migha Display (Git-Tag alte-version-migha-titel), davor Bodoni Moda und Instrument Serif. */
 @font-face {
-  font-family: 'Migha';
+  font-family: 'Cyrene';
   font-style: normal;
   font-display: swap;
   font-weight: 100 900;
-  src: url('../assets/fonts/migha-regular.otf') format('opentype');
+  size-adjust: 131%;
+  src: url('../assets/fonts/cyrene-regular.otf') format('opentype');
 }
 @font-face {
-  font-family: 'Migha';
+  font-family: 'Cyrene';
   font-style: italic;
   font-display: swap;
   font-weight: 100 900;
-  src: url('../assets/fonts/migha-slant.otf') format('opentype');
+  size-adjust: 131%;
+  src: url('../assets/fonts/cyrene-regular.otf') format('opentype');
 }
 
 /* Text: Libre Franklin – variabel, SIL Open Font License 1.1 (Lizenztext in src/assets/fonts), aus dem Fontsource-Paket
