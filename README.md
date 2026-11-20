@@ -590,7 +590,7 @@ Vier Farben, sonst nichts (seit 20. November 2026). Definiert in `src/styles/tok
 |---|---|---|
 | Dark Blue | `#1A0089` | Schrift überall (statt Schwarz), Bühne: Startseite und Menü; Links (unterstrichen), Fokusrahmen, Vorschaukarten, Browser-Symbol. Als Fläche sonst nirgends (seit 20.11.2026: Knöpfe, Abspielen, Fußzeile waren blau – zu viel Blau) |
 | White Chocolate | `#EFE7D3` | Wände: Hintergrund aller Seiten; Schrift auf Dark Blue |
-| Portland Orange | `#FF5E33` | „hier kannst du klicken“: Menü-Knopf, volle Knöpfe (Ganzes Album ansehen, Schreib mir, Senden; beim Überfahren blau), Überfahren als Fläche mit blauer Schrift, Unterstrich beim Überfahren von Titeln |
+| Portland Orange | `#E8481F` | „hier kannst du klicken“: Menü-Knopf, volle Knöpfe (Ganzes Album ansehen, Schreib mir, Senden; beim Überfahren blau), Überfahren als Fläche – immer mit heller Schrift (White Chocolate), Unterstrich beim Überfahren von Titeln. Einen Hauch tiefer als im Palettenbild (`#FF5E33`), damit helle Schrift darauf lesbar ist; blaue Schrift auf Orange mochte Jesko nicht |
 | June Bud | `#B7CF4F` | Fußzeile (mit blauer Schrift), Fläche oben auf jeder Albumseite, Download-Kasten, „Link kopiert“ |
 
 Dazu nur dunklere Stufen von White Chocolate für Platzhalter und Kästen (`--wall-2`, `--wall-3`). Es gibt bewusst nur
@@ -604,14 +604,14 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
   `c-blue` … in `tokens.css`). Ohne Angabe bekommt jedes Album June Bud (`green`). Bei Filmen ist es die Farbe der
   Vorschau ohne Standbild.
 - **Links und Überfahren:** Links sind blau wie der Text und unterstrichen (Token `--accent`). Beim Überfahren
-  überall dieselbe Antwort wie im Menü: ein oranges Feld mit blauer Schrift (Token `--hover`) – Links im Text,
+  überall dieselbe Antwort wie im Menü: ein oranges Feld mit heller Schrift (Token `--hover`, Schrift `--on-hover`) – Links im Text,
   Knöpfe, Knöpfe der Lightbox, Kontakt-Adressen, auch in der grünen Fußzeile. Was schon orange ist (volle
   Knöpfe, Abspielen, Menü- und Schließen-Knopf), wird beim Überfahren blau. Bewusst dezenter: Titel neben Fotos (Galerie-Übersicht, nächstes/vorheriges Album) bekommen nur einen
   Unterstrich in Orange (Token `--hover-line`).
 - **Startseite = das Menü** (`src/components/BlueMenu.astro`): Dark Blue `#1A0089` mit Schrift in White Chocolate
   (Token `--menu-bg` und `--on-menu` in `tokens.css`). Der Name hat die
   Schriftfarbe (`--name-color` in `BlueMenu.astro`), der Menüpunkt der aktuellen Seite ist unterstrichen. Beim Überfahren bekommen
-  Menüpunkte ein oranges Feld mit blauer Schrift, der Name im Menü ein oranges Feld gleichmäßig um beide Zeilen (nur mit Maus – am Handy blieb es beim Antippen stehen und schnitt beim Übergang in „DORNER“), Menü- und Schließen-Knopf sind orange Kreise. Instagram
+  Menüpunkte ein oranges Feld mit heller Schrift, der Name im Menü ein oranges Feld gleichmäßig um beide Zeilen (nur mit Maus – am Handy blieb es beim Antippen stehen und schnitt beim Übergang in „DORNER“), Menü- und Schließen-Knopf sind orange Kreise. Instagram
   unten wie in der Fußzeile jeder Seite mit Symbol und „jeskodorner“, aber klein (etwa so groß wie „Mappe ansehen →“; beim Überfahren orange). Sparsam bleiben: mehr Orange wirkt schnell zu viel. Die Fläche geht über den ganzen
   Bildschirm, oben groß der Name, darunter die Menüpunkte (Portfolio, Galerie, Film, Über mich, Kontakt), unten
   nur Instagram – auf der Startseite und im Menü gleich. Impressum und Datenschutz stehen in der Fußzeile jeder
@@ -699,8 +699,8 @@ Kontraste nach WCAG 2.x:
 |---|---|---|
 | White Chocolate `#EFE7D3` | Dark Blue `#1A0089` / Nebentext `#55507A` | 12,1 : 1 / 6,1 : 1 |
 | Dark Blue (Startseite, Menü) | White Chocolate | 12,1 : 1 |
-| Dark Blue | Orange (Überfahren) | 4,9 : 1 |
-| Portland Orange `#FF5E33` (Überfahren, Menü-Knopf) | Dark Blue | 4,9 : 1 |
+| Dark Blue | Orange (Menü-Knopf beim Überfahren) | 3,8 : 1 |
+| Portland Orange `#E8481F` (Überfahren, Knöpfe, Menü-Knopf) | White Chocolate | 3,2 : 1 – reicht für fette und große Schrift und Symbole, nicht für langen Text |
 | June Bud `#B7CF4F` (Fußzeile, Albumfläche) | Dark Blue | 8,6 : 1 |
 
 Orange nie als Schriftfarbe auf White Chocolate (2,5 : 1), nur als Fläche oder Linie.

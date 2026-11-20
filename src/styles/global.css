@@ -86,7 +86,7 @@ a {
     color 0.2s,
     background-color 0.2s;
 }
-/* Überfahren – überall dieselbe Antwort wie im Menü: oranges Feld, blaue Schrift. Hier für Links im Text;
+/* Überfahren – überall dieselbe Antwort wie im Menü: oranges Feld, helle Schrift. Hier für Links im Text;
    Knöpfe, Karten, Fotos, Menü und Fußzeile haben eigene Regeln. */
 a:hover {
   text-decoration-color: currentColor;
@@ -94,7 +94,7 @@ a:hover {
 a:not([class]):hover,
 a.email-link:not(.btn, .channel, .big-link):hover {
   background-color: var(--hover);
-  color: var(--ink);
+  color: var(--on-hover);
 }
 /* Der Rahmen folgt der Form des Elements (Radius außen = Radius innen + Abstand, das macht der Browser) */
 :focus-visible {
@@ -103,7 +103,7 @@ a.email-link:not(.btn, .channel, .big-link):hover {
 }
 ::selection {
   background: var(--hover);
-  color: var(--ink);
+  color: var(--on-hover);
 }
 
 /* ---------- Hilfsklassen ---------- */
@@ -125,7 +125,7 @@ a.email-link:not(.btn, .channel, .big-link):hover {
   z-index: 200;
   padding: 0.75rem 1.1rem;
   background: var(--hover);
-  color: var(--ink);
+  color: var(--on-hover);
   font-weight: 800;
   text-decoration: none;
   transform: translateY(-200%);
@@ -312,18 +312,19 @@ html:not(.js) .js-only {
 .btn:active {
   scale: 0.96;
 }
-/* Knöpfe beim Überfahren: Orange mit blauer Schrift */
+/* Knöpfe beim Überfahren: Orange mit heller Schrift */
 .btn:hover {
-  color: var(--ink);
+  color: var(--on-hover);
   background: var(--hover);
+  border-color: var(--hover);
 }
-/* Voller Knopf (Hauptaktion: Ganzes Album ansehen, Schreib mir, Senden): Orange mit blauer Schrift wie der
+/* Voller Knopf (Hauptaktion: Ganzes Album ansehen, Schreib mir, Senden): Orange mit heller Schrift wie der
    Menüknopf, beim Überfahren Blau. Vorher blau gefüllt – zusammen mit blauer Schrift und blauer Fußzeile war das zu
    viel Blau (20.11.2026). */
 .btn--solid {
   background: var(--hover);
   border-color: var(--hover);
-  color: var(--ink);
+  color: var(--on-hover);
 }
 .btn--solid:hover {
   background: var(--ink);

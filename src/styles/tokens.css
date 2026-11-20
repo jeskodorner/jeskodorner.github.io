@@ -3,7 +3,7 @@
  *   Dark Blue        #1A0089  Schrift überall, Bühne (Startseite, Menü), Links, Fokusrahmen,
  *                             Vorschaukarten, Browser-Symbol
  *   White Chocolate  #EFE7D3  Wände: Hintergrund aller Seiten, Schrift auf Dark Blue
- *   Portland Orange  #FF5E33  „hier kannst du klicken“: Menüknopf, Überfahren als Fläche mit blauer Schrift,
+ *   Portland Orange  #E8481F  „hier kannst du klicken“: Menüknopf, Überfahren als Fläche mit heller Schrift,
  *                             Unterstrich beim Überfahren von Titeln
  *   June Bud         #B7CF4F  Fußzeile, Fläche über dem Album, Kästen, „kopiert“
  * Blau als Fläche nur auf Startseite und Menü – volle Knöpfe, Abspielen und Fußzeile waren blau, das war zu viel.
@@ -13,8 +13,8 @@
  *
  * Kontraste (WCAG 2.x):
  *   Dark Blue auf White Chocolate 12,1:1 · Nebentext #55507A auf White Chocolate 6,1:1
- *   White Chocolate auf Dark Blue 12,1:1 · Dark Blue auf Orange 4,9:1 · Dark Blue auf June Bud 8,6:1
- *   June Bud auf Dark Blue 8,6:1 · Orange auf Dark Blue 4,9:1
+ *   White Chocolate auf Dark Blue 12,1:1 · White Chocolate auf Orange 3,2:1 (nur fette oder große Schrift, Symbole) ·
+ *   Dark Blue auf June Bud 8,6:1 · Orange auf Dark Blue 3,8:1
  *   Orange nie als Schriftfarbe auf White Chocolate (2,5:1), nur als Fläche oder Linie.
  */
 
@@ -23,7 +23,8 @@
 
   /* Die vier Farben */
   --blue: #1a0089; /* Dark Blue */
-  --orange: #ff5e33; /* Portland Orange */
+  /* Portland Orange, einen Hauch tiefer als im Palettenbild (#ff5e33): helle Schrift darauf ist so besser lesbar */
+  --orange: #e8481f;
   --cream: #efe7d3; /* White Chocolate */
   --green: #b7cf4f; /* June Bud */
 
@@ -40,7 +41,7 @@
 
   /* Farbflächen und ihre Schriftfarbe (Klassen c-blue, c-orange … weiter unten) */
   --on-blue: var(--cream);
-  --on-orange: var(--blue);
+  --on-orange: var(--cream);
   --on-green: var(--blue);
   --on-cream: var(--blue);
   /* Startseite und Menü: Dark Blue mit Schrift in White Chocolate (vorher Ultramarin #3a45c8, Git-Tag
@@ -53,7 +54,9 @@
   --paper-2: var(--wall-2);
   --accent: var(--blue); /* Links (unterstrichen), Fokusrahmen */
   --on-accent: var(--on-blue);
-  --hover: var(--orange); /* Überfahren: überall Orange als Fläche, Schrift blau (wie im Menü) */
+  --hover: var(--orange); /* Überfahren: überall Orange als Fläche, Schrift hell (wie im Menü) */
+  /* Schrift und Symbole auf Orange: White Chocolate wie im Palettenbild (bis 20.11.2026 blau – mochte er nicht) */
+  --on-hover: var(--on-orange);
   /* Ausnahme, bewusst dezenter: Titel neben Fotos (Galerie-Übersicht, nächstes/vorheriges Album) bekommen beim
      Überfahren nur einen Unterstrich in Orange */
   --hover-line: var(--orange);

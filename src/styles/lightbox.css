@@ -113,6 +113,9 @@ html:has(.pswp--open) {
 .pswp__top-bar .pswp__button:hover {
   background: var(--hover);
 }
+.pswp__top-bar .pswp__button:hover .pswp__icn {
+  color: var(--on-hover);
+}
 .pswp__button:focus-visible,
 .jd-step:focus-visible .jd-step-circle {
   outline: 3px solid var(--accent);
@@ -125,7 +128,7 @@ html:has(.pswp--open) {
 }
 .pswp__top-bar .pswp__button--close .pswp__icn,
 .pswp__top-bar .pswp__button--jd-info[aria-expanded='true'] .pswp__icn {
-  color: var(--ink);
+  color: var(--on-hover);
 }
 .pswp__top-bar .pswp__button--close:hover {
   background: var(--ink);
@@ -188,6 +191,8 @@ html:has(.pswp--open) {
 }
 .jd-step:hover .jd-step-circle {
   background: var(--hover);
+  border-color: var(--hover);
+  color: var(--on-hover);
 }
 .jd-step-icn {
   width: 18px;

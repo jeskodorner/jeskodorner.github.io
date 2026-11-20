@@ -154,7 +154,7 @@ const nameWords = site.name.split(' ').map((word) =>
     border: 0;
     border-radius: 50%;
     background: var(--hover);
-    color: var(--ink);
+    color: var(--on-hover);
     cursor: pointer;
     transition:
       background-color 0.2s,
@@ -209,7 +209,7 @@ const nameWords = site.name.split(' ').map((word) =>
   }
   @media (hover: hover) {
     a.bm-name:hover {
-      color: var(--ink);
+      color: var(--on-hover);
     }
     a.bm-name:hover::before {
       opacity: 1;
@@ -520,7 +520,7 @@ const nameWords = site.name.split(' ').map((word) =>
   .bm-list a[href='/portfolio/'] {
     font-style: normal;
   }
-  /* Aktueller Punkt (im Menü auf Unterseiten): unterstrichen. Überfahren: oranges Feld mit blauer Schrift. Das Feld steht
+  /* Aktueller Punkt (im Menü auf Unterseiten): unterstrichen. Überfahren: oranges Feld mit heller Schrift. Das Feld steht
      links und rechts ein klein wenig über, die Schrift bleibt an ihrem Platz. */
   .bm-list a {
     padding-inline: 0.06em;
@@ -536,7 +536,7 @@ const nameWords = site.name.split(' ').map((word) =>
   }
   .bm-list a:hover {
     background-color: var(--hover);
-    color: var(--ink);
+    color: var(--on-hover);
   }
   .bm-foot {
     view-transition-name: jd-menu-foot;
@@ -562,7 +562,7 @@ const nameWords = site.name.split(' ').map((word) =>
   }
   .bm-foot a:hover {
     background: var(--hover);
-    color: var(--ink);
+    color: var(--on-hover);
     text-decoration-color: currentColor;
   }
   .bm a:focus-visible,

@@ -48,12 +48,12 @@ const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : 
     overflow: hidden;
   }
   /* Fußzeile in June Bud mit blauer Schrift (8,6:1) – seit 20.11.2026, vorher Dark Blue wie Startseite und Menü: mit
-     blauer Schrift und blauen Knöpfen war das zu viel Blau. Überfahren wie überall: oranges Feld, blaue Schrift
+     blauer Schrift und blauen Knöpfen war das zu viel Blau. Überfahren wie überall: oranges Feld, helle Schrift
      (auch für den E-Mail-Link aus EmailLink.astro). Davor Schwarz mit Koralle (Git-Tag
      alte-version-ultramarin-climate-crisis). */
   .site-footer :global(a:hover) {
     background-color: var(--hover);
-    color: var(--ink);
+    color: var(--on-hover);
   }
   /* Adressen links, Rechtliches rechts – beide auf derselben Grundlinie (nicht an der Unterkante der Kästen) */
   .top {
