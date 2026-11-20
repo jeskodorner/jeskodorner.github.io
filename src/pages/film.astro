@@ -48,27 +48,13 @@ const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (
                 )
               )}
             </div>
+            {/* Nur Titel und Text (seit 20.11.2026; vorher auch Aufgaben, Videotyp, Länge, Jahr, Regie und Festivals –
+                die Felder in den Film-Dateien bleiben, werden aber nicht mehr gezeigt). Der Text in Grau. */}
             <div class="info rise">
-              {film.data.roles.length > 0 && <p class="label roles">{film.data.roles.join(' · ')}</p>}
               <h2 class="display display-2">{tidyTitle(film.data.title)}</h2>
-              {(film.data.format || film.data.runtime || film.data.year) && (
-                <p class="label muted meta-row">
-                  {film.data.format && <span>{film.data.format}</span>}
-                  {film.data.runtime && <span>{film.data.runtime}</span>}
-                  {film.data.year && <span>{film.data.year}</span>}
-                </p>
-              )}
-              {film.data.director && <p class="muted credit">Regie: {film.data.director}</p>}
               <div class="prose">
                 <Content />
               </div>
-              {film.data.festivals.length > 0 && (
-                <ul class="festivals" role="list">
-                  {film.data.festivals.map((fest) => (
-                    <li class="label">{fest}</li>
-                  ))}
-                </ul>
-              )}
               {film.data.youtube ? (
                 <a class="btn btn--small" href={`https://www.youtube.com/watch?v=${film.data.youtube}`} target="_blank" rel="noopener noreferrer">
                   Auf YouTube ansehen <Icon name="arrow-up-right" />
@@ -130,27 +116,9 @@ const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (
   }
   .info .prose {
     margin-top: 1rem;
+    color: var(--ink-soft);
   }
-  .info .btn,
-  .info .festivals {
+  .info .btn {
     margin-top: 0.75rem;
-  }
-  .roles {
-    color: var(--accent);
-  }
-  .credit {
-    font-size: var(--fs-sm);
-  }
-  .festivals {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-  .festivals li {
-    padding: 0.4rem 0.7rem;
-    border: 1.5px solid var(--line-strong);
-    border-radius: var(--radius-pill);
   }
 </style>

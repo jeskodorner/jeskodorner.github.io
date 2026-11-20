@@ -123,9 +123,7 @@ Ein Tippfehler bei `galerie` oder `bild` bricht den Build mit einer Meldung ab, 
 ---
 title: "Innehalten"
 youtube: "https://youtu.be/61yE6MHDz-o"   # Link oder ID genügt
-format: "Kurzfilm"                        # nur angeben, wenn es mehr sagt als „Video“
-year: 2025
-# roles: ["Kamera", "Schnitt"]
+year: 2025                                 # nur für die Reihenfolge, wird nicht angezeigt
 # still: ./images/innehalten.jpg           # eigenes Vorschaubild (optional)
 # stillAlt: "Beschreibung des Standbilds"
 color: green                               # Farbe der Vorschau ohne Standbild (blue | orange | green | cream)
@@ -134,6 +132,10 @@ order: 2                                   # Reihenfolge auf der Seite
 
 Kurzer Text zum Video.
 ```
+
+Auf der Seite stehen nur **Titel und Text** (der Text grau), dazu „Auf YouTube ansehen“. Aufgaben, Videotyp,
+Länge, Jahr, Regie und Festivals (`roles`, `format`, `runtime`, `year`, `director`, `festivals`) werden seit
+20.11.2026 nicht mehr gezeigt – die Felder dürfen in alten Dateien stehen bleiben.
 
 Videos werden **datensparsam per Zwei-Klick** eingebettet. Beim Seitenaufruf lädt nichts von YouTube, und es gibt keine Cookies.
 Erst ein Klick auf „Abspielen“ lädt den Player von youtube-nocookie.com. Ohne JavaScript führt der Klick zu YouTube.
