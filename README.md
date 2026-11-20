@@ -641,6 +641,11 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
   man aus einer Mappe (oder einer anderen Seite) zurück, geht es mit dem Foto weiter, das zuletzt zu sehen war
   (gemerkt im Tab, `sessionStorage`); erst ein neuer Besuch beginnt wieder vorne. Mit „Bewegung reduzieren“ oder
   ohne JavaScript bleibt das erste Foto stehen.
+- **Albumseite** (`src/components/GalleryPage.astro`): oben ein kompaktes Band in June Bud mit „← Alle Galerien“,
+  Anzahl · Monat · Ort, dem Titel und der Beschreibung in normaler Textgröße, direkt darunter die Fotos. Wer ein Album
+  öffnet, sieht so sofort Fotos (am Laptop etwa die Hälfte des ersten Bildschirms, am Handy über die Hälfte). Der
+  Titel ist dafür kleiner als auf den Hauptseiten. Vorher (bis 20.11.2026) war der Titel so groß wie „Galerie“, die
+  Beschreibung stand groß darunter, und am Laptop sah man bei langen Titeln nur die Überschrift.
 - **Mappe** (`src/pages/mappe/[slug].astro`, Auswahl in `src/lib/mappe.ts`): je Album aus dem Portfolio eine ruhige
   Übersicht wie eine aufgeschlagene Fotomappe, einfacher als das Album. Erreichbar über „Mappe ansehen →“ auf der
   Startseite und über jedes Foto im Portfolio. Oben „← Zurück“ (führt dorthin zurück, wo man herkam, samt Stelle auf

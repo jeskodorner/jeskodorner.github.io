@@ -84,33 +84,36 @@ const jsonLd = gallery.isUnlisted
           {gallery.location && <span>{gallery.location}</span>}
         </p>
         <h1 class="display display-1 title" style={`view-transition-name: gt-${gallery.slug}`}>{tidyTitle(gallery.title)}</h1>
+        {/* Beschreibung direkt unter dem Titel im Band (vorher groß darunter auf der Wand) – so beginnen die Fotos früher */}
+        <p class="band-lead">{gallery.description}</p>
       </div>
     </header>
 
-    <div class="g-head container container--wide">
-      <div class="intro rise">
-        <div class="text">
-          <p class="lead">{gallery.description}</p>
+    {
+      (Content || (!gallery.albumRequest && gallery.download) || gallery.isUnlisted) && (
+        <div class="g-head container container--wide">
+          <div class="intro rise">
+            {
+              Content && (
+                <div class="text prose body">
+                  <Content />
+                </div>
+              )
+            }
+            {/* Kundengalerie mit Download: bleibt oben, danach suchen Kunden zuerst */}
+            {!gallery.albumRequest && gallery.download && <div class="side"><DownloadBox {...gallery.download} /></div>}
+          </div>
+
           {
-            Content && (
-              <div class="prose body">
-                <Content />
-              </div>
+            gallery.isUnlisted && (
+              <p class="private">
+                <Icon name="lock" /> {t.galleries.unlisted}
+              </p>
             )
           }
         </div>
-        {/* Kundengalerie mit Download: bleibt oben, danach suchen Kunden zuerst */}
-        {!gallery.albumRequest && gallery.download && <div class="side"><DownloadBox {...gallery.download} /></div>}
-      </div>
-
-      {
-        gallery.isUnlisted && (
-          <p class="private">
-            <Icon name="lock" /> {t.galleries.unlisted}
-          </p>
-        )
-      }
-    </div>
+      )
+    }
 
     <section
       class="grid-wrap"
@@ -157,22 +160,31 @@ const jsonLd = gallery.isUnlisted
 </BaseLayout>
 
 <style>
-  /* Farbband in der Galeriefarbe */
+  /* Farbband in der Galeriefarbe. Kompakt (seit 20.11.2026): Wer ein Album öffnet, soll sofort Fotos sehen – am
+     Laptop etwa die Hälfte des ersten Bildschirms, nicht nur die Überschrift. Vorher: Ränder clamp(1.5rem, 4vw, 3.5rem)
+     clamp(2.5rem, 6vw, 5rem), Titel so groß wie auf den Hauptseiten (--fs-h1) und höchstens 7,8 Schrifthöhen breit. */
   .g-band {
-    padding-block: clamp(1.5rem, 4vw, 3.5rem) clamp(2.5rem, 6vw, 5rem);
+    padding-block: clamp(1rem, 2.5vw, 2rem) clamp(1.25rem, 3vw, 2.5rem);
   }
   .back {
-    margin-bottom: clamp(1.5rem, 4vw, 3rem);
+    margin-bottom: clamp(1rem, 2.5vw, 1.75rem);
   }
+  /* Titel kleiner als auf den Hauptseiten (Galerie, Portfolio …): hier sind die Fotos die Hauptsache. Breiter
+     erlaubt, damit er am Laptop meist in eine Zeile passt (Zeilenlänge in Schrifthöhen, ch ist in Migha zu schmal). */
   .title {
-    margin-top: 0.75rem;
-    /* Zeilenlänge in Schrifthöhen statt Zeichen (ch hängt an der Breite der „0“ und ist in der schmalen Migha viel
-       kleiner): so wie bisher, „Hilda – Setcard“ steht am Laptop in einer Zeile */
-    max-width: 7.8em;
+    margin-top: 0.5rem;
+    font-size: clamp(2.4rem, 1.2rem + 4.5vw, 6.5rem);
+    max-width: 14em;
+  }
+  .band-lead {
+    max-width: 60ch;
+    margin-top: clamp(0.75rem, 1.5vw, 1.25rem);
+    font-size: var(--fs-base);
+    line-height: 1.5;
   }
   .g-head {
-    padding-top: clamp(2rem, 5vw, 4rem);
-    padding-bottom: clamp(1rem, 3vw, 2rem);
+    padding-top: clamp(1.25rem, 2.5vw, 2rem);
+    padding-bottom: clamp(0.5rem, 1.5vw, 1rem);
   }
   .intro {
     display: grid;
@@ -180,9 +192,6 @@ const jsonLd = gallery.isUnlisted
   }
   .text {
     max-width: 52ch;
-  }
-  .body {
-    margin-top: 1.25rem;
   }
   .side {
     display: grid;
@@ -217,7 +226,7 @@ const jsonLd = gallery.isUnlisted
     }
   }
   .grid-wrap {
-    padding-top: clamp(0.75rem, 2.5vw, 2.5rem);
+    padding-top: clamp(1rem, 2.5vw, 2rem);
   }
   .private {
     display: flex;
