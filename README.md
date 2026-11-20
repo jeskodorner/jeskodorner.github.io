@@ -788,7 +788,7 @@ Orange nie als Schriftfarbe auf White Chocolate (2,5 : 1), nur als Fläche oder 
 - **Abschluss mit klarer Handlung:** Am Ende des Portfolios steht „Schreib mir“ als gefüllter Knopf, daneben der
   Weg zur Galerie.
 
-**Vorschau beim Teilen** (WhatsApp, iMessage, Instagram, …): Jede Seite und jedes Album hat eine eigene
+**Vorschau beim Teilen** (WhatsApp, iMessage, Instagram, …) – *noch nicht fertig (Stand 20.11.2026), wird noch überarbeitet*: Jede Seite und jedes Album hat eine eigene
 Vorschaukarte (1200 × 630 px), die beim Bauen automatisch entsteht (`src/lib/og.ts`, Dateien unter `/og/…`). Links ein
 Feld in Dark Blue mit „JESKO DORNER“ (Migha Black) und dem Titel der Seite (Migha Display aus
 `src/assets/fonts/migha-regular.otf`), rechts das Foto,

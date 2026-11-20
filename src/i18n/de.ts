@@ -176,7 +176,7 @@ export const de = {
       'Platzhaltertext – muss vor der Veröffentlichung rechtlich geprüft und vervollständigt werden. Dies ist keine Rechtsberatung.',
   },
   notFound: {
-    title: 'Unterbelichtet',
+    title: 'Seite nicht gefunden',
     text: 'Diese Seite gibt es nicht – oder nicht mehr. Vielleicht hat sich ein Tippfehler in den Link geschlichen.',
     home: 'Zur Startseite',
     galleries: 'Zur Galerie',

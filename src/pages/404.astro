@@ -6,7 +6,8 @@ const t = useTranslations().notFound;
 
 <BaseLayout title={t.title} description={t.text} noindex>
   <section class="container container--wide head nf">
-    <h1 class="display display-1">Unter&shy;belichtet.</h1>
+    {/* bis 20.11.2026 „Unterbelichtet.“ */}
+    <h1 class="display display-1">{t.title}.</h1>
     <p class="lead">{t.text}</p>
     <p class="actions">
       <a class="btn btn--solid" href="/">{t.home}</a>
