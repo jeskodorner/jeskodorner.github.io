@@ -35,6 +35,16 @@ const images = mappeImages(g, lead);
 const ratios = images.map((img) => img.src.width / img.src.height).sort((a, b) => a - b);
 const median = ratios.length ? ratios[Math.floor(ratios.length / 2)]! : 5 / 4;
 const fieldR = Math.min(3 / 2, Math.max(3 / 4, median));
+// Spalten: so viele, dass jedes Foto etwa so groß wirkt wie ein Hochformat bei vier Spalten (Hilda). Hochkant-Mappen
+// Laptop 4 / Tablet 3 / Handy 2, alle anderen 3 / 2 / 1 – Querformate wären sonst klein. Nie mehr Spalten als Fotos:
+// eine Mappe mit einem Foto zeigt es groß.
+const portrait = fieldR < 0.9;
+const cols = (n: number) => Math.max(1, Math.min(n, images.length));
+const colsLg = cols(portrait ? 4 : 3);
+const colsMd = cols(portrait ? 3 : 2);
+const colsSm = cols(portrait ? 2 : 1);
+// Bildbreite für den Browser (Inhalt etwa 90 % der Fensterbreite, geteilt durch die Spalten)
+const sizes = `(min-width: 1000px) ${Math.round(90 / colsLg)}vw, (min-width: 600px) ${Math.round(90 / colsMd)}vw, ${Math.round(92 / colsSm)}vw`;
 const meta = [formatMonth(g.date), g.location].filter(Boolean).join(' · ');
 // Lightbox-Daten des ganzen Albums (unsichtbar): ein Klick auf ein Foto blättert durchs ganze Album
 const items = await Promise.all(g.images.map((img) => photoData(g, img)));
@@ -51,7 +61,11 @@ const og = cardImage(`album/${g.slug}`, g.cover.alt);
     <p class="label muted">{meta}</p>
   </section>
 
-  <ol class="container container--wide mappe" role="list" style={`--field-r:${fieldR.toFixed(4)}`}>
+  <ol
+    class="container container--wide mappe"
+    role="list"
+    style={`--field-r:${fieldR.toFixed(4)};--cols-lg:${colsLg};--cols-md:${colsMd};--cols-sm:${colsSm}`}
+  >
     {
       images.map((img, i) => {
         const r = img.src.width / img.src.height;
@@ -61,7 +75,7 @@ const og = cardImage(`album/${g.slug}`, g.cover.alt);
               <Picture
                 src={img.src}
                 alt={img.alt}
-                sizes="(min-width: 1000px) 21vw, (min-width: 600px) 28vw, 42vw"
+                sizes={sizes}
                 color={img.color}
                 lqip={img.lqip}
                 loading={i < 4 ? 'eager' : 'lazy'}
@@ -118,27 +132,30 @@ const og = cardImage(`album/${g.slug}`, g.cover.alt);
   .back {
     margin-bottom: clamp(1.25rem, 3vw, 2rem);
   }
-  /* Übersicht wie eine aufgeschlagene Mappe: gleich große Felder in Reihen – Laptop 4, Tablet 3, Handy 2. Die Felder
-     haben die Form der meisten Fotos (--field-r, oben berechnet; vorher immer 5:4). In jedem Feld liegt ein Abzug ganz
-     (unbeschnitten), so groß wie das Feld es zulässt, mittig, mit Schatten. Abstände seit 20.11.2026 etwa halb so groß
-     wie vorher (vorher clamp(2.5rem, 5vw, 4.5rem) clamp(1.75rem, 4vw, 3.5rem)). */
+  /* Übersicht wie eine aufgeschlagene Mappe: gleich große Felder in Reihen. Spalten je nach Form und Anzahl der Fotos
+     (--cols-lg/-md/-sm, oben berechnet; vorher immer 4 / 3 / 2). Die Felder haben die Form der meisten Fotos
+     (--field-r; vorher immer 5:4). In jedem Feld liegt ein Abzug ganz (unbeschnitten), so groß wie das Feld es
+     zulässt, mittig, mit Schatten. Kein Feld höher als 75 % des Bildschirms (wichtig bei nur einem oder zwei Fotos);
+     die Reihe steht dann linksbündig wie Titel und Knopf. Abstände seit 20.11.2026 etwa halb so groß wie vorher. */
   .mappe {
+    --col-max: calc(75svh * var(--field-r));
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: clamp(1.25rem, 2.5vw, 2.5rem) clamp(1rem, 2vw, 2rem);
+    grid-template-columns: repeat(var(--cols-sm), minmax(0, var(--col-max)));
+    justify-content: start;
+    gap: 1rem 0.75rem;
     margin: 0 auto;
     padding-block: 0;
   }
-  @media (max-width: 999.98px) {
+  @media (min-width: 600px) {
     .mappe {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(var(--cols-md), minmax(0, var(--col-max)));
+      gap: clamp(1.25rem, 2.5vw, 2.5rem) clamp(1rem, 2vw, 2rem);
     }
   }
-  @media (max-width: 599.98px) {
+  @media (min-width: 1000px) {
     .mappe {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1rem 0.75rem;
+      grid-template-columns: repeat(var(--cols-lg), minmax(0, var(--col-max)));
     }
   }
   .sheet {

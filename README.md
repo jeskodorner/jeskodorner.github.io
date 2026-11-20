@@ -645,10 +645,12 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
   Übersicht wie eine aufgeschlagene Fotomappe, einfacher als das Album. Erreichbar über „Mappe ansehen →“ auf der
   Startseite und über jedes Foto im Portfolio. Oben „← Zurück“ (führt dorthin zurück, wo man herkam, samt Stelle auf
   der Seite; ohne Vorgeschichte zur Startseite), Titel und Monat linksbündig wie auf allen Seiten. Darunter die Fotos
-  als Abzüge in gleich großen Feldern, Laptop 4, Tablet 3, Handy 2 pro Reihe – jedes ganz und unbeschnitten,
-  mittig im Feld, mit Schatten, kein Text. Die Felder haben die Form der meisten Fotos der Mappe (mittleres
-  Seitenverhältnis, zwischen 3:4 und 3:2; vorher immer 5:4), die Abstände sind knapp (seit 20.11.2026 etwa halb so
-  groß wie vorher) – so wirken die Abzüge groß und zusammengehörig. Vorne das Foto aus dem Portfolio, dazu bis zu 7
+  als Abzüge in gleich großen Feldern – jedes ganz und unbeschnitten, mittig im Feld, mit Schatten, kein Text. Die
+  Felder haben die Form der meisten Fotos der Mappe (mittleres Seitenverhältnis, zwischen 3:4 und 3:2; vorher immer
+  5:4), die Abstände sind knapp (seit 20.11.2026 etwa halb so groß wie vorher). Spalten pro Reihe: hochkant-Mappen
+  (wie Hilda) Laptop 4, Tablet 3, Handy 2; alle anderen 3 / 2 / 1, damit Querformate nicht klein wirken; nie mehr
+  Spalten als Fotos – eine Mappe mit einem Foto (Einzelbilder) zeigt es groß. Kein Feld wird höher als drei Viertel
+  des Bildschirms. Vorne das Foto aus dem Portfolio, dazu bis zu 7
   weitere gleichmäßig über das Album verteilt (oder genau die Fotos aus `mappe:` im Album). Ein Klick auf ein Foto
   öffnet die Lightbox mit dem ganzen Album ab diesem Foto (`src/scripts/open-album.ts`). Unten „Ganzes Album
   ansehen →“ und wie viele Bilder das Album hat.
