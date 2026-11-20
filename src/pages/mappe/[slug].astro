@@ -30,6 +30,11 @@ interface Props {
 const { gallery: g, lead } = Astro.props;
 const t = useTranslations();
 const images = mappeImages(g, lead);
+// Form der Felder: wie die meisten Fotos der Mappe (das mittlere Seitenverhältnis), zwischen 3:4 und 3:2. Sind
+// alle hochkant, sind auch die Felder hochkant – so steht kein Foto mit viel leerem Rand in einem breiten Feld.
+const ratios = images.map((img) => img.src.width / img.src.height).sort((a, b) => a - b);
+const median = ratios.length ? ratios[Math.floor(ratios.length / 2)]! : 5 / 4;
+const fieldR = Math.min(3 / 2, Math.max(3 / 4, median));
 const meta = [formatMonth(g.date), g.location].filter(Boolean).join(' · ');
 // Lightbox-Daten des ganzen Albums (unsichtbar): ein Klick auf ein Foto blättert durchs ganze Album
 const items = await Promise.all(g.images.map((img) => photoData(g, img)));
@@ -46,7 +51,7 @@ const og = cardImage(`album/${g.slug}`, g.cover.alt);
     <p class="label muted">{meta}</p>
   </section>
 
-  <ol class="container container--wide mappe" role="list">
+  <ol class="container container--wide mappe" role="list" style={`--field-r:${fieldR.toFixed(4)}`}>
     {
       images.map((img, i) => {
         const r = img.src.width / img.src.height;
@@ -108,19 +113,20 @@ const og = cardImage(`album/${g.slug}`, g.cover.alt);
 
 <style>
   .head {
-    padding-bottom: clamp(2.5rem, 6vw, 5rem);
+    padding-bottom: clamp(1.5rem, 3.5vw, 3rem);
   }
   .back {
     margin-bottom: clamp(1.25rem, 3vw, 2rem);
   }
-  /* Übersicht wie eine aufgeschlagene Mappe: gleich große Felder (5:4) in Reihen – Laptop 4, Tablet 3, Handy 2.
-     In jedem Feld liegt ein Abzug ganz (unbeschnitten), so groß wie das Feld es zulässt, mittig, mit Schatten.
-     Viel Luft zwischen den Abzügen. */
+  /* Übersicht wie eine aufgeschlagene Mappe: gleich große Felder in Reihen – Laptop 4, Tablet 3, Handy 2. Die Felder
+     haben die Form der meisten Fotos (--field-r, oben berechnet; vorher immer 5:4). In jedem Feld liegt ein Abzug ganz
+     (unbeschnitten), so groß wie das Feld es zulässt, mittig, mit Schatten. Abstände seit 20.11.2026 etwa halb so groß
+     wie vorher (vorher clamp(2.5rem, 5vw, 4.5rem) clamp(1.75rem, 4vw, 3.5rem)). */
   .mappe {
     list-style: none;
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: clamp(2.5rem, 5vw, 4.5rem) clamp(1.75rem, 4vw, 3.5rem);
+    gap: clamp(1.25rem, 2.5vw, 2.5rem) clamp(1rem, 2vw, 2rem);
     margin: 0 auto;
     padding-block: 0;
   }
@@ -132,11 +138,11 @@ const og = cardImage(`album/${g.slug}`, g.cover.alt);
   @media (max-width: 599.98px) {
     .mappe {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 2rem 1.25rem;
+      gap: 1rem 0.75rem;
     }
   }
   .sheet {
-    aspect-ratio: 5 / 4;
+    aspect-ratio: var(--field-r, 5 / 4);
     container-type: size;
     display: grid;
     place-items: center;
@@ -166,7 +172,7 @@ const og = cardImage(`album/${g.slug}`, g.cover.alt);
     display: grid;
     justify-items: start;
     gap: 0.9rem;
-    padding-top: var(--section);
+    padding-top: clamp(2.5rem, 5vw, 4.5rem);
   }
   @media (max-width: 899.98px) {
     .end {

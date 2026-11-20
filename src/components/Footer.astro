@@ -104,8 +104,9 @@ const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : 
   .legal a {
     text-decoration: none;
   }
-  /* Der Schriftzug füllt die Breite des Inhaltsbereichs (cqi = 1 % davon): „Jesko Dorner“ ist in Migha 5,64 × so
-     breit wie die Schriftgröße → / 5.8 lässt etwas Luft. (Bodoni Moda: 6,08 → / 6.25, Instrument Serif: 4,17 → / 4.3) */
+  /* Der Schriftzug ist der Name wie auf der Startseite (Migha Black, Großbuchstaben) und füllt die Breite des
+     Inhaltsbereichs (cqi = 1 % davon): „JESKO DORNER“ ist 5,90 × so breit wie die Schriftgröße → / 6.05 lässt etwas
+     Luft. (Vorher Migha Regular „Jesko Dorner“: 5,64 → / 5.8; Bodoni Moda: 6,08 → / 6.25) */
   .wordmark-wrap {
     container-type: inline-size;
   }
@@ -113,12 +114,12 @@ const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : 
     margin-top: clamp(2.5rem, 6vw, 5rem);
     white-space: nowrap;
     font-size: clamp(3rem, 23vw, 34rem);
-    font-size: calc(100cqi / 5.8);
-    font-weight: 600;
+    font-size: calc(100cqi / 6.05);
+    font-family: var(--font-name);
+    font-weight: 400;
+    font-synthesis-weight: none;
+    text-transform: uppercase;
     line-height: 0.95;
-    /* Der Bogen des „J“ reicht 0,22 Schrifthöhen unter die Grundlinie, die Zeile endet schon bei 0,135 – Platz
-       schaffen, damit er nicht in die Copyright-Zeile darunter ragt */
-    padding-bottom: 0.1em;
     color: var(--green);
     user-select: none;
   }

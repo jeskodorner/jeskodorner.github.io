@@ -2,7 +2,7 @@
  * Vorschaukarten fürs Teilen (WhatsApp, iMessage, Instagram, …): 1200 × 630 px, beim Bauen erzeugt
  * (Route src/pages/og/[...card].jpg.ts, Datei z. B. /og/album/hilda-setcard.jpg).
  *
- * Aufbau wie die Startseite: links ein Feld in Dark Blue mit „JESKO / DORNER“ (Climate Crisis) oben und dem
+ * Aufbau wie die Startseite: links ein Feld in Dark Blue mit „JESKO / DORNER“ (Migha Black, wie auf der Website) oben und dem
  * Seitentitel (Migha, wie die Titel der Website) unten, rechts das Foto, zugeschnitten auf seinen Bildschwerpunkt (Feld `focus`).
  * Seiten ohne Foto (Kontakt, Impressum, Datenschutz, HQ-Album): das ganze Feld in Dark Blue, Name groß.
  *
@@ -10,7 +10,6 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { createRequire } from 'node:module';
 import type { ImageMetadata } from 'astro';
 import sharp, { type OverlayOptions } from 'sharp';
 import opentype from 'opentype.js';
@@ -41,11 +40,6 @@ export interface Card {
 export const cardImage = (key: string, alt?: string) => ({ url: `/og/${key}.jpg`, width: OG_W, height: OG_H, alt });
 
 // ---------- Schriften ----------
-const require = createRequire(import.meta.url);
-const loadFont = (pkgFile: string) => {
-  const buf = fs.readFileSync(require.resolve(pkgFile));
-  return opentype.parse(buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength));
-};
 /** Feste Schriftdatei aus dem Projekt (opentype.js liest .otf/.woff, aber keine variablen .woff2) */
 const loadLocalFont = (file: string) => {
   const buf = fs.readFileSync(path.join(process.cwd(), file));
@@ -54,7 +48,7 @@ const loadLocalFont = (file: string) => {
 let fonts: { name: opentype.Font; serif: opentype.Font } | undefined;
 const getFonts = () =>
   (fonts ??= {
-    name: loadFont('@fontsource/climate-crisis/files/climate-crisis-latin-400-normal.woff'),
+    name: loadLocalFont('src/assets/fonts/migha-black.otf'),
     serif: loadLocalFont('src/assets/fonts/migha-regular.otf'),
   });
 
@@ -129,8 +123,9 @@ export async function renderCard(card: Card): Promise<Buffer> {
   const panelW = withPhoto ? PANEL_W : OG_W;
   const pad = withPhoto ? PAD : 64;
 
-  // Name oben, zweizeilig, so breit wie das Feld es zulässt
-  const nameSize = withPhoto ? 58 : 124;
+  // Name oben, zweizeilig („DORNER“ in Migha Black 3,18 Schrifthöhen breit). Mit Foto so breit wie vorher in
+  // Climate Crisis (58 px), ohne Foto so groß, dass unten der Titel Platz behält
+  const nameSize = withPhoto ? 112 : 180;
   const nameCap = capHeight(name) * nameSize;
   const nameLead = nameSize * 0.92;
   const nameTop = pad + nameCap;

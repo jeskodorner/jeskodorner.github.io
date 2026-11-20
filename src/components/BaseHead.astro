@@ -3,7 +3,7 @@ import displayFont from '../assets/fonts/migha-regular.otf?url';
 import displayItalic from '../assets/fonts/migha-slant.otf?url';
 import sansFont from '../assets/fonts/libre-franklin-latin-wght-normal.woff2?url';
 // Name in der Kopfzeile: sofort laden, sonst steht das Logo beim Seitenwechsel kurz in einer Ersatzschrift
-import nameFont from '../assets/fonts/climate-crisis-latin-400-normal.woff2?url';
+import nameFont from '../assets/fonts/migha-black.otf?url';
 import { site } from '../config/site';
 
 export interface Props {
@@ -57,7 +57,7 @@ const ld = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 <link rel="preload" href={displayFont} as="font" type="font/otf" crossorigin />
 {isHome && <link rel="preload" href={displayItalic} as="font" type="font/otf" crossorigin />}
 <link rel="preload" href={sansFont} as="font" type="font/woff2" crossorigin />
-<link rel="preload" href={nameFont} as="font" type="font/woff2" crossorigin />
+<link rel="preload" href={nameFont} as="font" type="font/otf" crossorigin />
 
 <!-- Open Graph / Twitter -->
 <meta property="og:site_name" content={site.name} />

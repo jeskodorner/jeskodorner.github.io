@@ -38,7 +38,7 @@ const hasAside = Astro.slots.has('aside');
 
 /* Optischer Ausgleich einzelner Buchstabenpaare im Namen (Großbuchstaben in Instrument Serif), in em: zusätzlicher
    Abstand nach dem ersten Buchstaben des Paars. „S–K“ und „D–O–R“ standen zu luftig, „R–N“ berührten sich fast. */
-// Für Climate Crisis nicht nötig. Werte für Instrument Serif: { SK: -0.025, DO: -0.03, OR: -0.035, RN: 0.015 }
+// Für Migha Black nicht nötig. Werte für Instrument Serif: { SK: -0.025, DO: -0.03, OR: -0.035, RN: 0.015 }
 const KERN: Record<string, number> = {};
 /* Der Name Wort für Wort (am Handy steht jedes Wort in einer eigenen Zeile), darin Zeichen mit Ausgleich */
 const nameWords = site.name.split(' ').map((word) =>
@@ -120,9 +120,9 @@ const nameWords = site.name.split(' ').map((word) =>
     --bm-item: clamp(2.3rem, 10.5vw, 4.75rem);
     /* Farbe und Schriftgröße des Namens (auch fürs Foto am Handy gebraucht) */
     --name-color: var(--on-menu);
-    /* „JESKO DORNER“ ist in Climate Crisis 11,02 Schrifthöhen breit → / 12.4 füllt knapp 90 % der Breite
-       (Instrument Serif war 5,22 breit: min(11rem, 100cqi / 5.9)) */
-    --name-fs: min(6.5rem, 100cqi / 12.4);
+    /* „JESKO DORNER“ ist in Migha Black 5,90 Schrifthöhen breit → / 6.6 füllt knapp 90 % der Breite
+       (Climate Crisis war 11,02 breit: min(6.5rem, 100cqi / 12.4); Instrument Serif 5,22: min(11rem, 100cqi / 5.9)) */
+    --name-fs: min(12.5rem, 100cqi / 6.6);
     /* oberer Seitenrand (Laptop: auch der Abstand des Fotos nach oben) */
     --bm-pad: clamp(1.25rem, 4vw, 2.5rem);
     container-type: inline-size;
@@ -222,8 +222,9 @@ const nameWords = site.name.split(' ').map((word) =>
      nutzt dasselbe Raster bis 999 px (Regeln weiter unten). */
   @media (max-width: 699.98px) {
     .bm {
-      /* Name zweizeilig („JESKO“ / „DORNER“): „DORNER“ ist 6,15 Schrifthöhen breit → / 6.9 füllt knapp 90 % */
-      --name-fs: min(6.5rem, 100cqi / 6.9);
+      /* Name zweizeilig („JESKO“ / „DORNER“): „DORNER“ ist in Migha Black 3,18 Schrifthöhen breit → / 3.57 füllt
+         knapp 90 % (Climate Crisis: 6,15 → / 6.9) */
+      --name-fs: min(12.5rem, 100cqi / 3.57);
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
       /* Foto bzw. Schließen-Knopf · Name · (frei, früher „Fotografie“) · Menüpunkte · Fußzeile */
@@ -277,9 +278,31 @@ const nameWords = site.name.split(' ').map((word) =>
      im freien Platz) und Instagram. */
   @media (max-width: 999.98px) {
     :is(.bm--aside, .bm--overlay) {
-      --name-fs: min(6.5rem, 100cqi / 6.9);
-      /* Menü etwa halb bis zwei Drittel so groß wie der Name: klare Rangfolge */
+      /* Menü deutlich kleiner als der Name: klare Rangfolge */
       --bm-item: clamp(2rem, 8.6vw, 3.4rem);
+      /* Höhen der übrigen Teile (auch unten in den Regeln verwendet) – daraus ergibt sich, wie hoch der Name sein darf */
+      /* (vor Migha Black: Foto 34svh, Abstand über dem Namen clamp(1.75rem, 5svh, 3rem), Menü-Ränder 3rem) */
+      --frame-h: min(75vw, 31svh);
+      --name-mt: clamp(1.25rem, 3svh, 2.25rem);
+      --nav-my: 2.5rem;
+      --list-gap: max(clamp(0.35rem, 1.2vh, 0.9rem), 2.75rem - 0.95 * var(--bm-item));
+      /* Handy: Name zweizeilig, „DORNER“ 3,18 Schrifthöhen breit → / 3.57 füllt knapp 90 % der Breite; zwei Zeilen à
+         0,9 plus Innenabstände sind 1,88 Schrifthöhen hoch. Tablet (ab 600 px): einzeilig, Werte weiter unten. */
+      --name-div: 3.57;
+      --name-lines: 1.88;
+      /* Name so breit wie der Platz, aber nur so hoch, dass die Startseite ohne Scrollen auf einen Bildschirm passt:
+         Bildschirmhöhe minus Foto, Abstand und Bildunterschrift (0,75rem + 2,75rem), Abstand über dem Namen, Menü
+         (5 Punkte à 0,95 Schrifthöhen, 4 Abstände, Ränder), Instagram (1,125rem) und Rand unten, 0,5rem Reserve. Das
+         Menü (Overlay) rechnet gleich, so ist der Name dort genauso groß wie auf der Startseite. */
+      --name-fs: max(
+        2rem,
+        min(
+          12.5rem,
+          100cqi / var(--name-div),
+          (100svh - var(--frame-h) - 3.5rem - var(--name-mt) - var(--nav-my) - 4.75 * var(--bm-item) - 4 *
+                var(--list-gap) - 1.125rem - var(--foot-pad) - 0.5rem) / var(--name-lines)
+        )
+      );
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
       grid-template-rows: auto auto auto 1fr auto;
@@ -290,7 +313,7 @@ const nameWords = site.name.split(' ').map((word) =>
     :is(.bm--aside, .bm--overlay) .bm-name {
       grid-column: 2;
       grid-row: 2;
-      margin-top: clamp(1.75rem, 5svh, 3rem);
+      margin-top: var(--name-mt);
     }
     :is(.bm--aside, .bm--overlay) .bm-name :global(.bm-w) {
       display: block;
@@ -303,11 +326,11 @@ const nameWords = site.name.split(' ').map((word) =>
       grid-column: 2;
       grid-row: 4;
       align-self: center;
-      margin-block: calc(1.5rem + 0.07 * var(--bm-item)) calc(1.5rem - 0.07 * var(--bm-item));
+      margin-block: calc(var(--nav-my) / 2 + 0.07 * var(--bm-item)) calc(var(--nav-my) / 2 - 0.07 * var(--bm-item));
     }
     /* kleinere Menüpunkte: Abstand so, dass jede Zeile mindestens 44 px Tippfläche hat (Zeile 0,95 Schrifthöhen) */
     :is(.bm--aside, .bm--overlay) .bm-list {
-      gap: max(clamp(0.35rem, 1.2vh, 0.9rem), 2.75rem - 0.95 * var(--bm-item));
+      gap: var(--list-gap);
     }
     .bm--aside .bm-aside {
       grid-column: 1 / -1;
@@ -321,7 +344,7 @@ const nameWords = site.name.split(' ').map((word) =>
       gap: 0.75rem;
     }
     .bm--aside .bm-aside :global(.hs-frame) {
-      height: min(75vw, 34svh);
+      height: var(--frame-h);
     }
     .bm--aside .bm-aside :global(.hs-cap) {
       padding-inline: var(--gutter);
@@ -340,13 +363,11 @@ const nameWords = site.name.split(' ').map((word) =>
   @media (max-width: 999.98px) and (max-height: 700px) {
     :is(.bm--aside, .bm--overlay) {
       --bm-item: clamp(1.8rem, 8vw, 3.4rem);
+      --name-mt: 1rem;
+      --frame-h: min(75vw, 25svh);
+      --nav-my: 2.3rem;
     }
-    :is(.bm--aside, .bm--overlay) .bm-name {
-      margin-top: 1.25rem;
-    }
-    .bm--aside .bm-aside :global(.hs-frame) {
-      height: min(75vw, 28svh);
-    }
+    /* etwas mehr Luft über als unter dem Menü */
     :is(.bm--aside, .bm--overlay) .bm-body > nav {
       margin-block: calc(0.9rem + 0.07 * var(--bm-item)) calc(1.4rem - 0.07 * var(--bm-item));
     }
@@ -356,14 +377,27 @@ const nameWords = site.name.split(' ').map((word) =>
       margin-top: 0;
     }
   }
+  /* Tablet hochkant (600–999 px): der Name in einer Zeile über die ganze Breite – zweizeilig wäre er hier so hoch, dass
+     er für einen Bildschirm ohne Scrollen zu klein werden müsste. „JESKO DORNER“ ist 5,90 Schrifthöhen breit → / 6.6
+     füllt knapp 90 %; eine Zeile mit Innenabständen ist 0,98 Schrifthöhen hoch. */
+  @media (min-width: 600px) and (max-width: 999.98px) {
+    :is(.bm--aside, .bm--overlay) {
+      --name-div: 6.6;
+      --name-lines: 0.98;
+    }
+    :is(.bm--aside, .bm--overlay) .bm-name :global(.bm-w) {
+      display: inline-block;
+    }
+  }
   /* Laptop (ab 1000 px): zwei Spalten. Links (5/12) Name zweizeilig, unten Menü und Instagram;
      rechts (7/12) das Foto über die ganze Höhe mit Bildunterschrift (Menü: Blau). Genau ein Bildschirm hoch. */
   @media (min-width: 1000px) {
     :is(.bm--aside, .bm--overlay) {
       --col-gap: clamp(2.5rem, 4vw, 4.5rem);
-      /* „DORNER“ ist 6,15 Schrifthöhen breit → / 6.4 füllt die linke Spalte fast ganz */
-      --name-fs: min(7.5rem, (100cqi - var(--col-gap)) * 5 / 12 / 6.4);
-      --bm-item: calc(var(--name-fs) * 0.54);
+      /* „DORNER“ ist in Migha Black 3,18 Schrifthöhen breit → / 3.31 füllt die linke Spalte fast ganz */
+      --name-fs: min(14.5rem, (100cqi - var(--col-gap)) * 5 / 12 / 3.31);
+      /* Menüpunkte so groß wie bisher (vorher 0,54 × Name in Climate Crisis) – unabhängig von der Größe des Namens */
+      --bm-item: min(4.05rem, (100cqi - var(--col-gap)) * 5 / 12 / 11.85);
       display: grid;
       grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
       grid-template-rows: auto auto 1fr auto auto;

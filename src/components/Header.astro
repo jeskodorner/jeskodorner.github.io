@@ -67,9 +67,9 @@ const isCurrent = (match: string[]) => current(path, match);
     justify-content: space-between;
     gap: 1.5rem;
   }
-  /* Logo in derselben Schrift wie der große Name auf der Startseite (Climate Crisis, Großbuchstaben) – so gleitet der
-     Name beim Seitenwechsel ohne Schriftwechsel ins Logo. Die Schrift ist sehr breit („JESKO DORNER“ = 11 Schrifthöhen),
-     deshalb ist die Schriftgröße klein: am Handy gut 160 px, am Laptop gut 230 px breit. */
+  /* Logo in derselben Schrift wie der große Name auf der Startseite (Migha Black, Großbuchstaben) – so gleitet der
+     Name beim Seitenwechsel ohne Schriftwechsel ins Logo. „JESKO DORNER“ ist 5,9 Schrifthöhen breit: am Handy gut
+     160 px, am Laptop gut 230 px breit (so breit wie vorher in Climate Crisis). */
   .logo {
     display: inline-flex;
     align-items: center;
@@ -79,7 +79,7 @@ const isCurrent = (match: string[]) => current(path, match);
     font-weight: 400;
     font-synthesis-weight: none;
     text-transform: uppercase;
-    font-size: clamp(0.92rem, 0.78rem + 0.45vw, 1.3rem);
+    font-size: clamp(1.72rem, 1.46rem + 0.84vw, 2.43rem);
     /* gleiche Zeilenhöhe wie der Name auf der Startseite: die Wortkästen haben dieselben Proportionen */
     line-height: 0.9;
     letter-spacing: 0;

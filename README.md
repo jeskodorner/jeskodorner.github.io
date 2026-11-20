@@ -571,7 +571,7 @@ so früh. Was dafür sorgt – bitte beibehalten:
 - **Wichtigstes Bild im Kopf angekündigt** (`preload` an `BaseLayout`, erzeugt mit `preloadImage` aus `src/lib/images.ts`):
   Startseite, Portfolio, Galerie, Über mich. Die `sizes`-Angaben dafür stehen in `src/lib/sizes.ts`, damit Bild und
   Ankündigung genau gleich sind (sonst lädt der Browser doppelt).
-- **Schriften schlank:** Der Name nutzt die feste Climate Crisis (17 KB statt 49 KB, pixelgleich). Die schräge Migha
+- **Schriften schlank:** Je Schnitt eine kleine Datei (Migha Regular, Slant und Black je gut 20 KB). Die schräge Migha
   (Slant) wird nur auf der Startseite vorab geladen.
 - **Startseite:** Nur das erste Foto lädt sofort, die übrigen eine Sekunde nach dem Laden der Seite.
 - **Fotoreihen sofort fertig:** Die Reihen in Alben und Galerie werden direkt nach der Liste im HTML verteilt
@@ -645,8 +645,10 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
   Übersicht wie eine aufgeschlagene Fotomappe, einfacher als das Album. Erreichbar über „Mappe ansehen →“ auf der
   Startseite und über jedes Foto im Portfolio. Oben „← Zurück“ (führt dorthin zurück, wo man herkam, samt Stelle auf
   der Seite; ohne Vorgeschichte zur Startseite), Titel und Monat linksbündig wie auf allen Seiten. Darunter die Fotos
-  als Abzüge in gleich großen Feldern (5:4), Laptop 4, Tablet 3, Handy 2 pro Reihe – jedes ganz und unbeschnitten,
-  mittig im Feld, mit Schatten, viel Luft dazwischen, kein Text. Vorne das Foto aus dem Portfolio, dazu bis zu 7
+  als Abzüge in gleich großen Feldern, Laptop 4, Tablet 3, Handy 2 pro Reihe – jedes ganz und unbeschnitten,
+  mittig im Feld, mit Schatten, kein Text. Die Felder haben die Form der meisten Fotos der Mappe (mittleres
+  Seitenverhältnis, zwischen 3:4 und 3:2; vorher immer 5:4), die Abstände sind knapp (seit 20.11.2026 etwa halb so
+  groß wie vorher) – so wirken die Abzüge groß und zusammengehörig. Vorne das Foto aus dem Portfolio, dazu bis zu 7
   weitere gleichmäßig über das Album verteilt (oder genau die Fotos aus `mappe:` im Album). Ein Klick auf ein Foto
   öffnet die Lightbox mit dem ganzen Album ab diesem Foto (`src/scripts/open-album.ts`). Unten „Ganzes Album
   ansehen →“ und wie viele Bilder das Album hat.
@@ -748,7 +750,7 @@ Orange nie als Schriftfarbe auf White Chocolate (2,5 : 1), nur als Fläche oder 
 
 **Vorschau beim Teilen** (WhatsApp, iMessage, Instagram, …): Jede Seite und jedes Album hat eine eigene
 Vorschaukarte (1200 × 630 px), die beim Bauen automatisch entsteht (`src/lib/og.ts`, Dateien unter `/og/…`). Links ein
-Feld in Dark Blue mit „JESKO DORNER“ (Climate Crisis) und dem Titel der Seite (Migha Display aus
+Feld in Dark Blue mit „JESKO DORNER“ (Migha Black) und dem Titel der Seite (Migha Display aus
 `src/assets/fonts/migha-regular.otf`), rechts das Foto,
 zugeschnitten auf seinen Bildschwerpunkt (Feld `focus` beim Bild; ohne Angabe bei Hochformaten etwas über der Mitte).
 Startseite und Portfolio zeigen das erste Foto aus `showroom`, Galerie das neueste Album, Film das erste Standbild,
@@ -763,32 +765,36 @@ nach seinem Umriss gesetzt, als `public/favicon.svg`, dazu
 `public/favicon.ico` (32 px, für ältere Browser) und `public/apple-touch-icon.png` (180 px, Home-Bildschirm). Der
 Buchstabe ist als Form gespeichert, damit er überall gleich aussieht.
 
-**Schriften** (alle lokal, keine Google-Fonts-Verbindung, alle frei auch für geschäftliche Nutzung: Climate Crisis
-und Libre Franklin unter SIL OFL, Migha laut Lizenz von Seniors Studio). Bewusst keine
+**Schriften** (alle lokal, keine Google-Fonts-Verbindung, alle frei auch für geschäftliche Nutzung: Libre
+Franklin unter SIL OFL, Migha laut Lizenz von Seniors Studio). Bewusst keine
 der Schriften, die auf sehr vielen KI-gebauten Seiten stehen (Inter, Geist, Space Grotesk, Instrument Serif,
 Playfair, Fraunces …):
-- **Climate Crisis**: der Name „JESKO DORNER“ – groß auf Startseite und Menü, klein als Logo oben links auf allen
-  Unterseiten (Token `--font-name`). Die Schriftdatei wird vorab geladen (`BaseHead.astro`), damit das Logo beim
-  Seitenwechsel nie kurz in einer Ersatzschrift erscheint. Beim Wechsel Startseite → Unterseite gleitet der Name
-  Wort für Wort ins Logo („JESKO“ und „DORNER“ einzeln, Übergangsnamen `jd-name-1`/`jd-name-2`), so wird er nur
-  gleichmäßig kleiner und nie verzerrt – auch vom zweizeiligen Namen am Handy. Hinweis zum Testen: Im lokalen
-  `npm run preview` laufen die Seitenübergänge nicht, mit `npm run dev` und auf GitHub Pages schon. Sehr fett und
-  breit; deshalb ist die Schriftgröße kleiner als bei den anderen Titeln. Am Handy steht der Name in zwei Zeilen
-  („JESKO“ / „DORNER“), und das Menü sitzt mittig dazwischen: gleich viel Luft von „DORNER“ zu den Menüpunkten
-  wie von den Menüpunkten zu Impressum und Datenschutz. Vorher: Instrument Serif mit feiner Kontur
-  und von Hand ausgeglichenen Buchstabenpaaren (Werte stehen noch bei `KERN` in `BlueMenu.astro`).
-  Über npm (`@fontsource-variable/climate-crisis`).
+- **Migha Black** (seit 20.11.2026): der Name „JESKO DORNER“ – groß auf Startseite und Menü, klein als Logo oben
+  links auf allen Unterseiten, als Schriftzug unten in der Fußzeile, auf den Vorschaukarten (Token `--font-name`,
+  eigener Familienname `Migha Black`, damit kein Titel aus Versehen in Black erscheint). Dieselbe Schriftfamilie wie
+  Titel und Menü, nur im kräftigsten Schnitt – so gibt es keinen Bruch zwischen Name und Menü. Die Datei wird vorab
+  geladen (`BaseHead.astro`), damit das Logo beim Seitenwechsel nie kurz in einer Ersatzschrift erscheint. Beim
+  Wechsel Startseite → Unterseite gleitet der Name Wort für Wort ins Logo („JESKO“ und „DORNER“ einzeln,
+  Übergangsnamen `jd-name-1`/`jd-name-2`), so wird er nur gleichmäßig kleiner und nie verzerrt. Hinweis zum Testen:
+  Im lokalen `npm run preview` laufen die Seitenübergänge nicht, mit `npm run dev` und auf GitHub Pages schon.
+  Größen (`BlueMenu.astro`): Laptop zweizeilig, „DORNER“ füllt die linke Spalte; Handy zweizeilig, knapp 90 % der
+  Breite; Tablet hochkant (600–999 px) einzeilig über die ganze Breite. Am Handy und Tablet ist der Name zusätzlich
+  höchstens so groß, dass die Startseite ohne Scrollen auf einen Bildschirm passt (Rechnung bei `--name-fs`): auf
+  kleinen Handys wie dem iPhone SE etwa zwei Drittel der Breite. Dafür ist das Foto dort etwas flacher (31 % statt
+  34 % der Bildschirmhöhe). Das Menü ist gleich aufgebaut, der Name dort gleich groß.
+  Vorher: Climate Crisis (sehr fett und breit, bis 20.11.2026, Git-Tag `alte-version-ultramarin-climate-crisis`),
+  davor Instrument Serif mit von Hand ausgeglichenen Buchstabenpaaren (Werte bei `KERN` in `BlueMenu.astro`).
 - **Migha Display** (seit 20.11.2026, Seniors Studio): Titel, Menü, Schriftzug in der Fußzeile, Schilder im
   Portfolio, Zwischenüberschriften, Vorschaukarten, Browser-Symbol. Schmale, hohe Titelschrift; Kleinbuchstaben
   erscheinen als Kapitälchen (fast so hoch wie Großbuchstaben). Zwei Schnitte eingebunden: Regular und Slant
   (schräg, für die kursiven Menüpunkte). Im Paket gibt es noch Light, Medium, Bold, Kontrast (CNTR) und
-  Condensed – bei Bedarf Datei aus dem Paket nach `src/assets/fonts/` legen und in `fonts.css` eintragen. Lizenz
+  Condensed, jeweils auch breiter (Semi Expanded, Expanded) – bei Bedarf Datei aus dem Paket nach `src/assets/fonts/` legen und in `fonts.css` eintragen. Lizenz
   (frei, auch geschäftlich): `src/assets/fonts/LIZENZ-migha.txt`. Vorher: Bodoni Moda (16.–20.11.2026, Git-Tag
   `alte-version-bodoni`), davor Instrument Serif und Anybody. Kurz angeschaut und verworfen: Kugile (Demo nur
   privat nutzbar, ohne Umlaute), Murmure.
 - **Libre Franklin** (seit November 2026): Fließtext, Knöpfe, Beschriftungen. Vorher: Archivo.
-- Alle Schriften liegen als Dateien in `src/assets/fonts/` (Libre Franklin und Climate Crisis aus den
-  Fontsource-Paketen, nur Zeichensatz „latin“ mit Ä, Ö, Ü, ß; Migha als OTF aus dem Download), eingebunden in
+- Alle Schriften liegen als Dateien in `src/assets/fonts/` (Libre Franklin aus dem Fontsource-Paket, nur
+  Zeichensatz „latin“ mit Ä, Ö, Ü, ß; Migha als OTF aus dem Download), eingebunden in
   `src/styles/fonts.css`, Lizenztexte daneben.
 
 **Extenda einsetzen:** Extenda (Zetafonts) ist eine kommerzielle Schrift. Fürs Web brauchst du eine passende Lizenz.

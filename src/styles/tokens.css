@@ -64,8 +64,8 @@
   --font-display: 'Migha', 'Arial Narrow', 'Helvetica Neue', sans-serif;
   /* Stärke der Titelschrift (Migha hat nur einen Schnitt je Lage, die Angabe bleibt für einen späteren Wechsel) */
   --display-wght: 400;
-  /* nur der große Name auf Startseite und Menü: Climate Crisis, sehr fett und breit */
-  --font-name: 'Climate Crisis', 'Arial Black', sans-serif;
+  /* der Name „JESKO DORNER“ (Startseite, Menü, Logo, Fußzeile): Migha Black, vorher Climate Crisis */
+  --font-name: 'Migha Black', 'Migha', 'Arial Narrow', sans-serif;
   /* Text, Knöpfe, Etiketten: Libre Franklin (Franklin Gothic, Zeitungs- und Magazinklassiker); vorher Archivo */
   --font-sans: 'Libre Franklin Variable', 'Franklin Gothic Medium', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
