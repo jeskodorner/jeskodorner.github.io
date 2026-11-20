@@ -83,7 +83,7 @@ const jsonLd = gallery.isUnlisted
           <span>{formatMonth(gallery.date)}</span>
           {gallery.location && <span>{gallery.location}</span>}
         </p>
-        <h1 class="display display-1 title" style={`view-transition-name: gt-${gallery.slug}`}>{tidyTitle(gallery.title)}</h1>
+        <h1 class="display display-1 display-compact title" style={`view-transition-name: gt-${gallery.slug}`}>{tidyTitle(gallery.title)}</h1>
         {/* Beschreibung direkt unter dem Titel im Band (vorher groß darunter auf der Wand) – so beginnen die Fotos früher */}
         <p class="band-lead">{gallery.description}</p>
       </div>
@@ -169,12 +169,9 @@ const jsonLd = gallery.isUnlisted
   .back {
     margin-bottom: clamp(1rem, 2.5vw, 1.75rem);
   }
-  /* Titel kleiner als auf den Hauptseiten (Galerie, Portfolio …): hier sind die Fotos die Hauptsache. Breiter
-     erlaubt, damit er am Laptop meist in eine Zeile passt (Zeilenlänge in Schrifthöhen, ch ist in Migha zu schmal). */
+  /* Titel: kleiner als auf den Hauptseiten (Klasse display-compact, global.css) */
   .title {
     margin-top: 0.5rem;
-    font-size: clamp(2.4rem, 1.2rem + 4.5vw, 6.5rem);
-    max-width: 14em;
   }
   .band-lead {
     max-width: 60ch;

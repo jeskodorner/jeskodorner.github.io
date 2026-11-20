@@ -647,7 +647,8 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
   Titel ist dafür kleiner als auf den Hauptseiten. Vorher (bis 20.11.2026) war der Titel so groß wie „Galerie“, die
   Beschreibung stand groß darunter, und am Laptop sah man bei langen Titeln nur die Überschrift.
 - **Mappe** (`src/pages/mappe/[slug].astro`, Auswahl in `src/lib/mappe.ts`): je Album aus dem Portfolio eine ruhige
-  Übersicht wie eine aufgeschlagene Fotomappe, einfacher als das Album. Erreichbar über „Mappe ansehen →“ auf der
+  Übersicht wie eine aufgeschlagene Fotomappe, einfacher als das Album. Kopf kompakt wie auf der Albumseite (Titel
+  mit `display-compact`, `global.css`), damit die Fotos beim Öffnen sofort zu sehen sind. Erreichbar über „Mappe ansehen →“ auf der
   Startseite und über jedes Foto im Portfolio. Oben „← Zurück“ (führt dorthin zurück, wo man herkam, samt Stelle auf
   der Seite; ohne Vorgeschichte zur Startseite), Titel und Monat linksbündig wie auf allen Seiten. Darunter die Fotos
   als Abzüge in gleich großen Feldern – jedes ganz und unbeschnitten, mittig im Feld, mit Schatten, kein Text. Die
@@ -786,9 +787,10 @@ Playfair, Fraunces …):
   Im lokalen `npm run preview` laufen die Seitenübergänge nicht, mit `npm run dev` und auf GitHub Pages schon.
   Größen (`BlueMenu.astro`): Laptop zweizeilig, „DORNER“ füllt die linke Spalte; Handy zweizeilig, knapp 90 % der
   Breite; Tablet hochkant (600–999 px) einzeilig über die ganze Breite. Am Handy und Tablet ist der Name zusätzlich
-  höchstens so groß, dass die Startseite ohne Scrollen auf einen Bildschirm passt (Rechnung bei `--name-fs`): auf
-  kleinen Handys wie dem iPhone SE etwa zwei Drittel der Breite. Dafür ist das Foto dort etwas flacher (31 % statt
-  34 % der Bildschirmhöhe). Das Menü ist gleich aufgebaut, der Name dort gleich groß.
+  höchstens so groß, dass die Startseite ohne Scrollen auf einen Bildschirm passt – auch im Handy-Browser mit
+  eingeblendeten Leisten (Rechnung bei `--frame-h` und `--name-fs`). Zuerst gibt das Foto oben nach: höchstens 34 %,
+  mindestens 20 % der Höhe, sonst so hoch, wie neben dem Namen in voller Breite Platz ist. Erst auf sehr kurzen
+  Bildschirmen wird auch der Name kleiner. Das Menü ist gleich aufgebaut, der Name dort gleich groß.
   Vorher: Climate Crisis (sehr fett und breit, bis 20.11.2026, Git-Tag `alte-version-ultramarin-climate-crisis`),
   davor Instrument Serif mit von Hand ausgeglichenen Buchstabenpaaren (Werte bei `KERN` in `BlueMenu.astro`).
 - **Migha Display** (seit 20.11.2026, Seniors Studio): Titel, Menü, Schriftzug in der Fußzeile, Schilder im

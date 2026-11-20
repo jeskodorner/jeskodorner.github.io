@@ -280,9 +280,8 @@ const nameWords = site.name.split(' ').map((word) =>
     :is(.bm--aside, .bm--overlay) {
       /* Menü deutlich kleiner als der Name: klare Rangfolge */
       --bm-item: clamp(2rem, 8.6vw, 3.4rem);
-      /* Höhen der übrigen Teile (auch unten in den Regeln verwendet) – daraus ergibt sich, wie hoch der Name sein darf */
-      /* (vor Migha Black: Foto 34svh, Abstand über dem Namen clamp(1.75rem, 5svh, 3rem), Menü-Ränder 3rem) */
-      --frame-h: min(75vw, 31svh);
+      /* Abstände (auch unten in den Regeln verwendet). Vor Migha Black: Abstand über dem Namen
+         clamp(1.75rem, 5svh, 3rem), Menü-Ränder 3rem */
       --name-mt: clamp(1.25rem, 3svh, 2.25rem);
       --nav-my: 2.5rem;
       --list-gap: max(clamp(0.35rem, 1.2vh, 0.9rem), 2.75rem - 0.95 * var(--bm-item));
@@ -290,18 +289,28 @@ const nameWords = site.name.split(' ').map((word) =>
          0,9 plus Innenabstände sind 1,88 Schrifthöhen hoch. Tablet (ab 600 px): einzeilig, Werte weiter unten. */
       --name-div: 3.57;
       --name-lines: 1.88;
-      /* Name so breit wie der Platz, aber nur so hoch, dass die Startseite ohne Scrollen auf einen Bildschirm passt:
-         Bildschirmhöhe minus Foto, Abstand und Bildunterschrift (0,75rem + 2,75rem), Abstand über dem Namen, Menü
-         (5 Punkte à 0,95 Schrifthöhen, 4 Abstände, Ränder), Instagram (1,125rem) und Rand unten, 0,5rem Reserve. Das
-         Menü (Overlay) rechnet gleich, so ist der Name dort genauso groß wie auf der Startseite. */
+      /* Alles außer Foto und Name: Abstand und Bildunterschrift (0,75rem + 2,75rem), Abstand über dem Namen, Menü
+         (5 Punkte à 0,95 Schrifthöhen, 4 Abstände, Ränder), Instagram (1,125rem) und Rand unten, 0,5rem Reserve */
+      --rest-h: calc(
+        3.5rem + var(--name-mt) + var(--nav-my) + 4.75 * var(--bm-item) + 4 * var(--list-gap) + 1.125rem +
+          var(--foot-pad) + 0.5rem
+      );
+      /* Die Startseite passt ohne Scrollen auf einen Bildschirm – auch im Handy-Browser mit seinen Leisten (svh = die
+         Höhe, die bei eingeblendeten Leisten bleibt). Zuerst gibt das Foto nach: Es ist höchstens 34 % der Höhe hoch
+         (und nie höher als 3:4 der Breite), mindestens 20 %, sonst so hoch, wie neben dem Namen in voller Breite Platz
+         ist. Erst wenn das Foto schon ganz flach ist, wird der Name kleiner (sehr kurze Bildschirme). Das Menü
+         (Overlay) rechnet gleich, so ist der Name dort genauso groß wie auf der Startseite. */
+      --frame-max: min(75vw, 34svh);
+      --frame-min: 20svh;
+      --name-fs-w: min(12.5rem, 100cqi / var(--name-div));
+      --frame-h: clamp(
+        var(--frame-min),
+        100svh - var(--rest-h) - var(--name-lines) * var(--name-fs-w),
+        var(--frame-max)
+      );
       --name-fs: max(
         2rem,
-        min(
-          12.5rem,
-          100cqi / var(--name-div),
-          (100svh - var(--frame-h) - 3.5rem - var(--name-mt) - var(--nav-my) - 4.75 * var(--bm-item) - 4 *
-                var(--list-gap) - 1.125rem - var(--foot-pad) - 0.5rem) / var(--name-lines)
-        )
+        min(var(--name-fs-w), (100svh - var(--frame-h) - var(--rest-h)) / var(--name-lines))
       );
       display: grid;
       grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
@@ -364,7 +373,8 @@ const nameWords = site.name.split(' ').map((word) =>
     :is(.bm--aside, .bm--overlay) {
       --bm-item: clamp(1.8rem, 8vw, 3.4rem);
       --name-mt: 1rem;
-      --frame-h: min(75vw, 25svh);
+      --frame-max: min(75vw, 25svh);
+      --frame-min: 18svh;
       --nav-my: 2.3rem;
     }
     /* etwas mehr Luft über als unter dem Menü */

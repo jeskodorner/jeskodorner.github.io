@@ -198,6 +198,13 @@ html:not(.js) .js-only {
   font-size: var(--fs-h2);
   padding-top: 0.08em;
 }
+/* Titel auf Album- und Mappenseiten (zusätzlich zu display-1): kleiner als auf den Hauptseiten, denn dort sind die
+   Fotos die Hauptsache – sie sollen beim Öffnen sofort zu sehen sein. Breiter erlaubt, damit er am Laptop meist in
+   eine Zeile passt (Zeilenlänge in Schrifthöhen, ch ist in Migha zu schmal). */
+.display-1.display-compact {
+  font-size: clamp(2.4rem, 1.2rem + 4.5vw, 6.5rem);
+  max-width: 14em;
+}
 .display-3 {
   font-size: var(--fs-h3);
   line-height: 0.92;

@@ -57,7 +57,7 @@ const og = cardImage(`album/${g.slug}`, g.cover.alt);
     <a class="back btn btn--small" href="/" data-back>
       <Icon name="arrow-left" /> {t.mappe.back}
     </a>
-    <h1 class="display display-1">{tidyTitle(g.title)}</h1>
+    <h1 class="display display-1 display-compact">{tidyTitle(g.title)}</h1>
     <p class="label muted">{meta}</p>
   </section>
 
@@ -126,11 +126,17 @@ const og = cardImage(`album/${g.slug}`, g.cover.alt);
 </script>
 
 <style>
+  /* Kopf kompakt wie auf der Albumseite: Fotos sollen beim Öffnen sofort zu sehen sein (vorher Titel in voller
+     Größe und der übliche große Abstand oben, am Laptop sah man fast nur die Überschrift) */
   .head {
-    padding-bottom: clamp(1.5rem, 3.5vw, 3rem);
+    padding-top: clamp(1rem, 2.5vw, 2rem);
+    padding-bottom: clamp(1.25rem, 2.5vw, 2rem);
   }
   .back {
-    margin-bottom: clamp(1.25rem, 3vw, 2rem);
+    margin-bottom: clamp(1rem, 2.5vw, 1.75rem);
+  }
+  .head > .label {
+    margin-top: 0.5rem;
   }
   /* Übersicht wie eine aufgeschlagene Mappe: gleich große Felder in Reihen. Spalten je nach Form und Anzahl der Fotos
      (--cols-lg/-md/-sm, oben berechnet; vorher immer 4 / 3 / 2). Die Felder haben die Form der meisten Fotos
