@@ -166,7 +166,9 @@ const jsonLd = gallery.isUnlisted
   }
   .title {
     margin-top: 0.75rem;
-    max-width: 13ch;
+    /* Zeilenlänge in Schrifthöhen statt Zeichen (ch hängt an der Breite der „0“ und ist in der schmalen Migha viel
+       kleiner): so wie bisher, „Hilda – Setcard“ steht am Laptop in einer Zeile */
+    max-width: 7.8em;
   }
   .g-head {
     padding-top: clamp(2rem, 5vw, 4rem);

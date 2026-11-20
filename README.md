@@ -571,8 +571,8 @@ so früh. Was dafür sorgt – bitte beibehalten:
 - **Wichtigstes Bild im Kopf angekündigt** (`preload` an `BaseLayout`, erzeugt mit `preloadImage` aus `src/lib/images.ts`):
   Startseite, Portfolio, Galerie, Über mich. Die `sizes`-Angaben dafür stehen in `src/lib/sizes.ts`, damit Bild und
   Ankündigung genau gleich sind (sonst lädt der Browser doppelt).
-- **Schriften schlank:** Der Name nutzt die feste Climate Crisis (17 KB statt 49 KB, pixelgleich). Die kursive Bodoni
-  wird nur auf der Startseite vorab geladen.
+- **Schriften schlank:** Der Name nutzt die feste Climate Crisis (17 KB statt 49 KB, pixelgleich). Die schräge Migha
+  (Slant) wird nur auf der Startseite vorab geladen.
 - **Startseite:** Nur das erste Foto lädt sofort, die übrigen eine Sekunde nach dem Laden der Seite.
 - **Fotoreihen sofort fertig:** Die Reihen in Alben und Galerie werden direkt nach der Liste im HTML verteilt
   (`JustifyNow.astro`, Rechnung in `src/scripts/justify-layout.js`) statt erst nach dem Skript.
@@ -756,8 +756,8 @@ Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer 
 
 **Vorschau beim Teilen** (WhatsApp, iMessage, Instagram, …): Jede Seite und jedes Album hat eine eigene
 Vorschaukarte (1200 × 630 px), die beim Bauen automatisch entsteht (`src/lib/og.ts`, Dateien unter `/og/…`). Links ein
-Feld in Ultramarin mit „JESKO DORNER“ (Climate Crisis) und dem Titel der Seite (Bodoni Moda, Stärke 600, aus
-`src/assets/fonts/bodoni-moda-latin-600-normal.woff` – der Bildbau braucht eine feste Schriftdatei), rechts das Foto,
+Feld in Ultramarin mit „JESKO DORNER“ (Climate Crisis) und dem Titel der Seite (Migha Display aus
+`src/assets/fonts/migha-regular.otf`), rechts das Foto,
 zugeschnitten auf seinen Bildschwerpunkt (Feld `focus` beim Bild; ohne Angabe bei Hochformaten etwas über der Mitte).
 Startseite und Portfolio zeigen das erste Foto aus `showroom`, Galerie das neueste Album, Film das erste Standbild,
 Über mich das Porträt, jedes Album sein Vorschaubild (`cover`). Kontakt, Impressum, Datenschutz und die Albumseite mit
@@ -766,12 +766,13 @@ Code bekommen eine Karte nur in Ultramarin. Der Titel beim Teilen enthält immer
 Albums – mehr gibt eine statische Seite nicht her. WhatsApp und Co. merken sich alte Vorschauen eine Weile; neue
 Karten erscheinen dort manchmal erst nach Tagen.
 
-**Browser-Symbol** (Favicon): ein weißes „J“ aus Bodoni Moda (Stärke 700) auf Ultramarin, ganz sichtbar und mittig
+**Browser-Symbol** (Favicon): ein weißes „J“ aus Migha (Bold) auf Ultramarin, ganz sichtbar und mittig
 nach seinem Umriss gesetzt, als `public/favicon.svg`, dazu
 `public/favicon.ico` (32 px, für ältere Browser) und `public/apple-touch-icon.png` (180 px, Home-Bildschirm). Der
 Buchstabe ist als Form gespeichert, damit er überall gleich aussieht.
 
-**Schriften** (alle lokal, keine Google-Fonts-Verbindung, Lizenz SIL OFL – frei, auch geschäftlich). Bewusst keine
+**Schriften** (alle lokal, keine Google-Fonts-Verbindung, alle frei auch für geschäftliche Nutzung: Climate Crisis
+und Libre Franklin unter SIL OFL, Migha laut Lizenz von Seniors Studio). Bewusst keine
 der Schriften, die auf sehr vielen KI-gebauten Seiten stehen (Inter, Geist, Space Grotesk, Instrument Serif,
 Playfair, Fraunces …):
 - **Climate Crisis**: der Name „JESKO DORNER“ – groß auf Startseite und Menü, klein als Logo oben links auf allen
@@ -785,15 +786,18 @@ Playfair, Fraunces …):
   wie von den Menüpunkten zu Impressum und Datenschutz. Vorher: Instrument Serif mit feiner Kontur
   und von Hand ausgeglichenen Buchstabenpaaren (Werte stehen noch bei `KERN` in `BlueMenu.astro`).
   Über npm (`@fontsource-variable/climate-crisis`).
-- **Bodoni Moda** (seit November 2026): Titel, Menü, Schriftzug in der Fußzeile, Schilder im Portfolio,
-  Zwischenüberschriften. Modemagazin-Antiqua mit zwei variablen Achsen: Stärke (Token `--display-wght`, 500) und
-  optische Größe (folgt der Schriftgröße: groß sehr feine Haarstriche). Die Menüpunkte sind auf eine kleine
-  optische Größe festgesetzt (`'opsz' 24`), damit die Haarstriche auf Foto und Blau stehen bleiben. Auf der
-  Startseite und im Menü in Großbuchstaben, die Menüpunkte kursiv außer „Portfolio“. Vorher: Instrument Serif,
-  davor Anybody. Kurz angeschaut und verworfen: Kugile (Demo nur privat nutzbar, ohne Umlaute).
+- **Migha Display** (seit 20.11.2026, Seniors Studio): Titel, Menü, Schriftzug in der Fußzeile, Schilder im
+  Portfolio, Zwischenüberschriften, Vorschaukarten, Browser-Symbol. Schmale, hohe Titelschrift; Kleinbuchstaben
+  erscheinen als Kapitälchen (fast so hoch wie Großbuchstaben). Zwei Schnitte eingebunden: Regular und Slant
+  (schräg, für die kursiven Menüpunkte). Im Paket gibt es noch Light, Medium, Bold, Kontrast (CNTR) und
+  Condensed – bei Bedarf Datei aus dem Paket nach `src/assets/fonts/` legen und in `fonts.css` eintragen. Lizenz
+  (frei, auch geschäftlich): `src/assets/fonts/LIZENZ-migha.txt`. Vorher: Bodoni Moda (16.–20.11.2026, Git-Tag
+  `alte-version-bodoni`), davor Instrument Serif und Anybody. Kurz angeschaut und verworfen: Kugile (Demo nur
+  privat nutzbar, ohne Umlaute), Murmure.
 - **Libre Franklin** (seit November 2026): Fließtext, Knöpfe, Beschriftungen. Vorher: Archivo.
-- Bodoni Moda und Libre Franklin liegen als Dateien in `src/assets/fonts/` (aus den Fontsource-Paketen, nur
-  Zeichensatz „latin“ mit Ä, Ö, Ü, ß), eingebunden in `src/styles/fonts.css`, Lizenztexte daneben.
+- Alle Schriften liegen als Dateien in `src/assets/fonts/` (Libre Franklin und Climate Crisis aus den
+  Fontsource-Paketen, nur Zeichensatz „latin“ mit Ä, Ö, Ü, ß; Migha als OTF aus dem Download), eingebunden in
+  `src/styles/fonts.css`, Lizenztexte daneben.
 
 **Extenda einsetzen:** Extenda (Zetafonts) ist eine kommerzielle Schrift. Fürs Web brauchst du eine passende Lizenz.
 Mit Lizenz:
@@ -807,7 +811,7 @@ Mit Lizenz:
      font-display: swap;
    }
    ```
-3. In `src/styles/tokens.css` `--font-display: 'Extenda', 'Bodoni Moda Variable', serif;` setzen.
+3. In `src/styles/tokens.css` `--font-display: 'Extenda', 'Migha', sans-serif;` setzen.
 4. Optional in `src/components/BaseHead.astro` die Preload-Zeile auf die neue Datei umstellen.
 
 ---

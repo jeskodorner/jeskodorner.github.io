@@ -99,8 +99,8 @@ const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : 
   .legal a {
     text-decoration: none;
   }
-  /* Der Schriftzug füllt die Breite des Inhaltsbereichs (cqi = 1 % davon): „Jesko Dorner“ ist in Bodoni Moda (Stärke
-     600) 6,08 × so breit wie die Schriftgröße → / 6.25 lässt etwas Luft. (Instrument Serif: 4,17 → / 4.3) */
+  /* Der Schriftzug füllt die Breite des Inhaltsbereichs (cqi = 1 % davon): „Jesko Dorner“ ist in Migha 5,64 × so
+     breit wie die Schriftgröße → / 5.8 lässt etwas Luft. (Bodoni Moda: 6,08 → / 6.25, Instrument Serif: 4,17 → / 4.3) */
   .wordmark-wrap {
     container-type: inline-size;
   }
@@ -108,7 +108,7 @@ const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : 
     margin-top: clamp(2.5rem, 6vw, 5rem);
     white-space: nowrap;
     font-size: clamp(3rem, 23vw, 34rem);
-    font-size: calc(100cqi / 6.25);
+    font-size: calc(100cqi / 5.8);
     font-weight: 600;
     line-height: 0.95;
     /* Der Bogen des „J“ reicht 0,22 Schrifthöhen unter die Grundlinie, die Zeile endet schon bei 0,135 – Platz

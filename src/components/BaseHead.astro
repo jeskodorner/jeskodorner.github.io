@@ -1,6 +1,6 @@
 ---
-import displayFont from '../assets/fonts/bodoni-moda-latin-standard-normal.woff2?url';
-import displayItalic from '../assets/fonts/bodoni-moda-latin-standard-italic.woff2?url';
+import displayFont from '../assets/fonts/migha-regular.otf?url';
+import displayItalic from '../assets/fonts/migha-slant.otf?url';
 import sansFont from '../assets/fonts/libre-franklin-latin-wght-normal.woff2?url';
 // Name in der Kopfzeile: sofort laden, sonst steht das Logo beim Seitenwechsel kurz in einer Ersatzschrift
 import nameFont from '../assets/fonts/climate-crisis-latin-400-normal.woff2?url';
@@ -44,7 +44,7 @@ const ld = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 {noReferrer && <meta name="referrer" content="no-referrer" />}
 <meta name="generator" content={Astro.generator} />
 
-<!-- Browser-Symbol: „J“ in Bodoni Moda (Stärke 700) auf Ultramarin (SVG), dazu .ico für ältere Browser und ein Symbol für den
+<!-- Browser-Symbol: „J“ in Migha (Bold) auf Ultramarin (SVG), dazu .ico für ältere Browser und ein Symbol für den
      Home-Bildschirm. Neu erzeugen: siehe README („Browser-Symbol“). -->
 <link rel="icon" href="/favicon.ico" sizes="32x32" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -54,8 +54,8 @@ const ld = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 
 {/* Wichtigstes Bild zuerst ankündigen: lädt parallel zur Seite statt erst, wenn der Browser beim <img> ankommt */}
 {preload && <link rel="preload" as="image" type="image/avif" imagesrcset={preload.srcset} imagesizes={preload.sizes} fetchpriority="high" />}
-<link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin />
-{isHome && <link rel="preload" href={displayItalic} as="font" type="font/woff2" crossorigin />}
+<link rel="preload" href={displayFont} as="font" type="font/otf" crossorigin />
+{isHome && <link rel="preload" href={displayItalic} as="font" type="font/otf" crossorigin />}
 <link rel="preload" href={sansFont} as="font" type="font/woff2" crossorigin />
 <link rel="preload" href={nameFont} as="font" type="font/woff2" crossorigin />
 
