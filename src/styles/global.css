@@ -86,7 +86,7 @@ a {
     color 0.2s,
     background-color 0.2s;
 }
-/* Überfahren – überall dieselbe Antwort wie im Menü: korallenrotes Feld, schwarze Schrift. Hier für Links im Text;
+/* Überfahren – überall dieselbe Antwort wie im Menü: oranges Feld, blaue Schrift. Hier für Links im Text;
    Knöpfe, Karten, Fotos, Menü und Fußzeile haben eigene Regeln. */
 a:hover {
   text-decoration-color: currentColor;
@@ -102,7 +102,7 @@ a.email-link:not(.btn, .channel, .big-link):hover {
   outline-offset: 3px;
 }
 ::selection {
-  background: var(--pink);
+  background: var(--hover);
   color: var(--ink);
 }
 
@@ -162,7 +162,7 @@ html:not(.js) .js-only {
 
 /* Farbfläche: Hintergrund in der Galeriefarbe, Text in der passenden Kontrastfarbe */
 .room {
-  background: var(--c, var(--lime));
+  background: var(--c, var(--green));
   color: var(--on-c, var(--ink));
 }
 .room a:hover {
@@ -305,7 +305,7 @@ html:not(.js) .js-only {
 .btn:active {
   scale: 0.96;
 }
-/* Knöpfe beim Überfahren: Koralle mit schwarzer Schrift */
+/* Knöpfe beim Überfahren: Orange mit blauer Schrift */
 .btn:hover {
   color: var(--ink);
   background: var(--hover);
@@ -475,7 +475,7 @@ a:hover .arrow,
   position: relative;
   display: block;
   overflow: hidden;
-  background: var(--sand);
+  background: var(--wall-3);
   outline-offset: 3px;
 }
 .tile img {

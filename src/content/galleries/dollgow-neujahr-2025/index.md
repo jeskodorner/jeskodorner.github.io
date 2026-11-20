@@ -9,7 +9,7 @@ date: 2025-01-03
 description: "Neujahr 2025 in Dollgow: unterwegs in einer verschneiten Nacht,
   mit Taschenlampen und rotem Licht zwischen Schneeflocken und Dunkelheit."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: pink
+# color: green
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex
 visibility: public
 # Aufnahmedaten (Kamera, Blende …) anzeigen

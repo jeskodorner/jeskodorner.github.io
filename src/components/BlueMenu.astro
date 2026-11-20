@@ -14,7 +14,7 @@
  * Frühere Fassungen in Git-Tags: alte-version-startseite-ueberblendung (Doppelbelichtung, Schrift auf dem Foto mit
  * Schatten), alte-version-laptop-geteilt.
  * Farben: Name und Menüpunkte in der Schriftfarbe des Menüs (weiß auf Blau), aktueller Menüpunkt unterstrichen;
- *   beim Überfahren rosa Feld.
+ *   beim Überfahren oranges Feld.
  * Übergang: Name (Wort für Wort: jd-name-1 „JESKO“, jd-name-2 „DORNER“), Menüpunkte und Fußzeile tragen feste
  * view-transition-Namen. Wortweise, damit jedes Wort unverzerrt gleitet – auch vom zweizeiligen Namen am Handy in
  * das einzeilige Logo. Beim Wechsel Menü → Startseite
@@ -145,7 +145,7 @@ const nameWords = site.name.split(' ').map((word) =>
     height: var(--header-h);
     margin-bottom: clamp(0.25rem, 2vw, 1rem);
   }
-  /* Schließen-Knopf wie der Menüknopf auf den Unterseiten: korallenroter Kreis (auf Weiß sichtbar) */
+  /* Schließen-Knopf wie der Menüknopf auf den Unterseiten: oranger Kreis */
   .bm-close {
     display: inline-grid;
     place-items: center;
@@ -153,7 +153,7 @@ const nameWords = site.name.split(' ').map((word) =>
     height: 3rem;
     border: 0;
     border-radius: 50%;
-    background: var(--pink);
+    background: var(--hover);
     color: var(--ink);
     cursor: pointer;
     transition:
@@ -166,10 +166,10 @@ const nameWords = site.name.split(' ').map((word) =>
   }
   .bm-close:hover {
     background: var(--ink);
-    color: var(--pink);
+    color: var(--hover);
   }
   /* Name: eine Zeile, so breit wie der Platz (aber nicht riesig), in --name-color (Schriftfarbe des Menüs). Im Menü ist er ein Link zur Startseite
-     und bekommt beim Überfahren dasselbe rosa Feld wie die Menüpunkte. */
+     und bekommt beim Überfahren dasselbe orange Feld wie die Menüpunkte. */
   .bm-name {
     display: block;
     width: fit-content;
@@ -182,7 +182,7 @@ const nameWords = site.name.split(' ').map((word) =>
     text-transform: uppercase;
     text-decoration: none;
     color: var(--name-color);
-    /* etwas Luft rundum (rosa Feld beim Überfahren im Menü, Bogen des „J“ in Instrument Serif) – ohne das Layout
+    /* etwas Luft rundum (oranges Feld beim Überfahren im Menü, Bogen des „J“ in Instrument Serif) – ohne das Layout
        zu ändern */
     padding: 0.08em 0.12em 0.15em;
     margin: 0 -0.12em -0.15em;
@@ -191,7 +191,7 @@ const nameWords = site.name.split(' ').map((word) =>
       color 0.2s;
   }
   a.bm-name:hover {
-    background: var(--pink);
+    background: var(--hover);
     color: var(--ink);
   }
   /* Jedes Wort ein eigener Kasten, genau so groß wie das Wort (wie im Logo der Kopfzeile, Header.astro): Beim
@@ -455,7 +455,7 @@ const nameWords = site.name.split(' ').map((word) =>
   .bm-list a[href='/portfolio/'] {
     font-style: normal;
   }
-  /* Aktueller Punkt (im Menü auf Unterseiten): unterstrichen. Überfahren: rosa Feld mit schwarzer Schrift. Das Feld steht
+  /* Aktueller Punkt (im Menü auf Unterseiten): unterstrichen. Überfahren: oranges Feld mit blauer Schrift. Das Feld steht
      links und rechts ein klein wenig über, die Schrift bleibt an ihrem Platz. */
   .bm-list a {
     padding-inline: 0.06em;
@@ -470,7 +470,7 @@ const nameWords = site.name.split(' ').map((word) =>
     text-underline-offset: 0.1em;
   }
   .bm-list a:hover {
-    background-color: var(--pink);
+    background-color: var(--hover);
     color: var(--ink);
   }
   .bm-foot {
@@ -482,7 +482,7 @@ const nameWords = site.name.split(' ').map((word) =>
     padding-top: 2.5rem;
   }
   /* Instagram wie in der Fußzeile jeder Seite: Symbol + „jeskodorner“, aber klein – etwa so groß wie
-     „Mappe ansehen →“ unter dem Foto; beim Überfahren rosa hinterlegt wie die Menüpunkte */
+     „Mappe ansehen →“ unter dem Foto; beim Überfahren orange hinterlegt wie die Menüpunkte */
   .bm-foot a {
     color: inherit;
   }
@@ -496,7 +496,7 @@ const nameWords = site.name.split(' ').map((word) =>
     text-decoration: none;
   }
   .bm-foot a:hover {
-    background: var(--pink);
+    background: var(--hover);
     color: var(--ink);
     text-decoration-color: currentColor;
   }

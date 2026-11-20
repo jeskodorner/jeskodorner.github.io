@@ -10,7 +10,7 @@ description: "Keramikbrunnen und Skulpturen von Julia Bulik auf der Fusion 2025:
   Figuren, fließendes Wasser und leuchtende Glasuren zwischen Bäumen und
   Holzbauten."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: pink
+# color: green
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex
 visibility: public
 # Aufnahmedaten (Kamera, Blende …) anzeigen

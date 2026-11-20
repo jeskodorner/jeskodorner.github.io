@@ -9,7 +9,7 @@ date: 2026-07-01
 description: "Island im Sommer: Blick über eine weite, hügelige Landschaft mit
   rötlichem Bewuchs, einem Flusslauf und Bergen im Dunst."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: pink
+# color: green
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex
 visibility: public
 # Aufnahmedaten (Kamera, Blende …) anzeigen

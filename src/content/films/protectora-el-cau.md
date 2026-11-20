@@ -8,7 +8,7 @@ youtube: "https://youtu.be/yESSsgfX_DA"
 # Vorschaubild (lokal gespeichert, damit beim Seitenaufruf nichts von YouTube geladen wird)
 still: ./images/protectora-el-cau.jpg
 stillAlt: "Ein Hund mit offenem Maul blickt neugierig in die Kamera."
-color: pink
+color: green
 order: 0
 ---
 

@@ -66,7 +66,7 @@ const galleries = defineCollection({
        *  Leer = das Portfolio-Foto und bis zu 7 weitere, gleichmäßig über das Album verteilt. */
       mappe: z.array(z.string()).optional(),
       /** Galeriefarbe der Galerie. Ohne Angabe wird automatisch durchgewechselt. */
-      color: z.enum(['pink', 'blue', 'lime', 'orange', 'violet']).optional(),
+      color: z.enum(['blue', 'orange', 'green', 'cream']).optional(),
       visibility: z.enum(['public', 'unlisted']).default('public'),
       /** EXIF-Daten in Lightbox und Bildseite zeigen */
       showExif: z.boolean().default(true),
@@ -143,7 +143,7 @@ const films = defineCollection({
         still: image().optional(),
         stillAlt: z.string().trim().optional(),
         /** Farbe der Vorschau ohne Standbild */
-        color: z.enum(['pink', 'blue', 'lime', 'orange', 'violet']).optional(),
+        color: z.enum(['blue', 'orange', 'green', 'cream']).optional(),
         /** Externer Link (z. B. Vimeo), falls kein YouTube-Video eingebettet wird */
         link: z.url().optional(),
         linkLabel: z.string().optional(),

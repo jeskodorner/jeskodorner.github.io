@@ -9,7 +9,7 @@ date: 2024-04-23
 description: "Eindrücke am Meer: Küste im Abendlicht, ein Fischerboot mit Möwen,
   Hunde am Wasser, ein Lagerfeuer und Menschen – in Farbe und Schwarzweiß."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: pink
+# color: green
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex
 visibility: public
 # Aufnahmedaten (Kamera, Blende …) anzeigen

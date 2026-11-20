@@ -9,7 +9,7 @@ date: 2026-06-24
 description: "Unterwegs mit Rucksack in den Bergen Andorras: Schotterwege, Rast
   im Gras, Wolken am Hang und Gipfel im Gegenlicht."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: pink
+# color: green
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex
 visibility: public
 # Aufnahmedaten (Kamera, Blende …) anzeigen

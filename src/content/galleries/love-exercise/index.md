@@ -5,7 +5,7 @@ date: 2026-01-15
 # location: "Ort"
 description: "Set-Fotografie bei „Love Exercise“: Szenen und Blicke hinter die Kamera."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: pink
+# color: green
 visibility: public
 showExif: true
 # downloadUrl: https://…

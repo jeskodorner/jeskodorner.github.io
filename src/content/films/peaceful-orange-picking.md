@@ -8,7 +8,7 @@ youtube: "https://youtu.be/L_KqwPinNzI"
 # Vorschaubild (lokal gespeichert, damit beim Seitenaufruf nichts von YouTube geladen wird)
 still: ./images/peaceful-orange-picking.jpg
 stillAlt: "Eine Person im weißen T-Shirt pflückt Orangen von einem Baum."
-color: violet
+color: orange
 order: 4
 ---
 

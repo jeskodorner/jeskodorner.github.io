@@ -81,7 +81,7 @@ photos.config.json          ← Einstellungen für die Bildverarbeitung (Größe
 .github/workflows/deploy.yml← automatisches Deployment
 ```
 
-**Warum eigenes CSS statt Tailwind?** Die Seite lebt von wenigen, gezielt gesetzten Design-Werten: Wandweiß, Schwarz und fünf Galeriefarben. CSS Custom Properties bilden das direkt ab: Eine Klasse wie `c-pink` färbt eine ganze Fläche ein, das HTML bleibt lesbar, und Astro begrenzt die Styles pro Komponente. Tailwind würde vor allem bei vielen generischen Oberflächen helfen, die es hier nicht gibt.
+**Warum eigenes CSS statt Tailwind?** Die Seite lebt von wenigen, gezielt gesetzten Design-Werten: vier Farben. CSS Custom Properties bilden das direkt ab: Eine Klasse wie `c-green` färbt eine ganze Fläche ein, das HTML bleibt lesbar, und Astro begrenzt die Styles pro Komponente. Tailwind würde vor allem bei vielen generischen Oberflächen helfen, die es hier nicht gibt.
 
 ---
 
@@ -128,7 +128,7 @@ year: 2025
 # roles: ["Kamera", "Schnitt"]
 # still: ./images/innehalten.jpg           # eigenes Vorschaubild (optional)
 # stillAlt: "Beschreibung des Standbilds"
-color: lime                                # Farbe der Vorschau ohne Standbild
+color: green                               # Farbe der Vorschau ohne Standbild (blue | orange | green | cream)
 order: 2                                   # Reihenfolge auf der Seite
 ---
 
@@ -584,39 +584,39 @@ so früh. Was dafür sorgt – bitte beibehalten:
 
 ## 11. Design: Farben und Schriften
 
-Look „White Cube“: weiße Galeriewände, schwarze Schrift, Farbe kommt aus den Fotos. Definiert in `src/styles/tokens.css`.
-Drei Rollen (seit 16. November 2026): **Ultramarin ist die Bühne** (Startseite, Menü, Links), **Koralle heißt „hier
-kannst du klicken“** (Überfahren, Menü-Knopf), alles andere ist Schwarz, Weiß und das Foto.
-Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
+Vier Farben, sonst nichts (seit 20. November 2026). Definiert in `src/styles/tokens.css`:
 
-- **Fotos werden nie beschnitten**: in Alben, Übersichten und der Lightbox immer im Originalformat, groß mit weißem
+| Farbe | Hex | Rolle |
+|---|---|---|
+| Dark Blue | `#1A0089` | Schrift überall (statt Schwarz), Bühne: Startseite, Menü, Fußzeile; Links (unterstrichen), Fokusrahmen, Vorschaukarten, Browser-Symbol |
+| White Chocolate | `#EFE7D3` | Wände: Hintergrund aller Seiten; Schrift auf Dark Blue |
+| Portland Orange | `#FF5E33` | „hier kannst du klicken“: Menü-Knopf, Überfahren als Fläche mit blauer Schrift, Unterstrich beim Überfahren von Titeln |
+| June Bud | `#B7CF4F` | Fläche oben auf jeder Albumseite, Download-Kasten, Schriftzug in der Fußzeile |
+
+Dazu nur dunklere Stufen von White Chocolate für Platzhalter und Kästen (`--wall-2`, `--wall-3`). Es gibt bewusst nur
+eine helle Ansicht und keinen Dunkelmodus. Vorher (bis 20.11.2026): weiße Wände, schwarze Schrift, Ultramarin
+`#3A45C8` als Bühne, Koralle `#FF807F` fürs Überfahren, schwarze Fußzeile und für jedes Album ein Ton aus seinen
+Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
+
+- **Fotos werden nie beschnitten**: in Alben, Übersichten und der Lightbox immer im Originalformat, groß mit hellem
   Rand. Nichts ist schräg gestellt. Mutig sind Farben und Schrift, nicht die Anordnung.
-- **Jedes Album hat seinen Ton aus den Fotos.** Die Fläche oben auf der Albumseite und der Download-Kasten bekommen
-  einen hellen, gedämpften Ton, der beim Bauen aus den Durchschnittsfarben der Fotos berechnet wird (`src/lib/color.ts`):
-  Farbton vom Titelbild, Buntheit danach, wie bunt die Fotos im Schnitt sind, Helligkeit immer gleich (OKLCH 0,83,
-  schwarze Schrift mindestens 9 : 1). Hilda bekommt so ein warmes Pfirsich-Rost, Ecuador ein Salbei, der DS-Kurs das
-  Rosaviolett seines Bühnenlichts; fast farblose Alben (Nacht, Schwarzweiß) ein warmes Papiergrau.
-  Wer für ein Album doch eine feste Farbe will: `color: pink | blue | lime | orange | violet` in `index.md` (Palette
-  „Sommer“: Koralle `#FF807F`, Orange `#FFA44E`, Sonnengelb `#F7E04F`, klares Blau `#53A3F2`, Flieder `#B98CEA`).
-  Filme nutzen die Palette weiter. Vorher bekam jedes Album reihum eine Sommerfarbe (Git-Tag
-  `alte-version-startseite-ueberblendung`).
-- **Links und Überfahren:** Links und kleine Akzentschrift (z. B. die Jahreszahlen auf „Über mich“) sind in
-  Ultramarin `#3A45C8` (Token `--accent`, dasselbe Blau wie die Startseite). Beim Überfahren überall dieselbe Antwort
-  wie im Menü: ein korallenrotes Feld mit schwarzer Schrift (Token `--hover`) – Links im Text, Knöpfe, Abspielen,
-  Knöpfe der Lightbox, Kontakt-Adressen. In der schwarzen Fußzeile werden die Links beim Überfahren korallenrot.
-  Bewusst dezenter: Titel neben Fotos (Galerie-Übersicht, nächstes/vorheriges Album) bekommen nur einen
-  Unterstrich in Koralle (Token `--hover-line`). Vorher war Orange `#F25914` die Farbe fürs Überfahren überall.
-- **Rosa** ist Koralle `#FF807F` (vorher kräftiges Pink `#FF3D8B`, dann Altrosa `#E59BB0` und verblichenes
-  Korallenrosa `#EF9D9F`). Es gilt auch für Galerien mit `color: pink`.
-- **Startseite = das Menü** (`src/components/BlueMenu.astro`): Ultramarin `#3A45C8` (kräftiges Blau
-  mit leichtem Lila-Stich, kurz ausprobiert: „Kobalt-lila“ `#474EC4`) mit weißer Schrift (Token `--menu-bg` und `--on-menu` in `tokens.css`). Der Name hat die
+- **Farbflächen** (`color:` in `index.md` eines Albums oder bei einem Film): `blue | orange | green | cream` (Klassen
+  `c-blue` … in `tokens.css`). Ohne Angabe bekommt jedes Album June Bud (`green`). Bei Filmen ist es die Farbe der
+  Vorschau ohne Standbild.
+- **Links und Überfahren:** Links sind blau wie der Text und unterstrichen (Token `--accent`). Beim Überfahren
+  überall dieselbe Antwort wie im Menü: ein oranges Feld mit blauer Schrift (Token `--hover`) – Links im Text,
+  Knöpfe, Abspielen, Knöpfe der Lightbox, Kontakt-Adressen. In der blauen Fußzeile werden die Links beim Überfahren
+  orange. Bewusst dezenter: Titel neben Fotos (Galerie-Übersicht, nächstes/vorheriges Album) bekommen nur einen
+  Unterstrich in Orange (Token `--hover-line`).
+- **Startseite = das Menü** (`src/components/BlueMenu.astro`): Dark Blue `#1A0089` mit Schrift in White Chocolate
+  (Token `--menu-bg` und `--on-menu` in `tokens.css`). Der Name hat die
   Schriftfarbe (`--name-color` in `BlueMenu.astro`), der Menüpunkt der aktuellen Seite ist unterstrichen. Beim Überfahren bekommen
-  Menüpunkte und Name ein rosa Feld mit schwarzer Schrift, Menü- und Schließen-Knopf sind rosa Kreise. Instagram
-  unten wie in der Fußzeile jeder Seite mit Symbol und „jeskodorner“, aber klein (etwa so groß wie „Mappe ansehen →“; beim Überfahren rosa). Sparsam bleiben: mehr Rosa wirkt schnell zu viel. Die Fläche geht über den ganzen
+  Menüpunkte und Name ein oranges Feld mit blauer Schrift, Menü- und Schließen-Knopf sind orange Kreise. Instagram
+  unten wie in der Fußzeile jeder Seite mit Symbol und „jeskodorner“, aber klein (etwa so groß wie „Mappe ansehen →“; beim Überfahren orange). Sparsam bleiben: mehr Orange wirkt schnell zu viel. Die Fläche geht über den ganzen
   Bildschirm, oben groß der Name, darunter die Menüpunkte (Portfolio, Galerie, Film, Über mich, Kontakt), unten
   nur Instagram – auf der Startseite und im Menü gleich. Impressum und Datenschutz stehen in der Fußzeile jeder
   Unterseite (von der Startseite aus also mit zwei Klicks). Ohne Kopfleiste und ohne Scrollen. Dasselbe Menü öffnet sich auf allen
-  Geräten über den rosa Menü-Knopf oben rechts: Die Fläche wächst als Kreis aus dem Knopf, der Schließen-Knopf sitzt an derselben Stelle,
+  Geräten über den orangen Menü-Knopf oben rechts: Die Fläche wächst als Kreis aus dem Knopf, der Schließen-Knopf sitzt an derselben Stelle,
   der Name führt zur Startseite. Eine Textleiste mit Menüpunkten gibt es nur noch als Rückfall für sehr alte Browser.
   Das Menü ist die Startseite ohne Foto: Name und Menüpunkte stehen an derselben Stelle und sind gleich groß
   (Laptop ab 1000 px: Name zweizeilig oben links, Menüpunkte unten links, rechts Blau; darunter wie am Handy: Name
@@ -634,7 +634,7 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
   Die Bildunterschrift ist immer gleich aufgebaut: oben der Albumname (Titelschrift kursiv, eine Zeile, bei sehr
   langen Namen am Handy mit „…“), darunter Monat und Jahr · „Mappe ansehen →“ – so bleibt sie immer gleich hoch und
   das Foto springt nicht. Foto und Bildunterschrift führen zur Mappe des Albums; beim Überfahren bekommt die Zeile
-  „Monat · Mappe ansehen →“ das Koralle-Feld.
+  „Monat · Mappe ansehen →“ das orange Feld.
   Die Fotos wechseln alle 7 Sekunden in der Reihenfolge der Liste `showroom`: Das neue Foto blendet in 1,8 Sekunden
   weich über dem alten ein und setzt sich dabei langsam aus einer leichten Vergrößerung; das alte bleibt darunter
   stehen, bis das neue ganz da ist (nie eine leere Fläche dazwischen). Ein Foto erscheint erst fertig geladen. Kommt
@@ -685,23 +685,15 @@ Es gibt bewusst nur eine helle Ansicht und keinen Dunkelmodus.
 
 Kontraste nach WCAG 2.x:
 
-| Farbe | Hex | Textfarbe darauf | Kontrast |
-|---|---|---|---|
-| Wand | `#FFFFFF` | Schwarz `#0B0B0B` / Nebentext `#5C5C5C` | 19,6 : 1 / 6,7 : 1 |
-| Links, kleine Akzente | Ultramarin `#3A45C8` auf Weiß | – | 7,3 : 1 |
-| Koralle (`pink`) | `#FF807F` | Schwarz | 8,1 : 1 |
-| Startseite/Menü | Ultramarin `#3A45C8` | Weiß | 7,3 : 1 |
-| Überfahren im Menü | Koralle `#FF807F` (Fläche) | Schwarz | 8,1 : 1 |
-| Orange (`orange`) | `#FFA44E` | Schwarz | 10,0 : 1 |
-| Sonnengelb (`lime`) | `#F7E04F` | Schwarz | 14,7 : 1 |
-| Blau (`blue`) | `#53A3F2` | Schwarz | 7,4 : 1 |
-| Flieder (`violet`) | `#B98CEA` | Schwarz | 7,5 : 1 |
-| Überfahren | Koralle `#FF807F` (Fläche) | Schwarz | 8,1 : 1 |
-| Überfahren in der Fußzeile | Koralle `#FF807F` als Schrift auf Schwarz | – | 8,1 : 1 |
-| Albumtöne | aus den Fotos, OKLCH-Helligkeit 0,83 | Schwarz | mindestens 9 : 1 |
-| Titel-Unterstrich beim Überfahren | Koralle `#FF807F` | – (nur Linie) | – |
+| Fläche | Schrift darauf | Kontrast |
+|---|---|---|
+| White Chocolate `#EFE7D3` | Dark Blue `#1A0089` / Nebentext `#55507A` | 12,1 : 1 / 6,1 : 1 |
+| Dark Blue (Startseite, Menü, Fußzeile) | White Chocolate | 12,1 : 1 |
+| Dark Blue | June Bud (Schriftzug Fußzeile) / Orange (Überfahren) | 8,6 : 1 / 4,9 : 1 |
+| Portland Orange `#FF5E33` (Überfahren, Menü-Knopf) | Dark Blue | 4,9 : 1 |
+| June Bud `#B7CF4F` (Albumfläche) | Dark Blue | 8,6 : 1 |
 
-Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer Schrift.
+Orange nie als Schriftfarbe auf White Chocolate (2,5 : 1), nur als Fläche oder Linie.
 
 **Feinschliff-Regeln** (November 2026 einmal über die ganze Seite geprüft; bei neuen Seiten bitte beibehalten):
 
@@ -756,17 +748,17 @@ Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer 
 
 **Vorschau beim Teilen** (WhatsApp, iMessage, Instagram, …): Jede Seite und jedes Album hat eine eigene
 Vorschaukarte (1200 × 630 px), die beim Bauen automatisch entsteht (`src/lib/og.ts`, Dateien unter `/og/…`). Links ein
-Feld in Ultramarin mit „JESKO DORNER“ (Climate Crisis) und dem Titel der Seite (Migha Display aus
+Feld in Dark Blue mit „JESKO DORNER“ (Climate Crisis) und dem Titel der Seite (Migha Display aus
 `src/assets/fonts/migha-regular.otf`), rechts das Foto,
 zugeschnitten auf seinen Bildschwerpunkt (Feld `focus` beim Bild; ohne Angabe bei Hochformaten etwas über der Mitte).
 Startseite und Portfolio zeigen das erste Foto aus `showroom`, Galerie das neueste Album, Film das erste Standbild,
 Über mich das Porträt, jedes Album sein Vorschaubild (`cover`). Kontakt, Impressum, Datenschutz und die Albumseite mit
-Code bekommen eine Karte nur in Ultramarin. Der Titel beim Teilen enthält immer den Namen, z. B.
+Code bekommen eine Karte nur in Dark Blue. Der Titel beim Teilen enthält immer den Namen, z. B.
 „Hilda – Setcard · Jesko Dorner“. Hinweis: Ein geteilter Link auf ein einzelnes Foto (`#bild-3`) zeigt die Karte des
 Albums – mehr gibt eine statische Seite nicht her. WhatsApp und Co. merken sich alte Vorschauen eine Weile; neue
 Karten erscheinen dort manchmal erst nach Tagen.
 
-**Browser-Symbol** (Favicon): ein weißes „J“ aus Migha (Bold) auf Ultramarin, ganz sichtbar und mittig
+**Browser-Symbol** (Favicon): ein „J“ in White Chocolate aus Migha (Bold) auf Dark Blue, ganz sichtbar und mittig
 nach seinem Umriss gesetzt, als `public/favicon.svg`, dazu
 `public/favicon.ico` (32 px, für ältere Browser) und `public/apple-touch-icon.png` (180 px, Home-Bildschirm). Der
 Buchstabe ist als Form gespeichert, damit er überall gleich aussieht.

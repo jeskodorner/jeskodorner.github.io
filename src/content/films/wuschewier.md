@@ -8,7 +8,7 @@ year: 2024
 # Vorschaubild (lokal gespeichert, damit beim Seitenaufruf nichts von YouTube geladen wird)
 still: ./images/wuschewier.jpg
 stillAlt: "Zwei Personen mit Helmen an einem blauen Moped auf einem Feldweg im Abendlicht."
-color: pink
+color: blue
 order: 5
 ---
 

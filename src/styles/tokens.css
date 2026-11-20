@@ -1,70 +1,62 @@
 /*
- * Design-Tokens – „White Cube“: weiße Galeriewände, schwarze Schrift, sommerliche Farbflächen.
- *
- * Drei Rollen: Ultramarin ist die Bühne (Startseite, Menü, Links), Koralle heißt „hier kannst du klicken“
- * (Überfahren überall als Fläche mit schwarzer Schrift, Menü-Knopf), alles andere ist Schwarz, Weiß und das Foto.
- * Die Fläche über einem Album bekommt ihren Ton aus den Fotos (src/lib/color.ts). Die Palette „Sommer“ (Koralle,
- * Orange, Sonnengelb, klares Blau, Flieder) gilt nur noch für Filme und Alben mit ausdrücklichem `color:`. Startseite und Menü: dieses Blau mit weißer Schrift. Frühere Paletten (siehe README): Git-Tags alte-version-verblichene-farben (blass, kühl) und
- * alte-version-knallige-galeriefarben (Neon).
+ * Design-Tokens – vier Farben, sonst nichts (seit 20.11.2026):
+ *   Dark Blue        #1A0089  Schrift überall, Bühne (Startseite, Menü, Fußzeile), Links, Fokusrahmen,
+ *                             Vorschaukarten, Browser-Symbol
+ *   White Chocolate  #EFE7D3  Wände: Hintergrund aller Seiten, Schrift auf Dark Blue
+ *   Portland Orange  #FF5E33  „hier kannst du klicken“: Menüknopf, Überfahren als Fläche mit blauer Schrift,
+ *                             Unterstrich beim Überfahren von Titeln
+ *   June Bud         #B7CF4F  Fläche über dem Album, Schriftzug in der Fußzeile, Kästen
+ * Dunklere Stufen von White Chocolate nur für Platzhalter und Kästen; kein Schwarz mehr.
+ * Frühere Paletten (siehe README): Git-Tags alte-version-ultramarin-climate-crisis (Weiß, Schwarz, Ultramarin,
+ * Koralle, Albumton aus den Fotos), alte-version-verblichene-farben, alte-version-knallige-galeriefarben.
  *
  * Kontraste (WCAG 2.x):
- *   Text #0B0B0B auf Weiß 19,6:1 · Nebentext #5C5C5C 6,7:1 · Links #3A45C8 7,3:1
- *   Farbflächen, alle mit schwarzer Schrift:
- *     Koralle #FF807F 8,1:1 · Orange #FFA44E 10,0:1 · Sonnengelb #F7E04F 14,7:1
- *     Blau #53A3F2 7,4:1 · Flieder #B98CEA 7,5:1
- *   Rosa/Koralle nie als Schriftfarbe auf Weiß (zu hell), nur als Fläche mit schwarzer Schrift.
- *   Startseite/Menü #3A45C8 + Weiß 7,3:1 · Überfahren dort: Koralle-Fläche mit Schwarz 8,1:1
- *   Überfahren: Koralle-Fläche mit schwarzer Schrift 8,1:1 (früher Orange #F25914, Git-Tag alte-version-startseite-ueberblendung)
- *   Albumtöne: OKLCH-Helligkeit 0,83 mit schwarzer Schrift, mindestens 9:1
+ *   Dark Blue auf White Chocolate 12,1:1 · Nebentext #55507A auf White Chocolate 6,1:1
+ *   White Chocolate auf Dark Blue 12,1:1 · Dark Blue auf Orange 4,9:1 · Dark Blue auf June Bud 8,6:1
+ *   June Bud auf Dark Blue 8,6:1 · Orange auf Dark Blue 4,9:1
+ *   Orange nie als Schriftfarbe auf White Chocolate (2,5:1), nur als Fläche oder Linie.
  */
 
 :root {
   color-scheme: light;
 
-  /* Wände */
-  --wall: #ffffff;
-  --wall-2: #f3f3f0;
-  --wall-3: #e8e8e3;
+  /* Die vier Farben */
+  --blue: #1a0089; /* Dark Blue */
+  --orange: #ff5e33; /* Portland Orange */
+  --cream: #efe7d3; /* White Chocolate */
+  --green: #b7cf4f; /* June Bud */
 
-  /* Schrift */
-  --ink: #0b0b0b;
-  --ink-soft: #5c5c5c;
-  --line: rgb(11 11 11 / 0.12);
-  --line-strong: #0b0b0b;
+  /* Wände: White Chocolate und zwei dunklere Stufen (Platzhalter, Kästen) */
+  --wall: var(--cream);
+  --wall-2: #e7ddc6;
+  --wall-3: #ddd2b8;
 
-  /* Galeriefarben („Sommer“) und ihre Textfarben. Die Namen bleiben wegen color: … in den Galerien/Filmen gleich:
-     „pink“ ist Koralle, „lime“ Sonnengelb, „blue“ klares Blau, „violet“ Flieder. */
-  /* Koralle (vorher kräftiges Pink #ff3d8b, dann verblichen #ef9d9f) */
-  --pink: #ff807f;
-  --on-pink: #0b0b0b;
-  --blue: #53a3f2;
-  --on-blue: #0b0b0b;
-  /* Hintergrund von Startseite und Menü: Ultramarin – kräftiges Blau mit leichtem Lila-Stich, weiße Schrift.
-     (Kurz ausprobiert: „Kobalt-lila“ #474ec4.)
-     Ausprobiert: #2b3bff (zu künstlich), #3d8aae, Schieferblau #58677f, Mittelblau #4273b0, Weiß mit schwarzer
-     Schrift (Git-Tag alte-version-startseite-weiss) – siehe README. */
-  --menu-bg: #3a45c8;
-  --on-menu: #ffffff;
-  --lime: #f7e04f;
-  --on-lime: #0b0b0b;
-  --orange: #ffa44e;
-  --on-orange: #0b0b0b;
-  --violet: #b98cea;
-  --on-violet: #0b0b0b;
+  /* Schrift: Dark Blue statt Schwarz (Name --ink bleibt, er steht in vielen Komponenten) */
+  --ink: var(--blue);
+  --ink-soft: #55507a;
+  --line: rgb(26 0 137 / 0.14);
+  --line-strong: var(--blue);
+
+  /* Farbflächen und ihre Schriftfarbe (Klassen c-blue, c-orange … weiter unten) */
+  --on-blue: var(--cream);
+  --on-orange: var(--blue);
+  --on-green: var(--blue);
+  --on-cream: var(--blue);
+  /* Startseite, Menü und Fußzeile: Dark Blue mit Schrift in White Chocolate (vorher Ultramarin #3a45c8, Git-Tag
+     alte-version-ultramarin-climate-crisis) */
+  --menu-bg: var(--blue);
+  --on-menu: var(--on-blue);
 
   /* Rollen (von Komponenten verwendet) */
   --paper: var(--wall);
   --paper-2: var(--wall-2);
-  --sand: var(--wall-3);
-  --accent: #3a45c8; /* Links, kleine Akzentschrift, Fokusrahmen – dasselbe Blau wie die Startseite */
-  --ink-soft-on-dark: #bdbdbd; /* Nebentext auf Schwarz */
-  --hover: var(--pink); /* Überfahren: überall Koralle als Fläche, Schrift schwarz (wie im Menü) */
+  --accent: var(--blue); /* Links (unterstrichen), Fokusrahmen */
+  --on-accent: var(--on-blue);
+  --hover: var(--orange); /* Überfahren: überall Orange als Fläche, Schrift blau (wie im Menü) */
   /* Ausnahme, bewusst dezenter: Titel neben Fotos (Galerie-Übersicht, nächstes/vorheriges Album) bekommen beim
-     Überfahren nur einen Unterstrich in Koralle (bis 16.11.2026 Orange #f25914) */
-  --hover-line: var(--pink);
-  --accent-vivid: var(--pink); /* nur große Schrift und Flächen */
-  --on-accent: #ffffff;
-  --scrim: 11 11 11;
+     Überfahren nur einen Unterstrich in Orange */
+  --hover-line: var(--orange);
+  --scrim: 26 0 137;
 
   /* Schriften – lokal eingebunden (keine Google-Fonts-CDN) */
   /* Titel und Menü: Migha Display (schmal, hoch, Kapitälchen; src/styles/fonts.css). Vorher Bodoni Moda, davor
@@ -114,24 +106,20 @@
   }
 }
 
-/* Galeriefarben: Klasse c-pink, c-blue … setzt --c (Farbe) und --on-c (passende Textfarbe) */
-.c-pink {
-  --c: var(--pink);
-  --on-c: var(--on-pink);
-}
+/* Farbflächen: Klasse c-blue, c-orange … setzt --c (Farbe) und --on-c (passende Textfarbe) */
 .c-blue {
   --c: var(--blue);
   --on-c: var(--on-blue);
-}
-.c-lime {
-  --c: var(--lime);
-  --on-c: var(--on-lime);
 }
 .c-orange {
   --c: var(--orange);
   --on-c: var(--on-orange);
 }
-.c-violet {
-  --c: var(--violet);
-  --on-c: var(--on-violet);
+.c-green {
+  --c: var(--green);
+  --on-c: var(--on-green);
+}
+.c-cream {
+  --c: var(--wall-2);
+  --on-c: var(--on-cream);
 }

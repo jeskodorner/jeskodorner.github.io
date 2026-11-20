@@ -43,13 +43,18 @@ const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : 
     margin-top: var(--section);
     padding-top: clamp(2.5rem, 5vw, 4.5rem);
     padding-bottom: 1.5rem;
-    background: var(--ink);
-    color: var(--wall);
+    background: var(--blue);
+    color: var(--on-blue);
     overflow: hidden;
   }
-  /* Überfahren: Koralle wie überall (auf Schwarz als Schriftfarbe, 8,1:1; auch für den E-Mail-Link aus EmailLink.astro) */
+  /* Fußzeile in Dark Blue wie Startseite und Menü. Überfahren: Orange als Schriftfarbe (4,9:1; auch für den
+     E-Mail-Link aus EmailLink.astro). Vorher Schwarz mit Koralle (Git-Tag alte-version-ultramarin-climate-crisis) */
   .site-footer :global(a:hover) {
     color: var(--hover);
+  }
+  /* Fokusrahmen hell – der blaue Rahmen wäre auf Blau unsichtbar */
+  .site-footer :global(:focus-visible) {
+    outline-color: var(--on-blue);
   }
   /* Adressen links, Rechtliches rechts – beide auf derselben Grundlinie (nicht an der Unterkante der Kästen) */
   .top {
@@ -114,12 +119,12 @@ const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : 
     /* Der Bogen des „J“ reicht 0,22 Schrifthöhen unter die Grundlinie, die Zeile endet schon bei 0,135 – Platz
        schaffen, damit er nicht in die Copyright-Zeile darunter ragt */
     padding-bottom: 0.1em;
-    color: var(--pink);
+    color: var(--green);
     user-select: none;
   }
   .copy {
     margin-top: 1.25rem;
-    color: var(--ink-soft-on-dark);
+    color: var(--on-blue);
   }
   .copy small {
     font-size: inherit;

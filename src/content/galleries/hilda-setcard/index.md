@@ -5,7 +5,7 @@ date: 2026-09-07
 # location: "Ort"
 description: "Setcard-Fotos von Hilda vor einer rostigen Wand."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: pink
+# color: green
 visibility: public
 showExif: true
 cover: hilda-setcard-gesicht.jpg

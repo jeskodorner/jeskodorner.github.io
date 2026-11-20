@@ -1,5 +1,4 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
-import { albumTone } from './color';
 import type { ImageMetadata } from 'astro';
 import { site } from '../config/site';
 
@@ -40,15 +39,13 @@ export interface GalleryImage {
   hashUrl: string;
 }
 
-export const ROOM_COLORS = ['pink', 'blue', 'lime', 'orange', 'violet'] as const;
+export const ROOM_COLORS = ['blue', 'orange', 'green', 'cream'] as const;
 export type RoomColor = (typeof ROOM_COLORS)[number];
 
 export interface Gallery {
   id: string;
-  /** Galeriefarbe (CSS-Klasse c-<farbe>) – nur noch, wenn im Album ausdrücklich `color:` steht */
+  /** Farbe der Fläche über dem Album (CSS-Klasse c-<farbe>): ohne Angabe June Bud (grün) */
   color: RoomColor;
-  /** Albumfarbe aus den Fotos (heller, gedämpfter Ton, src/lib/color.ts); fehlt, wenn `color:` gesetzt ist */
-  tone?: string;
   folder: string;
   slug: string;
   title: string;
@@ -152,9 +149,7 @@ async function load(): Promise<Gallery[]> {
       date: d.date,
       location: d.location,
       description: d.description,
-      color: d.color ?? 'pink',
-      // Fläche über dem Album: Farbe aus den Fotos, außer im Album steht ausdrücklich eine Galeriefarbe
-      tone: d.color ? undefined : albumTone(images.map((i) => i.color), cover.color),
+      color: d.color ?? 'green',
       visibility: d.visibility,
       isUnlisted: d.visibility === 'unlisted',
       showExif: d.showExif,
@@ -171,10 +166,6 @@ async function load(): Promise<Gallery[]> {
   });
 
   galleries.sort((a, b) => b.date.getTime() - a.date.getTime());
-  // Galerien ohne eigene Farbe bekommen reihum eine Galeriefarbe (in Reihenfolge der Übersicht)
-  galleries.forEach((g, i) => {
-    if (!g.entry.data.color) g.color = ROOM_COLORS[i % ROOM_COLORS.length]!;
-  });
   return galleries;
 }
 

@@ -2,9 +2,9 @@
  * Vorschaukarten fürs Teilen (WhatsApp, iMessage, Instagram, …): 1200 × 630 px, beim Bauen erzeugt
  * (Route src/pages/og/[...card].jpg.ts, Datei z. B. /og/album/hilda-setcard.jpg).
  *
- * Aufbau wie die Startseite: links ein Feld in Ultramarin mit „JESKO / DORNER“ (Climate Crisis) oben und dem
+ * Aufbau wie die Startseite: links ein Feld in Dark Blue mit „JESKO / DORNER“ (Climate Crisis) oben und dem
  * Seitentitel (Migha, wie die Titel der Website) unten, rechts das Foto, zugeschnitten auf seinen Bildschwerpunkt (Feld `focus`).
- * Seiten ohne Foto (Kontakt, Impressum, Datenschutz, HQ-Album): das ganze Feld in Ultramarin, Name groß.
+ * Seiten ohne Foto (Kontakt, Impressum, Datenschutz, HQ-Album): das ganze Feld in Dark Blue, Name groß.
  *
  * Die Schrift wird als Form (Pfad) eingesetzt – so braucht der Bildbau keine installierten Schriften.
  */
@@ -18,8 +18,8 @@ import { site } from '../config/site';
 
 export const OG_W = 1200;
 export const OG_H = 630;
-const BLUE = '#3a45c8';
-const WHITE = '#ffffff';
+const BLUE = '#1a0089'; // Dark Blue (tokens.css)
+const WHITE = '#efe7d3'; // White Chocolate
 /** Breite des blauen Felds (Rest: Foto) */
 const PANEL_W = 456;
 const PAD = 52;

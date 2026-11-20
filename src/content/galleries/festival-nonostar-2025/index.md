@@ -9,7 +9,7 @@ date: 2025-08-22
 description: "Eindrücke vom Festival Nonostar 2025: Livemusik unter einem
   Zeltdach, Lagerfeuer, ein DJ-Pult und tanzende Menschen in der Nacht."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: pink
+# color: green
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex
 visibility: public
 # Aufnahmedaten (Kamera, Blende …) anzeigen

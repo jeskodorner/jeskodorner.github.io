@@ -10,7 +10,7 @@ description: "Eindrücke von einer Aufführung des DS-Kurses 26: bemalte Hemden,
   eine Kulisse im Stil einer Reality-Show, Spotlights und viel Bewegung auf der
   Bühne."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: pink
+# color: green
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex
 visibility: public
 # Aufnahmedaten (Kamera, Blende …) anzeigen
