@@ -135,8 +135,9 @@ Kurzer Text zum Video.
 
 **Film-Übersicht** (`/film/`, `src/pages/film.astro`): je Film ein Vorschaubild (16:9), der Titel klein darunter,
 ein kurzer Text in Grau und „Mehr ansehen →“ – kein Player. Laptop 3, Tablet 2, Handy 1 pro Reihe.
-**Seite je Film** (`/film/<dateiname>/`, `src/pages/film/[slug].astro`): „← Alle Filme“, Titel, der ganze Text in
-Grau und darunter der Player mit „Abspielen“ (so groß, dass er auf den ersten Bildschirm passt). Mit eigener
+**Seite je Film** (`/film/<dateiname>/`, `src/pages/film/[slug].astro`): „← Alle Filme“, Titel und der ganze Text
+in Grau, dazu der Player mit „Abspielen“ – am Laptop (ab 1000 px) nebeneinander, Text links, Video rechts; am Handy
+und Tablet untereinander, der Player dann so groß, dass er auf den ersten Bildschirm passt. Mit eigener
 Vorschaukarte fürs Teilen.
 
 Felder dafür (alle optional):

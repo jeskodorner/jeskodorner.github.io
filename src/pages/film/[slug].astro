@@ -27,23 +27,23 @@ const { film } = Astro.props;
 const t = useTranslations();
 const { Content } = await render(film);
 const d = film.data;
-const playerSizes = '(min-width: 1300px) 1200px, 92vw';
+const playerSizes = '(min-width: 1000px) 56vw, 92vw';
 ---
 
 <BaseLayout title={d.title} description={filmTeaser(film) || t.film.intro} image={cardImage(`film/${film.id}`, d.stillAlt ?? d.coverAlt)}>
-  <article>
-    <header class="container container--wide head">
-      {/* zurück an die Stelle dieses Films in der Übersicht */}
-      <a class="back btn btn--small" href={`/film/#${film.id}`}>
-        <Icon name="arrow-left" /> {t.film.back}
-      </a>
+  <article class="container container--wide film">
+    {/* zurück an die Stelle dieses Films in der Übersicht */}
+    <a class="back btn btn--small" href={`/film/#${film.id}`}>
+      <Icon name="arrow-left" /> {t.film.back}
+    </a>
+    <header class="intro">
       <h1 class="display display-1 display-compact" style={`view-transition-name: ft-${film.id}`}>{tidyTitle(d.title)}</h1>
       <div class="prose text">
         <Content />
       </div>
     </header>
 
-    <div class="container container--wide player">
+    <div class="player">
       {
         d.youtube ? (
           <YouTube id={d.youtube} title={d.title} still={d.still} stillAlt={d.stillAlt} color={d.color} eager sizes={playerSizes} />
@@ -66,13 +66,27 @@ const playerSizes = '(min-width: 1300px) 1200px, 92vw';
 </BaseLayout>
 
 <style>
-  /* Kopf kompakt wie auf Album- und Mappenseiten: der Film soll schnell zu sehen sein */
-  .head {
+  /* Oben „← Alle Filme“, darunter Titel und Text und der Player. Handy und Tablet untereinander, Laptop (ab 1000 px)
+     nebeneinander: links Titel und Text, rechts das Video, oben bündig (untereinander mochte Jesko am Laptop nicht).
+     Kopf kompakt wie auf Album- und Mappenseiten: der Film soll schnell zu sehen sein. */
+  .film {
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
     padding-top: clamp(1rem, 2.5vw, 2rem);
-    padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
   }
   .back {
-    margin-bottom: clamp(1rem, 2.5vw, 1.75rem);
+    justify-self: start;
+    margin-bottom: calc(-1 * clamp(0.5rem, 1vw, 0.75rem));
+  }
+  @media (min-width: 1000px) {
+    .film {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      column-gap: clamp(2.5rem, 4vw, 4.5rem);
+      align-items: start;
+    }
+    .back {
+      grid-column: 1 / -1;
+    }
   }
   .text {
     max-width: 52ch;
@@ -81,16 +95,20 @@ const playerSizes = '(min-width: 1300px) 1200px, 92vw';
     line-height: 1.4;
     color: var(--ink-soft);
   }
-  /* Player so breit wie der Inhalt, höchstens 1200 px, linksbündig wie Titel und Text – und nur so groß, dass er
-     samt „Abspielen“ unter Titel und Text auf den ersten Bildschirm passt (16:9, rund 24rem für Kopfzeile, Titel und
-     Text darüber) */
+  /* Player: Handy und Tablet so breit wie der Inhalt und nur so hoch, dass er samt „Abspielen“ unter Titel und Text
+     auf den ersten Bildschirm passt; Laptop so breit wie die rechte Spalte */
   .player {
     display: grid;
     justify-items: start;
     gap: 1.5rem;
   }
   .player > :global(*) {
-    width: min(100%, 1200px, (100svh - 24rem) * 16 / 9);
+    width: min(100%, (100svh - 24rem) * 16 / 9);
+  }
+  @media (min-width: 1000px) {
+    .player > :global(*) {
+      width: 100%;
+    }
   }
   .player :global(.still) {
     box-shadow: var(--hang-shadow);
