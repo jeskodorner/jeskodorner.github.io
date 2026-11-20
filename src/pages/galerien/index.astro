@@ -48,10 +48,9 @@ const hero = c0 ? await preloadImage(c0, cardSizes(c0.width / c0.height), 1200) 
                 <span class="card-title" style={`view-transition-name: gt-${g.slug}`}>
                   {tidyTitle(g.title)}
                 </span>
-                <span class="label card-meta">
-                  {/* geschützte Leerzeichen: umbrochen wird nur am Punkt, nie zwischen Monat und Jahr */}
-                  {t.galleries.images(g.images.length).replace(' ', '\u00A0')} · {formatMonth(g.date).replace(' ', '\u00A0')}
-                </span>
+                {/* Unter dem Titel nur Monat und Jahr (die Anzahl der Fotos stand bis 20.11.2026 davor); geschütztes
+                    Leerzeichen: nie zwischen Monat und Jahr umbrechen */}
+                <span class="label card-meta">{formatMonth(g.date).replace(' ', '\u00A0')}</span>
               </a>
             </li>
           );
