@@ -78,8 +78,8 @@ const jsonLd = gallery.isUnlisted
             </a>
           )
         }
+        {/* Monat und Ort (die Anzahl der Fotos stand bis 20.11.2026 davor) */}
         <p class="label meta-row">
-          <span>{t.galleries.images(gallery.images.length)}</span>
           <span>{formatMonth(gallery.date)}</span>
           {gallery.location && <span>{gallery.location}</span>}
         </p>
