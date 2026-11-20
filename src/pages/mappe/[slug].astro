@@ -45,7 +45,8 @@ const colsMd = cols(portrait ? 3 : 2);
 const colsSm = cols(portrait ? 2 : 1);
 // Bildbreite für den Browser (Inhalt etwa 90 % der Fensterbreite, geteilt durch die Spalten)
 const sizes = `(min-width: 1000px) ${Math.round(90 / colsLg)}vw, (min-width: 600px) ${Math.round(90 / colsMd)}vw, ${Math.round(92 / colsSm)}vw`;
-const meta = [formatMonth(g.date), g.location].filter(Boolean).join(' · ');
+// Unter dem Titel nur das Datum, wie auf der Albumseite (bis 20.11.2026 auch der Ort)
+const meta = formatMonth(g.date);
 // Lightbox-Daten des ganzen Albums (unsichtbar): ein Klick auf ein Foto blättert durchs ganze Album
 const items = await Promise.all(g.images.map((img) => photoData(g, img)));
 const og = cardImage(`album/${g.slug}`, g.cover.alt);

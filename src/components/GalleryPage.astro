@@ -78,10 +78,10 @@ const jsonLd = gallery.isUnlisted
             </a>
           )
         }
-        {/* Monat und Ort (die Anzahl der Fotos stand bis 20.11.2026 davor) */}
+        {/* Nur das Datum (bis 20.11.2026 auch Anzahl der Fotos und Ort; der Ort steht weiter unsichtbar für
+            Suchmaschinen in den Strukturdaten oben) */}
         <p class="label meta-row">
           <span>{formatMonth(gallery.date)}</span>
-          {gallery.location && <span>{gallery.location}</span>}
         </p>
         <h1 class="display display-1 display-compact title" style={`view-transition-name: gt-${gallery.slug}`}>{tidyTitle(gallery.title)}</h1>
         {/* Beschreibung direkt unter dem Titel im Band (vorher groß darunter auf der Wand) – so beginnen die Fotos früher */}
