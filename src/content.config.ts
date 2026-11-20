@@ -139,9 +139,15 @@ const films = defineCollection({
           .refine((v) => Boolean(youtubeId(v)), { error: 'youtube: Link oder ID nicht erkannt (z. B. https://youtu.be/abc123XYZ_-).' })
           .transform((v) => youtubeId(v)!)
           .optional(),
-        /** Eigenes Standbild als Vorschau (optional). Ohne Standbild: farbige Vorschau mit Titel */
+        /** Standbild im Player auf der Seite des Films (vor dem Klick auf „Abspielen“). Ohne Standbild: farbige
+         *  Fläche mit Titel */
         still: image().optional(),
         stillAlt: z.string().trim().optional(),
+        /** Eigenes Vorschaubild für die Übersicht /film/ (optional, z. B. extra hochgeladen). Ohne: das Standbild */
+        cover: image().optional(),
+        coverAlt: z.string().trim().optional(),
+        /** Kurzer Text für die Übersicht (optional). Ohne: der erste Absatz des Textes */
+        summary: z.string().trim().optional(),
         /** Farbe der Vorschau ohne Standbild */
         color: z.enum(['blue', 'orange', 'green', 'cream']).optional(),
         /** Externer Link (z. B. Vimeo), falls kein YouTube-Video eingebettet wird */
@@ -154,6 +160,9 @@ const films = defineCollection({
       .superRefine((f, ctx) => {
         if (f.still && (!f.stillAlt || f.stillAlt.length < 3)) {
           ctx.addIssue({ code: 'custom', path: ['stillAlt'], message: 'Alt-Text für das Standbild fehlt (stillAlt).' });
+        }
+        if (f.cover && (!f.coverAlt || f.coverAlt.length < 3)) {
+          ctx.addIssue({ code: 'custom', path: ['coverAlt'], message: 'Alt-Text für das Vorschaubild fehlt (coverAlt).' });
         }
       }),
 });

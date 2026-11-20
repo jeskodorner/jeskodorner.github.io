@@ -147,6 +147,8 @@ export const de = {
     title: 'Film',
     intro: 'Kurzfilme, Trailer und Videos.',
     watch: 'Ansehen',
+    more: 'Mehr ansehen',
+    back: 'Alle Filme',
     empty: 'Filmarbeiten folgen.',
   },
   about: { title: 'Über mich', stations: 'Stationen', gear: 'Ausrüstung' },

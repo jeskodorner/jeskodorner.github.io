@@ -1,19 +1,24 @@
 ---
-import { getCollection, render } from 'astro:content';
+/**
+ * Film – Übersicht: je Film ein Vorschaubild (eigenes `cover` oder das Standbild), der Titel klein darunter, ein
+ * kurzer Text in Grau und „Mehr ansehen →“. Kein Player hier: Abspielen gibt es auf der Seite des Films
+ * (src/pages/film/[slug].astro). Bis 20.11.2026 standen hier alle Videos mit Player und großem Titel untereinander –
+ * zu viele große Überschriften.
+ */
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ParallaxImage from '../components/ParallaxImage.astro';
-import YouTube from '../components/YouTube.astro';
+import Picture from '../components/Picture.astro';
 import Icon from '../components/Icon.astro';
 import { useTranslations } from '../i18n';
 import { tidyTitle } from '../lib/text';
 import { cardImage } from '../lib/og';
+import { getFilms, filmUrl, filmPreview, filmTeaser } from '../lib/films';
 
 const t = useTranslations();
-const films = (await getCollection('films')).sort((a, b) => a.data.order - b.data.order || (b.data.year ?? 0) - (a.data.year ?? 0));
-const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (await render(f)).Content })));
+const films = await getFilms();
+const first = films.map(filmPreview).find(Boolean);
 ---
 
-<BaseLayout title={t.film.title} description={t.film.intro} image={cardImage('film', films.find((f) => f.data.still)?.data.stillAlt)}>
+<BaseLayout title={t.film.title} description={t.film.intro} image={cardImage('film', first?.alt)}>
   <section class="container container--wide head">
     <h1 class="display display-1">{t.film.title}</h1>
     <p class="lead muted">{t.film.intro}</p>
@@ -23,54 +28,37 @@ const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (
     {films.length === 0 && <p>{t.film.empty}</p>}
     <ol class="films" role="list">
       {
-        rendered.map(({ film, Content }, i) => (
-          <li class="film" id={film.id}>
-            <div class="media">
-              {film.data.youtube ? (
-                <YouTube
-                  id={film.data.youtube}
-                  title={film.data.title}
-                  still={film.data.still}
-                  stillAlt={film.data.stillAlt}
-                  color={film.data.color}
-                  eager={i === 0}
-                />
-              ) : (
-                film.data.still && (
-                  <ParallaxImage
-                    class="still"
-                    src={film.data.still}
-                    alt={film.data.stillAlt ?? ''}
-                    sizes="(min-width: 1000px) 48vw, 100vw"
-                    loading={i === 0 ? 'eager' : 'lazy'}
-                    fetchpriority={i === 0 ? 'high' : undefined}
-                  />
-                )
-              )}
-            </div>
-            {/* Nur Titel und Text (seit 20.11.2026; vorher auch Aufgaben, Videotyp, Länge, Jahr, Regie und Festivals –
-                die Felder in den Film-Dateien bleiben, werden aber nicht mehr gezeigt). Der Text in Grau. */}
-            <div class="info rise">
-              <h2 class="display display-2">{tidyTitle(film.data.title)}</h2>
-              <div class="prose">
-                <Content />
-              </div>
-              {film.data.youtube ? (
-                <a class="btn btn--small" href={`https://www.youtube.com/watch?v=${film.data.youtube}`} target="_blank" rel="noopener noreferrer">
-                  Auf YouTube ansehen <Icon name="arrow-up-right" />
-                  <span class="visually-hidden">(externe Seite, neuer Tab)</span>
-                </a>
-              ) : (
-                film.data.link && (
-                  <a class="btn btn--small" href={film.data.link} target="_blank" rel="noopener noreferrer">
-                    {film.data.linkLabel ?? t.film.watch} <Icon name="arrow-up-right" />
-                    <span class="visually-hidden">(externe Seite, neuer Tab)</span>
-                  </a>
-                )
-              )}
-            </div>
-          </li>
-        ))
+        films.map((film, i) => {
+          const preview = filmPreview(film);
+          const url = filmUrl(film);
+          return (
+            <li class:list={['film', `c-${film.data.color ?? 'green'}`]} id={film.id}>
+              <a class="film-link" href={url}>
+                <span class="frame">
+                  {preview ? (
+                    <Picture
+                      src={preview.src}
+                      alt={preview.alt}
+                      sizes="(min-width: 1100px) 30vw, (min-width: 700px) 46vw, 92vw"
+                      loading={i < 3 ? 'eager' : 'lazy'}
+                      fetchpriority={i === 0 ? 'high' : undefined}
+                      class="frame-img"
+                    />
+                  ) : (
+                    <span class="frame-fill" aria-hidden="true" />
+                  )}
+                </span>
+                <h2 class="film-title" style={`view-transition-name: ft-${film.id}`}>
+                  {tidyTitle(film.data.title)}
+                </h2>
+              </a>
+              <p class="teaser">{filmTeaser(film)}</p>
+              <a class="more label" href={url} aria-label={`${t.film.more}: ${film.data.title}`}>
+                {t.film.more} <Icon name="arrow-right" class="arrow" />
+              </a>
+            </li>
+          );
+        })
       }
     </ol>
   </section>
@@ -80,45 +68,101 @@ const rendered = await Promise.all(films.map(async (f) => ({ film: f, Content: (
   .head {
     padding-bottom: clamp(2rem, 5vw, 4rem);
   }
+  .lead {
+    max-width: 52ch;
+  }
+  /* Raster: Handy 1, Tablet 2, Laptop 3 Filme pro Reihe */
   .films {
     list-style: none;
     padding: 0;
     display: grid;
-    gap: clamp(3.5rem, 8vw, 8rem);
+    gap: clamp(2.5rem, 5vw, 4.5rem) clamp(1rem, 2.5vw, 2.25rem);
+  }
+  @media (min-width: 700px) {
+    .films {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (min-width: 1100px) {
+    .films {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
   .film {
     display: grid;
-    gap: clamp(1.25rem, 3vw, 3rem);
+    align-content: start;
+    justify-items: start;
+    gap: 0.6rem;
     scroll-margin-top: calc(var(--header-h) + 1rem);
   }
-  /* Desktop: Text immer links (gleich breit wie das Video), Video rechts, beide oben bündig */
-  @media (min-width: 1000px) {
-    .film {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      align-items: start;
-      column-gap: clamp(2.5rem, 5vw, 6rem);
-    }
-    .film .media {
-      order: 2;
-    }
-  }
-  .film :global(.still) {
+  .film-link {
+    display: grid;
+    gap: 0.75rem;
     width: 100%;
+    text-decoration: none;
+    color: var(--ink);
+    outline-offset: 6px;
+  }
+  /* Vorschaubild immer 16:9 (Ausschnitt aus der Mitte), damit die Reihen gleich hoch sind */
+  .frame {
+    display: block;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
     background: var(--wall-3);
     box-shadow: var(--hang-shadow);
   }
-  /* Gruppen durch Abstand: Titel und Angaben gehören eng zusammen, Text und Knopf stehen mit mehr Luft darunter */
-  .info {
-    display: grid;
-    gap: 0.5rem;
-    justify-items: start;
-    max-width: 40rem;
+  .frame :global(.frame-img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.9s var(--ease);
   }
-  .info .prose {
-    margin-top: 1rem;
+  .frame-fill {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: var(--c);
+  }
+  /* Titel klein wie in der Galerie-Übersicht – nur „Film“ oben ist groß */
+  .film-title {
+    font-family: var(--font-display);
+    font-weight: var(--display-wght);
+    font-synthesis-weight: none;
+    font-size: clamp(1.5rem, 1.15rem + 1vw, 2.25rem);
+    line-height: 1;
+    letter-spacing: -0.005em;
+    text-wrap: balance;
+  }
+  .teaser {
+    max-width: 44ch;
     color: var(--ink-soft);
   }
-  .info .btn {
-    margin-top: 0.75rem;
+  .more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    margin-top: 0.15rem;
+    padding: 0.15em 0.3em;
+    margin-inline: -0.3em;
+    text-decoration: none;
+    transition:
+      background-color 0.2s,
+      color 0.2s;
+  }
+  .more:hover {
+    background: var(--hover);
+    color: var(--on-hover);
+  }
+  @media (hover: hover) {
+    .film-link:hover :global(.frame-img) {
+      transform: scale(var(--hover-zoom));
+    }
+    .film-link:hover .film-title {
+      text-decoration: underline;
+      text-decoration-color: var(--hover-line);
+      text-decoration-thickness: 0.1em;
+      text-underline-offset: 0.12em;
+    }
   }
 </style>

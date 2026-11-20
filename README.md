@@ -133,9 +133,23 @@ order: 2                                   # Reihenfolge auf der Seite
 Kurzer Text zum Video.
 ```
 
-Auf der Seite stehen nur **Titel und Text** (der Text grau), dazu „Auf YouTube ansehen“. Aufgaben, Videotyp,
-Länge, Jahr, Regie und Festivals (`roles`, `format`, `runtime`, `year`, `director`, `festivals`) werden seit
-20.11.2026 nicht mehr gezeigt – die Felder dürfen in alten Dateien stehen bleiben.
+**Film-Übersicht** (`/film/`, `src/pages/film.astro`): je Film ein Vorschaubild (16:9), der Titel klein darunter,
+ein kurzer Text in Grau und „Mehr ansehen →“ – kein Player. Laptop 3, Tablet 2, Handy 1 pro Reihe.
+**Seite je Film** (`/film/<dateiname>/`, `src/pages/film/[slug].astro`): „← Alle Filme“, Titel, der ganze Text in
+Grau und darunter der Player mit „Abspielen“ (so groß, dass er auf den ersten Bildschirm passt). Mit eigener
+Vorschaukarte fürs Teilen.
+
+Felder dafür (alle optional):
+
+```yaml
+cover: ./images/mein-video-vorschau.jpg     # eigenes Vorschaubild für die Übersicht (ohne: das Standbild `still`)
+coverAlt: "Was auf dem Vorschaubild zu sehen ist"
+summary: "Kurzer Text für die Übersicht"     # ohne: der erste Absatz des Textes
+```
+
+Das Vorschaubild legst du in `src/content/films/images/`. Aufgaben, Videotyp, Länge, Jahr, Regie und Festivals
+(`roles`, `format`, `runtime`, `year`, `director`, `festivals`) werden seit 20.11.2026 nicht mehr gezeigt – die
+Felder dürfen in alten Dateien stehen bleiben.
 
 Videos werden **datensparsam per Zwei-Klick** eingebettet. Beim Seitenaufruf lädt nichts von YouTube, und es gibt keine Cookies.
 Erst ein Klick auf „Abspielen“ lädt den Player von youtube-nocookie.com. Ohne JavaScript führt der Klick zu YouTube.

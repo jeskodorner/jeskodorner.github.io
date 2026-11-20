@@ -22,9 +22,11 @@ export interface Props {
   color?: RoomColor;
   /** Erstes Video der Seite: Vorschaubild sofort laden */
   eager?: boolean;
+  /** Breite des Standbilds für den Browser (sizes) */
+  sizes?: string;
 }
 
-const { id, title, still, stillAlt, color = 'pink', eager = false } = Astro.props;
+const { id, title, still, stillAlt, color = 'green', eager = false, sizes = '(min-width: 1000px) 48vw, 100vw' } = Astro.props;
 const watchUrl = `https://www.youtube.com/watch?v=${id}`;
 ---
 
@@ -32,7 +34,7 @@ const watchUrl = `https://www.youtube.com/watch?v=${id}`;
   <a class="yt-poster" href={watchUrl} target="_blank" rel="noopener noreferrer" aria-label={`Video „${title}“ abspielen (lädt YouTube)`}>
     {
       still ? (
-        <Picture src={still} alt={stillAlt ?? ''} sizes="(min-width: 1000px) 48vw, 100vw" loading={eager ? 'eager' : 'lazy'} class="yt-img" />
+        <Picture src={still} alt={stillAlt ?? ''} sizes={sizes} loading={eager ? 'eager' : 'lazy'} class="yt-img" />
       ) : (
         <span class="yt-title display" aria-hidden="true">
           {title}

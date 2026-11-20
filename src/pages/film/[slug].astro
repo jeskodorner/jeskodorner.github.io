@@ -1,0 +1,101 @@
+---
+/**
+ * Seite je Film (/film/<name>/): „← Alle Filme“, Titel, der Text zum Film in Grau und darunter der Player –
+ * datensparsam, erst ein Klick auf „Abspielen“ lädt YouTube (src/components/YouTube.astro). Filme ohne YouTube,
+ * aber mit Link (z. B. Vimeo): Standbild und ein Knopf zum Film.
+ */
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import YouTube from '../../components/YouTube.astro';
+import Picture from '../../components/Picture.astro';
+import Icon from '../../components/Icon.astro';
+import { useTranslations } from '../../i18n';
+import { tidyTitle } from '../../lib/text';
+import { cardImage } from '../../lib/og';
+import { getFilms, filmTeaser, type Film } from '../../lib/films';
+
+export async function getStaticPaths() {
+  const films = await getFilms();
+  return films.map((film) => ({ params: { slug: film.id }, props: { film } }));
+}
+
+interface Props {
+  film: Film;
+}
+
+const { film } = Astro.props;
+const t = useTranslations();
+const { Content } = await render(film);
+const d = film.data;
+const playerSizes = '(min-width: 1300px) 1200px, 92vw';
+---
+
+<BaseLayout title={d.title} description={filmTeaser(film) || t.film.intro} image={cardImage(`film/${film.id}`, d.stillAlt ?? d.coverAlt)}>
+  <article>
+    <header class="container container--wide head">
+      {/* zurück an die Stelle dieses Films in der Übersicht */}
+      <a class="back btn btn--small" href={`/film/#${film.id}`}>
+        <Icon name="arrow-left" /> {t.film.back}
+      </a>
+      <h1 class="display display-1 display-compact" style={`view-transition-name: ft-${film.id}`}>{tidyTitle(d.title)}</h1>
+      <div class="prose text">
+        <Content />
+      </div>
+    </header>
+
+    <div class="container container--wide player">
+      {
+        d.youtube ? (
+          <YouTube id={d.youtube} title={d.title} still={d.still} stillAlt={d.stillAlt} color={d.color} eager sizes={playerSizes} />
+        ) : (
+          <>
+            {d.still && (
+              <Picture src={d.still} alt={d.stillAlt ?? ''} sizes={playerSizes} loading="eager" fetchpriority="high" class="still" />
+            )}
+            {d.link && (
+              <a class="btn btn--solid watch" href={d.link} target="_blank" rel="noopener noreferrer">
+                {d.linkLabel ?? t.film.watch} <Icon name="arrow-up-right" />
+                <span class="visually-hidden">(externe Seite, neuer Tab)</span>
+              </a>
+            )}
+          </>
+        )
+      }
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  /* Kopf kompakt wie auf Album- und Mappenseiten: der Film soll schnell zu sehen sein */
+  .head {
+    padding-top: clamp(1rem, 2.5vw, 2rem);
+    padding-bottom: clamp(1.5rem, 3vw, 2.5rem);
+  }
+  .back {
+    margin-bottom: clamp(1rem, 2.5vw, 1.75rem);
+  }
+  .text {
+    max-width: 52ch;
+    margin-top: clamp(0.75rem, 1.5vw, 1.25rem);
+    font-size: var(--fs-lead);
+    line-height: 1.4;
+    color: var(--ink-soft);
+  }
+  /* Player so breit wie der Inhalt, höchstens 1200 px, linksbündig wie Titel und Text – und nur so groß, dass er
+     samt „Abspielen“ unter Titel und Text auf den ersten Bildschirm passt (16:9, rund 24rem für Kopfzeile, Titel und
+     Text darüber) */
+  .player {
+    display: grid;
+    justify-items: start;
+    gap: 1.5rem;
+  }
+  .player > :global(*) {
+    width: min(100%, 1200px, (100svh - 24rem) * 16 / 9);
+  }
+  .player :global(.still) {
+    box-shadow: var(--hang-shadow);
+  }
+  .player > .watch {
+    width: auto;
+  }
+</style>
