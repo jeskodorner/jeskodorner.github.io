@@ -56,7 +56,7 @@ const og = cardImage(`album/${g.slug}`, g.cover.alt);
   <section class="container container--wide head">
     {/* Zurück dorthin, wo man herkam (Startseite oder Portfolio); ohne Vorgeschichte zur Startseite */}
     <a class="back btn btn--small" href="/" data-back>
-      <Icon name="arrow-left" /> {t.mappe.back}
+      <Icon name="arrow-left" /> {t.back}
     </a>
     <h1 class="display display-1 display-compact">{tidyTitle(g.title)}</h1>
     <p class="label muted">{meta}</p>
@@ -112,17 +112,10 @@ const og = cardImage(`album/${g.slug}`, g.cover.alt);
 
 <script>
   import { initAlbumLinks } from '../../scripts/open-album';
+  import { initBackLinks } from '../../scripts/back-link';
   initAlbumLinks();
   // „Zurück“: kam man von dieser Website (Startseite, Portfolio), geht es genau dorthin zurück – samt Stelle auf der Seite
-  for (const a of document.querySelectorAll<HTMLAnchorElement>('[data-back]')) {
-    a.addEventListener('click', (e) => {
-      const ref = document.referrer ? new URL(document.referrer) : null;
-      if (ref && ref.origin === location.origin && ref.pathname !== location.pathname && history.length > 1) {
-        e.preventDefault();
-        history.back();
-      }
-    });
-  }
+  initBackLinks();
 </script>
 
 <style>

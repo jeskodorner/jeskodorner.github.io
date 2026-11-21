@@ -1,6 +1,6 @@
 ---
 /**
- * Seite je Film (/film/<name>/) – aufgebaut wie die Albumseite: oben ein helles graues Band mit „← Alle Filme“, Titel
+ * Seite je Film (/film/<name>/) – aufgebaut wie die Albumseite: oben ein helles graues Band mit „← Zurück“, Titel
  * und Text (grau), am Laptop daneben der Player, am Handy darunter. Datensparsam: erst ein Klick auf „Abspielen“ lädt
  * YouTube (src/components/YouTube.astro). Unten „Nächster Film →“ wie „Nächste Galerie“ beim Album (nur in eine
  * Richtung; nach dem letzten Film kommt wieder der erste). Filme ohne YouTube, aber mit Link (z. B. Vimeo):
@@ -40,9 +40,10 @@ const playerSizes = '(min-width: 1000px) 56vw, 92vw';
   <article class="c-cream">
     <div class="g-band room">
       <div class="container container--wide film">
-        {/* zurück an die Stelle dieses Films in der Übersicht */}
-        <a class="back btn btn--small" href={`/film/#${film.id}`}>
-          <Icon name="arrow-left" /> {t.film.back}
+        {/* „Zurück“ dorthin, wo man herkam; ohne Vorgeschichte an die Stelle dieses Films in der Übersicht
+            (src/scripts/back-link.ts) */}
+        <a class="back btn btn--small" href={`/film/#${film.id}`} data-back>
+          <Icon name="arrow-left" /> {t.back}
         </a>
         <header class="intro">
           <h1 class="display display-1 display-compact" style={`view-transition-name: ft-${film.id}`}>{tidyTitle(d.title)}</h1>
@@ -81,9 +82,14 @@ const playerSizes = '(min-width: 1000px) 56vw, 92vw';
   />
 </BaseLayout>
 
+<script>
+  import { initBackLinks } from '../../scripts/back-link';
+  initBackLinks();
+</script>
+
 <style>
   /* Helles graues Band wie auf der Albumseite (gleiche Ränder wie .g-band in GalleryPage.astro). Darin oben
-     „← Alle Filme“, darunter Titel und Text und der Player. Handy und Tablet untereinander, Laptop (ab 1000 px)
+     „← Zurück“, darunter Titel und Text und der Player. Handy und Tablet untereinander, Laptop (ab 1000 px)
      nebeneinander: links Titel und Text, rechts das Video, oben bündig (untereinander mochte Jesko am Laptop nicht). */
   .g-band {
     padding-block: clamp(1rem, 2.5vw, 2rem) clamp(1.5rem, 3vw, 2.75rem);

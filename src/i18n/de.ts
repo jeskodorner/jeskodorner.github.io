@@ -4,6 +4,8 @@
  */
 export const de = {
   skipLink: 'Zum Inhalt springen',
+  /** Knopf oben auf Album, Film und Mappe (überall gleich, src/scripts/back-link.ts) */
+  back: 'Zurück',
   nav: {
     label: 'Hauptnavigation',
     home: 'Start',
@@ -49,8 +51,6 @@ export const de = {
     write: 'Schreib mir',
   },
   mappe: {
-    /** Knopf oben auf der Mappe */
-    back: 'Zurück',
     /** Knopf unten auf der Mappe */
     toAlbum: 'Ganzes Album ansehen',
     /** Zeile darunter, z. B. „30 Bilder im Album“ */
@@ -59,7 +59,6 @@ export const de = {
     title: 'Galerie',
     intro: 'Keine kuratierte Ausstellung, sondern mein offenes Fotoarchiv – Serien, Reisen, Aufträge und alles dazwischen.',
     images: (n: number) => (n === 1 ? '1 Bild' : `${n} Bilder`),
-    back: 'Alle Galerien',
     prev: 'Vorherige Galerie',
     next: 'Nächste Galerie',
     unlisted:
@@ -147,7 +146,6 @@ export const de = {
     intro: 'Kurzfilme, Trailer und Videos.',
     watch: 'Ansehen',
     more: 'Mehr ansehen',
-    back: 'Alle Filme',
     next: 'Nächster Film',
     empty: 'Filmarbeiten folgen.',
   },

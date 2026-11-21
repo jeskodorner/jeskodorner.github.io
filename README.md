@@ -136,7 +136,7 @@ Kurzer Text zum Video.
 **Film-Übersicht** (`/film/`, `src/pages/film.astro`): je Film ein Vorschaubild (16:9), der Titel klein darunter,
 ein kurzer Text in Grau und „Mehr ansehen →“ – kein Player. Laptop 3, Tablet 2, Handy 1 pro Reihe.
 **Seite je Film** (`/film/<dateiname>/`, `src/pages/film/[slug].astro`): aufgebaut wie die Albumseite – oben ein
-hellgraues Band mit „← Alle Filme“, Titel und dem ganzen Text in Grau, dazu der Player mit „Abspielen“ (am Laptop
+hellgraues Band mit „← Zurück“, Titel und dem ganzen Text in Grau, dazu der Player mit „Abspielen“ (am Laptop
 ab 1000 px nebeneinander, Text links, Video rechts; am Handy und Tablet untereinander, der Player dann so groß, dass
 er auf den ersten Bildschirm passt). Unten „Nächster Film →“ mit Vorschaubild, gleich aufgebaut wie „Nächste
 Galerie“ beim Album (`src/components/NeighbourNav.astro`), nur in eine Richtung; nach dem letzten Film kommt der
@@ -665,7 +665,7 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
   man aus einer Mappe (oder einer anderen Seite) zurück, geht es mit dem Foto weiter, das zuletzt zu sehen war
   (gemerkt im Tab, `sessionStorage`); erst ein neuer Besuch beginnt wieder vorne. Mit „Bewegung reduzieren“ oder
   ohne JavaScript bleibt das erste Foto stehen.
-- **Albumseite** (`src/components/GalleryPage.astro`): oben ein kompaktes hellgraues Band mit „← Alle Galerien“,
+- **Albumseite** (`src/components/GalleryPage.astro`): oben ein kompaktes hellgraues Band mit „← Zurück“,
   Anzahl · Monat · Ort, dem Titel und der Beschreibung in normaler Textgröße, direkt darunter die Fotos. Wer ein Album
   öffnet, sieht so sofort Fotos (am Laptop etwa die Hälfte des ersten Bildschirms, am Handy über die Hälfte). Der
   Titel ist dafür kleiner als auf den Hauptseiten. Vorher (bis 20.11.2026) war der Titel so groß wie „Galerie“, die
@@ -751,8 +751,11 @@ Orange nie als Schriftfarbe auf White Chocolate (2,5 : 1), nur als Fläche oder 
 - **Knöpfe sagen, was passiert:** Verb und Ding („Portfolio ansehen“, „Galerie ansehen“, „Album anfordern“,
   „Schreib mir“), keine Auslassungspunkte. Am Ende von Portfolio und Über mich steht dasselbe Paar (Klasse
   `btn-row`): „Schreib mir“ gefüllt, daneben der Weg weiter mit Pfeil; am Handy beide untereinander in voller Breite.
-- **Zurück aus dem Album:** „← Alle Galerien“ führt zur Stelle des Albums in der Übersicht (`/galerien/#album-…`),
-  nicht an ihren Anfang. Der Zurück-Knopf des Browsers stellt die Position ohnehin wieder her.
+- **Zurück:** Album, Film und Mappe haben oben denselben Knopf „← Zurück“ (`src/scripts/back-link.ts`, Text in
+  `de.ts` unter `back`). Er führt dorthin, wo man herkam, wie der Zurück-Knopf des Browsers, samt Stelle auf der
+  Seite. Ohne Vorgeschichte (Link von außen) führt er im Album zur Stelle des Albums in der Übersicht
+  (`/galerien/#album-…`), im Film zur Stelle des Films in der Film-Übersicht und in der Mappe zur Startseite. Bis
+  21.11.2026 hieß er im Album „Alle Galerien“ und im Film „Alle Filme“ und führte immer zur Übersicht.
 - **Erster Bildschirm sagt, worum es geht:** über die Fotos mit Bildunterschrift. Eine Zeile „Fotografie“ unter dem
   Namen gab es kurz, sie ist wieder weg.
 - **Fotoreihen ohne Ruckeln:** Mit JavaScript erscheinen die Fotoreihen eines Albums erst, wenn `justify.ts` sie

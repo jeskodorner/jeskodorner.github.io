@@ -72,9 +72,10 @@ const jsonLd = gallery.isUnlisted
       <div class="container container--wide">
         {
           !gallery.isUnlisted && (
-            /* zurück an die Stelle dieses Albums in der Übersicht, nicht an den Anfang */
-            <a class="back btn btn--small" href={`/galerien/#album-${gallery.slug}`}>
-              <Icon name="arrow-left" /> {t.galleries.back}
+            /* „Zurück“ dorthin, wo man herkam; ohne Vorgeschichte an die Stelle dieses Albums in der Übersicht
+               (src/scripts/back-link.ts) */
+            <a class="back btn btn--small" href={`/galerien/#album-${gallery.slug}`} data-back>
+              <Icon name="arrow-left" /> {t.back}
             </a>
           )
         }
@@ -137,6 +138,11 @@ const jsonLd = gallery.isUnlisted
     next={next && { url: next.url, title: next.title, img: { src: next.cover.src, color: next.cover.color, lqip: next.cover.lqip } }}
   />
 </BaseLayout>
+
+<script>
+  import { initBackLinks } from '../scripts/back-link';
+  initBackLinks();
+</script>
 
 <style>
   /* Farbband in der Galeriefarbe. Kompakt (seit 20.11.2026): Wer ein Album öffnet, soll sofort Fotos sehen – am

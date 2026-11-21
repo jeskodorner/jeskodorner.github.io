@@ -64,10 +64,49 @@ const hero = c0 ? await preloadImage(c0, cardSizes(c0.width / c0.height), 1200) 
 <script>
   import { initJustify } from '../../scripts/justify';
   initJustify();
-  // Aus einem Album zurück („Alle Galerien“, Adresse /galerien/#album-…): nach dem Verteilen der Reihen das Album
-  // mittig zeigen – der Sprung des Browsers beim Laden passt nicht mehr, sobald die Reihen neu verteilt sind
-  const target = location.hash.startsWith('#album-') ? document.getElementById(location.hash.slice(1)) : null;
-  if (target) requestAnimationFrame(() => target.scrollIntoView({ block: 'center', behavior: 'instant' }));
+  // Aus einem Album zurück: nach dem Verteilen der Reihen das Album mittig zeigen. Die Stelle, die sich der Browser
+  // gemerkt hat, passt nicht mehr, sobald die Reihen neu verteilt sind (gemessen 21.11.2026: Album 300 px zu tief,
+  // halb unter dem Bildschirmrand). Zwei Wege hierher:
+  // - „← Zurück“ oder Zurück-Knopf des Browsers (Album war vorher hier angeklickt, gemerkt im Tab): das Album zeigen
+  // - Link von außen ins Album, dort „← Zurück“ (keine Vorgeschichte): Adresse /galerien/#album-…
+  const KEY = 'galerien-album';
+  const remember = (id: string | null) => {
+    try {
+      if (id) sessionStorage.setItem(KEY, id);
+      else sessionStorage.removeItem(KEY);
+    } catch {
+      /* ohne Speicher (privates Fenster): dann eben die Stelle des Browsers */
+    }
+  };
+  let last: string | null = null;
+  try {
+    last = sessionStorage.getItem(KEY);
+  } catch {
+    /* s. o. */
+  }
+  const nav = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined;
+  const id = location.hash.startsWith('#album-') ? location.hash.slice(1) : nav?.type === 'back_forward' ? last : null;
+  const target = id ? document.getElementById(id) : null;
+  remember(null);
+  if (target) {
+    const show = () => target.scrollIntoView({ block: 'center', behavior: 'instant' });
+    requestAnimationFrame(show);
+    // Der Browser setzt seine gemerkte Stelle bis zum Ende des Ladens noch einmal – danach noch einmal zeigen,
+    // außer man hat inzwischen selbst gescrollt
+    let moved = false;
+    const stop = () => (moved = true);
+    addEventListener('wheel', stop, { once: true, passive: true });
+    addEventListener('touchmove', stop, { once: true, passive: true });
+    addEventListener('keydown', stop, { once: true });
+    const again = () => requestAnimationFrame(() => !moved && show());
+    if (document.readyState === 'complete') again();
+    else addEventListener('load', again, { once: true });
+  }
+  for (const card of document.querySelectorAll<HTMLAnchorElement>('.cards .card')) {
+    card.addEventListener('click', () => remember(card.closest('li')?.id ?? null));
+  }
+  // Aus dem Zwischenspeicher des Browsers zurück (Seite unverändert, Stelle stimmt): nichts tun, Merkzettel weg
+  addEventListener('pageshow', (e) => e.persisted && remember(null));
 </script>
 
 <style>
