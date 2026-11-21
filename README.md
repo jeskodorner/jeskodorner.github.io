@@ -609,9 +609,9 @@ Vier Farben, sonst nichts (seit 20. November 2026). Definiert in `src/styles/tok
 
 | Farbe | Hex | Rolle |
 |---|---|---|
-| Dark Blue | `#1A0089` | Schrift überall (statt Schwarz), Bühne: Startseite und Menü; Links (unterstrichen), Fokusrahmen, Vorschaukarten, Browser-Symbol. Als Fläche sonst nirgends (seit 20.11.2026: Knöpfe, Abspielen, Fußzeile waren blau – zu viel Blau) |
-| White Chocolate | `#EFE7D3` | Wände: Hintergrund aller Seiten; Schrift auf Dark Blue |
-| Portland Orange | `#E8481F` | „hier kannst du klicken“: Menü-Knopf, volle Knöpfe (Ganzes Album ansehen, Schreib mir, Senden; beim Überfahren blau), Überfahren als Fläche – immer mit heller Schrift (White Chocolate), Unterstrich beim Überfahren von Titeln. Einen Hauch tiefer als im Palettenbild (`#FF5E33`), damit helle Schrift darauf lesbar ist; blaue Schrift auf Orange mochte Jesko nicht |
+| Dark Blue | `#1A0089` | Schrift überall (statt Schwarz), Bühne: Startseite und Menü; Links (unterstrichen), Fokusrahmen, Vorschaukarten. Als Fläche sonst nirgends (seit 20.11.2026: Knöpfe, Abspielen, Fußzeile waren blau – zu viel Blau) |
+| White Chocolate | `#EFE7D3` | Wände: Hintergrund aller Seiten; Schrift auf Dark Blue; Grund des Browser-Symbols |
+| Portland Orange | `#E8481F` | „J“ im Browser-Symbol. „hier kannst du klicken“: Menü-Knopf, volle Knöpfe (Ganzes Album ansehen, Schreib mir, Senden; beim Überfahren blau), Überfahren als Fläche – immer mit heller Schrift (White Chocolate), Unterstrich beim Überfahren von Titeln. Einen Hauch tiefer als im Palettenbild (`#FF5E33`), damit helle Schrift darauf lesbar ist; blaue Schrift auf Orange mochte Jesko nicht |
 | June Bud | `#B7CF4F` | Fußzeile (mit blauer Schrift), „Link kopiert“. Die Fläche oben auf Album- und Filmseiten ist seit 20.11.2026 hellgrau (`--wall-2`, Klasse `c-cream`) – mit grüner Fußzeile war es vorher zu viel Grün |
 
 Dazu nur dunklere Stufen von White Chocolate für Platzhalter und Kästen (`--wall-2`, `--wall-3`). Es gibt bewusst nur
@@ -803,10 +803,12 @@ Code bekommen eine Karte nur in Dark Blue. Der Titel beim Teilen enthält immer 
 Albums – mehr gibt eine statische Seite nicht her. WhatsApp und Co. merken sich alte Vorschauen eine Weile; neue
 Karten erscheinen dort manchmal erst nach Tagen.
 
-**Browser-Symbol** (Favicon): ein „J“ in White Chocolate aus Migha (Bold) auf Dark Blue, ganz sichtbar und mittig
-nach seinem Umriss gesetzt, als `public/favicon.svg`, dazu
+**Browser-Symbol** (Favicon): seit 21.11.2026 ein „J“ in Portland Orange aus Migha Black (der Schrift des Namens)
+auf White Chocolate, ganz sichtbar und mittig nach seinem Umriss gesetzt, als `public/favicon.svg`, dazu
 `public/favicon.ico` (32 px, für ältere Browser) und `public/apple-touch-icon.png` (180 px, Home-Bildschirm). Der
-Buchstabe ist als Form gespeichert, damit er überall gleich aussieht.
+Buchstabe ist als Form gespeichert, damit er überall gleich aussieht. Vorher: „J“ aus der feineren Migha Display hell auf
+Dark Blue (Git-Tag `alte-version-favicon-blau`) – Jesko wollte es nicht auch noch blau und ohne die elegante Schrift.
+Verglichen und nicht gewählt: J und JD hell auf Orange, J und JD schlicht aus einfachen Formen gezeichnet.
 
 **Schriften** (alle lokal, keine Google-Fonts-Verbindung, alle frei auch für geschäftliche Nutzung: Libre
 Franklin unter SIL OFL, Migha laut Lizenz von Seniors Studio, Melodrama unter der ITF Free Font License – siehe
