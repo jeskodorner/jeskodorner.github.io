@@ -10,7 +10,7 @@ description: "Eindrücke von der Ausstellung Julia Bulik: Keramikskulpturen auf
   Sockeln und an verwitterten Wänden, Leuchtschrift, Livemusik im Gewölbekeller
   und Gäste im Gespräch."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: cream
+# color: green
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex
 visibility: public
 # Aufnahmedaten (Kamera, Blende …) anzeigen

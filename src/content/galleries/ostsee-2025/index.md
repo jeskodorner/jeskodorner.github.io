@@ -9,7 +9,7 @@ date: 2025-04-20
 description: "Ein sonniger Tag am Ostseestrand: vier Personen im Sand, zwei
   davon in einer lachenden Umarmung."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: cream
+# color: green
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex
 visibility: public
 # Aufnahmedaten (Kamera, Blende …) anzeigen

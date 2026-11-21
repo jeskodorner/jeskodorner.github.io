@@ -9,7 +9,7 @@ date: 2023-06-25
 description: "Spanien im Juni 2023: zwei Hunde am Strand im Abendlicht und ein
   kleiner Bootshafen mit Steinmole im Dunst."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: cream
+# color: green
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex
 visibility: public
 # Aufnahmedaten (Kamera, Blende …) anzeigen

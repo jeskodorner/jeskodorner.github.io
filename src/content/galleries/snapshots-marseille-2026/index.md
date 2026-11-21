@@ -10,7 +10,7 @@ description: "Snapshots aus Marseille 2026: Graffiti und Meerblicke,
   Spiegelungen am Hafen, Licht und Schatten in Innenräumen, eine Badebucht
   zwischen Felsen."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: cream
+# color: green
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex
 visibility: public
 # Aufnahmedaten (Kamera, Blende …) anzeigen

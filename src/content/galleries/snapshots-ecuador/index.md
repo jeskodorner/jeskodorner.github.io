@@ -9,7 +9,7 @@ date: 2026-10-16
 description: "Reise-Snapshots aus Ecuador: Flug, Busbahnhof, Straßenszenen,
   Fahrten über Land und Tage im Regenwald."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: cream
+# color: green
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex
 visibility: public
 # Aufnahmedaten (Kamera, Blende …) anzeigen

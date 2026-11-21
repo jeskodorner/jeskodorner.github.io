@@ -10,7 +10,7 @@ description: "Unterwegs in den Pyrenäen: Gipfel mit Kiefern, Schneefelder im
   Geröll, Klettern am Fels, Berge im rötlichen Licht und zum Schluss die
   Dämmerung an einem Strand."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: cream
+# color: green
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex
 visibility: public
 # Aufnahmedaten (Kamera, Blende …) anzeigen

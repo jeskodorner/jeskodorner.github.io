@@ -103,7 +103,7 @@ photos.config.json          ← Einstellungen für die Bildverarbeitung (Größe
 
 **Portfolio:** In `startseite.md` legt die Liste `showroom` fest, welche Fotos ausgewählt sind, in welcher
 Reihenfolge und unter welchem Namen. Sie erscheinen auf der Seite **/portfolio/** als kleine Ausstellung (jedes Foto
-einzeln untereinander: am Laptop linksbündig mit dem Namen daneben auf halber Höhe, am Handy Fotos, Schilder und Knöpfe mittig, Überschrift und Einleitung linksbündig wie auf allen Seiten; ein Klick aufs Foto oder auf den Namen daneben öffnet die Mappe des Albums, eine ruhige Übersicht mit einer Auswahl der Fotos – der Name ändert sich beim Überfahren nicht)
+einzeln untereinander: am Laptop linksbündig mit dem Namen daneben auf halber Höhe, am Handy Fotos, Schilder und Knöpfe mittig, Überschrift und Einleitung linksbündig wie auf allen Seiten; ein Klick aufs Foto oder auf den Namen daneben öffnet die Mappe des Albums, eine ruhige Übersicht mit einer Auswahl der Fotos; beim Überfahren von Foto oder Name wird das Foto leicht größer und der Name orange unterstrichen wie in der Galerie-Übersicht, seit 21.11.2026)
 und liefern das Foto für die Vorschaukarte der Startseite (siehe „Vorschau beim Teilen“).
 
 ```yaml
@@ -136,7 +136,7 @@ Kurzer Text zum Video.
 **Film-Übersicht** (`/film/`, `src/pages/film.astro`): je Film ein Vorschaubild (16:9), der Titel klein darunter,
 ein kurzer Text in Grau und „Mehr ansehen →“ – kein Player. Laptop 3, Tablet 2, Handy 1 pro Reihe.
 **Seite je Film** (`/film/<dateiname>/`, `src/pages/film/[slug].astro`): aufgebaut wie die Albumseite – oben ein
-hellgraues Band mit „← Zurück“, Titel und dem ganzen Text in Grau, dazu der Player mit „Abspielen“ (am Laptop
+Band in June Bud mit „← Zurück“, Titel und dem ganzen Text in Grau, dazu der Player mit „Abspielen“ (am Laptop
 ab 1000 px nebeneinander, Text links, Video rechts; am Handy und Tablet untereinander, der Player dann so groß, dass
 er auf den ersten Bildschirm passt). Unten „Nächster Film →“ mit Vorschaubild, gleich aufgebaut wie „Nächste
 Galerie“ beim Album (`src/components/NeighbourNav.astro`), nur in eine Richtung; nach dem letzten Film kommt der
@@ -612,7 +612,7 @@ Vier Farben, sonst nichts (seit 20. November 2026). Definiert in `src/styles/tok
 | Dark Blue | `#1A0089` | Schrift überall (statt Schwarz), Bühne: Startseite und Menü; Links (unterstrichen), Fokusrahmen, Vorschaukarten. Als Fläche sonst nirgends (seit 20.11.2026: Knöpfe, Abspielen, Fußzeile waren blau – zu viel Blau) |
 | White Chocolate | `#EFE7D3` | Wände: Hintergrund aller Seiten; Schrift auf Dark Blue; Grund des Browser-Symbols |
 | Portland Orange | `#E8481F` | „J“ im Browser-Symbol. „hier kannst du klicken“: Menü-Knopf, volle Knöpfe (Ganzes Album ansehen, Schreib mir, Senden; beim Überfahren blau), Überfahren als Fläche – immer mit heller Schrift (White Chocolate), Unterstrich beim Überfahren von Titeln. Einen Hauch tiefer als im Palettenbild (`#FF5E33`), damit helle Schrift darauf lesbar ist; blaue Schrift auf Orange mochte Jesko nicht |
-| June Bud | `#B7CF4F` | Fußzeile (mit blauer Schrift), „Link kopiert“. Die Fläche oben auf Album- und Filmseiten ist seit 20.11.2026 hellgrau (`--wall-2`, Klasse `c-cream`) – mit grüner Fußzeile war es vorher zu viel Grün |
+| June Bud | `#B7CF4F` | Fläche oben auf Album- und Filmseiten (Klasse `c-green`), „Link kopiert“. Die Fußzeile ist seit 21.11.2026 beige (`--wall-2`, eine Stufe dunkler als die Wände, mit blauer Schrift) – „grün nach oben und beige nach unten“. Am 20.11.2026 war es kurz umgekehrt: Fußzeile grün, Band hellgrau |
 
 Dazu nur dunklere Stufen von White Chocolate für Platzhalter und Kästen (`--wall-2`, `--wall-3`). Es gibt bewusst nur
 eine helle Ansicht und keinen Dunkelmodus. Vorher (bis 20.11.2026): weiße Wände, schwarze Schrift, Ultramarin
@@ -626,8 +626,8 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
   Vorschau ohne Standbild.
 - **Links und Überfahren:** Links sind blau wie der Text und unterstrichen (Token `--accent`). Beim Überfahren
   überall dieselbe Antwort wie im Menü: ein oranges Feld mit heller Schrift (Token `--hover`, Schrift `--on-hover`) – Links im Text,
-  Knöpfe, Knöpfe der Lightbox, Kontakt-Adressen, auch in der grünen Fußzeile. Was schon orange ist (volle
-  Knöpfe, Abspielen, Menü- und Schließen-Knopf), wird beim Überfahren blau. Bewusst dezenter: Titel neben Fotos (Galerie-Übersicht, nächstes/vorheriges Album) bekommen nur einen
+  Knöpfe, Knöpfe der Lightbox, Kontakt-Adressen, auch in der Fußzeile. Was schon orange ist (volle
+  Knöpfe, Abspielen, Menü- und Schließen-Knopf), wird beim Überfahren blau. Bewusst dezenter: Titel neben Fotos (Galerie-Übersicht, Film-Übersicht, Schilder im Portfolio, nächstes/vorheriges Album) bekommen nur einen
   Unterstrich in Orange (Token `--hover-line`).
 - **Startseite = das Menü** (`src/components/BlueMenu.astro`): Dark Blue `#1A0089` mit Schrift in White Chocolate
   (Token `--menu-bg` und `--on-menu` in `tokens.css`). Der Name hat die
@@ -665,7 +665,7 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
   man aus einer Mappe (oder einer anderen Seite) zurück, geht es mit dem Foto weiter, das zuletzt zu sehen war
   (gemerkt im Tab, `sessionStorage`); erst ein neuer Besuch beginnt wieder vorne. Mit „Bewegung reduzieren“ oder
   ohne JavaScript bleibt das erste Foto stehen.
-- **Albumseite** (`src/components/GalleryPage.astro`): oben ein kompaktes hellgraues Band mit „← Zurück“,
+- **Albumseite** (`src/components/GalleryPage.astro`): oben ein kompaktes Band in June Bud mit „← Zurück“,
   Anzahl · Monat · Ort, dem Titel und der Beschreibung in normaler Textgröße, direkt darunter die Fotos. Wer ein Album
   öffnet, sieht so sofort Fotos (am Laptop etwa die Hälfte des ersten Bildschirms, am Handy über die Hälfte). Der
   Titel ist dafür kleiner als auf den Hauptseiten. Vorher (bis 20.11.2026) war der Titel so groß wie „Galerie“, die
@@ -725,7 +725,8 @@ Kontraste nach WCAG 2.x:
 | Dark Blue (Startseite, Menü) | White Chocolate | 12,1 : 1 |
 | Dark Blue | Orange (Menü-Knopf beim Überfahren) | 3,8 : 1 |
 | Portland Orange `#E8481F` (Überfahren, Knöpfe, Menü-Knopf) | White Chocolate | 3,2 : 1 – reicht für fette und große Schrift und Symbole, nicht für langen Text |
-| June Bud `#B7CF4F` (Fußzeile) | Dark Blue | 8,6 : 1 |
+| June Bud `#B7CF4F` (Band über Album und Film) | Dark Blue / Text-Grau `#4B4672` | 8,6 : 1 / 5,0 : 1 |
+| Beige `#E7DDC6` (Fußzeile) | Dark Blue | 11 : 1 |
 
 Orange nie als Schriftfarbe auf White Chocolate (2,5 : 1), nur als Fläche oder Linie.
 

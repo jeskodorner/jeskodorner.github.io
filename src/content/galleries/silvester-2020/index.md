@@ -9,7 +9,7 @@ date: 2020-12-31
 description: "Ein Bild aus der Silvesternacht 2020: Funken von Feuerwerk auf
   einem nächtlichen Gehweg."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: cream
+# color: green
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex
 visibility: public
 # Aufnahmedaten (Kamera, Blende …) anzeigen

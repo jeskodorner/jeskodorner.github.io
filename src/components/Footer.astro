@@ -43,14 +43,15 @@ const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : 
     margin-top: var(--section);
     padding-top: clamp(2.5rem, 5vw, 4.5rem);
     padding-bottom: 1.5rem;
-    background: var(--green);
-    color: var(--on-green);
+    background: var(--wall-2);
+    color: var(--on-cream);
     overflow: hidden;
   }
-  /* Fußzeile in June Bud mit blauer Schrift (8,6:1) – seit 20.11.2026, vorher Dark Blue wie Startseite und Menü: mit
-     blauer Schrift und blauen Knöpfen war das zu viel Blau. Überfahren wie überall: oranges Feld, helle Schrift
-     (auch für den E-Mail-Link aus EmailLink.astro). Davor Schwarz mit Koralle (Git-Tag
-     alte-version-ultramarin-climate-crisis). */
+  /* Fußzeile beige (--wall-2, eine Stufe dunkler als die Wände) mit blauer Schrift – seit 21.11.2026; Jesko wollte
+     „grün nach oben und beige nach unten“: das Band über Album und Film ist wieder June Bud. Am 20.11.2026 war die
+     Fußzeile June Bud, davor Dark Blue wie Startseite und Menü (mit blauer Schrift und blauen Knöpfen zu viel Blau),
+     davor Schwarz mit Koralle (Git-Tag alte-version-ultramarin-climate-crisis). Überfahren wie überall: oranges Feld,
+     helle Schrift (auch für den E-Mail-Link aus EmailLink.astro). */
   .site-footer :global(a:hover) {
     background-color: var(--hover);
     color: var(--on-hover);
@@ -124,7 +125,7 @@ const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : 
   }
   .copy {
     margin-top: 1.25rem;
-    color: var(--on-green);
+    color: var(--on-cream);
   }
   .copy small {
     font-size: inherit;

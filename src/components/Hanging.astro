@@ -3,8 +3,9 @@
  * „Hängung“ (Seite „Portfolio“): Jedes Foto hängt unbeschnitten in seinem Originalformat an der
  * weißen Wand, mit viel Platz daneben und einem schlichten Schild (Name und Angaben).
  * Ein Klick aufs Foto oder aufs Schild öffnet die Mappe des Albums (pages/mappe/[slug].astro): eine ruhige Übersicht
- * mit einer Auswahl der Fotos, von dort geht es ins ganze Album – dieselbe Mappe wie von der Startseite. Das Schild
- * ändert sich beim Überfahren nicht (ruhig).
+ * mit einer Auswahl der Fotos, von dort geht es ins ganze Album – dieselbe Mappe wie von der Startseite. Beim
+ * Überfahren von Foto oder Schild wird das Foto leicht größer und der Titel orange unterstrichen, wie in der
+ * Galerie-Übersicht (seit 21.11.2026; vorher blieb das Schild ruhig).
  *   Desktop: Fotos linksbündig, das Schild rechts daneben auf halber Bildhöhe.
  *   Handy: alles mittig – jedes Foto steht in der Mitte, das Schild mittig darunter.
  *   Größe: deutlich kleiner als der Bildschirm (Hochformate höchstens gut halb so hoch, Querformate höchstens
@@ -43,7 +44,7 @@ const { items } = Astro.props;
               class="work-img"
             />
           </a>
-          {/* Das Schild führt ebenfalls zur Mappe – ruhig, ohne sichtbare Änderung beim Überfahren */}
+          {/* Das Schild führt ebenfalls zur Mappe */}
           <a class="work-label" href={mappeUrl(it.gallery)}>
             <span class="work-title">{tidyTitle(it.name ?? it.album)}</span>
             {(it.name || it.meta) && <span class="label work-meta">{[it.name && it.album, it.meta].filter(Boolean).join(' · ')}</span>}
@@ -87,9 +88,18 @@ const { items } = Astro.props;
     height: auto;
     transition: transform 0.9s var(--ease);
   }
+  /* Überfahren von Foto oder Schild: Foto leicht größer, Titel orange unterstrichen – wie in der Galerie-Übersicht */
   @media (hover: hover) {
-    .work-media:hover :global(.work-img) {
+    .work-media:hover :global(.work-img),
+    .work:has(.work-label:hover) :global(.work-img) {
       transform: scale(var(--hover-zoom));
+    }
+    .work-label:hover .work-title,
+    .work:has(.work-media:hover) .work-title {
+      text-decoration: underline;
+      text-decoration-color: var(--hover-line);
+      text-decoration-thickness: 0.1em;
+      text-underline-offset: 0.12em;
     }
   }
 

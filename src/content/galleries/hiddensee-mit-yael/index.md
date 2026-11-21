@@ -10,7 +10,7 @@ description: "Mit Yael auf Hiddensee Anfang April: Vollmond über dem Feld,
   Rinder in der Dämmerung, sandverwehte Wege durch die Dünen und der Blick auf
   die Ostsee."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: cream
+# color: green
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex
 visibility: public
 # Aufnahmedaten (Kamera, Blende …) anzeigen

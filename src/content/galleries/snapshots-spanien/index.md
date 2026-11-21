@@ -9,7 +9,7 @@ date: 2025-02-03
 description: "Snapshots aus Spanien: weiße Häuser und Zäune, Abende am Wasser,
   ruhige Buchten und ein Ausblick vom Berg über die Küste."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: cream
+# color: green
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex
 visibility: public
 # Aufnahmedaten (Kamera, Blende …) anzeigen

@@ -9,7 +9,7 @@ date: 2026-05-10
 description: "Unterwegs mit Georg in Berlin-Mitte: Straßenfotografie im warmen
   Licht, ein Mann mit Koffer auf einer Treppe unter Stahlträgern."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: cream
+# color: green
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex
 visibility: public
 # Aufnahmedaten (Kamera, Blende …) anzeigen
