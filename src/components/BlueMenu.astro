@@ -311,11 +311,13 @@ const nameWords = site.name.split(' ').map((word) =>
          (/ 3.57, 1,88 hoch) – dann blieb fürs Foto nur ein Streifen; das Foto hat Vorrang. */
       --name-div: 6.6;
       --name-lines: 0.98;
-      /* Alles außer Foto und Name: Abstand und Bildunterschrift (0,75rem + eine Zeile 1,25rem), Abstand über dem
-         Namen, Menü (5 Punkte à 0,95 Schrifthöhen, 4 Abstände, Ränder), Instagram (1,125rem) und Rand unten,
-         0,5rem Reserve */
+      /* Abstand und Bildunterschrift unter dem Foto (0,75rem + eine Zeile 1,25rem); am Handy ohne Bildunterschrift 0
+         (Regel weiter unten) */
+      --cap-h: 2rem;
+      /* Alles außer Foto und Name: Bildunterschrift (--cap-h), Abstand über dem Namen, Menü (5 Punkte à 0,95
+         Schrifthöhen, 4 Abstände, Ränder), Instagram (1,125rem) und Rand unten, 0,5rem Reserve */
       --rest-h: calc(
-        2rem + var(--name-mt) + var(--nav-my) + 4.75 * var(--bm-item) + 4 * var(--list-gap) + 1.125rem +
+        var(--cap-h) + var(--name-mt) + var(--nav-my) + 4.75 * var(--bm-item) + 4 * var(--list-gap) + 1.125rem +
           var(--foot-pad) + 0.5rem
       );
       /* Die Startseite passt ohne Scrollen auf einen Bildschirm – auch im Handy-Browser mit seinen Leisten (svh = die
@@ -379,6 +381,18 @@ const nameWords = site.name.split(' ').map((word) =>
     }
     .bm--aside .bm-aside :global(.hs-cap) {
       padding-inline: var(--gutter);
+    }
+    /* Handy (unter 700 px): keine Bildunterschrift unter dem Foto (seit 21.11.2026, Jeskos Wunsch) – sie wurde dort
+       meist mit „…“ gekürzt („Matvey – Love Exercis…“) und drängte sich zwischen Foto und Namen. Das Foto selbst
+       führt weiter zur Stelle im Portfolio, und dort stehen Albumname und Datum. Tablet und Laptop behalten sie.
+       Das Menü rechnet ohne sie (--cap-h 0), damit der Name dort gleich groß bleibt wie auf der Startseite. */
+    @media (max-width: 699.98px) {
+      :is(.bm--aside, .bm--overlay) {
+        --cap-h: 0rem;
+      }
+      .bm--aside .bm-aside :global(.hs-cap) {
+        display: none;
+      }
     }
     /* Menü: oben die Leiste mit dem Schließen-Knopf (an der Stelle des Menüknopfs), der Name direkt darunter */
     .bm--overlay .bm-top {

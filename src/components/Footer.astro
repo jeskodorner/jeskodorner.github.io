@@ -43,15 +43,18 @@ const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : 
     margin-top: var(--section);
     padding-top: clamp(2.5rem, 5vw, 4.5rem);
     padding-bottom: 1.5rem;
-    background: var(--wall-2);
-    color: var(--on-cream);
+    background: var(--orange);
+    color: var(--on-orange);
     overflow: hidden;
+    /* Überfahren auf Orange: blaues Feld mit heller Schrift (wie bei den orangen Knöpfen), sonst wäre es unsichtbar */
+    --hover: var(--blue);
+    --on-hover: var(--on-blue);
   }
-  /* Fußzeile beige (--wall-2, eine Stufe dunkler als die Wände) mit blauer Schrift – seit 21.11.2026; Jesko wollte
-     „grün nach oben und beige nach unten“: das Band über Album und Film ist wieder June Bud. Am 20.11.2026 war die
-     Fußzeile June Bud, davor Dark Blue wie Startseite und Menü (mit blauer Schrift und blauen Knöpfen zu viel Blau),
-     davor Schwarz mit Koralle (Git-Tag alte-version-ultramarin-climate-crisis). Überfahren wie überall: oranges Feld,
-     helle Schrift (auch für den E-Mail-Link aus EmailLink.astro). */
+  /* Fußzeile Portland Orange mit heller Schrift (White Chocolate) – seit 21.11.2026, Jeskos Wahl („orange hell“).
+     Kontrast 3,2 : 1: gut für den großen Namen und die fetten Adressen, knapp für die kleine Schrift (Impressum,
+     Datenschutz, ©); ein dunkleres Orange (#B8330D, 4,8 : 1) stand zur Wahl, er nahm das helle. Vorher am selben Tag beige
+     (--wall-2, Git-Tag alte-version-fusszeile-beige), am 20.11.2026 June Bud, davor Dark Blue wie Startseite und
+     Menü, davor Schwarz mit Koralle (Git-Tag alte-version-ultramarin-climate-crisis). */
   .site-footer :global(a:hover) {
     background-color: var(--hover);
     color: var(--on-hover);
@@ -120,12 +123,12 @@ const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : 
     font-synthesis-weight: none;
     text-transform: uppercase;
     line-height: 0.95;
-    color: var(--ink);
+    color: inherit;
     user-select: none;
   }
   .copy {
     margin-top: 1.25rem;
-    color: var(--on-cream);
+    color: inherit;
   }
   .copy small {
     font-size: inherit;

@@ -611,8 +611,8 @@ Vier Farben, sonst nichts (seit 20. November 2026). Definiert in `src/styles/tok
 |---|---|---|
 | Dark Blue | `#1A0089` | Schrift überall (statt Schwarz), Bühne: Startseite und Menü; Links (unterstrichen), Fokusrahmen, Vorschaukarten. Als Fläche sonst nirgends (seit 20.11.2026: Knöpfe, Abspielen, Fußzeile waren blau – zu viel Blau) |
 | White Chocolate | `#EFE7D3` | Wände: Hintergrund aller Seiten; Schrift auf Dark Blue; Grund des Browser-Symbols |
-| Portland Orange | `#E8481F` | „J“ im Browser-Symbol. „hier kannst du klicken“: Menü-Knopf, volle Knöpfe (Ganzes Album ansehen, Schreib mir, Senden; beim Überfahren blau), Überfahren als Fläche – immer mit heller Schrift (White Chocolate), Unterstrich beim Überfahren von Titeln. Einen Hauch tiefer als im Palettenbild (`#FF5E33`), damit helle Schrift darauf lesbar ist; blaue Schrift auf Orange mochte Jesko nicht |
-| June Bud | `#B7CF4F` | Fläche oben auf Album- und Filmseiten (Klasse `c-green`), „Link kopiert“. Die Fußzeile ist seit 21.11.2026 beige (`--wall-2`, eine Stufe dunkler als die Wände, mit blauer Schrift) – „grün nach oben und beige nach unten“. Am 20.11.2026 war es kurz umgekehrt: Fußzeile grün, Band hellgrau |
+| Portland Orange | `#E8481F` | „J“ im Browser-Symbol; Fußzeile (seit 21.11.2026, helle Schrift, Überfahren dort blau). „hier kannst du klicken“: Menü-Knopf, volle Knöpfe (Ganzes Album ansehen, Schreib mir, Senden; beim Überfahren blau), Überfahren als Fläche – immer mit heller Schrift (White Chocolate), Unterstrich beim Überfahren von Titeln. Einen Hauch tiefer als im Palettenbild (`#FF5E33`), damit helle Schrift darauf lesbar ist; blaue Schrift auf Orange mochte Jesko nicht |
+| June Bud | `#B7CF4F` | Fläche oben auf Album- und Filmseiten (Klasse `c-green`), „Link kopiert“. Fußzeile am 21.11.2026 erst beige (`--wall-2`, „grün nach oben und beige nach unten“, Git-Tag `alte-version-fusszeile-beige`), dann orange mit heller Schrift. Am 20.11.2026 war es kurz umgekehrt: Fußzeile grün, Band hellgrau |
 
 Dazu nur dunklere Stufen von White Chocolate für Platzhalter und Kästen (`--wall-2`, `--wall-3`). Es gibt bewusst nur
 eine helle Ansicht und keinen Dunkelmodus. Vorher (bis 20.11.2026): weiße Wände, schwarze Schrift, Ultramarin
@@ -626,8 +626,8 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
   Vorschau ohne Standbild.
 - **Links und Überfahren:** Links sind blau wie der Text und unterstrichen (Token `--accent`). Beim Überfahren
   überall dieselbe Antwort wie im Menü: ein oranges Feld mit heller Schrift (Token `--hover`, Schrift `--on-hover`) – Links im Text,
-  Knöpfe, Knöpfe der Lightbox, Kontakt-Adressen, auch in der Fußzeile. Was schon orange ist (volle
-  Knöpfe, Abspielen, Menü- und Schließen-Knopf), wird beim Überfahren blau. Bewusst dezenter: Titel neben Fotos (Galerie-Übersicht, Film-Übersicht, Schilder im Portfolio, nächstes/vorheriges Album) bekommen nur einen
+  Knöpfe, Knöpfe der Lightbox, Kontakt-Adressen. Was schon orange ist (volle
+  Knöpfe, Abspielen, Menü- und Schließen-Knopf, die ganze Fußzeile), wird beim Überfahren blau. Bewusst dezenter: Titel neben Fotos (Galerie-Übersicht, Film-Übersicht, Schilder im Portfolio, nächstes/vorheriges Album) bekommen nur einen
   Unterstrich in Orange (Token `--hover-line`).
 - **Startseite = das Menü** (`src/components/BlueMenu.astro`): Dark Blue `#1A0089` mit Schrift in White Chocolate
   (Token `--menu-bg` und `--on-menu` in `tokens.css`). Der Name hat die
@@ -653,7 +653,8 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
   (`BlueMenu.astro`). Vorher lag die Unterkante des Fotos auf „KONTAKT“ (Commit e565eee). Jedes Foto füllt diese Fläche (Ausschnitt nach dem
   Bildschwerpunkt), so wechselt beim Bildwechsel nie das Format; ganz zu sehen sind die Fotos im Portfolio. Am Handy
   und Tablet hochkant steht das Foto ganz oben, randlos, darunter die Bildunterschrift, dann Name (eine Zeile), Menü,
-  Instagram – ohne Scrollen, auch auf kleinen Handys. Das Foto hat dort Vorrang (30–45 % der Höhe, höchstens 4:3).
+  Instagram – ohne Scrollen, auch auf kleinen Handys. Am Handy (unter 700 px) fehlt die Bildunterschrift seit
+  21.11.2026: Sie wurde dort meist mit „…“ gekürzt; das Foto führt weiter ins Portfolio. Das Foto hat dort Vorrang (30–45 % der Höhe, höchstens 4:3).
   Die Bildunterschrift ist immer gleich aufgebaut: eine Zeile „Albumname – Monat Jahr“ (Albumname in
   der Titelschrift, bei sehr langen Namen mit „…“ gekürzt, das Datum bleibt ganz) – so bleibt sie immer gleich hoch
   und das Foto springt nicht. Foto und Bildunterschrift führen ins Portfolio genau zu diesem Foto (`/portfolio/#werk-<n>`); beim
@@ -726,7 +727,7 @@ Kontraste nach WCAG 2.x:
 | Dark Blue | Orange (Menü-Knopf beim Überfahren) | 3,8 : 1 |
 | Portland Orange `#E8481F` (Überfahren, Knöpfe, Menü-Knopf) | White Chocolate | 3,2 : 1 – reicht für fette und große Schrift und Symbole, nicht für langen Text |
 | June Bud `#B7CF4F` (Band über Album und Film) | Dark Blue / Text-Grau `#4B4672` | 8,6 : 1 / 5,0 : 1 |
-| Beige `#E7DDC6` (Fußzeile) | Dark Blue | 11 : 1 |
+| Portland Orange (Fußzeile) | White Chocolate | 3,2 : 1 – gut für den großen Namen und die fetten Adressen, knapp für die kleine Schrift (Impressum, Datenschutz, ©). Ein dunkleres Orange `#B8330D` (4,8 : 1) stand zur Wahl, Jesko nahm das helle |
 
 Orange nie als Schriftfarbe auf White Chocolate (2,5 : 1), nur als Fläche oder Linie.
 
