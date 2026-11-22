@@ -1,4 +1,4 @@
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
 import type { ImageMetadata } from 'astro';
 import { site } from '../config/site';
 
@@ -100,6 +100,13 @@ export function getAllGalleries(): Promise<Gallery[]> {
 async function load(): Promise<Gallery[]> {
   const entries = await getCollection('galleries');
   const seen = new Map<string, string>();
+  // Alben aus dem Portfolio: Das Foto aus dem Portfolio (Liste `showroom` in startseite.md, Feld `bild`) ist immer
+  // auch das Titelbild des Albums – in der Galerie-Übersicht, im Band oben auf der Albumseite und beim Teilen
+  // (seit 22.11.2026, Jeskos Wunsch). Es geht vor `cover:` in index.md. Direkt aus der Liste gelesen (nicht über
+  // showroom.ts, das selbst die Alben braucht).
+  const showroom = (await getEntry('pages', 'startseite'))?.data.showroom ?? [];
+  const portfolioCover = new Map<string, string>();
+  for (const s of showroom) if (s.bild && !portfolioCover.has(s.galerie)) portfolioCover.set(s.galerie, s.bild);
 
   const galleries = entries.map((entry) => {
     const d = entry.data;
@@ -140,7 +147,11 @@ async function load(): Promise<Gallery[]> {
       };
     });
 
-    const cover = (d.cover && images.find((i) => i.file === d.cover)) || images[0]!;
+    const fromPortfolio = portfolioCover.get(d.slug) ?? portfolioCover.get(folder);
+    const cover =
+      (fromPortfolio && images.find((i) => i.file === fromPortfolio)) ||
+      (d.cover && images.find((i) => i.file === d.cover)) ||
+      images[0]!;
 
     return {
       id: entry.id,

@@ -13,7 +13,8 @@ images:
   - file: dsc01421.jpg
     alt: "Nahaufnahme bei Nacht: Person mit roter Strickkapuze zieht den Kragen
       ihres Hoodies hoch."
-    focus: "50% 30%"
+    # Ausschnitt weiter oben, damit das Gesicht im breiten Band oben auf der Albumseite ganz drin ist (vorher 30 %)
+    focus: "50% 12%"
   - file: dsc01438.jpg
     alt: "Person im roten Hoodie sitzt nachts auf einem Fahrrad, im Hintergrund
       Leuchtreklamen."

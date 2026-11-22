@@ -52,6 +52,8 @@ images:
   - file: dscf3604.jpg
     alt: "Eine Person springt in der Dämmerung zwischen zwei Steinmauern an einer
       Strandpromenade, dahinter Palme und Meer"
+    # Ausschnitt weiter oben, damit die springende Person im breiten Band oben auf der Albumseite drin ist
+    focus: "50% 20%"
   - file: dscf3758.jpg
     alt: "Rundes Verbotsschild mit Aufschrift „Excepte autoritzats“ neben einer
       Hecke, dahinter ruhiges Meer und Berge"

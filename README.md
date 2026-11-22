@@ -302,7 +302,13 @@ Unterhalb des Kopfbereichs kannst du optional einen längeren Text in Markdown s
 - Ohne JavaScript öffnet ein Klick das Foto selbst in groß.
 
 **Seite „Galerie“ (`/galerien/`)** zeigt alle Galerien wie in Lightroom in gleich hohen, randvollen Reihen mit
-Titelbild, darunter Name, Bilderzahl und Monat. Es gibt nur diese eine Ansicht.
+Titelbild, darunter Name und Monat. Es gibt nur diese eine Ansicht.
+
+**Titelbild eines Albums** (Galerie-Übersicht, Band oben auf der Albumseite, Vorschau beim Teilen): Ist das Album im
+Portfolio, ist es seit 22.11.2026 **automatisch das Foto aus dem Portfolio** (Feld `bild` in `startseite.md`) – es
+geht vor `cover:` in index.md (`src/lib/galleries.ts`). Sonst `cover:` oder das erste Foto. Den Ausschnitt im
+breiten Band bestimmt `focus` am Foto (bei Hochformaten ohne Angabe das obere Drittel); der graue Filter darüber
+richtet sich nach der Helligkeit des Fotos, damit dunkle Nachtfotos nicht schwarz werden.
 
 ---
 

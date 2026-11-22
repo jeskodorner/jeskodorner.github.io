@@ -27,6 +27,21 @@ const og = cardImage(`album/${gallery.slug}`, gallery.cover.alt);
 const absUrl = new URL(gallery.url, Astro.site ?? site.url).href;
 const hasBody = Boolean(gallery.entry.body?.trim());
 const { Content } = hasBody ? await render(gallery.entry) : { Content: null };
+// Ausschnitt des Fotos im Band oben: `focus` aus index.md, sonst bei Hochformaten das obere Drittel (dort sind meist
+// die Gesichter – mittig schnitt das breite Band sie oft ab), bei Querformaten die Mitte
+const coverFocus =
+  gallery.entry.data.images.find((i) => i.file === gallery.cover.file)?.focus ??
+  (gallery.cover.src.height > gallery.cover.src.width ? '50% 22%' : '50% 50%');
+// Dichte des grauen Filters nach der Helligkeit des Fotos (mittlere Farbe aus meta.json): dunkle Nachtfotos (Dollgow)
+// bekommen weniger Filter, sonst wären sie fast schwarz; helle Fotos mehr, damit die helle Schrift lesbar bleibt
+const luminance = (hex?: string) => {
+  const m = /^#([0-9a-f]{6})$/i.exec(hex ?? '');
+  if (!m) return undefined;
+  const [r, g, b] = [0, 2, 4].map((i) => parseInt(m[1]!.slice(i, i + 2), 16) / 255).map((x) => (x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4));
+  return 0.2126 * r! + 0.7152 * g! + 0.0722 * b!;
+};
+const lum = luminance(gallery.cover.color);
+const bandAlpha = lum === undefined ? 0.8 : Math.min(0.8, Math.max(0.45, lum * 5));
 
 // Strukturierte Daten nur für öffentliche Galerien
 const jsonLd = gallery.isUnlisted
@@ -72,7 +87,7 @@ const jsonLd = gallery.isUnlisted
     {/* Band oben mit dem Vorschaubild der Galerie als Hintergrund, darüber ein grauer Filter, darauf Zurück, Datum,
         Titel und Beschreibung in heller Schrift (seit 22.11.2026; vorher ein Band in June Bud nur mit Text, Git-Tag
         alte-version-album-band). Das Foto ist nur Hintergrund (aria-hidden), im Album steht es noch einmal. */}
-    <header class="g-band g-band--photo">
+    <header class="g-band g-band--photo" style={`--band-a:${bandAlpha.toFixed(2)}`}>
       <div class="g-band-bg" aria-hidden="true">
         <Picture
           src={gallery.cover.src}
@@ -83,7 +98,7 @@ const jsonLd = gallery.isUnlisted
           loading="eager"
           fetchpriority="high"
           class="g-band-img"
-          style={`object-position:${gallery.cover.focus}`}
+          style={`object-position:${coverFocus}`}
         />
       </div>
       <div class="container container--wide g-band-inner">
@@ -169,8 +184,13 @@ const jsonLd = gallery.isUnlisted
      Albums beginnen trotzdem auf dem ersten Bildschirm. */
   .g-band {
     /* Grauer Filter: nach unten dichter, wo Titel und Beschreibung stehen – auch helle, unruhige Fotos (Schulstreik)
-       bleiben so lesbar */
-    --band-filter: linear-gradient(rgb(38 36 34 / 0.42), rgb(38 36 34 / 0.62) 45%, rgb(38 36 34 / 0.8));
+       bleiben so lesbar. Wie dicht, hängt von der Helligkeit des Fotos ab (--band-a, oben berechnet, 0,45–0,8) */
+    --band-a: 0.8;
+    --band-filter: linear-gradient(
+      rgb(38 36 34 / calc(var(--band-a) * 0.55)),
+      rgb(38 36 34 / calc(var(--band-a) * 0.8)) 45%,
+      rgb(38 36 34 / var(--band-a))
+    );
     /* Fokusrahmen auf dem dunklen Foto hell statt blau */
     --accent: var(--wall);
     position: relative;
@@ -207,8 +227,10 @@ const jsonLd = gallery.isUnlisted
   .back {
     justify-self: start;
   }
+  /* Leichter Schatten hinter der Schrift: auch auf unruhigen, stellenweise hellen Fotos (Schulstreik) lesbar */
   .g-text {
     align-self: end;
+    text-shadow: 0 1px 14px rgb(0 0 0 / 0.35);
   }
   /* Titel: kleiner als auf den Hauptseiten (Klasse display-compact, global.css), hell auf dem Foto */
   .title {
