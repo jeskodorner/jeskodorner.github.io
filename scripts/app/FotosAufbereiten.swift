@@ -1,5 +1,6 @@
 // „Fotos aufbereiten“ – kleines Mac-Programm mit Fenster (seit 22.11.2026). Ordner oder Fotos ins Fenster (oder aufs
-// Symbol im Dock) ziehen; die fertigen Web-Versionen landen daneben in „<Name> – fertig“. Die eigentliche Arbeit macht
+// Symbol im Dock) ziehen; die fertigen Web-Versionen landen daneben in „<Name> – Web“ (mit Wasserzeichen: „<Name> – Web mit
+// Wasserzeichen“). Die eigentliche Arbeit macht
 // scripts/prepare-folder.mjs (Node). Gebaut wird mit `bash scripts/make-app.sh`, das PROJECT_DIR und NODE_PATH einsetzt.
 import AppKit
 import SwiftUI
@@ -23,12 +24,13 @@ final class Runner: ObservableObject {
         busy = true
         lines = []
         summary = "Wird aufbereitet …"
+        let suffix = watermark ? " – Web mit Wasserzeichen" : " – Web"
         outputDirs = urls.map { url in
             var isDir: ObjCBool = false
             FileManager.default.fileExists(atPath: url.path, isDirectory: &isDir)
             return isDir.boolValue
-                ? url.deletingLastPathComponent().appendingPathComponent(url.lastPathComponent + " – fertig")
-                : url.deletingLastPathComponent().appendingPathComponent("Fotos – fertig")
+                ? url.deletingLastPathComponent().appendingPathComponent(url.lastPathComponent + suffix)
+                : url.deletingLastPathComponent().appendingPathComponent("Fotos" + suffix)
         }
 
         let task = Process()
@@ -93,7 +95,7 @@ struct ContentView: View {
                         .foregroundStyle(.secondary)
                     Text(runner.busy ? "Wird aufbereitet …" : "Ordner oder Fotos hier hineinziehen")
                         .font(.title3.weight(.medium))
-                    Text("Fertige Web-Versionen (2400 px, ohne GPS) landen daneben in „… – fertig“.\nDie Originale bleiben unverändert.")
+                    Text("Fertige Web-Versionen (2400 px, ohne GPS) landen daneben\nim Ordner „… – Web“. Die Originale bleiben unverändert.")
                         .font(.callout)
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)

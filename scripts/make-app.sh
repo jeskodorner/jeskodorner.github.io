@@ -1,7 +1,7 @@
 #!/bin/bash
 # Baut das Mac-Programm „Fotos aufbereiten.app“ (Fenster mit Ablagefläche, Quelltext: scripts/app/FotosAufbereiten.swift).
 # Ordner oder Fotos ins Fenster oder aufs Symbol im Dock ziehen; die fertigen Web-Versionen landen daneben in
-# „<Name> – fertig“ (scripts/prepare-folder.mjs). Neu bauen, wenn das Projekt verschoben wurde:  bash scripts/make-app.sh
+# „<Name> – Web“ (scripts/prepare-folder.mjs). Neu bauen, wenn das Projekt verschoben wurde:  bash scripts/make-app.sh
 # Braucht die Command Line Tools von Apple (swiftc) und Node.
 set -e
 DIR="$(cd "$(dirname "$0")/.." && pwd)"

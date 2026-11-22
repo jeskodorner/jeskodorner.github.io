@@ -7,7 +7,8 @@
  * 2400 px, sRGB, JPEG unter ca. 600 KB, GPS entfernt, Wasserzeichen nur wenn in photos.config.json eingeschaltet
  * (seit 22.11.2026 aus); Kamera-Daten, Aufnahmezeit,
  * Bildbeschreibung und Bildunterschrift aus Lightroom bleiben erhalten. Die Originale bleiben unverändert.
- * Ergebnis: neben dem Ordner ein Ordner „<Name> – fertig“ (bei einzelnen Fotos: „Fotos – fertig“ daneben).
+ * Ergebnis: neben dem Ordner ein Ordner „<Name> – Web“ bzw. „<Name> – Web mit Wasserzeichen“ (bei einzelnen Fotos:
+ * „Fotos – Web …“ daneben) – so liegen beide Fassungen nebeneinander, ohne sich zu überschreiben.
  * Diese Fotos lassen sich direkt im CMS unter „Fotos hochladen“ verwenden – sie bekommen dort kein zweites
  * Wasserzeichen (Markierung in den Metadaten).
  */
@@ -30,6 +31,7 @@ if (!inputs.length) {
 }
 const config = await loadConfig();
 if (config.watermark && (wmOn || wmOff)) config.watermark.enabled = wmOn;
+const SUFFIX = config.watermark?.enabled ? ' – Web mit Wasserzeichen' : ' – Web';
 
 // Aufträge sammeln: je Ordner seine Fotos; einzelne Fotos nach ihrem Ordner gruppiert
 const jobs = new Map(); // Zielordner → Quelldateien
@@ -38,11 +40,11 @@ for (const input of inputs) {
   const stat = await fs.stat(abs).catch(() => undefined);
   if (!stat) continue;
   if (stat.isDirectory()) {
-    if (/ – fertig$/.test(abs)) continue; // schon fertige Ordner nicht noch einmal
+    if (/ – (fertig|Web( mit Wasserzeichen)?)$/.test(abs)) continue; // schon fertige Ordner nicht noch einmal
     const files = (await fs.readdir(abs)).filter((f) => SOURCE_EXT.test(f) && !f.startsWith('.')).sort(naturalSort);
-    jobs.set(`${abs} – fertig`, files.map((f) => path.join(abs, f)));
+    jobs.set(`${abs}${SUFFIX}`, files.map((f) => path.join(abs, f)));
   } else if (SOURCE_EXT.test(abs)) {
-    const target = path.join(path.dirname(abs), 'Fotos – fertig');
+    const target = path.join(path.dirname(abs), `Fotos${SUFFIX}`);
     jobs.set(target, [...(jobs.get(target) ?? []), abs]);
   }
 }

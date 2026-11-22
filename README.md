@@ -219,7 +219,8 @@ bearbeiteten Datei verloren; leere Felder aus dem CMS gelten als „nicht angege
 ### Fotos vorab fertig machen: Mac-Programm „Fotos aufbereiten“
 
 Im Projektordner liegt **„Fotos aufbereiten.app“** (am besten ins Dock ziehen). Öffnen und einen Ordner mit Fotos (oder
-einzelne Fotos) ins Fenster ziehen – oder direkt aufs Symbol im Dock: Daneben entsteht „<Name> – fertig“ mit Web-Versionen wie für die Website – lange
+einzelne Fotos) ins Fenster ziehen – oder direkt aufs Symbol im Dock: Daneben entsteht „<Name> – Web“ (mit Wasserzeichen:
+„<Name> – Web mit Wasserzeichen“) mit Web-Versionen wie für die Website – lange
 Kante 2400 px, sRGB, JPEG unter ca. 600 KB, GPS entfernt; Kamera-Daten, Aufnahmezeit und Bildbeschreibungen aus
 Lightroom bleiben drin. Die Originale bleiben unverändert. Diese Fotos lassen sich direkt im CMS hochladen.
 **Wasserzeichen im Programm:** Schalter im Fenster (gemerkt in den Mac-Einstellungen `de.jeskodorner.fotos-aufbereiten`;
