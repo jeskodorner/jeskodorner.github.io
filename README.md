@@ -156,7 +156,8 @@ Felder dürfen in alten Dateien stehen bleiben.
 
 **Eigenes Video statt YouTube** (seit 22.11.2026, z. B. Dollgow): Die MP4 liegt in `public/videos/`, der Film
 nennt sie mit `video:`. Sie läuft **ohne Ton in Schleife wie ein bewegtes Foto** (`src/components/LoopVideo.astro`):
-lädt erst, wenn sie auf dem Bildschirm ist, läuft nur dort, ein kleiner Knopf (und ein Klick aufs Video) hält an.
+lädt erst, wenn sie auf dem Bildschirm ist, läuft nur dort, auf der Filmseite hält ein kleiner Knopf (und ein Klick
+aufs Video) an; in der Mappe läuft sie ohne Knopf einfach durch (Jeskos Wunsch).
 Bei „Bewegung reduzieren“ oder im Datensparmodus des Handys läuft sie nicht von selbst. Breite und Höhe liest der
 Build aus der Datei (`src/lib/video.ts`). Mit `galerie:` gehört der Film zu einem Fotoalbum: Ist das Album im
 Portfolio, zeigt seine Mappe das Video oben groß und darunter die Fotos.
@@ -632,7 +633,7 @@ Vier Farben, sonst nichts (seit 20. November 2026). Definiert in `src/styles/tok
 |---|---|---|
 | Dark Blue | `#1A0089` | Schrift überall (statt Schwarz), Bühne: Startseite und Menü; Links (unterstrichen), Fokusrahmen, Vorschaukarten. Als Fläche sonst nirgends (seit 20.11.2026: Knöpfe, Abspielen, Fußzeile waren blau – zu viel Blau) |
 | White Chocolate | `#EFE7D3` | Wände: Hintergrund aller Seiten; Schrift auf Dark Blue; Grund des Browser-Symbols |
-| Portland Orange | `#E8481F` | „J“ im Browser-Symbol; großer Name „JESKO DORNER“ unten in der Fußzeile (seit 21.11.2026). „hier kannst du klicken“: Menü-Knopf, volle Knöpfe (Ganzes Album ansehen, Schreib mir, Senden; beim Überfahren blau), Überfahren als Fläche – immer mit heller Schrift (White Chocolate), Unterstrich beim Überfahren von Titeln. Einen Hauch tiefer als im Palettenbild (`#FF5E33`), damit helle Schrift darauf lesbar ist; blaue Schrift auf Orange mochte Jesko nicht |
+| Portland Orange | `#E8481F` | „J“ im Browser-Symbol; großer Name „JESKO DORNER“ unten in der Fußzeile (seit 21.11.2026). „hier kannst du klicken“: volle Knöpfe (Ganzes Album ansehen, Schreib mir, Senden; beim Überfahren blau), Überfahren als Fläche – immer mit heller Schrift (White Chocolate), Unterstrich beim Überfahren von Titeln. Einen Hauch tiefer als im Palettenbild (`#FF5E33`), damit helle Schrift darauf lesbar ist; blaue Schrift auf Orange mochte Jesko nicht |
 | June Bud | `#B7CF4F` | Fläche oben auf Album- und Filmseiten (Klasse `c-green`), „Link kopiert“. Fußzeile am 21.11.2026 erst beige (`--wall-2`, „grün nach oben und beige nach unten“, Git-Tag `alte-version-fusszeile-beige`), dann ganz orange mit heller Schrift (Git-Tag `alte-version-fusszeile-orange` – zu viel Orange, gleich unter „Schreib mir“), jetzt beige mit blauer Schrift und nur dem großen Namen in Orange. Am 20.11.2026 war es kurz umgekehrt: Fußzeile grün, Band hellgrau |
 
 Dazu nur dunklere Stufen von White Chocolate für Platzhalter und Kästen (`--wall-2`, `--wall-3`). Es gibt bewusst nur
@@ -658,7 +659,7 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
   Bildschirm, oben groß der Name, darunter die Menüpunkte (Portfolio, Galerie, Film, Über mich, Kontakt), unten
   nur Instagram – auf der Startseite und im Menü gleich. Impressum und Datenschutz stehen in der Fußzeile jeder
   Unterseite (von der Startseite aus also mit zwei Klicks). Ohne Kopfleiste und ohne Scrollen. Am Handy und
-  Tablet öffnet sich dasselbe Menü über den orangen Menü-Knopf oben rechts: Die Fläche wächst als Kreis aus dem Knopf, der Schließen-Knopf sitzt an derselben Stelle,
+  Tablet öffnet sich dasselbe Menü über den Menü-Knopf oben rechts (dunkelbeiges Quadrat, seit 22.11.2026; vorher oranger Kreis): Die Fläche wächst als Kreis aus dem Knopf, der Schließen-Knopf sitzt an derselben Stelle,
   der Name führt zur Startseite. **Am Laptop (ab 1000 px) klassisch** (seit 20.11.2026): die fünf Bereiche als
   Wörter rechts in der Kopfleiste (Titelschrift, Großbuchstaben), der aktuelle unterstrichen, Überfahren oranges
   Feld; kein Menüknopf (`Header.astro`, `.nav-desktop`).
@@ -744,8 +745,8 @@ Kontraste nach WCAG 2.x:
 |---|---|---|
 | White Chocolate `#EFE7D3` | Dark Blue `#1A0089` / Nebentext `#55507A` | 12,1 : 1 / 6,1 : 1 |
 | Dark Blue (Startseite, Menü) | White Chocolate | 12,1 : 1 |
-| Dark Blue | Orange (Menü-Knopf beim Überfahren) | 3,8 : 1 |
-| Portland Orange `#E8481F` (Überfahren, Knöpfe, Menü-Knopf) | White Chocolate | 3,2 : 1 – reicht für fette und große Schrift und Symbole, nicht für langen Text |
+| Dunkles Beige `#DDD2B8` (Knöpfe ohne eigene Farbe, Menü-Knopf, Knöpfe der Großansicht) | Dark Blue | 10 : 1 |
+| Portland Orange `#E8481F` (Überfahren, volle Knöpfe) | White Chocolate | 3,2 : 1 – reicht für fette und große Schrift und Symbole, nicht für langen Text |
 | June Bud `#B7CF4F` (Band über Album und Film) | Dark Blue / Text-Grau `#4B4672` | 8,6 : 1 / 5,0 : 1 |
 | Beige `#E7DDC6` (Fußzeile) | Dark Blue | 11 : 1 |
 | Beige (Fußzeile) | Portland Orange (nur der große Name, Schmuck, `aria-hidden`) | 2,9 : 1 |
@@ -766,7 +767,7 @@ Orange nie als Schriftfarbe auf White Chocolate (2,5 : 1), nur als Fläche oder 
   Videotyp (Galerie, Album, Mappe, Portfolio, Film).
 - **Text immer grau:** Einleitungen, Beschreibungen und Fließtext stehen in Grau (`--ink-soft`, Klassen `lead` und
   `prose`); Überschriften, Links, Etiketten und Knöpfe in Blau.
-- **Tippflächen mindestens 44 px:** Knöpfe sind mindestens 44 px hoch (`btn--small`, runde Teilen-Knöpfe 44 × 44).
+- **Tippflächen mindestens 44 px:** Knöpfe sind mindestens 44 px hoch (`btn--small`, quadratische Teilen-Knöpfe 44 × 44).
   Kleine Textlinks (Logo, Menüpunkte, Fußzeile, Kontakt) bekommen mit der Klasse `tap` eine unsichtbare Fläche um
   den Link; die Schrift bleibt gleich. Wo solche Links untereinander stehen, ist der Abstand so groß, dass sich
   die Flächen nicht überlappen (Fußzeile am Handy, Kontakt).
@@ -810,7 +811,12 @@ Orange nie als Schriftfarbe auf White Chocolate (2,5 : 1), nur als Fläche oder 
   den Ecken, Details als Spalte rechts (`isShort` in `src/scripts/lightbox.ts`, Media-Query am Ende von
   `src/styles/lightbox.css`).
 - **Rückmeldung:** Knöpfe geben beim Drücken kurz nach; „Link kopieren“ wird für zwei Sekunden zum Haken.
-- **Fokusrahmen** folgt der Form des Elements (runde Knöpfe bekommen einen runden Rahmen).
+- **Kantig** (seit 22.11.2026, passend zum rechteckigen Feld beim Überfahren): keine runden Ecken mehr – Knöpfe,
+  Menü-Knopf, Knöpfe der Großansicht, Eingabefelder und Kästen (Tokens `--radius` und `--radius-pill` stehen auf 0).
+  Knöpfe ohne eigene Farbe („Zurück“, „Galerie ansehen“ …) haben keinen blauen Rahmen mehr, sondern eine
+  dunkelbeige Fläche (`--field`); der Menü-Knopf ebenso (vorher orange). Volle Knöpfe bleiben orange. Vorher runde
+  Knöpfe mit blauem Rahmen: Git-Tag `alte-version-runde-knoepfe`. Rund ist nur noch der kleine Ladekreis.
+- **Fokusrahmen** folgt der Form des Elements.
 - **Abschluss mit klarer Handlung:** Am Ende des Portfolios steht „Schreib mir“ als gefüllter Knopf, daneben der
   Weg zur Galerie.
 

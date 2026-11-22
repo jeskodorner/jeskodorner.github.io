@@ -71,9 +71,11 @@ html:has(.pswp--open) {
   width: 44px;
   height: 44px;
   margin: 0;
-  border: 1.5px solid var(--ink);
-  border-radius: 50%;
-  background: var(--wall);
+  /* Kantig, ohne Rahmen, dunkelbeige hinterlegt wie die Knöpfe auf den Seiten (seit 22.11.2026; vorher Kreise mit
+     blauem Rahmen) */
+  border: 0;
+  border-radius: 0;
+  background: var(--field);
   opacity: 1;
   transition:
     background-color 0.2s,
@@ -121,20 +123,13 @@ html:has(.pswp--open) {
   outline: 3px solid var(--accent);
   outline-offset: 2px;
 }
-/* Schließen und aktive Details: gefüllt – Orange wie der Menüknopf, beim Überfahren blau (vorher blau gefüllt) */
-.pswp__top-bar .pswp__button--close,
+/* Aktive Details: Orange (eingeschaltet). Schließen ist seit 22.11.2026 dunkelbeige wie der Menü-Knopf (vorher
+   orange) */
 .pswp__top-bar .pswp__button--jd-info[aria-expanded='true'] {
   background: var(--hover);
 }
-.pswp__top-bar .pswp__button--close .pswp__icn,
 .pswp__top-bar .pswp__button--jd-info[aria-expanded='true'] .pswp__icn {
   color: var(--on-hover);
-}
-.pswp__top-bar .pswp__button--close:hover {
-  background: var(--ink);
-}
-.pswp__top-bar .pswp__button--close:hover .pswp__icn {
-  color: var(--wall);
 }
 
 /* ---------- „← Vorheriges Bild“ / „Nächstes Bild →“: direkt über dem Foto ----------
@@ -184,14 +179,13 @@ html:has(.pswp--open) {
   place-items: center;
   width: 36px;
   height: 36px;
-  border: 1.5px solid var(--ink);
-  border-radius: 50%;
+  border-radius: 0;
+  background: var(--field);
   color: var(--ink);
   transition: background-color 0.2s;
 }
 .jd-step:hover .jd-step-circle {
   background: var(--hover);
-  border-color: var(--hover);
   color: var(--on-hover);
 }
 .jd-step-icn {

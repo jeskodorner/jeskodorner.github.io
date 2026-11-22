@@ -5,7 +5,8 @@
  * - Lädt erst, wenn es auf dem Bildschirm ist, und läuft nur dort (außerhalb angehalten: spart Akku).
  * - Bei „Bewegung reduzieren“ oder im Datensparmodus läuft es nicht von selbst: Standbild mit Abspielknopf.
  * - Ein kleiner Knopf unten rechts hält an und spielt weiter (bei Mausbedienung nur beim Überfahren sichtbar, angehalten
- *   immer). Ein Klick aufs Video tut dasselbe.
+ *   immer). Ein Klick aufs Video tut dasselbe. Mit `pausable={false}` (Mappen im Portfolio, Jeskos Wunsch vom
+ *   22.11.2026) gibt es weder Knopf noch Anhalten per Klick – dann läuft es einfach, wie ein GIF.
  * - Ohne JavaScript: normale Videosteuerung des Browsers.
  * Das Standbild (`poster`) steht da, bis das Video läuft – in der Übersicht und bei langsamer Verbindung.
  */
@@ -20,15 +21,21 @@ export interface Props {
   poster: ImageMetadata;
   /** Beschreibung des Videos (für Screenreader) */
   alt: string;
+  /** Anhalten erlauben (Knopf und Klick aufs Video). Standard: ja */
+  pausable?: boolean;
   class?: string;
 }
 
-const { file, poster, alt, class: className } = Astro.props;
+const { file, poster, alt, pausable = true, class: className } = Astro.props;
 const v = videoInfo(file);
 const posterImg = await getImage({ src: poster, width: Math.min(1920, poster.width), format: 'webp', quality: 80 });
 ---
 
-<figure class:list={['loop', className]} style={`--ratio:${(v.width / v.height).toFixed(4)}`} data-loop>
+<figure
+  class:list={['loop', className, { 'loop--pausable': pausable }]}
+  style={`--ratio:${(v.width / v.height).toFixed(4)}`}
+  data-loop
+>
   <video
     class="loop-video"
     src={v.src}
@@ -44,10 +51,14 @@ const posterImg = await getImage({ src: poster, width: Math.min(1920, poster.wid
     aria-label={alt}
   >
   </video>
-  <button class="loop-toggle" type="button" aria-label="Video anhalten" data-loop-toggle hidden>
-    <Icon name="pause" class="i-pause" />
-    <Icon name="play" class="i-play" />
-  </button>
+  {
+    pausable && (
+      <button class="loop-toggle" type="button" aria-label="Video anhalten" data-loop-toggle hidden>
+        <Icon name="pause" class="i-pause" />
+        <Icon name="play" class="i-play" />
+      </button>
+    )
+  }
 </figure>
 
 <script>
@@ -57,10 +68,10 @@ const posterImg = await getImage({ src: poster, width: Math.min(1920, poster.wid
   document.querySelectorAll<HTMLElement>('[data-loop]').forEach((fig) => {
     const video = fig.querySelector('video');
     const btn = fig.querySelector<HTMLButtonElement>('[data-loop-toggle]');
-    if (!video || !btn) return;
-    // Mit JavaScript: keine Browser-Steuerung, nur der eigene kleine Knopf
+    if (!video) return;
+    // Mit JavaScript: keine Browser-Steuerung, nur der eigene kleine Knopf (falls Anhalten erlaubt ist)
     video.controls = false;
-    btn.hidden = false;
+    if (btn) btn.hidden = false;
     // Angehalten durch den Knopf (oder von Anfang an bei „Bewegung reduzieren“ / Datensparmodus)
     let held = reduce || saveData;
     let visible = false;
@@ -68,7 +79,7 @@ const posterImg = await getImage({ src: poster, width: Math.min(1920, poster.wid
     const sync = () => {
       const paused = video.paused;
       fig.classList.toggle('is-paused', paused);
-      btn.setAttribute('aria-label', paused ? 'Video abspielen' : 'Video anhalten');
+      btn?.setAttribute('aria-label', paused ? 'Video abspielen' : 'Video anhalten');
     };
     const update = () => {
       if (visible && !held) {
@@ -95,8 +106,10 @@ const posterImg = await getImage({ src: poster, width: Math.min(1920, poster.wid
       },
       { threshold: 0.1 },
     ).observe(video);
-    btn.addEventListener('click', toggle);
-    video.addEventListener('click', toggle);
+    if (btn) {
+      btn.addEventListener('click', toggle);
+      video.addEventListener('click', toggle);
+    }
     video.addEventListener('play', sync);
     video.addEventListener('pause', sync);
     sync();
@@ -115,6 +128,8 @@ const posterImg = await getImage({ src: poster, width: Math.min(1920, poster.wid
     height: auto;
     aspect-ratio: var(--ratio);
     object-fit: cover;
+  }
+  .loop--pausable .loop-video {
     cursor: pointer;
   }
   /* Kleiner runder Knopf unten rechts: helle Fläche, blaues Zeichen; beim Überfahren orange wie überall */
@@ -128,7 +143,7 @@ const posterImg = await getImage({ src: poster, width: Math.min(1920, poster.wid
     height: 2.75rem;
     padding: 0;
     border: 0;
-    border-radius: 50%;
+    border-radius: 0;
     background: rgb(239 231 211 / 0.85);
     color: var(--ink);
     font-size: 1.1rem;

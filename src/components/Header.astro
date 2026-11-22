@@ -151,9 +151,10 @@ const isCurrent = (match: string[]) => current(path, match);
     width: 3rem;
     height: 3rem;
     border: 0;
-    border-radius: 50%;
-    background: var(--hover);
-    color: var(--on-hover);
+    /* Quadrat in dunklem Beige mit blauem Zeichen (seit 22.11.2026; vorher oranger Kreis), beim Überfahren orange */
+    border-radius: 0;
+    background: var(--field);
+    color: var(--ink);
     transition:
       background-color 0.2s,
       color 0.2s,
@@ -163,8 +164,8 @@ const isCurrent = (match: string[]) => current(path, match);
     scale: 0.94;
   }
   .menu-btn:hover {
-    background: var(--ink);
-    color: var(--hover);
+    background: var(--hover);
+    color: var(--on-hover);
   }
   /* Laptop: statt des Knopfs die Wörter (.nav-desktop) */
   @media (min-width: 1000px) {

@@ -34,6 +34,9 @@
   --wall: var(--cream);
   --wall-2: #e7ddc6;
   --wall-3: #ddd2b8;
+  /* Dunkles Beige als Fläche für Knöpfe ohne eigene Farbe (Zurück, Galerie ansehen …) und den Menü-Knopf –
+     statt blauem Rahmen bzw. Orange (seit 22.11.2026) */
+  --field: var(--wall-3);
 
   /* Schrift: Dark Blue statt Schwarz (Name --ink bleibt, er steht in vielen Komponenten) */
   --ink: var(--blue);
@@ -97,8 +100,10 @@
   --max-text: 64ch;
   --header-h: 4.25rem;
 
-  --radius: 4px; /* Flächen und Eingabefelder */
-  --radius-pill: 999px; /* Knöpfe und Etiketten */
+  /* Kantig wie das rechteckige Feld beim Überfahren (seit 22.11.2026; vorher 4px und runde Knöpfe, Git-Tag
+     alte-version-runde-knoepfe). Die Namen bleiben, damit man es an einer Stelle zurückdrehen kann. */
+  --radius: 0px; /* Flächen und Eingabefelder */
+  --radius-pill: 0px; /* Knöpfe und Etiketten */
   --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
   --pop: cubic-bezier(0.3, 1.6, 0.5, 1);
   /* Fotos beim Überfahren: überall gleich stark vergrößert, im Rahmen (Album, Galerie, Portfolio) */

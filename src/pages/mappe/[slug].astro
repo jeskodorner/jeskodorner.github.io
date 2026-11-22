@@ -63,6 +63,7 @@ const film = await filmForGallery(g);
           poster={film.data.still}
           alt={`Film „${film.data.title}“, ohne Ton, läuft in Schleife`}
           class="mappe-video"
+          pausable={false}
         />
       </div>
     )
@@ -143,8 +144,8 @@ const film = await filmForGallery(g);
     margin-top: 0.5rem;
   }
   /* Film zum Album (z. B. Dollgow): oben über die volle Breite, genau so breit wie die Fotoreihen darunter (seit
-     22.11.2026 – vorher nie höher als der Bildschirm und dadurch schmaler als die Reihen). Abstand zu den Fotos wie
-     zwischen zwei Fotoreihen. */
+     22.11.2026 – vorher nie höher als der Bildschirm und dadurch schmaler als die Reihen). Ohne Knopf zum Anhalten,
+     es läuft einfach wie ein GIF. Abstand zu den Fotos wie zwischen zwei Fotoreihen. */
   .film-top {
     padding-bottom: var(--mappe-gap);
   }

@@ -145,16 +145,17 @@ const nameWords = site.name.split(' ').map((word) =>
     height: var(--header-h);
     margin-bottom: clamp(0.25rem, 2vw, 1rem);
   }
-  /* Schließen-Knopf wie der Menüknopf auf den Unterseiten: oranger Kreis */
+  /* Schließen-Knopf wie der Menüknopf auf den Unterseiten: Quadrat in dunklem Beige (seit 22.11.2026; vorher oranger
+     Kreis), beim Überfahren orange */
   .bm-close {
     display: inline-grid;
     place-items: center;
     width: 3rem;
     height: 3rem;
     border: 0;
-    border-radius: 50%;
-    background: var(--hover);
-    color: var(--on-hover);
+    border-radius: 0;
+    background: var(--field);
+    color: var(--ink);
     cursor: pointer;
     transition:
       background-color 0.2s,
@@ -165,8 +166,8 @@ const nameWords = site.name.split(' ').map((word) =>
     scale: 0.94;
   }
   .bm-close:hover {
-    background: var(--ink);
-    color: var(--hover);
+    background: var(--hover);
+    color: var(--on-hover);
   }
   /* Name: eine Zeile, so breit wie der Platz (aber nicht riesig), in --name-color (Schriftfarbe des Menüs). Im Menü
      ist er ein Link zur Startseite und bekommt beim Überfahren ein oranges Feld um beide Zeilen (Regeln unten). */

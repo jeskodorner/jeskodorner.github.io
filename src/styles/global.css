@@ -297,9 +297,11 @@ html:not(.js) .js-only {
   gap: 0.6em;
   min-height: 3rem;
   padding: 0.8em 1.5em;
-  border: 2.5px solid var(--ink);
+  /* Ohne sichtbaren Rahmen, dunkelbeige hinterlegt (seit 22.11.2026; vorher blauer Rahmen 2,5 px). Der Rahmen bleibt
+     unsichtbar da, damit volle und normale Knöpfe gleich groß sind. */
+  border: 2.5px solid transparent;
   border-radius: var(--radius-pill);
-  background: var(--wall);
+  background: var(--field);
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: var(--fs-sm);
