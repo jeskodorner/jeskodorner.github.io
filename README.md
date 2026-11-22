@@ -697,12 +697,11 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
   mit `display-compact`, `global.css`), damit die Fotos beim Öffnen sofort zu sehen sind. Erreichbar nur über das Portfolio (Foto oder
   Schild). Oben „← Zurück“ (führt dorthin zurück, wo man herkam, samt Stelle auf
   der Seite; ohne Vorgeschichte zur Startseite), Titel und Monat linksbündig wie auf allen Seiten. Darunter die Fotos
-  als Abzüge in gleich großen Feldern – jedes ganz und unbeschnitten, mittig im Feld, mit Schatten, kein Text. Die
-  Felder haben die Form der meisten Fotos der Mappe (mittleres Seitenverhältnis, zwischen 3:4 und 3:2; vorher immer
-  5:4), die Abstände sind knapp (seit 20.11.2026 etwa halb so groß wie vorher). Spalten pro Reihe: hochkant-Mappen
-  (wie Hilda) Laptop 4, Tablet 3, Handy 2; alle anderen 3 / 2 / 1, damit Querformate nicht klein wirken; nie mehr
-  Spalten als Fotos – eine Mappe mit einem Foto (Einzelbilder) zeigt es groß. Kein Feld wird höher als drei Viertel
-  des Bildschirms. Vorne das Foto aus dem Portfolio, dazu bis zu 7
+  seit 22.11.2026 wie auf der Galerie-Seite: gleich hohe, randvolle Reihen, jedes Foto im Originalformat, ohne
+  Schatten und ohne Text, mit schmalen Abständen (dieselbe Rechnung wie dort, `justify-layout.js`, gleiche
+  Reihenhöhe). Vorher gleich große Felder in Spalten mit je einem Abzug mit Schatten (Git-Tag
+  `alte-version-mappe-felder`). Gibt es einen eigenen Film zum Album (Dollgow), läuft er oben über die volle Breite
+  in Schleife, darunter die Fotos. Vorne das Foto aus dem Portfolio, dazu bis zu 7
   weitere gleichmäßig über das Album verteilt (oder genau die Fotos aus `mappe:` im Album). Ein Klick auf ein Foto
   öffnet die Lightbox mit dem ganzen Album ab diesem Foto (`src/scripts/open-album.ts`). Unten nur „Ganzes Album
   ansehen →“ (keine Bildanzahl).

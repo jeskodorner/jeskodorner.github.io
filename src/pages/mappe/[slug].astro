@@ -1,7 +1,7 @@
 ---
 /**
- * Mappe: eine ruhige Übersicht zu einem Album aus dem Portfolio, wie eine aufgeschlagene Fotomappe – „← Zurück“,
- * Titel, Monat, eine Auswahl der Fotos als Abzüge nebeneinander (jedes ganz, mit Schatten, in gleich großen Feldern),
+ * Mappe: eine ruhige Übersicht zu einem Album aus dem Portfolio – „← Zurück“, Titel, Monat, eine Auswahl der Fotos
+ * in gleich hohen, randvollen Reihen wie auf der Galerie-Seite (jedes Foto im Originalformat),
  * fast kein Text, unten „Ganzes Album ansehen →“. Erreichbar über „Mappe ansehen →“ auf der Startseite und über die
  * Fotos im Portfolio.
  * Welche Fotos: src/lib/mappe.ts (Liste `mappe:` im Album oder automatisch bis zu 8). Ein Klick auf ein Foto öffnet
@@ -11,6 +11,7 @@
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Picture from '../../components/Picture.astro';
+import JustifyNow from '../../components/JustifyNow.astro';
 import Icon from '../../components/Icon.astro';
 import LoopVideo from '../../components/LoopVideo.astro';
 import { filmForGallery } from '../../lib/films';
@@ -19,6 +20,7 @@ import type { Gallery, GalleryImage } from '../../lib/galleries';
 import { photoData } from '../../lib/lightbox-data';
 import { cardImage } from '../../lib/og';
 import { tidyTitle } from '../../lib/text';
+import { cardSizes } from '../../lib/sizes';
 import { useTranslations, formatMonth } from '../../i18n';
 
 export async function getStaticPaths() {
@@ -34,21 +36,6 @@ interface Props {
 const { gallery: g, lead } = Astro.props;
 const t = useTranslations();
 const images = mappeImages(g, lead);
-// Form der Felder: wie die meisten Fotos der Mappe (das mittlere Seitenverhältnis), zwischen 3:4 und 3:2. Sind
-// alle hochkant, sind auch die Felder hochkant – so steht kein Foto mit viel leerem Rand in einem breiten Feld.
-const ratios = images.map((img) => img.src.width / img.src.height).sort((a, b) => a - b);
-const median = ratios.length ? ratios[Math.floor(ratios.length / 2)]! : 5 / 4;
-const fieldR = Math.min(3 / 2, Math.max(3 / 4, median));
-// Spalten: so viele, dass jedes Foto etwa so groß wirkt wie ein Hochformat bei vier Spalten (Hilda). Hochkant-Mappen
-// Laptop 4 / Tablet 3 / Handy 2, alle anderen 3 / 2 / 1 – Querformate wären sonst klein. Nie mehr Spalten als Fotos:
-// eine Mappe mit einem Foto zeigt es groß.
-const portrait = fieldR < 0.9;
-const cols = (n: number) => Math.max(1, Math.min(n, images.length));
-const colsLg = cols(portrait ? 4 : 3);
-const colsMd = cols(portrait ? 3 : 2);
-const colsSm = cols(portrait ? 2 : 1);
-// Bildbreite für den Browser (Inhalt etwa 90 % der Fensterbreite, geteilt durch die Spalten)
-const sizes = `(min-width: 1000px) ${Math.round(90 / colsLg)}vw, (min-width: 600px) ${Math.round(90 / colsMd)}vw, ${Math.round(92 / colsSm)}vw`;
 // Unter dem Titel nur das Datum, wie auf der Albumseite (bis 20.11.2026 auch der Ort)
 const meta = formatMonth(g.date);
 // Lightbox-Daten des ganzen Albums (unsichtbar): ein Klick auf ein Foto blättert durchs ganze Album
@@ -81,33 +68,35 @@ const film = await filmForGallery(g);
     )
   }
 
-  <ol
-    class="container container--wide mappe"
-    role="list"
-    style={`--field-r:${fieldR.toFixed(4)};--cols-lg:${colsLg};--cols-md:${colsMd};--cols-sm:${colsSm}`}
-  >
-    {
-      images.map((img, i) => {
-        const r = img.src.width / img.src.height;
-        return (
-          <li class="sheet" style={`--r:${r.toFixed(4)}`}>
-            <a class="sheet-link reveal" href={img.hashUrl} data-open-album={g.slug} data-photo={img.index}>
-              <Picture
-                src={img.src}
-                alt={img.alt}
-                sizes={sizes}
-                color={img.color}
-                lqip={img.lqip}
-                loading={i < 4 ? 'eager' : 'lazy'}
-                fetchpriority={i === 0 ? 'high' : undefined}
-                class="sheet-img"
-              />
-            </a>
-          </li>
-        );
-      })
-    }
-  </ol>
+  {/* Fotos in gleich hohen, randvollen Reihen wie auf der Galerie-Seite (seit 22.11.2026; vorher gleich große Felder
+      mit Abzügen und Schatten) – verteilt von justify-layout.js, schon beim Aufbau der Seite (JustifyNow) */}
+  <div class="container container--wide">
+    <ol class="mappe" role="list" data-justify>
+      {
+        images.map((img, i) => {
+          const r = img.src.width / img.src.height;
+          return (
+            <li class="sheet" style={`--r:${r.toFixed(4)}`}>
+              <a class="sheet-link reveal" href={img.hashUrl} data-open-album={g.slug} data-photo={img.index}>
+                <Picture
+                  src={img.src}
+                  alt={img.alt}
+                  sizes={cardSizes(r)}
+                  color={img.color}
+                  lqip={img.lqip}
+                  loading={i < 4 ? 'eager' : 'lazy'}
+                  fetchpriority={i === 0 ? 'high' : undefined}
+                  maxWidth={1200}
+                  class="sheet-img"
+                />
+              </a>
+            </li>
+          );
+        })
+      }
+    </ol>
+    <JustifyNow />
+  </div>
 
   <ul class="album-src" hidden data-album-src={g.slug} data-count={g.images.length} data-title={g.title}>
     {
@@ -132,9 +121,12 @@ const film = await filmForGallery(g);
 <script>
   import { initAlbumLinks } from '../../scripts/open-album';
   import { initBackLinks } from '../../scripts/back-link';
+  import { initJustify } from '../../scripts/justify';
   initAlbumLinks();
   // „Zurück“: kam man von dieser Website (Startseite, Portfolio), geht es genau dorthin zurück – samt Stelle auf der Seite
   initBackLinks();
+  // Reihen neu verteilen, wenn sich die Breite ändert (Fenster, Drehen des Handys)
+  initJustify();
 </script>
 
 <style>
@@ -150,53 +142,46 @@ const film = await filmForGallery(g);
   .head > .label {
     margin-top: 0.5rem;
   }
-  /* Film zum Album (z. B. Dollgow): oben groß, so breit wie der Inhalt, aber nie höher als der Bildschirm unter der
-     Kopfleiste; mit Schatten wie die Abzüge darunter. Abstand zu den Fotos wie zwischen zwei Fotoreihen. */
+  /* Film zum Album (z. B. Dollgow): oben über die volle Breite, genau so breit wie die Fotoreihen darunter (seit
+     22.11.2026 – vorher nie höher als der Bildschirm und dadurch schmaler als die Reihen). Abstand zu den Fotos wie
+     zwischen zwei Fotoreihen. */
   .film-top {
-    padding-bottom: clamp(1.25rem, 2.5vw, 2.5rem);
+    padding-bottom: var(--mappe-gap);
   }
   .film-top :global(.mappe-video) {
-    width: min(100%, (100svh - var(--header-h) - 2rem) * var(--ratio));
-    box-shadow: var(--hang-shadow);
+    width: 100%;
   }
-  /* Übersicht wie eine aufgeschlagene Mappe: gleich große Felder in Reihen. Spalten je nach Form und Anzahl der Fotos
-     (--cols-lg/-md/-sm, oben berechnet; vorher immer 4 / 3 / 2). Die Felder haben die Form der meisten Fotos
-     (--field-r; vorher immer 5:4). In jedem Feld liegt ein Abzug ganz (unbeschnitten), so groß wie das Feld es
-     zulässt, mittig, mit Schatten. Kein Feld höher als 75 % des Bildschirms (wichtig bei nur einem oder zwei Fotos);
-     die Reihe steht dann linksbündig wie Titel und Knopf. Abstände seit 20.11.2026 etwa halb so groß wie vorher. */
+  /* Fotos wie auf der Galerie-Seite: gleich hohe Reihen, die die Breite füllen, jedes Foto im Originalformat, ohne
+     Schatten. Reihenhöhe und schmalstes Foto wie dort (--row, --min-w); zwischen den Fotos überall derselbe schmale
+     Abstand (dort ist er nach unten größer, weil Titel unter den Fotos stehen). Ohne JavaScript verteilt CSS
+     (flex-grow), dann ist nur die letzte Reihe nicht gestreckt. Bis 22.11.2026: gleich große Felder in Spalten, jedes
+     Foto als Abzug mit Schatten darin. */
+  .container {
+    --mappe-gap: clamp(0.45rem, 0.8vw, 0.8rem);
+  }
   .mappe {
-    --col-max: calc(75svh * var(--field-r));
+    --row: clamp(118px, 45px + 19vw, 340px);
+    --min-w: clamp(150px, 40vw, 200px);
     list-style: none;
-    display: grid;
-    grid-template-columns: repeat(var(--cols-sm), minmax(0, var(--col-max)));
-    justify-content: start;
-    gap: 1rem 0.75rem;
-    margin: 0 auto;
-    padding-block: 0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--mappe-gap);
   }
-  @media (min-width: 600px) {
-    .mappe {
-      grid-template-columns: repeat(var(--cols-md), minmax(0, var(--col-max)));
-      gap: clamp(1.25rem, 2.5vw, 2.5rem) clamp(1rem, 2vw, 2rem);
-    }
-  }
-  @media (min-width: 1000px) {
-    .mappe {
-      grid-template-columns: repeat(var(--cols-lg), minmax(0, var(--col-max)));
-    }
+  .mappe::after {
+    content: '';
+    flex-grow: 1000000;
   }
   .sheet {
-    aspect-ratio: var(--field-r, 5 / 4);
-    container-type: size;
-    display: grid;
-    place-items: center;
+    flex-grow: calc(var(--r) * 100);
+    flex-basis: calc(var(--r) * var(--row));
+    min-width: 0;
   }
   .sheet-link {
     display: block;
-    /* Querformat füllt die Breite, Hochformat die Höhe des Felds */
-    width: min(100cqw, 100cqh * var(--r));
     overflow: hidden;
-    box-shadow: var(--hang-shadow);
+    background: var(--wall-3);
     cursor: zoom-in;
     outline-offset: 4px;
   }
@@ -204,6 +189,7 @@ const film = await filmForGallery(g);
     display: block;
     width: 100%;
     height: auto;
+    aspect-ratio: var(--r);
     transition: transform 0.9s var(--ease);
   }
   @media (hover: hover) {
