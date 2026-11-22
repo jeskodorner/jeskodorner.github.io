@@ -140,7 +140,8 @@ ein kurzer Text in Grau und „Mehr ansehen →“ – kein Player. Laptop 3, Ta
 ohne Farbband (seit 22.11.2026) „← Zurück“, Titel und der ganze Text in Grau, dazu der Player mit „Abspielen“ (am Laptop
 ab 1000 px nebeneinander, Text links, Video rechts; am Handy und Tablet untereinander, der Player dann so groß, dass
 er auf den ersten Bildschirm passt). Unten „Nächster Film →“ mit Vorschaubild, gleich aufgebaut wie „Nächste
-Galerie“ beim Album (`src/components/NeighbourNav.astro`), nur in eine Richtung; nach dem letzten Film kommt der
+Galerie“ beim Album (`src/components/NeighbourNav.astro`; „Nächste …“ steht immer rechtsbündig, gespiegelt zu
+„Vorherige …“, seit 22.11.2026 auch am Handy), nur in eine Richtung; nach dem letzten Film kommt der
 erste. Mit eigener Vorschaukarte fürs Teilen. Die Mappe bleibt bewusst anders: ruhiger, ohne Band.
 
 Felder dafür (alle optional):
@@ -708,9 +709,11 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
   in Schleife, darunter die Fotos. Mappen mit nur zwei oder drei Fotos zeigen sie am Handy größer (eins pro Reihe).
   Fotos: das Foto aus dem Portfolio steht seit 22.11.2026 nicht mehr vorne, sondern als letztes (man hat es gerade
   groß gesehen); dazu bis zu 7
-  weitere gleichmäßig über das Album verteilt (oder genau die Fotos aus `mappe:` im Album). Ein Klick auf ein Foto
-  öffnet die Lightbox mit dem ganzen Album ab diesem Foto (`src/scripts/open-album.ts`). Unten nur „Ganzes Album
-  ansehen →“ (keine Bildanzahl).
+  weitere gleichmäßig über das Album verteilt (oder genau die Fotos aus `mappe:` im Album). **Mappe und Album sind
+  zwei getrennte Orte** (seit 22.11.2026): Ein Klick auf ein Foto öffnet die Großansicht nur mit den Fotos der Mappe
+  und eigener Zählung („2 von 4“, `src/scripts/open-album.ts`); die einzige Verbindung ins Album ist unten „Ganzes
+  Album ansehen →“ (keine Bildanzahl). Nummern in Jeskos Wünschen („Bild 3 raus“) beziehen sich je nach Ort auf die
+  Mappe oder das Album – im Zweifel nachfragen. Vorher blätterte die Großansicht durchs ganze Album.
 - **Frühere Startseite: Bildfeld mit Doppelbelichtung** (bis 16. November 2026, Git-Tag
   `alte-version-startseite-ueberblendung`, Datei `BlendLoop.astro`): Fotos aus dem Portfolio (Liste `showroom`),
   in normalen Farben im Modus „Aufhellen“ übereinandergelegt (wie eine Doppelbelichtung), immer 4:3. Es sind immer zwei zu sehen. Alle

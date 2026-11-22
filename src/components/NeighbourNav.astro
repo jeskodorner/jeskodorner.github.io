@@ -61,14 +61,21 @@ const { prev, next, prevLabel, nextLabel, label } = Astro.props;
     gap: 1rem;
     margin-top: var(--section);
   }
+  /* „Nächste …“ immer rechtsbündig, gespiegelt zu „Vorherige …“ (Bild links ↔ Bild rechts, wie die Pfeile) – am
+     Laptop nebeneinander, seit 22.11.2026 auch am Handy untereinander */
+  .nb--next {
+    text-align: right;
+    justify-items: end;
+  }
+  .nb--next .nb-body {
+    justify-content: flex-end;
+  }
   @media (min-width: 760px) {
     .neighbours {
       grid-template-columns: 1fr 1fr;
     }
     .nb--next {
       grid-column: 2;
-      text-align: right;
-      justify-items: end;
     }
   }
   .nb {

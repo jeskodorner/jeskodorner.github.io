@@ -5,7 +5,10 @@
  * fast kein Text, unten „Ganzes Album ansehen →“. Erreichbar über „Mappe ansehen →“ auf der Startseite und über die
  * Fotos im Portfolio.
  * Welche Fotos: src/lib/mappe.ts (Liste `mappe:` im Album oder automatisch bis zu 8). Ein Klick auf ein Foto öffnet
- * die Lightbox mit dem ganzen Album ab diesem Foto, direkt hier (wie im Portfolio).
+ * die Großansicht direkt hier – nur mit den Fotos der Mappe und eigener Zählung („2 von 4“).
+ * Mappe und Album sind zwei getrennte Orte (Jesko, 22.11.2026): Die einzige Verbindung ist „Ganzes Album ansehen“
+ * unten. Vorher blätterte die Großansicht durchs ganze Album, und ohne JavaScript führte ein Foto ins Album – jetzt
+ * öffnet es dann nur das große Bild.
  * Gibt es einen eigenen Film zum Album (Feld `galerie` in src/content/films/…, z. B. Dollgow), läuft er über den
  * Fotos groß in Schleife (seit 22.11.2026).
  */
@@ -38,8 +41,8 @@ const t = useTranslations();
 const images = mappeImages(g, lead);
 // Unter dem Titel nur das Datum, wie auf der Albumseite (bis 20.11.2026 auch der Ort)
 const meta = formatMonth(g.date);
-// Lightbox-Daten des ganzen Albums (unsichtbar): ein Klick auf ein Foto blättert durchs ganze Album
-const items = await Promise.all(g.images.map((img) => photoData(g, img)));
+// Lightbox-Daten nur der Fotos dieser Mappe (unsichtbar), in ihrer Reihenfolge und eigener Zählung
+const items = await Promise.all(images.map((img) => photoData(g, img)));
 const og = cardImage(`album/${g.slug}`, g.cover.alt);
 // Gibt es einen eigenen Film zum Album (Feld `galerie` im Film), läuft er oben groß in Schleife, darunter die Fotos
 const film = await filmForGallery(g);
@@ -78,7 +81,7 @@ const film = await filmForGallery(g);
           const r = img.src.width / img.src.height;
           return (
             <li class="sheet" style={`--r:${r.toFixed(4)}`}>
-              <a class="sheet-link reveal" href={img.hashUrl} data-open-album={g.slug} data-photo={img.index}>
+              <a class="sheet-link reveal" href={items[i]!.set.largest.url} data-open-album={g.slug} data-photo={i + 1}>
                 <Picture
                   src={img.src}
                   alt={img.alt}
@@ -99,7 +102,7 @@ const film = await filmForGallery(g);
     <JustifyNow />
   </div>
 
-  <ul class="album-src" hidden data-album-src={g.slug} data-count={g.images.length} data-title={g.title}>
+  <ul class="album-src" hidden data-album-src={g.slug} data-count={images.length} data-title={g.title}>
     {
       items.map((it) => (
         <li>

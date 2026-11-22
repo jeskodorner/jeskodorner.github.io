@@ -25,7 +25,7 @@ showroom:
   - galerie: schulstreik-05-03
     bild: p3050133.jpg
   - galerie: hoodie
-    bild: dsc01423.jpg
+    bild: dsc01421.jpg
   - galerie: love-exercise
     bild: love-exercise-jesko-dorner-52.jpg
   - galerie: dollgow-neujahr-2025

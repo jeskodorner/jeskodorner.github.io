@@ -1,8 +1,9 @@
 /**
- * Fotos, die direkt hier ihr ganzes Album in der Lightbox öffnen (Mappe), ohne die Albumseite.
- * Die Seite enthält je Album eine unsichtbare Liste [data-album-src="<slug>"] mit den Lightbox-Daten aller Fotos;
- * ein Link mit data-open-album="<slug>" und data-photo="<Nummer>" öffnet das Album ab genau diesem Foto.
- * Ohne JavaScript führt der Link ins Album (#bild-<Nummer>).
+ * Fotos, die direkt hier in der Großansicht aufgehen (Mappe), ohne die Albumseite.
+ * Die Seite enthält eine unsichtbare Liste [data-album-src="<slug>"] mit den Lightbox-Daten der Fotos, die dort
+ * blätterbar sein sollen (in der Mappe seit 22.11.2026 nur die Fotos der Mappe, nicht das ganze Album); ein Link mit
+ * data-open-album="<slug>" und data-photo="<Nummer in dieser Liste>" öffnet die Großansicht ab genau diesem Foto.
+ * Ohne JavaScript öffnet der Link nur das große Bild.
  */
 import { initLightbox } from './lightbox';
 
