@@ -1,6 +1,6 @@
 ---
 /**
- * Seite je Film (/film/<name>/) – aufgebaut wie die Albumseite: oben ein Band in June Bud mit „← Zurück“, Titel
+ * Seite je Film (/film/<name>/) – aufgebaut wie die Albumseite, ohne Farbband: oben „← Zurück“, Titel
  * und Text (grau), am Laptop daneben der Player, am Handy darunter. Datensparsam: erst ein Klick auf „Abspielen“ lädt
  * YouTube (src/components/YouTube.astro). Unten „Nächster Film →“ wie „Nächste Galerie“ beim Album (nur in eine
  * Richtung; nach dem letzten Film kommt wieder der erste). Filme ohne YouTube, aber mit Link (z. B. Vimeo):
@@ -43,8 +43,8 @@ const ratio = vid ? vid.width / vid.height : 16 / 9;
 ---
 
 <BaseLayout title={d.title} description={filmTeaser(film) || t.film.intro} image={cardImage(`film/${film.id}`, d.stillAlt ?? d.coverAlt)}>
-  <article class="c-green">
-    <div class="g-band room">
+  <article>
+    <div class="g-band">
       <div class="container container--wide film">
         {/* „Zurück“ dorthin, wo man herkam; ohne Vorgeschichte an die Stelle dieses Films in der Übersicht
             (src/scripts/back-link.ts) */}
@@ -96,7 +96,8 @@ const ratio = vid ? vid.width / vid.height : 16 / 9;
 </script>
 
 <style>
-  /* Band in June Bud wie auf der Albumseite (gleiche Ränder wie .g-band in GalleryPage.astro). Darin oben
+  /* Kopf wie auf der Albumseite, direkt auf der Wand (seit 22.11.2026 ohne Farbband: die Albumseite zeigt statt des
+     Bands das Vorschaubild, hier steht der Player an dieser Stelle; vorher June Bud, davor hellgrau). Oben
      „← Zurück“, darunter Titel und Text und der Player. Handy und Tablet untereinander, Laptop (ab 1000 px)
      nebeneinander: links Titel und Text, rechts das Video, oben bündig (untereinander mochte Jesko am Laptop nicht). */
   .g-band {

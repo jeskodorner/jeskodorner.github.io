@@ -43,16 +43,15 @@ const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : 
     margin-top: var(--section);
     padding-top: clamp(2.5rem, 5vw, 4.5rem);
     padding-bottom: 1.5rem;
-    background: var(--wall-2);
-    color: var(--on-cream);
+    background: var(--green);
+    color: var(--on-green);
     overflow: hidden;
   }
-  /* Fußzeile beige (--wall-2, eine Stufe dunkler als die Wände) mit blauer Schrift, nur der große Name unten in
-     Portland Orange – seit 21.11.2026 (Variante „B“). Orange bleibt so ein Akzent; die volle orange Fläche war
-     Jesko zu viel Orange (gleich unter „Schreib mir“). Vorher am selben Tag ganz orange mit heller Schrift (Git-Tag
-     alte-version-fusszeile-orange) und kurz beige mit blauem Namen (alte-version-fusszeile-beige), am 20.11.2026
-     June Bud, davor Dark Blue wie Startseite und Menü, davor Schwarz mit Koralle (Git-Tag
-     alte-version-ultramarin-climate-crisis). Überfahren wie überall: oranges Feld, helle Schrift (auch für den
+  /* Fußzeile June Bud mit blauer Schrift und blauem Namen (8,6 : 1) – seit 22.11.2026 wieder, weil das grüne Band
+     über den Alben einem Kopf mit dem Vorschaubild gewichen ist („dann doch die Fußzeile grün“). Davor am 21./22.11.
+     beige mit orangem Namen, kurz ganz orange (Git-Tag alte-version-fusszeile-orange), beige mit blauem Namen
+     (alte-version-fusszeile-beige); am 20.11.2026 schon einmal June Bud, davor Dark Blue, davor Schwarz mit Koralle
+     (alte-version-ultramarin-climate-crisis). Überfahren wie überall: oranges Feld, helle Schrift (auch für den
      E-Mail-Link aus EmailLink.astro). */
   .site-footer :global(a:hover) {
     background-color: var(--hover);
@@ -122,9 +121,7 @@ const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : 
     font-synthesis-weight: none;
     text-transform: uppercase;
     line-height: 0.95;
-    /* Orange als Schrift auf Beige (2,9 : 1) nur hier: sehr groß und nur Schmuck (aria-hidden), der Name steht
-       lesbar im Logo oben */
-    color: var(--orange);
+    color: var(--ink);
     user-select: none;
   }
   .copy {

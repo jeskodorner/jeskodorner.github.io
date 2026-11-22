@@ -72,7 +72,7 @@ const film = await filmForGallery(g);
   {/* Fotos in gleich hohen, randvollen Reihen wie auf der Galerie-Seite (seit 22.11.2026; vorher gleich große Felder
       mit Abzügen und Schatten) – verteilt von justify-layout.js, schon beim Aufbau der Seite (JustifyNow) */}
   <div class="container container--wide">
-    <ol class="mappe" role="list" data-justify>
+    <ol class:list={['mappe', { 'mappe--few': images.length <= 3 }]} role="list" data-justify>
       {
         images.map((img, i) => {
           const r = img.src.width / img.src.height;
@@ -169,6 +169,13 @@ const film = await filmForGallery(g);
     display: flex;
     flex-wrap: wrap;
     gap: var(--mappe-gap);
+  }
+  /* Nur zwei oder drei Fotos (z. B. Spanien): am Handy größer – höhere Zielreihe, so steht ein Querformat allein in
+     voller Breite (seit 22.11.2026, Jeskos Wunsch) */
+  @media (max-width: 699.98px) {
+    .mappe--few {
+      --row: 60vw;
+    }
   }
   .mappe::after {
     content: '';

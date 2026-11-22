@@ -16,17 +16,10 @@ visibility: public
 showExif: true
 # Titelbild (Dateiname aus der Liste unten). Ohne Angabe: das erste Bild
 # cover: bild-01.jpg
-# Fotos der Mappe im Portfolio, in dieser Reihenfolge: Foto 7 vorne (wie im Portfolio), Foto 6 als zweites,
-# dazu sechs weitere aus dem Album
+# Fotos der Mappe im Portfolio (bewusst reduziert, nicht das ganze Album): Foto 7 vorne, Foto 6 dahinter
 mappe:
   - dscf3604.jpg
   - dscf3579.jpg
-  - dscf3256.jpg
-  - dscf3431.jpg
-  - dscf3496.jpg
-  - dscf3758.jpg
-  - dscf3835.jpg
-  - dscf4008.jpg
 
 # --- Download (optional, siehe README) ---
 # downloadUrl: https://…
