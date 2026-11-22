@@ -1,0 +1,229 @@
+# Pages CMS (https://app.pagescms.org) – die Website im Browser bearbeiten, ohne Terminal (seit 22.11.2026).
+# Anmeldung mit dem GitHub-Konto; jede Speicherung ist ein Commit auf main, danach baut GitHub die Website neu
+# (.github/workflows/deploy.yml). Neue Fotos laufen über „Fotos hochladen“: GitHub bereitet sie auf wie
+# `npm run optimize` (scripts/inbox.mjs) und legt das Album an.
+# Achtung: Beim Speichern im CMS gehen die #-Kommentare in den bearbeiteten Dateien verloren (die Erklärungen stehen
+# im README und in der Git-Geschichte).
+
+media:
+  - name: eingang
+    label: Fotos-Eingang
+    input: photos-inbox/fotos
+    output: /photos-inbox/fotos
+    rename: safe
+    extensions: [jpg, jpeg, png, tif, tiff, webp, heic]
+  - name: filmbilder
+    label: Film-Vorschaubilder
+    input: src/content/films/images
+    output: ./images
+    rename: safe
+    extensions: [jpg, jpeg, png, webp]
+
+content:
+  # ---------------------------------------------------------------- Fotos hochladen
+  - name: eingang
+    label: Fotos hochladen
+    type: collection
+    path: photos-inbox
+    filename: "{year}-{month}-{day}-{primary}.md"
+    view:
+      fields: [title, date]
+    fields:
+      - name: title
+        label: Albumtitel
+        type: string
+        required: true
+        description: Neues Album – sein Titel, z. B. „Ostsee 2026“. Daraus wird auch die Adresse.
+      - name: album
+        label: Zu einem bestehenden Album hinzufügen (optional)
+        type: string
+        description: Leer lassen für ein neues Album. Sonst der Kurzname aus der Adresse, z. B. „hoodie“ für /galerien/hoodie/.
+      - name: date
+        label: Datum
+        type: date
+      - name: location
+        label: Ort (optional)
+        type: string
+      - name: description
+        label: Kurzbeschreibung
+        type: text
+        description: 1–2 Sätze. Steht im Album oben und in der Vorschau beim Teilen.
+      - name: visibility
+        label: Sichtbarkeit
+        type: select
+        default: public
+        options:
+          values:
+            - { name: public, label: Öffentlich (in der Galerie) }
+            - { name: unlisted, label: Privat (nur mit Link) }
+      - name: fotos
+        label: Fotos
+        type: image
+        description: Am besten aus Lightroom in Web-Größe exportiert (lange Kante 2400 px, JPEG). Bildbeschreibungen aus Lightroom („Bildunterschrift“) werden übernommen.
+        options:
+          media: eingang
+          multiple:
+            max: 300
+
+  # ---------------------------------------------------------------- Alben
+  - name: alben
+    label: Alben
+    type: collection
+    path: src/content/galleries
+    subfolders: true
+    view:
+      layout: tree
+      node:
+        filename: index.md
+        hideDirs: others
+    operations:
+      create: false
+      rename: false
+      delete: false
+    fields:
+      - { name: title, label: Titel, type: string, required: true }
+      - { name: slug, label: Kurzname (Adresse), type: string, readonly: true }
+      - { name: date, label: Datum, type: date }
+      - { name: location, label: Ort, type: string }
+      - { name: description, label: Kurzbeschreibung, type: text, required: true }
+      - name: visibility
+        label: Sichtbarkeit
+        type: select
+        options:
+          values:
+            - { name: public, label: Öffentlich (in der Galerie) }
+            - { name: unlisted, label: Privat (nur mit Link) }
+      - { name: showExif, label: Aufnahmedaten zeigen, type: boolean }
+      - name: cover
+        label: Titelbild (Dateiname, optional)
+        type: string
+        description: Bei Alben im Portfolio gilt automatisch das Foto aus dem Portfolio.
+      - name: mappe
+        label: Fotos der Mappe im Portfolio (Dateinamen, optional)
+        type: string
+        list: true
+        description: Leer = automatisch bis zu 8 Fotos. Das Vorschaubild aus dem Portfolio steht in der Mappe nie vorne.
+      - name: mappeVideo
+        label: Video oben in der Mappe (Dateiname in public/videos/, optional)
+        type: string
+      - name: color
+        label: Farbe (alt, wird nicht mehr genutzt)
+        type: string
+        hidden: true
+      - { name: downloadUrl, label: Download-Link (optional), type: string }
+      - { name: downloadSize, label: Download-Größe, type: string }
+      - { name: downloadFormat, label: Download-Format, type: string }
+      - { name: downloadNote, label: Download-Hinweis, type: string }
+      - { name: albumRequest, label: Kasten „Ganzes Album anfordern“, type: boolean }
+      - { name: shareText, label: Eigener Teilen-Text, type: string, hidden: true }
+      - name: images
+        label: Fotos
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{file} – {alt}"
+        fields:
+          - { name: file, label: Datei, type: string, readonly: true }
+          - name: alt
+            label: Bildbeschreibung
+            type: string
+            required: true
+            description: Was ist zu sehen? Für Screenreader und Google.
+          - { name: caption, label: Bildunterschrift (optional), type: string }
+          - name: focus
+            label: Ausschnitt (optional)
+            type: string
+            description: Wichtigster Bereich, waagerecht und senkrecht, z. B. „50% 20%“ (oben), „50% 50%“ (Mitte).
+          - { name: originalUrl, label: Link zum Original (optional), type: string, hidden: true }
+          - { name: hero, label: Hero-Bild (alt), type: boolean, hidden: true }
+      - { name: body, label: Text unter dem Titel (optional), type: rich-text }
+
+  # ---------------------------------------------------------------- Portfolio
+  - name: portfolio
+    label: Portfolio
+    type: file
+    path: src/content/pages/startseite.md
+    fields:
+      - name: showroom
+        label: Alben im Portfolio
+        description: Reihenfolge egal – sortiert wird nach dem Datum des Albums. Das Foto ist zugleich Titelbild des Albums.
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{galerie} – {bild}"
+        fields:
+          - name: galerie
+            label: Album (Kurzname)
+            type: string
+            required: true
+            description: Kurzname aus der Adresse, z. B. „hoodie“ für /galerien/hoodie/.
+          - name: bild
+            label: Vorschaufoto (Dateiname)
+            type: string
+            description: Dateiname aus dem Album, z. B. „dsc01421.jpg“ (unter „Alben“ → Fotos zu sehen).
+          - { name: name, label: Eigener Name (optional), type: string }
+      - { name: kicker, type: string, hidden: true }
+      - { name: statement, type: string, hidden: true }
+      - { name: note, type: string, hidden: true }
+      - { name: aboutTeaser, type: string, hidden: true }
+
+  # ---------------------------------------------------------------- Filme
+  - name: filme
+    label: Filme
+    type: collection
+    path: src/content/films
+    filename: "{primary}.md"
+    view:
+      fields: [title, year]
+    fields:
+      - { name: title, label: Titel, type: string, required: true }
+      - name: youtube
+        label: YouTube-Link
+        type: string
+        description: Link oder ID genügt, z. B. https://youtu.be/abc123XYZ_-
+      - { name: year, label: Jahr, type: number }
+      - name: still
+        label: Standbild
+        type: image
+        options:
+          media: filmbilder
+      - { name: stillAlt, label: Beschreibung des Standbilds, type: string }
+      - name: cover
+        label: Eigenes Vorschaubild für die Übersicht (optional)
+        type: image
+        options:
+          media: filmbilder
+      - { name: coverAlt, label: Beschreibung des Vorschaubilds, type: string }
+      - { name: summary, label: Kurztext für die Übersicht (optional), type: string }
+      - { name: link, label: Externer Link statt YouTube (optional), type: string }
+      - { name: linkLabel, label: Beschriftung des Links, type: string }
+      - { name: video, label: Eigenes Video (Dateiname in public/videos/, optional), type: string }
+      - { name: order, label: Reihenfolge (kleiner = weiter vorne), type: number }
+      - { name: color, type: string, hidden: true }
+      - { name: roles, type: string, list: true, hidden: true }
+      - { name: format, type: string, hidden: true }
+      - { name: runtime, type: string, hidden: true }
+      - { name: director, type: string, hidden: true }
+      - { name: festivals, type: string, list: true, hidden: true }
+      - { name: body, label: Text, type: rich-text }
+
+  # ---------------------------------------------------------------- Über mich
+  - name: ueber-mich
+    label: Über mich
+    type: file
+    path: src/content/pages/ueber-mich.md
+    fields:
+      - { name: lead, label: Einleitung, type: string }
+      - { name: portraitAlt, label: Beschreibung des Porträts, type: string }
+      - name: stations
+        label: Stationen (leer = ausgeblendet)
+        type: object
+        list: true
+        fields:
+          - { name: year, label: Jahr, type: string }
+          - { name: title, label: Titel, type: string }
+          - { name: text, label: Text, type: string }
+      - { name: gear, label: Ausrüstung (leer = ausgeblendet), type: string, list: true }
+      - { name: body, label: Text, type: rich-text }

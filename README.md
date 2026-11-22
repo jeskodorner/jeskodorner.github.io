@@ -187,6 +187,34 @@ löschen, und sie sind von der Seite verschwunden. Gibt es keine Filme mehr, ver
 
 ## 4. Neue Galerie anlegen
 
+### Im Browser mit Pages CMS (ohne Terminal, seit 22.11.2026)
+
+Unter **https://app.pagescms.org** mit dem GitHub-Konto anmelden und das Projekt `jeskodorner.github.io` öffnen.
+Die Formulare stehen in `.pages.yml`. Jede Speicherung ist ein Commit auf `main`; danach baut GitHub die Website neu
+(ein paar Minuten, zu sehen unter GitHub → Actions).
+
+- **Fotos hochladen** → neuer Eintrag: Albumtitel, Datum, Ort, Kurzbeschreibung, Sichtbarkeit, Fotos hineinziehen,
+  speichern. Für Fotos zu einem **bestehenden** Album dessen Kurznamen (aus der Adresse) ins Feld „Zu einem
+  bestehenden Album hinzufügen“ schreiben. GitHub macht daraus automatisch das Album (`scripts/inbox.mjs`, wie
+  `npm run optimize`: verkleinern, Wasserzeichen, GPS weg, Aufnahmedaten, Eintrag in `index.md`) und leert den
+  Eingang (`photos-inbox/`) wieder.
+- **Alben**: Titel, Texte, Bildbeschreibungen, Ausschnitt (`focus`), Mappe-Fotos usw. ändern.
+- **Portfolio**: welche Alben mit welchem Vorschaufoto im Portfolio stehen.
+- **Filme**, **Über mich**: Texte und Felder.
+
+**Fotos aus Lightroom exportieren** (vor dem Hochladen): JPEG, sRGB, lange Kante 2400 px, Qualität ca. 85,
+Metadaten „Alle außer Kamera- und Camera-Raw-Infos“ oder „Alle“ (GPS entfernt das Skript), Dateiname z. B.
+„Dateiname“. Bildbeschreibungen am besten schon in Lightroom ins Feld „Bildunterschrift“ schreiben – sie werden
+übernommen. Fehlt eine, trägt das Skript „Foto aus „Albumtitel““ ein; im CMS unter „Alben“ → Fotos verbessern.
+Originale mit 20 MB gehören nicht ins Repo (GitHub-Grenzen, siehe Abschnitt 10).
+
+**Sicherheit:** Bearbeiten kann nur, wer sich mit einem GitHub-Konto anmeldet, das Schreibrechte am Repo hat. Die
+Pages-CMS-App nur für dieses eine Repo freigeben (GitHub → Settings → Applications), Zwei-Faktor-Anmeldung bei GitHub
+einschalten. Die Freigabe lässt sich dort jederzeit widerrufen. Beim Speichern im CMS gehen `#`-Kommentare in der
+bearbeiteten Datei verloren; leere Felder aus dem CMS gelten als „nicht angegeben“ (`src/content.config.ts`).
+
+### Im Terminal
+
 ```bash
 npm run new-gallery -- "Küste im Oktober"
 ```

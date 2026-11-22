@@ -8,7 +8,8 @@ on:
   workflow_dispatch: # manuell starten: Actions → "Deploy auf GitHub Pages" → Run workflow
 
 permissions:
-  contents: read
+  # write: Fotos aus dem CMS-Eingang werden aufbereitet und als Commit zurückgespeichert (scripts/inbox.mjs)
+  contents: write
   pages: write
   id-token: write
 
@@ -32,6 +33,23 @@ jobs:
 
       - name: Abhängigkeiten installieren
         run: npm ci
+
+      # Fotos, die in Pages CMS unter „Fotos hochladen“ hochgeladen wurden (photos-inbox/), zu einem Album machen –
+      # wie `npm run optimize` im Terminal – und als Commit speichern. Vorher auf den neuesten Stand von main gehen,
+      # damit kurz hintereinander gestartete Läufe nichts doppelt verarbeiten. Ein Commit mit dem Standard-Token
+      # startet keinen neuen Lauf; gebaut wird gleich hier mit den aufbereiteten Fotos.
+      - name: Fotos aus dem CMS aufbereiten
+        run: |
+          git fetch origin main
+          git reset --hard origin/main
+          node scripts/inbox.mjs
+          if [ -n "$(git status --porcelain -- src/content photos-inbox)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add -A src/content photos-inbox
+            git commit -m "Fotos aus dem CMS aufbereitet"
+            git push origin HEAD:main
+          fi
 
       # Bereits erzeugte AVIF/WebP-Varianten wiederverwenden – spart bei vielen Bildern viele Minuten.
       - name: Bild-Cache wiederherstellen

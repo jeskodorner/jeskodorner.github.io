@@ -16,6 +16,11 @@ const exifOverride = z
   .partial()
   .strict();
 
+/** Leere Felder aus dem CMS (Pages CMS schreibt bei leeren Feldern "" oder null) wie „nicht angegeben“ behandeln –
+ *  sonst brächen z. B. ein leerer Link oder ein leerer Ausschnitt den Build ab (seit 22.11.2026). */
+const empty = (v: unknown) => (v === '' || v === null ? undefined : v);
+const opt = <T extends z.ZodTypeAny>(schema: T) => z.preprocess(empty, schema.optional());
+
 const IMAGE_FILE = /^[a-z0-9][a-z0-9._-]*\.(jpe?g|png|webp|avif)$/i;
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
@@ -33,17 +38,22 @@ const galleryImage = z
       .refine((v) => !/^(todo|tbd|xxx)\b/i.test(v), {
         error: 'Alt-Text ist noch ein Platzhalter (TODO).',
       }),
-    caption: z.string().optional(),
+    caption: opt(z.string()),
     /** Link zum hochauflösenden Original beim externen Anbieter */
-    originalUrl: z.url({ error: 'originalUrl muss eine vollständige URL sein (https://…).' }).optional(),
+    originalUrl: opt(
+      z.url({
+        error: 'originalUrl muss eine vollständige URL sein (https://…).',
+      }),
+    ),
     /** Als Hero-Bild auf der Startseite verwenden */
     hero: z.boolean().default(false),
     /** Wichtigster Bildbereich bei Vollbild-Zuschnitt, z. B. "50% 30%" (waagerecht senkrecht). Standard: Mitte */
-    focus: z
-      .string()
-      .regex(/^\d{1,3}% \d{1,3}%$/, { error: 'focus bitte als "50% 30%" angeben (waagerecht senkrecht).' })
-      .optional(),
-    exif: exifOverride.optional(),
+    focus: opt(
+      z.string().regex(/^\d{1,3}% \d{1,3}%$/, {
+        error: 'focus bitte als "50% 30%" angeben (waagerecht senkrecht).',
+      }),
+    ),
+    exif: opt(exifOverride),
   })
   .strict();
 
@@ -56,38 +66,45 @@ const galleries = defineCollection({
       slug: z.string().regex(SLUG, {
         error: 'Slug darf nur Kleinbuchstaben, Ziffern und Bindestriche enthalten.',
       }),
-      date: z.coerce.date({ error: 'Datum fehlt oder ist ungültig (Format: 2026-10-22).' }),
-      location: z.string().optional(),
+      date: z.coerce.date({
+        error: 'Datum fehlt oder ist ungültig (Format: 2026-10-22).',
+      }),
+      location: opt(z.string()),
       /** Kurzbeschreibung (Kacheln, Suchmaschinen, Vorschau beim Teilen) */
       description: z.string().min(1, { error: 'Beschreibung fehlt.' }).max(300),
       /** Dateiname des Titelbilds; leer = erstes Bild */
-      cover: z.string().optional(),
+      cover: opt(z.string()),
       /** Fotos der „Mappe“ (Seite /mappe/<slug>/, nur Alben aus dem Portfolio), Dateinamen in Reihenfolge.
        *  Leer = das Portfolio-Foto und bis zu 7 weitere, gleichmäßig über das Album verteilt. */
-      mappe: z.array(z.string()).optional(),
+      mappe: opt(z.array(z.string())),
       /** Video für die Mappe (Dateiname einer MP4 in public/videos/): läuft dort oben über die volle Breite ohne Ton
        *  in Schleife, darunter die Fotos. Gehört nur zur Mappe – nicht in den Bereich „Film“ (seit 22.11.2026). */
-      mappeVideo: z
-        .string()
-        .regex(/^[\w.-]+\.mp4$/, { error: 'mappeVideo: nur der Dateiname einer MP4 in public/videos/, ohne Leerzeichen.' })
-        .optional(),
+      mappeVideo: opt(
+        z.string().regex(/^[\w.-]+\.mp4$/, {
+          error: 'mappeVideo: nur der Dateiname einer MP4 in public/videos/, ohne Leerzeichen.',
+        }),
+      ),
       /** Galeriefarbe der Galerie. Ohne Angabe wird automatisch durchgewechselt. */
-      color: z.enum(['blue', 'orange', 'green', 'cream']).optional(),
+      color: opt(z.enum(['blue', 'orange', 'green', 'cream'])),
       visibility: z.enum(['public', 'unlisted']).default('public'),
       /** EXIF-Daten in Lightbox und Bildseite zeigen */
       showExif: z.boolean().default(true),
-      downloadUrl: z.url({ error: 'downloadUrl muss eine vollständige URL sein (https://…).' }).optional(),
-      downloadSize: z.string().optional(),
-      downloadFormat: z.string().optional(),
+      downloadUrl: opt(
+        z.url({
+          error: 'downloadUrl muss eine vollständige URL sein (https://…).',
+        }),
+      ),
+      downloadSize: opt(z.string()),
+      downloadFormat: opt(z.string()),
       /** Hinweiszeile, z. B. Nutzungsrechte, Gültigkeit, Passworthinweis */
-      downloadNote: z.string().optional(),
+      downloadNote: opt(z.string()),
       /**
        * Kasten „Ganzes Album anfordern“ (Code per E-Mail anfordern). Standard: an bei öffentlichen, aus bei Unlisted-Galerien.
        * Mit downloadUrl erscheint zusätzlich „Album öffnen“ – das Passwort setzt du beim Anbieter, nie hier.
        */
-      albumRequest: z.boolean().optional(),
+      albumRequest: opt(z.boolean()),
       /** Eigener Teilen-Text; {title} und {url} werden ersetzt */
-      shareText: z.string().optional(),
+      shareText: opt(z.string()),
       images: z.array(galleryImage).min(1, { error: 'Die Galerie braucht mindestens ein Bild.' }),
     })
     .strict()
@@ -133,51 +150,67 @@ const films = defineCollection({
     z
       .object({
         title: z.string(),
-        year: z.number().int().optional(),
+        year: opt(z.coerce.number().int()),
         /** z. B. ["Kamera", "Schnitt"] */
-        roles: z.array(z.string()).default([]),
-        format: z.string().optional(),
-        runtime: z.string().optional(),
-        director: z.string().optional(),
+        roles: z.preprocess(empty, z.array(z.string()).default([])),
+        format: opt(z.string()),
+        runtime: opt(z.string()),
+        director: opt(z.string()),
         /** YouTube-Link oder -ID – wird datensparsam per Zwei-Klick eingebettet */
-        youtube: z
-          .string()
-          .refine((v) => Boolean(youtubeId(v)), { error: 'youtube: Link oder ID nicht erkannt (z. B. https://youtu.be/abc123XYZ_-).' })
-          .transform((v) => youtubeId(v)!)
-          .optional(),
+        youtube: opt(
+          z
+            .string()
+            .refine((v) => Boolean(youtubeId(v)), {
+              error: 'youtube: Link oder ID nicht erkannt (z. B. https://youtu.be/abc123XYZ_-).',
+            })
+            .transform((v) => youtubeId(v)!),
+        ),
         /** Standbild im Player auf der Seite des Films (vor dem Klick auf „Abspielen“). Ohne Standbild: farbige
          *  Fläche mit Titel */
-        still: image().optional(),
-        stillAlt: z.string().trim().optional(),
+        still: opt(image()),
+        stillAlt: opt(z.string().trim()),
         /** Eigenes Vorschaubild für die Übersicht /film/ (optional, z. B. extra hochgeladen). Ohne: das Standbild */
-        cover: image().optional(),
-        coverAlt: z.string().trim().optional(),
+        cover: opt(image()),
+        coverAlt: opt(z.string().trim()),
         /** Kurzer Text für die Übersicht (optional). Ohne: der erste Absatz des Textes */
-        summary: z.string().trim().optional(),
+        summary: opt(z.string().trim()),
         /** Farbe der Vorschau ohne Standbild */
-        color: z.enum(['blue', 'orange', 'green', 'cream']).optional(),
+        color: opt(z.enum(['blue', 'orange', 'green', 'cream'])),
         /** Eigenes Video statt YouTube: Dateiname einer MP4 in public/videos/ (z. B. "dollgow-neujahr-2025.mp4"). Läuft
          *  ohne Ton in Schleife wie ein bewegtes Foto (src/components/LoopVideo.astro). Unter 50 MB halten (GitHub). */
-        video: z
-          .string()
-          .regex(/^[\w.-]+\.mp4$/, { error: 'video: nur der Dateiname einer MP4 in public/videos/, ohne Leerzeichen.' })
-          .optional(),
+        video: opt(
+          z.string().regex(/^[\w.-]+\.mp4$/, {
+            error: 'video: nur der Dateiname einer MP4 in public/videos/, ohne Leerzeichen.',
+          }),
+        ),
         /** Externer Link (z. B. Vimeo), falls kein YouTube-Video eingebettet wird */
-        link: z.url().optional(),
-        linkLabel: z.string().optional(),
-        festivals: z.array(z.string()).default([]),
-        order: z.number().default(0),
+        link: opt(z.url()),
+        linkLabel: opt(z.string()),
+        festivals: z.preprocess(empty, z.array(z.string()).default([])),
+        order: z.preprocess(empty, z.coerce.number().default(0)),
       })
       .strict()
       .superRefine((f, ctx) => {
         if (f.still && (!f.stillAlt || f.stillAlt.length < 3)) {
-          ctx.addIssue({ code: 'custom', path: ['stillAlt'], message: 'Alt-Text für das Standbild fehlt (stillAlt).' });
+          ctx.addIssue({
+            code: 'custom',
+            path: ['stillAlt'],
+            message: 'Alt-Text für das Standbild fehlt (stillAlt).',
+          });
         }
         if (f.video && !f.still) {
-          ctx.addIssue({ code: 'custom', path: ['still'], message: 'Zum Video fehlt ein Standbild (still) – es steht in der Übersicht und solange das Video lädt.' });
+          ctx.addIssue({
+            code: 'custom',
+            path: ['still'],
+            message: 'Zum Video fehlt ein Standbild (still) – es steht in der Übersicht und solange das Video lädt.',
+          });
         }
         if (f.cover && (!f.coverAlt || f.coverAlt.length < 3)) {
-          ctx.addIssue({ code: 'custom', path: ['coverAlt'], message: 'Alt-Text für das Vorschaubild fehlt (coverAlt).' });
+          ctx.addIssue({
+            code: 'custom',
+            path: ['coverAlt'],
+            message: 'Alt-Text für das Vorschaubild fehlt (coverAlt).',
+          });
         }
       }),
 });
@@ -187,28 +220,42 @@ const pages = defineCollection({
   loader: glob({ pattern: '*.md', base: './src/content/pages' }),
   schema: z
     .object({
-      kicker: z.string().optional(),
+      kicker: opt(z.string()),
       /** Startseite „Portfolio“: welche Fotos hängen, mit optionalem eigenem Namen */
-      showroom: z
-        .array(
-          z
-            .object({
-              galerie: z.string().min(1),
-              bild: z.string().optional(),
-              name: z.string().optional(),
-            })
-            .strict(),
-        )
-        .default([]),
-      statement: z.string().optional(),
-      note: z.string().optional(),
-      aboutTeaser: z.string().optional(),
-      lead: z.string().optional(),
-      portraitAlt: z.string().optional(),
-      stations: z
-        .array(z.object({ year: z.coerce.string(), title: z.string(), text: z.string().optional() }).strict())
-        .default([]),
-      gear: z.array(z.string()).default([]),
+      showroom: z.preprocess(
+        empty,
+        z
+          .array(
+            z
+              .object({
+                galerie: z.string().min(1),
+                bild: opt(z.string()),
+                name: opt(z.string()),
+              })
+              .strict(),
+          )
+          .default([]),
+      ),
+      statement: opt(z.string()),
+      note: opt(z.string()),
+      aboutTeaser: opt(z.string()),
+      lead: opt(z.string()),
+      portraitAlt: opt(z.string()),
+      stations: z.preprocess(
+        empty,
+        z
+          .array(
+            z
+              .object({
+                year: z.coerce.string(),
+                title: z.string(),
+                text: opt(z.string()),
+              })
+              .strict(),
+          )
+          .default([]),
+      ),
+      gear: z.preprocess(empty, z.array(z.string()).default([])),
     })
     .strict(),
 });
