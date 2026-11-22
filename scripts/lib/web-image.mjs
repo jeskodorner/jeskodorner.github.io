@@ -98,15 +98,27 @@ export async function renderWebVersion(file, cfg, info = {}) {
   const width = Math.round(w * scale);
   const height = Math.round(h * scale);
   const alreadyDone = info.software === WEB_MARKER;
+  const wm = cfg.watermark?.enabled && !alreadyDone ? cfg.watermark : undefined;
+  // Helle Ecke → dunkles Zeichen, dunkle Ecke → helles (sonst verschwindet es z. B. auf Sand oder Schnee)
+  let dark = false;
+  if (wm) {
+    const box = watermarkBox(width, height, wm);
+    const left = box.anchor === 'start' ? 0 : box.anchor === 'middle' ? Math.round((width - box.w) / 2) : width - box.w;
+    const { channels } = await sharp(file, { failOn: 'none' })
+      .rotate()
+      .resize({ width, height, fit: 'fill' })
+      .extract({ left, top: height - box.h, width: box.w, height: box.h })
+      .stats();
+    const [r, g, b] = channels.map((ch) => ch.mean / 255);
+    dark = 0.2126 * r + 0.7152 * g + 0.0722 * (b ?? r) > 0.5;
+  }
 
   const make = (quality) => {
     let p = sharp(file, { failOn: 'none' })
       .rotate()
       .resize({ width, height, fit: 'fill' })
       .withIccProfile('srgb');
-    if (cfg.watermark?.enabled && !alreadyDone) {
-      p = p.composite([{ input: watermarkSvg(width, height, cfg.watermark), gravity: gravityOf(cfg.watermark.position) }]);
-    }
+    if (wm) p = p.composite([{ input: watermarkSvg(width, height, wm, dark), gravity: gravityOf(wm.position) }]);
     if (cfg.keepGps) p = p.keepExif();
     else p = p.withExif(exifFor(info, cfg));
     const xmp = xmpFor(info);
@@ -160,22 +172,31 @@ function escapeXml(s) {
   return String(s).replace(/[<>&"']/g, (ch) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&apos;' })[ch]);
 }
 
-function watermarkSvg(w, h, wm) {
+/** Größe und Ausrichtung des Wasserzeichens (für die Messung der Helligkeit darunter) */
+function watermarkBox(w, h, wm) {
   const fontSize = Math.max(13, Math.round(Math.max(w, h) * (wm.size ?? 0.016)));
   const pad = Math.round(fontSize * 1.2);
   const textWidth = Math.round(fontSize * 0.62 * wm.text.length + fontSize * 0.1 * wm.text.length);
-  const svgW = Math.min(w, textWidth + pad * 2);
-  const svgH = Math.min(h, fontSize + pad * 2);
   const anchor = wm.position === 'bottom-left' ? 'start' : wm.position === 'bottom-center' ? 'middle' : 'end';
+  return { fontSize, pad, w: Math.min(w, textWidth + pad * 2), h: Math.min(h, fontSize + pad * 2), anchor };
+}
+
+/** Schriftzug als SVG: hell mit dunklem Schatten – auf hellem Grund (dark) dunkel mit hellem Schein */
+function watermarkSvg(w, h, wm, dark = false) {
+  const { fontSize, pad, w: svgW, h: svgH, anchor } = watermarkBox(w, h, wm);
   const x = anchor === 'start' ? pad : anchor === 'middle' ? svgW / 2 : svgW - pad;
   const y = svgH - pad;
   const o = wm.opacity ?? 0.5;
   const text = escapeXml(wm.text);
   const style = `font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="${fontSize}" font-weight="600" letter-spacing="${(fontSize * 0.06).toFixed(1)}" text-anchor="${anchor}"`;
+  const [ink, halo] = dark ? ['#1c1c1c', '#fff'] : ['#fff', '#000'];
+  const inkOpacity = dark ? Math.min(1, o * 1.1) : o;
+  // Feine Kontur in der Gegenfarbe: bleibt auch auf gemischtem Grund (dunkle Kleidung neben hellem Sand) lesbar
+  const stroke = (fontSize * 0.09).toFixed(1);
   return Buffer.from(
     `<svg xmlns="http://www.w3.org/2000/svg" width="${svgW}" height="${svgH}">` +
-      `<text x="${x + 1}" y="${y + 1}" ${style} fill="#000" fill-opacity="${(o * 0.45).toFixed(2)}">${text}</text>` +
-      `<text x="${x}" y="${y}" ${style} fill="#fff" fill-opacity="${o}">${text}</text>` +
+      `<text x="${x}" y="${y}" ${style} fill="none" stroke="${halo}" stroke-width="${stroke}" stroke-linejoin="round" stroke-opacity="${(o * 0.6).toFixed(2)}">${text}</text>` +
+      `<text x="${x}" y="${y}" ${style} fill="${ink}" fill-opacity="${inkOpacity.toFixed(2)}">${text}</text>` +
       `</svg>`,
   );
 }
