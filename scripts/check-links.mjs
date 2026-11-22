@@ -65,6 +65,8 @@ for (const file of htmlFiles) {
   const html = await fs.readFile(file, 'utf8');
   const isUnlisted = rel.startsWith('/g/');
   const is404 = rel.startsWith('/404');
+  // Weiterleitungsseiten für umbenannte Alben (astro.config.mjs → redirects): nur ein Sprung, kein Inhalt
+  if (/<meta http-equiv="refresh"/.test(html) && /<title>Redirecting to:/.test(html)) continue;
 
   // Grundlegende SEO/A11y-Checks
   if (!/<html[^>]+lang="de"/.test(html)) errors.push(`${rel}: lang-Attribut fehlt`);
