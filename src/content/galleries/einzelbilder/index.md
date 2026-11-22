@@ -1,12 +1,13 @@
 ---
 # Titel der Galerie
-title: "Einzelbilder"
-# URL-Teil: /galerien/einzelbilder/
-slug: einzelbilder
+title: "Museum mit Freundinnen"
+# URL-Teil: /galerien/museum-mit-freundinnen/ (bis 22.11.2026 „Einzelbilder“, /galerien/einzelbilder/ – die alte
+# Adresse leitet weiter, siehe astro.config.mjs)
+slug: museum-mit-freundinnen
 date: 2025-02-10
 # location: "Ort"
 # Kurzbeschreibung (1–2 Sätze) – erscheint auf der Kachel und in Link-Vorschauen
-description: "Einzelne Fotos, die für sich stehen."
+description: "Ein Nachmittag im Museum mit Freundinnen."
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
 # color: green
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex

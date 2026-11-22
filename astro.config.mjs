@@ -16,4 +16,10 @@ export default defineConfig({
     }),
   ],
   devToolbar: { enabled: false },
+  // Umbenannte Alben: alte Adressen leiten weiter (GitHub Pages kann keine echten Weiterleitungen, Astro legt dafür kleine
+  // Seiten an, die sofort weiterspringen)
+  redirects: {
+    '/galerien/einzelbilder/': '/galerien/museum-mit-freundinnen/',
+    '/mappe/einzelbilder/': '/mappe/museum-mit-freundinnen/',
+  },
 });

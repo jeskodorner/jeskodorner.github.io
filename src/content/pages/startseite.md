@@ -18,7 +18,7 @@ aboutTeaser: "Platzhalter: kurzer Teaser-Text über dich."
 # Leere Liste (showroom: []) = jede öffentliche Galerie einmal mit ihrem Vorschaubild.
 showroom:
   # aus „ausgewählte arbeiten“
-  - galerie: einzelbilder
+  - galerie: museum-mit-freundinnen
     bild: dscf4376.jpg
   - galerie: hilda-setcard
     bild: hilda-setcard-gesicht.jpg
@@ -32,4 +32,8 @@ showroom:
     bild: dscf0888.jpg
   - galerie: snapshots-spanien
     bild: dscf3604.jpg
+  - galerie: weye-bags
+    bild: dscf5828-cover-bild.jpg
+  - galerie: ostsee-2025
+    bild: dscf6969.jpg
 ---
