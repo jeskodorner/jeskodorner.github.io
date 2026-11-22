@@ -27,17 +27,19 @@ import { useTranslations, formatMonth } from '../../i18n';
 
 export async function getStaticPaths() {
   const mappen = await getMappen();
-  return mappen.map(({ gallery, lead }) => ({ params: { slug: gallery.slug }, props: { gallery, lead } }));
+  return mappen.map(({ gallery, lead, mappe }) => ({ params: { slug: gallery.slug }, props: { gallery, lead, mappe } }));
 }
 
 interface Props {
   gallery: Gallery;
   lead: GalleryImage;
+  /** Fotos der Mappe aus dem Portfolio-Eintrag */
+  mappe?: string[];
 }
 
-const { gallery: g, lead } = Astro.props;
+const { gallery: g, lead, mappe } = Astro.props;
 const t = useTranslations();
-const images = mappeImages(g, lead);
+const images = mappeImages(g, lead, mappe);
 // Unter dem Titel nur das Datum, wie auf der Albumseite (bis 20.11.2026 auch der Ort)
 const meta = formatMonth(g.date);
 // Lightbox-Daten nur der Fotos dieser Mappe (unsichtbar), in ihrer Reihenfolge und eigener Zählung

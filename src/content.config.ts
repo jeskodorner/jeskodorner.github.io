@@ -228,8 +228,12 @@ const pages = defineCollection({
           .array(
             z
               .object({
-                galerie: z.string().min(1),
+                /** Kurzname des Albums; leer = aus dem Pfad des Vorschaufotos (CMS: „/alben/<ordner>/images/x.jpg“) */
+                galerie: opt(z.string()),
+                /** Vorschaufoto: Dateiname oder Pfad aus dem CMS */
                 bild: opt(z.string()),
+                /** Fotos der Mappe (Dateinamen oder Pfade aus dem CMS), in dieser Reihenfolge; leer = automatisch */
+                mappe: opt(z.array(z.string())),
                 name: opt(z.string()),
               })
               .strict(),

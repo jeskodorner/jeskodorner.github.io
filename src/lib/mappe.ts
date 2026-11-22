@@ -19,14 +19,15 @@ export const mappeUrl = (g: Gallery) => `/mappe/${g.slug}/`;
 const leadLast = (imgs: GalleryImage[], lead: GalleryImage) =>
   imgs.length > 1 && imgs[0] === lead ? [...imgs.slice(1), lead] : imgs;
 
-export function mappeImages(g: Gallery, lead: GalleryImage = g.cover): GalleryImage[] {
-  const list = g.entry.data.mappe;
+/** Fotos der Mappe: Liste aus dem Portfolio-Eintrag (`own`), sonst `mappe:` im Album, sonst automatisch */
+export function mappeImages(g: Gallery, lead: GalleryImage = g.cover, own?: string[]): GalleryImage[] {
+  const list = own?.length ? own : g.entry.data.mappe;
   if (list?.length) {
     return leadLast(list.map((file) => {
       const img = g.images.find((i) => i.file === file);
       if (!img) {
         throw new Error(
-          `${g.folder}/index.md → mappe: Bild „${file}“ gibt es nicht. Möglich: ${g.images.map((i) => i.file).join(', ')}`,
+          `Mappe „${g.slug}“: Bild „${file}“ gibt es im Album nicht. Möglich: ${g.images.map((i) => i.file).join(', ')}`,
         );
       }
       return img;
@@ -42,7 +43,7 @@ export function mappeImages(g: Gallery, lead: GalleryImage = g.cover): GalleryIm
 /** Alle Mappen: je Album aus dem Portfolio eine, mit dem Foto aus dem Portfolio vorne */
 export async function getMappen() {
   const works = await getSelectedWorks();
-  const seen = new Map<string, { gallery: Gallery; lead: GalleryImage }>();
-  for (const w of works) if (!seen.has(w.gallery.slug)) seen.set(w.gallery.slug, { gallery: w.gallery, lead: w.image });
+  const seen = new Map<string, { gallery: Gallery; lead: GalleryImage; mappe?: string[] }>();
+  for (const w of works) if (!seen.has(w.gallery.slug)) seen.set(w.gallery.slug, { gallery: w.gallery, lead: w.image, mappe: w.mappe });
   return [...seen.values()];
 }

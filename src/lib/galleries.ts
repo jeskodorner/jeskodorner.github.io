@@ -1,6 +1,7 @@
 import { getCollection, getEntry, type CollectionEntry } from 'astro:content';
 import type { ImageMetadata } from 'astro';
 import { site } from '../config/site';
+import { fileOf, folderOf as albumFolderOf } from './portfolio-paths';
 
 /** Von `npm run optimize` erzeugte Zusatzdaten pro Bild (meta.json). */
 export interface ImageMeta {
@@ -106,7 +107,11 @@ async function load(): Promise<Gallery[]> {
   // showroom.ts, das selbst die Alben braucht).
   const showroom = (await getEntry('pages', 'startseite'))?.data.showroom ?? [];
   const portfolioCover = new Map<string, string>();
-  for (const s of showroom) if (s.bild && !portfolioCover.has(s.galerie)) portfolioCover.set(s.galerie, s.bild);
+  for (const s of showroom) {
+    const key = s.galerie?.trim() || albumFolderOf(s.bild);
+    const bild = fileOf(s.bild);
+    if (key && bild && !portfolioCover.has(key)) portfolioCover.set(key, bild);
+  }
 
   const galleries = entries.map((entry) => {
     const d = entry.data;

@@ -57,15 +57,4 @@ images:
     alt: "Person mit Jeanstasche auf dem Rücken geht durch eine alte hölzerne
       Haustür"
 cover: dscf5828-cover-bild.jpg
-# Fotos der Mappe im Portfolio: alle außer Album-Foto 1 und 7 (Foto 4 ist die Vorschau im Portfolio und steht in der
-# Mappe deshalb hinten)
-mappe:
-  - dscf5813.jpg
-  - dscf5823.jpg
-  - dscf5853.jpg
-  - dscf5861.jpg
-  - dscf5926-test.jpg
-  - dscf5928.jpg
-  - dscf5935.jpg
-  - dscf5828-cover-bild.jpg
 ---

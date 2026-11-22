@@ -10,13 +10,6 @@ visibility: public
 showExif: true
 cover: hilda-setcard-gesicht.jpg
 # downloadUrl: https://…
-# Fotos der Mappe im Portfolio: ohne Album-Bild 6 (Brustbild mit offenem Blick) und ohne Album-Bild 4 (Ganzkörper,
-# ein Bein ausgestellt – in der Mappe war es Bild 3). Das Gesicht (Vorschau im Portfolio) steht in der Mappe hinten.
-mappe:
-  - hilda-setcard-gesicht.jpg
-  - hilda-setcard-profil.jpg
-  - hilda-setcard-korper-1.jpg
-  - hilda-setcard-oberkorper-1.jpg
 images:
   - file: hilda-setcard-gesicht.jpg
     alt: "Frontales Porträt von Hilda mit ernstem Blick vor einer rostigen Wand."

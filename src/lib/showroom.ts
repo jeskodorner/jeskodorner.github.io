@@ -6,6 +6,7 @@
 import { getEntry, type CollectionEntry } from 'astro:content';
 import { getPublicGalleries, type Gallery, type GalleryImage } from './galleries';
 import { formatMonth } from '../i18n';
+import { fileOf, folderOf } from './portfolio-paths';
 
 export interface WorkItem {
   image: GalleryImage;
@@ -20,6 +21,8 @@ export interface WorkItem {
   /** Eigener Name des Fotos (optional) */
   name?: string;
   meta?: string;
+  /** Fotos der Mappe aus dem Portfolio-Eintrag (Dateinamen), sonst undefined */
+  mappe?: string[];
 }
 
 export async function getSelectedWorks(): Promise<WorkItem[]> {
@@ -42,12 +45,15 @@ export async function getSelectedWorks(): Promise<WorkItem[]> {
   const showroom = text.showroom;
   if (!showroom?.length) return byDate(galleries.map((g) => workFor(g)));
   return byDate(showroom.map((s) => {
-    const g = galleries.find((x) => x.slug === s.galerie || x.id === s.galerie);
+    const key = s.galerie?.trim() || folderOf(s.bild);
+    const g = galleries.find((x) => x.slug === key || x.id === key || x.folder === key);
     if (!g) {
-      throw error(`Galerie „${s.galerie}“ gibt es nicht oder sie ist nicht öffentlich. Möglich: ${galleries.map((x) => x.slug).join(', ')}`);
+      throw error(`Galerie „${key ?? '(leer)'}“ gibt es nicht oder sie ist nicht öffentlich. Möglich: ${galleries.map((x) => x.slug).join(', ')}`);
     }
-    const image = s.bild ? g.images.find((i) => i.file === s.bild) : g.cover;
-    if (!image) throw error(`Bild „${s.bild}“ gibt es in „${s.galerie}“ nicht. Möglich: ${g.images.map((i) => i.file).join(', ')}`);
-    return workFor(g, image, s.name?.trim() || undefined);
+    const bild = fileOf(s.bild);
+    const image = bild ? g.images.find((i) => i.file === bild) : g.cover;
+    if (!image) throw error(`Bild „${bild}“ gibt es in „${g.slug}“ nicht. Möglich: ${g.images.map((i) => i.file).join(', ')}`);
+    const mappe = s.mappe?.map((p) => fileOf(p)).filter((f): f is string => Boolean(f));
+    return { ...workFor(g, image, s.name?.trim() || undefined), mappe: mappe?.length ? mappe : undefined };
   }));
 }

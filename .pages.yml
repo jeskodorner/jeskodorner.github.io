@@ -12,6 +12,13 @@ media:
     output: /photos-uploads
     rename: safe
     extensions: [jpg, jpeg, png, tif, tiff, webp, heic]
+  # Fotos der Alben – nur zum Auswählen im Portfolio (Vorschaufoto, Mappe). Hier bitte nichts hochladen: neue Fotos
+  # immer über „Fotos hochladen“, sonst fehlen Wasserzeichen und Aufbereitung.
+  - name: alben
+    label: Album-Fotos (nur auswählen)
+    input: src/content/galleries
+    output: /alben
+    extensions: [jpg, jpeg]
   - name: filmbilder
     label: Film-Vorschaubilder
     input: src/content/films/images
@@ -76,6 +83,7 @@ content:
       node:
         filename: index.md
         hideDirs: others
+      fields: [title, slug, date, visibility]
     operations:
       create: false
       rename: false
@@ -98,11 +106,6 @@ content:
         label: Titelbild (Dateiname, optional)
         type: string
         description: Bei Alben im Portfolio gilt automatisch das Foto aus dem Portfolio.
-      - name: mappe
-        label: Fotos der Mappe im Portfolio (Dateinamen, optional)
-        type: string
-        list: true
-        description: Leer = automatisch bis zu 8 Fotos. Das Vorschaubild aus dem Portfolio steht in der Mappe nie vorne.
       - name: mappeVideo
         label: Video oben in der Mappe (Dateiname in public/videos/, optional)
         type: string
@@ -147,22 +150,31 @@ content:
     fields:
       - name: showroom
         label: Alben im Portfolio
-        description: Reihenfolge egal – sortiert wird nach dem Datum des Albums. Das Foto ist zugleich Titelbild des Albums.
+        description: Reihenfolge egal – sortiert wird nach dem Datum des Albums.
         type: object
         list:
           collapsible:
             collapsed: true
-            summary: "{galerie} – {bild}"
+            summary: "{galerie}"
         fields:
           - name: galerie
             label: Album (Kurzname)
             type: string
-            required: true
-            description: Kurzname aus der Adresse, z. B. „hoodie“ für /galerien/hoodie/.
+            description: Kurzname aus der Adresse, z. B. „hoodie“ für /galerien/hoodie/. Kann leer bleiben – dann gilt das Album des Vorschaufotos.
           - name: bild
-            label: Vorschaufoto (Dateiname)
-            type: string
-            description: Dateiname aus dem Album, z. B. „dsc01421.jpg“ (unter „Alben“ → Fotos zu sehen).
+            label: Vorschaufoto
+            type: image
+            description: Im Ordner des Albums → images ein Foto wählen. Es ist zugleich das Titelbild des Albums.
+            options:
+              media: alben
+          - name: mappe
+            label: Fotos der Mappe
+            type: image
+            description: Welche Fotos die Mappe zeigt, in dieser Reihenfolge. Leer = automatisch bis zu 8. Das Vorschaufoto steht in der Mappe nie vorne.
+            options:
+              media: alben
+              multiple:
+                max: 30
           - { name: name, label: Eigener Name (optional), type: string }
       - { name: kicker, type: string, hidden: true }
       - { name: statement, type: string, hidden: true }

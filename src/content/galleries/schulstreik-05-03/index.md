@@ -9,11 +9,6 @@ description: "Schulstreik gegen die Wehrpflicht am Potsdamer Platz."
 visibility: public
 showExif: true
 # downloadUrl: https://…
-# Fotos der Mappe im Portfolio (bewusst reduziert): Foto 9, 3, 1 – Foto 3 ist das Vorschaubild im Portfolio
-mappe:
-  - p3050249.jpg
-  - p3050133.jpg
-  - p3050040.jpg
 images:
   - file: p3050040.jpg
     alt: "Jugendliche Demonstrierende sammeln sich lachend und im Gespräch vor einem

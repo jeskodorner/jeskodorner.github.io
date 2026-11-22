@@ -199,7 +199,10 @@ Die Formulare stehen in `.pages.yml`. Jede Speicherung ist ein Commit auf `main`
   `npm run optimize`: verkleinern, Wasserzeichen, GPS weg, Aufnahmedaten, Eintrag in `index.md`) und leert den
   Eingang (`photos-inbox/`, Fotos in `photos-uploads/`) wieder.
 - **Alben**: Titel, Texte, Bildbeschreibungen, Ausschnitt (`focus`), Mappe-Fotos usw. ändern.
-- **Portfolio**: welche Alben mit welchem Vorschaufoto im Portfolio stehen.
+- **Portfolio**: welche Alben im Portfolio stehen; je Eintrag **Vorschaufoto** und **Fotos der Mappe** per Klick aus
+  dem Album wählen (Medienquelle „Album-Fotos“; dort nichts hochladen). Die Mappe-Auswahl steht seit 22.11.2026 im
+  Portfolio-Eintrag (`startseite.md` → `showroom[].mappe`), nicht mehr im Album; `mappe:` im Album gilt nur noch
+  als Ersatz.
 - **Filme**, **Über mich**: Texte und Felder.
 
 **Fotos aus Lightroom exportieren** (vor dem Hochladen): JPEG, sRGB, lange Kante 2400 px, Qualität ca. 85,
