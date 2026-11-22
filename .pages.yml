@@ -5,6 +5,14 @@
 # Achtung: Beim Speichern im CMS gehen die #-Kommentare in den bearbeiteten Dateien verloren (die Erklärungen stehen
 # im README und in der Git-Geschichte).
 
+settings:
+  commit:
+    templates:
+      create: "Neu im CMS: {path}"
+      update: "Geändert im CMS: {path}"
+      delete: "Gelöscht im CMS: {path}"
+      rename: "Umbenannt im CMS: {path}"
+
 media:
   - name: eingang
     label: Fotos-Eingang
@@ -113,11 +121,6 @@ content:
         label: Farbe (alt, wird nicht mehr genutzt)
         type: string
         hidden: true
-      - { name: downloadUrl, label: Download-Link (optional), type: string }
-      - { name: downloadSize, label: Download-Größe, type: string }
-      - { name: downloadFormat, label: Download-Format, type: string }
-      - { name: downloadNote, label: Download-Hinweis, type: string }
-      - { name: albumRequest, label: Kasten „Ganzes Album anfordern“, type: boolean }
       - { name: shareText, label: Eigener Teilen-Text, type: string, hidden: true }
       - name: images
         label: Fotos
@@ -141,6 +144,12 @@ content:
           - { name: originalUrl, label: Link zum Original (optional), type: string, hidden: true }
           - { name: hero, label: Hero-Bild (alt), type: boolean, hidden: true }
       - { name: body, label: Text unter dem Titel (optional), type: rich-text }
+      # selten gebraucht (Kundengalerien)
+      - { name: downloadUrl, label: "Kundengalerie: Download-Link (optional)", type: string }
+      - { name: downloadSize, label: "Kundengalerie: Download-Größe", type: string }
+      - { name: downloadFormat, label: "Kundengalerie: Download-Format", type: string }
+      - { name: downloadNote, label: "Kundengalerie: Hinweis zum Download", type: string }
+      - { name: albumRequest, label: Kasten „Ganzes Album anfordern“ zeigen, type: boolean }
 
   # ---------------------------------------------------------------- Portfolio
   - name: portfolio
