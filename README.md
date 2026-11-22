@@ -197,7 +197,7 @@ Die Formulare stehen in `.pages.yml`. Jede Speicherung ist ein Commit auf `main`
   speichern. Für Fotos zu einem **bestehenden** Album dessen Kurznamen (aus der Adresse) ins Feld „Zu einem
   bestehenden Album hinzufügen“ schreiben. GitHub macht daraus automatisch das Album (`scripts/inbox.mjs`, wie
   `npm run optimize`: verkleinern, Wasserzeichen, GPS weg, Aufnahmedaten, Eintrag in `index.md`) und leert den
-  Eingang (`photos-inbox/`) wieder.
+  Eingang (`photos-inbox/`, Fotos in `photos-uploads/`) wieder.
 - **Alben**: Titel, Texte, Bildbeschreibungen, Ausschnitt (`focus`), Mappe-Fotos usw. ändern.
 - **Portfolio**: welche Alben mit welchem Vorschaufoto im Portfolio stehen.
 - **Filme**, **Über mich**: Texte und Felder.

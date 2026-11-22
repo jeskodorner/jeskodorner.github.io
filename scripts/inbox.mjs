@@ -3,7 +3,7 @@
  * node scripts/inbox.mjs   (läuft automatisch bei GitHub, siehe .github/workflows/deploy.yml)
  *
  * Fotos-Eingang aus Pages CMS (seit 22.11.2026): Im CMS legt Jesko unter „Fotos hochladen“ einen Eintrag an
- * (Titel, Datum, Text, Fotos). Pages CMS speichert ihn als photos-inbox/<name>.md und die Fotos in photos-inbox/fotos/.
+ * (Titel, Datum, Text, Fotos). Pages CMS speichert ihn als photos-inbox/<name>.md und die Fotos in photos-uploads/.
  * Dieses Skript macht daraus ein Album – genauso wie `npm run optimize` im Terminal:
  *   1. Album-Ordner wählen: bestehendes Album (Feld „album“) oder neues aus dem Titel (unlisted: mit Zufallsanteil).
  *   2. Neues Album: index.md mit Titel, Datum, Ort, Text, Sichtbarkeit anlegen.
@@ -33,10 +33,10 @@ if (!entries.length) {
 }
 
 const str = (v) => (v === null || v === undefined ? '' : String(v).trim());
-/** Pfad aus dem CMS („/photos-inbox/fotos/x.jpg“, „photos-inbox/fotos/x.jpg“ oder nur „x.jpg“) → Datei im Repo */
+/** Pfad aus dem CMS („/photos-uploads/x.jpg“, „photos-uploads/x.jpg“ oder nur „x.jpg“) → Datei im Repo */
 const inboxFile = (p) => {
   const clean = str(p).replace(/^\/+/, '');
-  return clean.includes('/') ? path.join(ROOT, clean) : path.join(INBOX, 'fotos', clean);
+  return clean.includes('/') ? path.join(ROOT, clean) : path.join(ROOT, 'photos-uploads', clean);
 };
 /** Datum aus dem CMS (Date-Objekt oder Text) → JJJJ-MM-TT */
 const isoDate = (v) => {

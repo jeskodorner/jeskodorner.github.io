@@ -8,8 +8,8 @@
 media:
   - name: eingang
     label: Fotos-Eingang
-    input: photos-inbox/fotos
-    output: /photos-inbox/fotos
+    input: photos-uploads
+    output: /photos-uploads
     rename: safe
     extensions: [jpg, jpeg, png, tif, tiff, webp, heic]
   - name: filmbilder
