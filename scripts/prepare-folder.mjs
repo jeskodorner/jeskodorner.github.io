@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * node scripts/prepare-folder.mjs <ordner|foto> … [--open]
+ * node scripts/prepare-folder.mjs <ordner|foto> … [--open] [--wasserzeichen | --ohne-wasserzeichen]
  * Dahinter steckt das Mac-Programm „Fotos aufbereiten.app“: Ordner (oder einzelne Fotos) im Finder darauf ziehen.
  *
  * Macht aus jedem Foto eine fertige Web-Version – genau wie für die Website (photos.config.json): lange Kante
@@ -20,12 +20,16 @@ import { readExif, renderWebVersion } from './lib/web-image.mjs';
 const SOURCE_EXT = /\.(jpe?g|png|tiff?|webp|avif|heic|heif)$/i;
 const args = process.argv.slice(2);
 const openAfter = args.includes('--open');
+// Wasserzeichen: Schalter im Mac-Programm (Doppelklick) überstimmt photos.config.json
+const wmOn = args.includes('--wasserzeichen');
+const wmOff = args.includes('--ohne-wasserzeichen');
 const inputs = args.filter((a) => !a.startsWith('--'));
 if (!inputs.length) {
   console.log('Ordner oder Fotos angeben (oder auf „Fotos aufbereiten.app“ ziehen).');
   process.exit(1);
 }
 const config = await loadConfig();
+if (config.watermark && (wmOn || wmOff)) config.watermark.enabled = wmOn;
 
 // Aufträge sammeln: je Ordner seine Fotos; einzelne Fotos nach ihrem Ordner gruppiert
 const jobs = new Map(); // Zielordner → Quelldateien
@@ -69,7 +73,7 @@ for (const [target, files] of jobs) {
   }
 }
 
-const summary = `${done} Foto${done === 1 ? '' : 's'} fertig${failed ? `, ${failed} mit Fehler` : ''}.`;
+const summary = `${done} Foto${done === 1 ? '' : 's'} fertig${config.watermark?.enabled ? ' (mit Wasserzeichen)' : ''}${failed ? `, ${failed} mit Fehler` : ''}.`;
 console.log(summary);
 if (openAfter) for (const d of outDirs) spawnSync('open', [d]);
 if (!done && !failed) {
