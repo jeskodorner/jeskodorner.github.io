@@ -27,4 +27,6 @@ showroom:
     bild: dsc01423.jpg
   - galerie: love-exercise
     bild: love-exercise-jesko-dorner-31.jpg
+  - galerie: dollgow-neujahr-2025
+    bild: dscf0888.jpg
 ---

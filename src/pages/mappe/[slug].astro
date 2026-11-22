@@ -6,10 +6,14 @@
  * Fotos im Portfolio.
  * Welche Fotos: src/lib/mappe.ts (Liste `mappe:` im Album oder automatisch bis zu 8). Ein Klick auf ein Foto öffnet
  * die Lightbox mit dem ganzen Album ab diesem Foto, direkt hier (wie im Portfolio).
+ * Gibt es einen eigenen Film zum Album (Feld `galerie` in src/content/films/…, z. B. Dollgow), läuft er über den
+ * Fotos groß in Schleife (seit 22.11.2026).
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Picture from '../../components/Picture.astro';
 import Icon from '../../components/Icon.astro';
+import LoopVideo from '../../components/LoopVideo.astro';
+import { filmForGallery } from '../../lib/films';
 import { getMappen, mappeImages } from '../../lib/mappe';
 import type { Gallery, GalleryImage } from '../../lib/galleries';
 import { photoData } from '../../lib/lightbox-data';
@@ -50,6 +54,8 @@ const meta = formatMonth(g.date);
 // Lightbox-Daten des ganzen Albums (unsichtbar): ein Klick auf ein Foto blättert durchs ganze Album
 const items = await Promise.all(g.images.map((img) => photoData(g, img)));
 const og = cardImage(`album/${g.slug}`, g.cover.alt);
+// Gibt es einen eigenen Film zum Album (Feld `galerie` im Film), läuft er oben groß in Schleife, darunter die Fotos
+const film = await filmForGallery(g);
 ---
 
 <BaseLayout title={g.title} description={g.description} image={og}>
@@ -61,6 +67,19 @@ const og = cardImage(`album/${g.slug}`, g.cover.alt);
     <h1 class="display display-1 display-compact">{tidyTitle(g.title)}</h1>
     <p class="label muted">{meta}</p>
   </section>
+
+  {
+    film?.data.video && film.data.still && (
+      <div class="container container--wide film-top">
+        <LoopVideo
+          file={film.data.video}
+          poster={film.data.still}
+          alt={`Film „${film.data.title}“, ohne Ton, läuft in Schleife`}
+          class="mappe-video"
+        />
+      </div>
+    )
+  }
 
   <ol
     class="container container--wide mappe"
@@ -130,6 +149,15 @@ const og = cardImage(`album/${g.slug}`, g.cover.alt);
   }
   .head > .label {
     margin-top: 0.5rem;
+  }
+  /* Film zum Album (z. B. Dollgow): oben groß, so breit wie der Inhalt, aber nie höher als der Bildschirm unter der
+     Kopfleiste; mit Schatten wie die Abzüge darunter. Abstand zu den Fotos wie zwischen zwei Fotoreihen. */
+  .film-top {
+    padding-bottom: clamp(1.25rem, 2.5vw, 2.5rem);
+  }
+  .film-top :global(.mappe-video) {
+    width: min(100%, (100svh - var(--header-h) - 2rem) * var(--ratio));
+    box-shadow: var(--hang-shadow);
   }
   /* Übersicht wie eine aufgeschlagene Mappe: gleich große Felder in Reihen. Spalten je nach Form und Anzahl der Fotos
      (--cols-lg/-md/-sm, oben berechnet; vorher immer 4 / 3 / 2). Die Felder haben die Form der meisten Fotos

@@ -154,7 +154,28 @@ Das Vorschaubild legst du in `src/content/films/images/`. Aufgaben, Videotyp, L�
 (`roles`, `format`, `runtime`, `year`, `director`, `festivals`) werden seit 20.11.2026 nicht mehr gezeigt – die
 Felder dürfen in alten Dateien stehen bleiben.
 
-Videos werden **datensparsam per Zwei-Klick** eingebettet. Beim Seitenaufruf lädt nichts von YouTube, und es gibt keine Cookies.
+**Eigenes Video statt YouTube** (seit 22.11.2026, z. B. Dollgow): Die MP4 liegt in `public/videos/`, der Film
+nennt sie mit `video:`. Sie läuft **ohne Ton in Schleife wie ein bewegtes Foto** (`src/components/LoopVideo.astro`):
+lädt erst, wenn sie auf dem Bildschirm ist, läuft nur dort, ein kleiner Knopf (und ein Klick aufs Video) hält an.
+Bei „Bewegung reduzieren“ oder im Datensparmodus des Handys läuft sie nicht von selbst. Breite und Höhe liest der
+Build aus der Datei (`src/lib/video.ts`). Mit `galerie:` gehört der Film zu einem Fotoalbum: Ist das Album im
+Portfolio, zeigt seine Mappe das Video oben groß und darunter die Fotos.
+
+```yaml
+video: dollgow-neujahr-2025.mp4        # Datei in public/videos/
+galerie: dollgow-neujahr-2025          # Album dazu (optional)
+still: ../galleries/dollgow-neujahr-2025/images/dscf0861.jpg   # Pflicht: Übersicht und solange das Video lädt
+stillAlt: "Beschreibung des Standbilds"
+```
+
+Export aus DaVinci Resolve (Deliver, Custom Export): MP4, H.264, Größe im Seitenverhältnis des Films (z. B.
+1920 × 1280 bei 3:2), „Restrict to“ etwa 6000 Kb/s, Key Frames alle 2 Sekunden, Gamma Tag Rec.709-A, ohne Ton.
+**Unter 50 MB bleiben** (GitHub warnt ab 50 MB, lehnt ab 100 MB ab), und jede neue Fassung bleibt für immer in der
+Git-Geschichte – also möglichst einmal sorgfältig exportieren. Damit das Video sofort anläuft, die Datei vor dem
+Kopieren einmal ohne neues Komprimieren umpacken: `avconvert -s eingang.mp4 -p PresetPassthrough -o public/videos/name.mp4`
+(macOS, schiebt das Inhaltsverzeichnis der Datei nach vorn).
+
+YouTube-Videos werden **datensparsam per Zwei-Klick** eingebettet. Beim Seitenaufruf lädt nichts von YouTube, und es gibt keine Cookies.
 Erst ein Klick auf „Abspielen“ lädt den Player von youtube-nocookie.com. Ohne JavaScript führt der Klick zu YouTube.
 Die Datenschutzerklärung bekommt dazu automatisch einen YouTube-Abschnitt.
 

@@ -9,6 +9,7 @@ export type IconName =
   | 'arrow-up'
   | 'check'
   | 'play'
+  | 'pause'
   | 'share'
   | 'link'
   | 'download'
@@ -36,6 +37,7 @@ const paths: Record<IconName, string> = {
   check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
   // Abspielen: gefülltes Dreieck (wie allgemein üblich), in derselben Linienstärke gerundet
   play: '<path d="M8.5 6v12l10-6z" fill="currentColor"/>',
+  pause: '<path d="M8 6v12M16 6v12" stroke-width="3.2"/>',
   share: '<path d="M12 3v12M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v7.5h14V12"/>',
   link: '<path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1.2 1.2"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1.2-1.2"/>',
   download: '<path d="M12 3v12M7.5 10.5 12 15l4.5-4.5"/><path d="M4 20h16"/>',

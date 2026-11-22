@@ -150,6 +150,15 @@ const films = defineCollection({
         summary: z.string().trim().optional(),
         /** Farbe der Vorschau ohne Standbild */
         color: z.enum(['blue', 'orange', 'green', 'cream']).optional(),
+        /** Eigenes Video statt YouTube: Dateiname einer MP4 in public/videos/ (z. B. "dollgow-neujahr-2025.mp4"). Läuft
+         *  ohne Ton in Schleife wie ein bewegtes Foto (src/components/LoopVideo.astro). Unter 50 MB halten (GitHub). */
+        video: z
+          .string()
+          .regex(/^[\w.-]+\.mp4$/, { error: 'video: nur der Dateiname einer MP4 in public/videos/, ohne Leerzeichen.' })
+          .optional(),
+        /** Fotoalbum zum Film (Ordnername in src/content/galleries/): Ist das Album im Portfolio, zeigt seine Mappe das
+         *  Video oben groß, darunter die Fotos */
+        galerie: z.string().optional(),
         /** Externer Link (z. B. Vimeo), falls kein YouTube-Video eingebettet wird */
         link: z.url().optional(),
         linkLabel: z.string().optional(),
@@ -160,6 +169,9 @@ const films = defineCollection({
       .superRefine((f, ctx) => {
         if (f.still && (!f.stillAlt || f.stillAlt.length < 3)) {
           ctx.addIssue({ code: 'custom', path: ['stillAlt'], message: 'Alt-Text für das Standbild fehlt (stillAlt).' });
+        }
+        if (f.video && !f.still) {
+          ctx.addIssue({ code: 'custom', path: ['still'], message: 'Zum Video fehlt ein Standbild (still) – es steht in der Übersicht und solange das Video lädt.' });
         }
         if (f.cover && (!f.coverAlt || f.coverAlt.length < 3)) {
           ctx.addIssue({ code: 'custom', path: ['coverAlt'], message: 'Alt-Text für das Vorschaubild fehlt (coverAlt).' });
