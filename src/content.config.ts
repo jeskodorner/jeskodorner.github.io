@@ -65,6 +65,12 @@ const galleries = defineCollection({
       /** Fotos der „Mappe“ (Seite /mappe/<slug>/, nur Alben aus dem Portfolio), Dateinamen in Reihenfolge.
        *  Leer = das Portfolio-Foto und bis zu 7 weitere, gleichmäßig über das Album verteilt. */
       mappe: z.array(z.string()).optional(),
+      /** Video für die Mappe (Dateiname einer MP4 in public/videos/): läuft dort oben über die volle Breite ohne Ton
+       *  in Schleife, darunter die Fotos. Gehört nur zur Mappe – nicht in den Bereich „Film“ (seit 22.11.2026). */
+      mappeVideo: z
+        .string()
+        .regex(/^[\w.-]+\.mp4$/, { error: 'mappeVideo: nur der Dateiname einer MP4 in public/videos/, ohne Leerzeichen.' })
+        .optional(),
       /** Galeriefarbe der Galerie. Ohne Angabe wird automatisch durchgewechselt. */
       color: z.enum(['blue', 'orange', 'green', 'cream']).optional(),
       visibility: z.enum(['public', 'unlisted']).default('public'),
@@ -156,9 +162,6 @@ const films = defineCollection({
           .string()
           .regex(/^[\w.-]+\.mp4$/, { error: 'video: nur der Dateiname einer MP4 in public/videos/, ohne Leerzeichen.' })
           .optional(),
-        /** Fotoalbum zum Film (Ordnername in src/content/galleries/): Ist das Album im Portfolio, zeigt seine Mappe das
-         *  Video oben groß, darunter die Fotos */
-        galerie: z.string().optional(),
         /** Externer Link (z. B. Vimeo), falls kein YouTube-Video eingebettet wird */
         link: z.url().optional(),
         linkLabel: z.string().optional(),

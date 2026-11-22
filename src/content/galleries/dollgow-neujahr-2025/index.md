@@ -16,6 +16,8 @@ visibility: public
 showExif: true
 # Titelbild (Dateiname aus der Liste unten). Ohne Angabe: das erste Bild
 # cover: bild-01.jpg
+# Video oben in der Mappe im Portfolio (Datei in public/videos/), läuft ohne Ton in Schleife – nicht im Bereich Film
+mappeVideo: dollgow-neujahr-2025.mp4
 
 # --- Download (optional, siehe README) ---
 # downloadUrl: https://…

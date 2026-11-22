@@ -156,20 +156,15 @@ Das Vorschaubild legst du in `src/content/films/images/`. Aufgaben, Videotyp, L�
 (`roles`, `format`, `runtime`, `year`, `director`, `festivals`) werden seit 20.11.2026 nicht mehr gezeigt – die
 Felder dürfen in alten Dateien stehen bleiben.
 
-**Eigenes Video statt YouTube** (seit 22.11.2026, z. B. Dollgow): Die MP4 liegt in `public/videos/`, der Film
-nennt sie mit `video:`. Sie läuft **ohne Ton in Schleife wie ein bewegtes Foto** (`src/components/LoopVideo.astro`):
-lädt erst, wenn sie auf dem Bildschirm ist, läuft nur dort, auf der Filmseite hält ein kleiner Knopf (und ein Klick
-aufs Video) an; in der Mappe läuft sie ohne Knopf einfach durch (Jeskos Wunsch).
-Bei „Bewegung reduzieren“ oder im Datensparmodus des Handys läuft sie nicht von selbst. Breite und Höhe liest der
-Build aus der Datei (`src/lib/video.ts`). Mit `galerie:` gehört der Film zu einem Fotoalbum: Ist das Album im
-Portfolio, zeigt seine Mappe das Video oben groß und darunter die Fotos.
-
-```yaml
-video: dollgow-neujahr-2025.mp4        # Datei in public/videos/
-galerie: dollgow-neujahr-2025          # Album dazu (optional)
-still: ../galleries/dollgow-neujahr-2025/images/dscf0861.jpg   # Pflicht: Übersicht und solange das Video lädt
-stillAlt: "Beschreibung des Standbilds"
-```
+**Video in einer Mappe** (seit 22.11.2026, z. B. Dollgow): Die MP4 liegt in `public/videos/`, das Album nennt sie in
+index.md mit `mappeVideo: dollgow-neujahr-2025.mp4`. In der Mappe läuft sie oben über die volle Breite **ohne Ton in
+Schleife wie ein bewegtes Foto** (`src/components/LoopVideo.astro`), ohne Knopf zum Anhalten; darunter die Fotos.
+Solche Videos gehören nur zur Mappe und erscheinen **nicht im Bereich „Film“** (Jeskos Wunsch). Sie laden erst, wenn
+sie auf dem Bildschirm sind, und laufen nur dort; bei „Bewegung reduzieren“ oder im Datensparmodus bleibt das
+Standbild stehen. Standbild: ein Bild aus dem Video mit demselben Namen in `src/assets/videos/` (z. B.
+`dollgow-neujahr-2025.jpg`, aus dem Video bei 0:46 gezogen). Breite und Höhe liest der Build aus der Datei
+(`src/lib/video.ts`). Ein Film im Bereich „Film“ kann mit `video:` ebenfalls eine eigene MP4 statt YouTube zeigen
+(dann mit kleinem Knopf zum Anhalten und `still:` als Vorschau).
 
 Export aus DaVinci Resolve (Deliver, Custom Export): MP4, H.264, Größe im Seitenverhältnis des Films (z. B.
 1920 × 1280 bei 3:2), „Restrict to“ etwa 6000 Kb/s, Key Frames alle 2 Sekunden, Gamma Tag Rec.709-A, ohne Ton.

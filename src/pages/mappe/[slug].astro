@@ -9,15 +9,14 @@
  * Mappe und Album sind zwei getrennte Orte (Jesko, 22.11.2026): Die einzige Verbindung ist „Ganzes Album ansehen“
  * unten. Vorher blätterte die Großansicht durchs ganze Album, und ohne JavaScript führte ein Foto ins Album – jetzt
  * öffnet es dann nur das große Bild.
- * Gibt es einen eigenen Film zum Album (Feld `galerie` in src/content/films/…, z. B. Dollgow), läuft er über den
- * Fotos groß in Schleife (seit 22.11.2026).
+ * Hat das Album ein Video für die Mappe (Feld `mappeVideo` in index.md, z. B. Dollgow), läuft es über den Fotos groß
+ * in Schleife (seit 22.11.2026). Es gehört nur zur Mappe, nicht in den Bereich „Film“.
  */
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Picture from '../../components/Picture.astro';
 import JustifyNow from '../../components/JustifyNow.astro';
 import Icon from '../../components/Icon.astro';
 import LoopVideo from '../../components/LoopVideo.astro';
-import { filmForGallery } from '../../lib/films';
 import { getMappen, mappeImages } from '../../lib/mappe';
 import type { Gallery, GalleryImage } from '../../lib/galleries';
 import { photoData } from '../../lib/lightbox-data';
@@ -44,8 +43,9 @@ const meta = formatMonth(g.date);
 // Lightbox-Daten nur der Fotos dieser Mappe (unsichtbar), in ihrer Reihenfolge und eigener Zählung
 const items = await Promise.all(images.map((img) => photoData(g, img)));
 const og = cardImage(`album/${g.slug}`, g.cover.alt);
-// Gibt es einen eigenen Film zum Album (Feld `galerie` im Film), läuft er oben groß in Schleife, darunter die Fotos
-const film = await filmForGallery(g);
+// Video der Mappe (Feld `mappeVideo` im Album): oben groß in Schleife, darunter die Fotos. Standbild, bis es läuft: ein
+// Bild aus dem Video in src/assets/videos/ (nicht das Vorschaubild – das steht in der Mappe nie vorne)
+const mappeVideo = g.entry.data.mappeVideo;
 ---
 
 <BaseLayout title={g.title} description={g.description} image={og}>
@@ -59,12 +59,11 @@ const film = await filmForGallery(g);
   </section>
 
   {
-    film?.data.video && film.data.still && (
+    mappeVideo && (
       <div class="container container--wide film-top">
         <LoopVideo
-          file={film.data.video}
-          poster={film.data.still}
-          alt={`Film „${film.data.title}“, ohne Ton, läuft in Schleife`}
+          file={mappeVideo}
+          alt={`Video „${g.title}“, ohne Ton, läuft in Schleife`}
           class="mappe-video"
           pausable={false}
         />

@@ -199,6 +199,13 @@ html:not(.js) .js-only {
   font-size: var(--fs-h2);
   padding-top: 0.08em;
 }
+/* Mehrzeilige große Titel: Melodrama hat lange Unterlängen (g, j, p) – bei 0,95 stieß z. B. das „g“ von „Dollgow“
+   ins „j“ von „Neujahr“ darunter (gemeldet 22.11.2026). Mit 1,08 bleibt zwischen Unterlänge und Großbuchstaben der
+   nächsten Zeile Luft; einzeilige Titel ändern sich dadurch kaum. */
+.display-1,
+.display-2 {
+  line-height: 1.08;
+}
 /* Titel auf Album- und Mappenseiten (zusätzlich zu display-1): kleiner als auf den Hauptseiten, denn dort sind die
    Fotos die Hauptsache – sie sollen beim Öffnen sofort zu sehen sein. Breiter erlaubt, damit er am Laptop meist in
    eine Zeile passt (Zeilenlänge in Schrifthöhen statt ch). */
@@ -208,7 +215,7 @@ html:not(.js) .js-only {
 }
 .display-3 {
   font-size: var(--fs-h3);
-  line-height: 0.92;
+  line-height: 1.04; /* vorher 0,92 – zweizeilige Titel unten bei „Nächste Galerie“ stießen sonst aneinander */
 }
 .mega {
   font-size: var(--fs-mega);

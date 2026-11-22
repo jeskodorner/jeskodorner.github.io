@@ -8,7 +8,8 @@
  *   immer). Ein Klick aufs Video tut dasselbe. Mit `pausable={false}` (Mappen im Portfolio, Jeskos Wunsch vom
  *   22.11.2026) gibt es weder Knopf noch Anhalten per Klick – dann läuft es einfach, wie ein GIF.
  * - Ohne JavaScript: normale Videosteuerung des Browsers.
- * Das Standbild (`poster`) steht da, bis das Video läuft – in der Übersicht und bei langsamer Verbindung.
+ * Das Standbild steht da, bis das Video läuft (und bei „Bewegung reduzieren“): ein Bild aus dem Video mit demselben
+ * Namen in src/assets/videos/ (z. B. dollgow-neujahr-2025.jpg zu dollgow-neujahr-2025.mp4), sonst `poster`.
  */
 import type { ImageMetadata } from 'astro';
 import { getImage } from 'astro:assets';
@@ -18,7 +19,8 @@ import { videoInfo } from '../lib/video';
 export interface Props {
   /** Dateiname in public/videos/ */
   file: string;
-  poster: ImageMetadata;
+  /** Ersatz-Standbild, falls es in src/assets/videos/ keins mit dem Namen des Videos gibt */
+  poster?: ImageMetadata;
   /** Beschreibung des Videos (für Screenreader) */
   alt: string;
   /** Anhalten erlauben (Knopf und Klick aufs Video). Standard: ja */
@@ -28,7 +30,13 @@ export interface Props {
 
 const { file, poster, alt, pausable = true, class: className } = Astro.props;
 const v = videoInfo(file);
-const posterImg = await getImage({ src: poster, width: Math.min(1920, poster.width), format: 'webp', quality: 80 });
+// Standbild aus dem Video: gleicher Dateiname, Endung .jpg/.png/.webp, in src/assets/videos/
+const stills = import.meta.glob<ImageMetadata>('../assets/videos/*.{jpg,jpeg,png,webp}', { eager: true, import: 'default' });
+const base = file.replace(/\.mp4$/i, '');
+const still = Object.entries(stills).find(([p]) => p.split('/').pop()?.replace(/\.[^.]+$/, '') === base)?.[1] ?? poster;
+const posterImg = still
+  ? await getImage({ src: still, width: Math.min(1920, still.width), format: 'webp', quality: 80 })
+  : undefined;
 ---
 
 <figure
@@ -39,7 +47,7 @@ const posterImg = await getImage({ src: poster, width: Math.min(1920, poster.wid
   <video
     class="loop-video"
     src={v.src}
-    poster={posterImg.src}
+    poster={posterImg?.src}
     width={v.width}
     height={v.height}
     muted
