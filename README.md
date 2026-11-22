@@ -706,7 +706,8 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
   Reihenhöhe). Vorher gleich große Felder in Spalten mit je einem Abzug mit Schatten (Git-Tag
   `alte-version-mappe-felder`). Gibt es einen eigenen Film zum Album (Dollgow), läuft er oben über die volle Breite
   in Schleife, darunter die Fotos. Mappen mit nur zwei oder drei Fotos zeigen sie am Handy größer (eins pro Reihe).
-  Vorne das Foto aus dem Portfolio, dazu bis zu 7
+  Fotos: das Foto aus dem Portfolio steht seit 22.11.2026 nicht mehr vorne, sondern als letztes (man hat es gerade
+  groß gesehen); dazu bis zu 7
   weitere gleichmäßig über das Album verteilt (oder genau die Fotos aus `mappe:` im Album). Ein Klick auf ein Foto
   öffnet die Lightbox mit dem ganzen Album ab diesem Foto (`src/scripts/open-album.ts`). Unten nur „Ganzes Album
   ansehen →“ (keine Bildanzahl).
