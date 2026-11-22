@@ -69,44 +69,42 @@ const jsonLd = gallery.isUnlisted
   jsonLd={jsonLd}
 >
   <article class={`c-${gallery.color}`}>
-    {/* Kopf mit dem Vorschaubild aus der Galerie-Übersicht (seit 22.11.2026; vorher ein grünes Band nur mit Text):
-        Laptop links Datum, Titel und Beschreibung, rechts das Foto; Handy das Foto zuerst. Ein Klick aufs Foto öffnet
-        es in der Großansicht. Bild und Titel gleiten beim Öffnen aus der Übersicht an ihren Platz (view-transition). */}
-    <header class="g-top container container--wide">
-      {
-        !gallery.isUnlisted && (
-          /* „Zurück“ dorthin, wo man herkam; ohne Vorgeschichte an die Stelle dieses Albums in der Übersicht
-             (src/scripts/back-link.ts) */
-          <a class="back btn btn--small" href={`/galerien/#album-${gallery.slug}`} data-back>
-            <Icon name="arrow-left" /> {t.back}
-          </a>
-        )
-      }
-      <a
-        class="g-cover"
-        href={gallery.cover.hashUrl}
-        style={`--r:${(gallery.cover.src.width / gallery.cover.src.height).toFixed(4)};view-transition-name: gc-${gallery.slug}`}
-        aria-label={`${gallery.cover.alt} – groß ansehen`}
-      >
+    {/* Band oben mit dem Vorschaubild der Galerie als Hintergrund, darüber ein grauer Filter, darauf Zurück, Datum,
+        Titel und Beschreibung in heller Schrift (seit 22.11.2026; vorher ein Band in June Bud nur mit Text, Git-Tag
+        alte-version-album-band). Das Foto ist nur Hintergrund (aria-hidden), im Album steht es noch einmal. */}
+    <header class="g-band g-band--photo">
+      <div class="g-band-bg" aria-hidden="true">
         <Picture
           src={gallery.cover.src}
           alt=""
-          sizes="(min-width: 1000px) 56vw, 92vw"
+          sizes="100vw"
           color={gallery.cover.color}
           lqip={gallery.cover.lqip}
           loading="eager"
           fetchpriority="high"
-          class="g-cover-img"
+          class="g-band-img"
+          style={`object-position:${gallery.cover.focus}`}
         />
-      </a>
-      <div class="g-text">
-        {/* Nur das Datum (bis 20.11.2026 auch Anzahl der Fotos und Ort; der Ort steht weiter unsichtbar für
-            Suchmaschinen in den Strukturdaten oben) */}
-        <p class="label meta-row">
-          <span>{formatMonth(gallery.date)}</span>
-        </p>
-        <h1 class="display display-1 display-compact title" style={`view-transition-name: gt-${gallery.slug}`}>{tidyTitle(gallery.title)}</h1>
-        <p class="band-lead">{gallery.description}</p>
+      </div>
+      <div class="container container--wide g-band-inner">
+        {
+          !gallery.isUnlisted && (
+            /* „Zurück“ dorthin, wo man herkam; ohne Vorgeschichte an die Stelle dieses Albums in der Übersicht
+               (src/scripts/back-link.ts) */
+            <a class="back btn btn--small" href={`/galerien/#album-${gallery.slug}`} data-back>
+              <Icon name="arrow-left" /> {t.back}
+            </a>
+          )
+        }
+        <div class="g-text">
+          {/* Nur das Datum (bis 20.11.2026 auch Anzahl der Fotos und Ort; der Ort steht weiter unsichtbar für
+              Suchmaschinen in den Strukturdaten oben) */}
+          <p class="label meta-row">
+            <span>{formatMonth(gallery.date)}</span>
+          </p>
+          <h1 class="display display-1 display-compact title" style={`view-transition-name: gt-${gallery.slug}`}>{tidyTitle(gallery.title)}</h1>
+          <p class="band-lead">{gallery.description}</p>
+        </div>
       </div>
     </header>
 
@@ -165,72 +163,69 @@ const jsonLd = gallery.isUnlisted
 </script>
 
 <style>
-  /* Kopf (seit 22.11.2026): das Vorschaubild aus der Übersicht groß, daneben bzw. darunter Datum, Titel und
-     Beschreibung, auf der Wand ohne Farbband. Vorher ein Band in June Bud nur mit Text (Git-Tag
-     alte-version-album-band). Handy und Tablet: Zurück, Foto, Text untereinander. Laptop: Zurück über die ganze Breite,
-     links der Text (5/12), rechts das Foto (7/12), oben bündig – wie auf der Seite je Film. Das Foto ist unbeschnitten
-     und nie höher als etwa zwei Drittel des Bildschirms (Hochformate werden schmaler). */
-  .g-top {
+  /* Band mit Foto (seit 22.11.2026): das Vorschaubild füllt das Band (beschnitten, Ausschnitt nach `focus`), darüber
+     ein grauer Filter (--band-filter), damit die helle Schrift darauf immer lesbar ist. Oben „Zurück“, unten Datum,
+     Titel und Beschreibung. Etwas höher als das alte Textband, damit vom Foto etwas zu sehen ist – die Fotos des
+     Albums beginnen trotzdem auf dem ersten Bildschirm. */
+  .g-band {
+    /* Grauer Filter: nach unten dichter, wo Titel und Beschreibung stehen – auch helle, unruhige Fotos (Schulstreik)
+       bleiben so lesbar */
+    --band-filter: linear-gradient(rgb(38 36 34 / 0.42), rgb(38 36 34 / 0.62) 45%, rgb(38 36 34 / 0.8));
+    /* Fokusrahmen auf dem dunklen Foto hell statt blau */
+    --accent: var(--wall);
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    color: var(--wall);
+    background: var(--ink-soft);
+  }
+  .g-band-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+  .g-band-bg :global(picture),
+  .g-band-bg :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .g-band-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--band-filter);
+  }
+  .g-band-inner {
     display: grid;
-    gap: clamp(1rem, 2.5vw, 1.5rem);
-    padding-block: clamp(1rem, 2.5vw, 2rem) clamp(0.5rem, 1.5vw, 1rem);
+    grid-template-rows: auto 1fr;
+    gap: clamp(1.5rem, 4vw, 3rem);
+    min-height: clamp(17rem, 46svh, 30rem);
+    padding-block: clamp(1rem, 2.5vw, 2rem) clamp(1.5rem, 3.5vw, 2.75rem);
   }
   .back {
     justify-self: start;
   }
-  .g-cover {
-    display: block;
-    width: min(100%, 62svh * var(--r));
-    overflow: hidden;
-    background: var(--wall-3);
-    cursor: zoom-in;
-    outline-offset: 4px;
+  .g-text {
+    align-self: end;
   }
-  .g-cover :global(.g-cover-img) {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: var(--r);
-    transition: transform 0.9s var(--ease);
-  }
-  @media (hover: hover) {
-    .g-cover:hover :global(.g-cover-img) {
-      transform: scale(var(--hover-zoom));
-    }
-  }
-  @media (min-width: 1000px) {
-    .g-top {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-      column-gap: clamp(2.5rem, 4vw, 4.5rem);
-      align-items: start;
-    }
-    .back {
-      grid-column: 1 / -1;
-    }
-    .g-cover {
-      grid-column: 2;
-      grid-row: 2;
-      width: min(100%, 68svh * var(--r));
-    }
-    .g-text {
-      grid-column: 1;
-      grid-row: 2;
-    }
-  }
-  /* Titel: kleiner als auf den Hauptseiten (Klasse display-compact, global.css) */
+  /* Titel: kleiner als auf den Hauptseiten (Klasse display-compact, global.css), hell auf dem Foto */
   .title {
     margin-top: 0.5rem;
+    color: var(--wall);
   }
-  /* Beschreibung und Datum grau wie überall */
+  /* Auf dem Foto: Titel hell, Beschreibung und Datum etwas zurückgenommen (statt Grau, das auf dem Foto nicht lesbar
+     wäre) */
   .band-lead {
     max-width: 60ch;
     margin-top: clamp(0.75rem, 1.5vw, 1.25rem);
     font-size: var(--fs-base);
     line-height: 1.5;
-    color: var(--ink-soft);
+    color: rgb(239 231 211 / 0.88);
   }
-  .g-top .meta-row {
-    color: var(--ink-soft);
+  .g-band .meta-row {
+    color: rgb(239 231 211 / 0.88);
   }
   .g-head {
     padding-top: clamp(1.25rem, 2.5vw, 2rem);

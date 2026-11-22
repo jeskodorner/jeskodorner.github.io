@@ -689,13 +689,12 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
   man aus einer Mappe (oder einer anderen Seite) zurück, geht es mit dem Foto weiter, das zuletzt zu sehen war
   (gemerkt im Tab, `sessionStorage`); erst ein neuer Besuch beginnt wieder vorne. Mit „Bewegung reduzieren“ oder
   ohne JavaScript bleibt das erste Foto stehen.
-- **Albumseite** (`src/components/GalleryPage.astro`): oben seit 22.11.2026 das **Vorschaubild aus der
-  Galerie-Übersicht** groß (unbeschnitten, höchstens etwa zwei Drittel des Bildschirms hoch; ein Klick öffnet es in
-  der Großansicht), dazu „← Zurück“, Monat, Titel und Beschreibung – am Laptop Text links und Foto rechts wie auf
-  der Filmseite, am Handy das Foto zuerst. Beim Öffnen aus der Übersicht gleiten Vorschaubild und Titel an ihren
-  Platz (View Transitions, `gc-…` und `gt-…`). Darunter die Fotos. Vorher ein kompaktes Band in June Bud nur mit
-  Text (Git-Tag `alte-version-album-band`); die Fußzeile ist dafür wieder grün. Der Titel ist kleiner als auf den
-  Hauptseiten. Vorher (bis 20.11.2026) war der Titel so groß wie „Galerie“, die
+- **Albumseite** (`src/components/GalleryPage.astro`): oben seit 22.11.2026 ein Band mit dem **Vorschaubild der
+  Galerie als Hintergrund** (beschnitten, Ausschnitt nach `focus`) und einem dunklen grauen Filter darüber, der nach
+  unten dichter wird (Jeskos Wahl „dunkel, farbig“; verglichen mit hell/schwarzweiß und dunkel/schwarzweiß). Darauf
+  „← Zurück“, Monat, Titel und Beschreibung in heller Schrift. Darunter die Fotos. Vorher ein kompaktes Band in June
+  Bud nur mit Text (Git-Tag `alte-version-album-band`); die Fußzeile ist dafür wieder grün. Der Titel ist kleiner als
+  auf den Hauptseiten. Vorher (bis 20.11.2026) war der Titel so groß wie „Galerie“, die
   Beschreibung stand groß darunter, und am Laptop sah man bei langen Titeln nur die Überschrift.
 - **Mappe** (`src/pages/mappe/[slug].astro`, Auswahl in `src/lib/mappe.ts`): je Album aus dem Portfolio eine ruhige
   Übersicht wie eine aufgeschlagene Fotomappe, einfacher als das Album. Kopf kompakt wie auf der Albumseite (Titel

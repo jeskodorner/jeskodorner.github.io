@@ -34,7 +34,7 @@ const hero = c0 ? await preloadImage(c0, cardSizes(c0.width / c0.height), 1200) 
           return (
             <li class:list={['card-item', `c-${g.color}`]} id={`album-${g.slug}`} style={`--r:${r.toFixed(4)}`}>
               <a class="card" href={g.url} data-index={i + 1}>
-                <span class="card-frame" style={`view-transition-name: gc-${g.slug}`}>
+                <span class="card-frame">
                   <Picture
                     src={g.cover.src}
                     alt={g.cover.alt}
