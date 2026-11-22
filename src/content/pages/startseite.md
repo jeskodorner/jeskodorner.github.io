@@ -23,11 +23,11 @@ showroom:
   - galerie: hilda-setcard
     bild: hilda-setcard-gesicht.jpg
   - galerie: schulstreik-05-03
-    bild: p3050211.jpg
+    bild: p3050133.jpg
   - galerie: hoodie
     bild: dsc01423.jpg
   - galerie: love-exercise
-    bild: love-exercise-jesko-dorner-31.jpg
+    bild: love-exercise-jesko-dorner-52.jpg
   - galerie: dollgow-neujahr-2025
     bild: dscf0888.jpg
   - galerie: snapshots-spanien
