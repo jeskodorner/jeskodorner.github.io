@@ -5,7 +5,7 @@
       "width": 2400,
       "height": 1600,
       "color": "#7a7a7a",
-      "lqip": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAADwAwCdASoYABAAPt1cp0yopSOiMAgBEBuJaQAAYcEPHjFM3GkwIOT0AP218LsTrcgqLuwZB8PWVBZYiHD8GyGEUSOAJviaCji6qMDwRF8MvPUQcP6ZN35dVOrwO8UFNB32+GxGz37chMyLY6/z53ng3IAAAA==",
+      "lqip": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAAAQBACdASoYABAAPt1cp0yopSOiMAgBEBuJaQAAYcEPHjFM3GkwIO7MgAD9tfC7E63IKi7sGQfD1lQWWIhw/BshhFEjgCb4mgo4uqjA8ERfDLz1EHD+mTd+XVTq8DvFBTQd9vhsRs9+3ITMi1C5+QjT0QAAAA==",
       "exif": {
         "camera": "Fujifilm X-T3",
         "lens": "XF18-55mmF2.8-4 R LM OIS",
@@ -37,7 +37,7 @@
       "width": 2400,
       "height": 1600,
       "color": "#8e8882",
-      "lqip": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAAAQBACdASoYABAAPt1iqUyopiQiMAgBEBuJZQCdMoACKLBdSKbMrioxQADnmtN/Y79LthO+iVM3zzZrEDtou3uYAS5BLy3+k0AAAA==",
+      "lqip": "data:image/webp;base64,UklGRlAAAABXRUJQVlA4IEQAAADQAwCdASoYABAAPt1qqU4opqQiMAgBEBuJZQCsABYvw112+FFusOAA55rTf2O/S7YT7rswUM+EcShrWvLwvAoXpLIAAA==",
       "exif": {
         "camera": "Fujifilm X-T3",
         "lens": "XF18-55mmF2.8-4 R LM OIS",
@@ -53,7 +53,7 @@
       "width": 2400,
       "height": 1600,
       "color": "#898989",
-      "lqip": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAQBACdASoYABAAPt1cp0yopSOiMAgBEBuJaQAAW1hqffCbIpODIAVYAAD+WUN3MqY3KM4+UnhkM5UZVSOkUibpOZLISdVdymoLfuBWzliy/7hBhILYCAF/AAA=",
+      "lqip": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAADwAwCdASoYABAAPt1cp0yopSOiMAgBEBuJaQAAW1hqffCbIpODIeH4AP5ZQ3cypjcozj5SeGQzlRlVI6RSJuk5kshJ1V3Kagt+4FbOWLL/uEGU4SstsQLOgAA=",
       "exif": {
         "camera": "Fujifilm X-T3",
         "lens": "XF18-55mmF2.8-4 R LM OIS",
@@ -68,8 +68,8 @@
       "source": "DSCF3578.jpg",
       "width": 2400,
       "height": 1600,
-      "color": "#312c21",
-      "lqip": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAADQAwCdASoYABAAPt1epkyopSOiMAgBEBuJQBOgAs1Jl6XVFJTjZyAA/UbVmk9DKytRujFlzJL59l8iI9LNmpgZe1lIRzAzgfuIVaPzlsbU8RIZrvpj36bDRxkG9k8Bo2tuDwHtP363rsGyR7BbfQ79GtgAAA==",
+      "color": "#302c21",
+      "lqip": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAADQAwCdASoYABAAPt1epkyopSOiMAgBEBuJQBOgAs1Jl6XVFJTjZyAA/UbVmk9DKytRujFlzJL59l8iI9LNmpgZe1lIRzAzgfuIVaPzlsbU8RIZrvpj36bDRxkG9k8Bo3qWw8B7T9+t67BskewW30O/RrYAAA==",
       "exif": {
         "camera": "Fujifilm X-T3",
         "lens": "XF18-55mmF2.8-4 R LM OIS",
@@ -84,8 +84,8 @@
       "source": "DSCF3579.jpg",
       "width": 2400,
       "height": 1600,
-      "color": "#604b3b",
-      "lqip": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAAAwBACdASoYABAAPt1cp0yopSOiMAgBEBuJaACdH8AJVrmXq6EXDDx4lkAA/u9nd8JtmPGT201cvuQfoeBVxjJaM0QvFfW6RI9jQFQOncIncVedgUdTWPl4f0KD+/MfBOuOzcbMX63+wYeEhCc+6nU1IlfgNQAA",
+      "color": "#604a3b",
+      "lqip": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAAAwBACdASoYABAAPt1gp00opaOiMAgBEBuJaACdH8AJBQ93SojvTQs2PugA/u9ndtI1syyrPWGyZ03wVhyhVzjJaM0uKzNN6IM0W/NwurXxwE/B5FhWfm3v2FuvGPfLZH4E7UMh1v9gw8JBXuLMqK7Qf6vfsAAA",
       "exif": {
         "camera": "Fujifilm X-T3",
         "lens": "XF18-55mmF2.8-4 R LM OIS",
@@ -100,7 +100,7 @@
       "source": "DSCF3604.jpg",
       "width": 2400,
       "height": 1600,
-      "color": "#303847",
+      "color": "#303747",
       "lqip": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAABQBACdASoYABAAPt1cpkyopSOiMAgBEBuJYgCdMoM6AEmjsJl1O4dXMXCQAP7jLJKeSbuNSxORyJ+I1pssxf8Bowr112Uq1NGoFzORSYjmWFzzB4yMAA==",
       "exif": {
         "camera": "Fujifilm X-T3",
@@ -116,8 +116,8 @@
       "source": "DSCF3758.jpg",
       "width": 2400,
       "height": 1600,
-      "color": "#737b77",
-      "lqip": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAAAwBACdASoYABAAPt1apkyopSOiMAgBEBuJaACdMoAKQ2uTbDXf7vd2hQAA/vYp6KUDpeSjD3pLD+EyklfSdTwi/KN++yvWKGVb6P29Tcj9sdvR/kiaQ4p7ONck9fbkC2K6Is/K6C/ToGpEhOW2HIUwpsjkVT2tqO3xTO4WAAA=",
+      "color": "#737b76",
+      "lqip": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAAAwBACdASoYABAAPt1apkyopSOiMAgBEBuJaACdMoAKQ2uTbDXf7vd2hQAA/vYp6KUDpeSjD3pLD+EyklfSdTwi/KN++yvWKGVb6P29Tcj9sdvR/kiaQ4p7ONck9fbkC2K6Is/K6C/ToGpEhOW2HIUwpskCqy99hADrDg+RkAA=",
       "exif": {
         "camera": "Fujifilm X-T3",
         "lens": "XF18-55mmF2.8-4 R LM OIS",
@@ -133,7 +133,7 @@
       "width": 2400,
       "height": 1600,
       "color": "#8e9793",
-      "lqip": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAABQBACdASoYABAAPt1cp00opSOiMAgBEBuJYgCdMoMrZEOhPyjNP99dgsJ4AN5gXtD5fSJdISNAMOEBj75iT/sa+XPQT0qL60iXXKhlTJ3U4vJ4OpT+F3KokqGVi+Pmjxia4CBAAAA=",
+      "lqip": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAABQBACdASoYABAAPt1cp00opSOiMAgBEBuJYgCdMoMrZEOhPyjNP99di2FAAN5gXtD5fSJdISNAMOEBj75iT/sa+XPQT0qL60iXXKhlTJ8W1DpNWgq4rLHbEUNSoei9XbC7gQOoAAA=",
       "exif": {
         "camera": "Fujifilm X-T3",
         "lens": "XF18-55mmF2.8-4 R LM OIS",
@@ -149,7 +149,7 @@
       "width": 2400,
       "height": 2400,
       "color": "#5e655a",
-      "lqip": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAABwBQCdASoYABgAPt1aqUyopSQiMBgMARAbiUAWoSQAMTTCwSzNk145cieXSvGQmoPST/3wAMsNq8wmkEFkzs+1xxVdAPHU8x6kjxT0LxNFylEk0EHIgx3BJRSiDAvdt7mRj093No/26R6+ZFZhjNYdP5mFJNbtWSPx8RAgAAA=",
+      "lqip": "data:image/webp;base64,UklGRo4AAABXRUJQVlA4IIIAAADQBQCdASoYABgAPtlWpEyoJKOiN/VYAQAbCUATpmznQASz5AQR4C+LJidLrM0QJt7f/b1eY1JAAMsNvIjkcT5ArYBjwu6XcF9IfLhvbdLiP10d+2OjCT0UXDugOAjdNSexrljLvDGMoByH38JLfjn03QJn3zw5EhUSiyTw+XtoEgAA",
       "exif": {
         "camera": "Fujifilm X-T3",
         "lens": "XF18-55mmF2.8-4 R LM OIS",
@@ -165,7 +165,7 @@
       "width": 2400,
       "height": 1600,
       "color": "#252a1d",
-      "lqip": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAAAwBACdASoYABAAPt1apkyopSOiMAgBEBuJYwDG9CHe9/UHIi92Kgp3nIAA/vVo8TRogQUWCs/Ps/hmj3wqlx180p58lziBfAnJq/OnvsfiewvBNoJvxiZFhaKvkAAA",
+      "lqip": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAAAwBACdASoYABAAPt1apkyopSOiMAgBEBuJYwDG9CHe9/UHIi92Kgp31fAA/vVo8TRogQUWCs/Ps/hmj3wqlx180p58lziBfAnJq/OnvsfiewvBNoJvwPGFVaLFQn2AAAA=",
       "exif": {
         "camera": "Fujifilm X-T3",
         "lens": "XF18-55mmF2.8-4 R LM OIS",

@@ -12,7 +12,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import sharp from 'sharp';
-import exifr from 'exifr';
+import { readExif, renderWebVersion } from './lib/web-image.mjs';
 import { parseDocument, isSeq, isMap } from 'yaml';
 import {
   ROOT,
@@ -111,7 +111,7 @@ for (const folder of folders) {
 
     try {
       const info = await readExif(srcPath);
-      const { buffer, quality, width, height } = await renderWebVersion(srcPath, config);
+      const { buffer, quality, width, height } = await renderWebVersion(srcPath, config, info);
       await fs.writeFile(outPath, buffer);
       const { color, lqip } = await placeholder(buffer);
       meta.images[outName] = {
@@ -175,139 +175,6 @@ if (problems.length) {
 }
 
 /* ------------------------------------------------------------------ */
-
-async function readExif(file) {
-  let data = {};
-  try {
-    data =
-      (await exifr.parse(file, {
-        tiff: true,
-        exif: true,
-        gps: true,
-        xmp: true,
-        iptc: true,
-        icc: false,
-        reviveValues: true,
-        translateValues: true,
-      })) ?? {};
-  } catch {
-    data = {};
-  }
-  // Standardtexte, die Kameras selbst in die Bildbeschreibung schreiben – keine echte Bildunterschrift
-  const CAMERA_DEFAULTS = /^(OLYMPUS DIGITAL CAMERA|SONY DSC|DIGITAL CAMERA|KODAK.*DIGITAL CAMERA|DCIM|Default|Image|Picture|SAMSUNG|LEICA|NIKON|CANON|PENTAX|Photo)$/i;
-  const text = (v) => {
-    if (!v) return undefined;
-    if (typeof v === 'string') {
-      const s = v.trim();
-      return s && !CAMERA_DEFAULTS.test(s) ? s : undefined;
-    }
-    if (Array.isArray(v)) return text(v[0]);
-    if (typeof v === 'object' && 'value' in v) return text(v.value);
-    return undefined;
-  };
-
-  let make = (data.Make ?? '').trim().replace(/\s*(corporation|corp\.?|imaging corp\.?|co\.,? ?ltd\.?)$/i, '');
-  if (make.length > 3 && make === make.toUpperCase()) make = make[0] + make.slice(1).toLowerCase();
-  const model = (data.Model ?? '').trim();
-  const camera = model ? (model.toLowerCase().startsWith(make.toLowerCase()) ? model : `${make} ${model}`.trim()) : make || undefined;
-
-  const t = data.ExposureTime;
-  const shutter =
-    typeof t === 'number' && t > 0 ? (t >= 1 ? `${Math.round(t * 10) / 10}` : `1/${Math.round(1 / t)}`) : undefined;
-  const iso = data.ISO ?? data.ISOSpeedRatings ?? data.PhotographicSensitivity;
-  const date = data.DateTimeOriginal ?? data.CreateDate;
-
-  const exif = Object.fromEntries(
-    Object.entries({
-      camera: camera || undefined,
-      lens: (data.LensModel ?? data.Lens ?? '').toString().trim() || undefined,
-      aperture: typeof data.FNumber === 'number' ? Math.round(data.FNumber * 10) / 10 : undefined,
-      shutter,
-      iso: Array.isArray(iso) ? iso[0] : iso,
-      focalLength: typeof data.FocalLength === 'number' ? Math.round(data.FocalLength) : undefined,
-      date: date instanceof Date && !Number.isNaN(date.getTime()) ? localIso(date) : undefined,
-    }).filter(([, v]) => v !== undefined && v !== ''),
-  );
-
-  const gps =
-    typeof data.latitude === 'number' && typeof data.longitude === 'number'
-      ? { lat: data.latitude, lng: data.longitude }
-      : undefined;
-
-  return {
-    exif,
-    gps,
-    alt: text(data.AltTextAccessibility),
-    caption: text(data.Caption) ?? text(data.description) ?? text(data.ImageDescription),
-  };
-}
-
-/** Aufnahmezeit als lokale Zeit ohne Zeitzone (EXIF kennt meist keine Zeitzone) */
-function localIso(d) {
-  const p = (n) => String(n).padStart(2, '0');
-  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}:${p(d.getSeconds())}`;
-}
-
-async function renderWebVersion(file, cfg) {
-  const base = sharp(file, { failOn: 'none' });
-  const m = await base.metadata();
-  let w = m.width ?? 0;
-  let h = m.height ?? 0;
-  if ((m.orientation ?? 1) >= 5) [w, h] = [h, w];
-  const scale = Math.min(1, cfg.maxEdge / Math.max(w, h));
-  const width = Math.round(w * scale);
-  const height = Math.round(h * scale);
-
-  const make = (quality) => {
-    let p = sharp(file, { failOn: 'none' })
-      .rotate()
-      .resize({ width, height, fit: 'fill' })
-      .withIccProfile('srgb');
-    if (cfg.watermark?.enabled) {
-      p = p.composite([{ input: watermarkSvg(width, height, cfg.watermark), gravity: gravityOf(cfg.watermark.position) }]);
-    }
-    p = cfg.keepGps
-      ? p.keepExif()
-      : p.withExif({ IFD0: { Copyright: cfg.copyright ?? '', Artist: cfg.artist ?? '' } });
-    return p.jpeg({ quality, mozjpeg: true }).toBuffer();
-  };
-
-  let quality = cfg.jpegQuality;
-  let buffer = await make(quality);
-  while (buffer.length / 1024 > cfg.targetMaxKB && quality - 4 >= cfg.minJpegQuality) {
-    quality -= 4;
-    buffer = await make(quality);
-  }
-  return { buffer, quality, width, height };
-}
-
-function gravityOf(position = 'bottom-right') {
-  return { 'bottom-right': 'southeast', 'bottom-left': 'southwest', 'bottom-center': 'south' }[position] ?? 'southeast';
-}
-
-function escapeXml(s) {
-  return String(s).replace(/[<>&"']/g, (ch) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&apos;' })[ch]);
-}
-
-function watermarkSvg(w, h, wm) {
-  const fontSize = Math.max(13, Math.round(Math.max(w, h) * (wm.size ?? 0.016)));
-  const pad = Math.round(fontSize * 1.2);
-  const textWidth = Math.round(fontSize * 0.62 * wm.text.length + fontSize * 0.1 * wm.text.length);
-  const svgW = Math.min(w, textWidth + pad * 2);
-  const svgH = Math.min(h, fontSize + pad * 2);
-  const anchor = wm.position === 'bottom-left' ? 'start' : wm.position === 'bottom-center' ? 'middle' : 'end';
-  const x = anchor === 'start' ? pad : anchor === 'middle' ? svgW / 2 : svgW - pad;
-  const y = svgH - pad;
-  const o = wm.opacity ?? 0.5;
-  const text = escapeXml(wm.text);
-  const style = `font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="${fontSize}" font-weight="600" letter-spacing="${(fontSize * 0.06).toFixed(1)}" text-anchor="${anchor}"`;
-  return Buffer.from(
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${svgW}" height="${svgH}">` +
-      `<text x="${x + 1}" y="${y + 1}" ${style} fill="#000" fill-opacity="${(o * 0.45).toFixed(2)}">${text}</text>` +
-      `<text x="${x}" y="${y}" ${style} fill="#fff" fill-opacity="${o}">${text}</text>` +
-      `</svg>`,
-  );
-}
 
 async function placeholder(buffer) {
   const [avg, tiny] = await Promise.all([

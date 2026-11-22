@@ -216,6 +216,20 @@ Pages-CMS-App nur für dieses eine Repo freigeben (GitHub → Settings → Appli
 einschalten. Die Freigabe lässt sich dort jederzeit widerrufen. Beim Speichern im CMS gehen `#`-Kommentare in der
 bearbeiteten Datei verloren; leere Felder aus dem CMS gelten als „nicht angegeben“ (`src/content.config.ts`).
 
+### Fotos vorab fertig machen: Mac-Programm „Fotos aufbereiten“
+
+Im Projektordner liegt **„Fotos aufbereiten.app“** (am besten ins Dock ziehen). Einen Ordner mit Fotos (oder einzelne
+Fotos) im Finder darauf ziehen: Daneben entsteht „<Name> – fertig“ mit Web-Versionen wie für die Website – lange
+Kante 2400 px, sRGB, JPEG unter ca. 600 KB, GPS entfernt; Kamera-Daten, Aufnahmezeit und Bildbeschreibungen aus
+Lightroom bleiben drin. Die Originale bleiben unverändert. Diese Fotos lassen sich direkt im CMS hochladen. Dahinter
+steckt `scripts/prepare-folder.mjs`; nach dem Verschieben des Projekts die App neu bauen: `bash scripts/make-app.sh`.
+
+**Wasserzeichen** „© Jesko Dorner“: seit 22.11.2026 ausgeschaltet (`photos.config.json` → `watermark.enabled`),
+damit die Vorschaubilder ohne Stempel sind. Alle Web-Fotos wurden dafür aus den Originalen neu erzeugt (`npm run
+optimize -- --force`); der Stand mit Wasserzeichen ist Git-Tag `alte-version-mit-wasserzeichen`. Wieder einschalten:
+`enabled: true` und erneut `npm run optimize -- --force`. Fotos, die schon mit „Fotos aufbereiten“ fertig gemacht
+wurden, bekommen beim Aufbereiten kein zweites Wasserzeichen (Markierung in den Metadaten).
+
 ### Im Terminal
 
 ```bash
