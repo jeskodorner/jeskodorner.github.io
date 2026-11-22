@@ -1,7 +1,7 @@
 /**
- * Portfolio: Liste "showroom" in src/content/pages/startseite.md – welche Fotos in welcher
- * Reihenfolge, jeweils mit optionalem eigenem Namen. Leere Liste: jede öffentliche Galerie einmal mit Vorschaubild.
- * Genutzt von der Startseite (Bilderstapel) und der Seite /portfolio/.
+ * Portfolio: Liste "showroom" in src/content/pages/startseite.md – welche Fotos, jeweils mit optionalem eigenem
+ * Namen. Sortiert nach dem Datum des Albums, das neueste zuerst. Leere Liste: jede öffentliche Galerie einmal mit
+ * Vorschaubild. Genutzt von der Startseite (Fotowechsel), der Seite /portfolio/ und den Mappen.
  */
 import { getEntry, type CollectionEntry } from 'astro:content';
 import { getPublicGalleries, type Gallery, type GalleryImage } from './galleries';
@@ -36,9 +36,12 @@ export async function getSelectedWorks(): Promise<WorkItem[]> {
     meta: formatMonth(g.date),
   });
   const error = (msg: string) => new Error(`startseite.md → showroom: ${msg}`);
+  // Nach dem Datum des Albums, das neueste zuerst (seit 22.11.2026); bei gleichem Datum bleibt die Reihenfolge der
+  // Liste (sort ist stabil)
+  const byDate = (works: WorkItem[]) => works.sort((a, b) => b.gallery.date.getTime() - a.gallery.date.getTime());
   const showroom = text.showroom;
-  if (!showroom?.length) return galleries.map((g) => workFor(g));
-  return showroom.map((s) => {
+  if (!showroom?.length) return byDate(galleries.map((g) => workFor(g)));
+  return byDate(showroom.map((s) => {
     const g = galleries.find((x) => x.slug === s.galerie || x.id === s.galerie);
     if (!g) {
       throw error(`Galerie „${s.galerie}“ gibt es nicht oder sie ist nicht öffentlich. Möglich: ${galleries.map((x) => x.slug).join(', ')}`);
@@ -46,5 +49,5 @@ export async function getSelectedWorks(): Promise<WorkItem[]> {
     const image = s.bild ? g.images.find((i) => i.file === s.bild) : g.cover;
     if (!image) throw error(`Bild „${s.bild}“ gibt es in „${s.galerie}“ nicht. Möglich: ${g.images.map((i) => i.file).join(', ')}`);
     return workFor(g, image, s.name?.trim() || undefined);
-  });
+  }));
 }

@@ -101,8 +101,9 @@ photos.config.json          ← Einstellungen für die Bildverarbeitung (Größe
 > öffentlichen Seiten eigentlich; eine c/o-Adresse eines Impressum-Dienstes wäre eine Möglichkeit. Die
 > Datenschutzerklärung hat noch Platzhalter, die auf der Seite markiert sind. Das hier ist keine Rechtsberatung.
 
-**Portfolio:** In `startseite.md` legt die Liste `showroom` fest, welche Fotos ausgewählt sind, in welcher
-Reihenfolge und unter welchem Namen. Sie erscheinen auf der Seite **/portfolio/** als kleine Ausstellung (jedes Foto
+**Portfolio:** In `startseite.md` legt die Liste `showroom` fest, welche Fotos ausgewählt sind und unter welchem
+Namen. Die Reihenfolge ergibt sich seit 22.11.2026 aus dem Datum des Albums, das neueste zuerst (bei gleichem Datum
+wie in der Liste) – das gilt auch für den Fotowechsel auf der Startseite. Sie erscheinen auf der Seite **/portfolio/** als kleine Ausstellung (jedes Foto
 einzeln untereinander: am Laptop linksbündig mit dem Namen daneben auf halber Höhe, am Handy Fotos, Schilder und Knöpfe mittig, Überschrift und Einleitung linksbündig wie auf allen Seiten; ein Klick aufs Foto oder auf den Namen daneben öffnet die Mappe des Albums, eine ruhige Übersicht mit einer Auswahl der Fotos; beim Überfahren von Foto oder Name wird das Foto leicht größer und der Name orange unterstrichen wie in der Galerie-Übersicht, seit 21.11.2026)
 und liefern das Foto für die Vorschaukarte der Startseite (siehe „Vorschau beim Teilen“).
 
@@ -682,7 +683,7 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
   und das Foto springt nicht. Foto und Bildunterschrift führen ins Portfolio genau zu diesem Foto (`/portfolio/#werk-<n>`); beim
   Überfahren bekommt der Titel den orangen Unterstrich. Bis 20.11.2026 stand dort „Mappe ansehen →“ und führte zur
   Mappe – die Mappen erreicht man jetzt nur noch übers Portfolio.
-  Die Fotos wechseln alle 7 Sekunden in der Reihenfolge der Liste `showroom`: Das neue Foto blendet in 1,8 Sekunden
+  Die Fotos wechseln alle 7 Sekunden in der Reihenfolge des Portfolios (nach Datum, das neueste zuerst): Das neue Foto blendet in 1,8 Sekunden
   weich über dem alten ein und setzt sich dabei langsam aus einer leichten Vergrößerung; das alte bleibt darunter
   stehen, bis das neue ganz da ist (nie eine leere Fläche dazwischen). Ein Foto erscheint erst fertig geladen. Kommt
   man aus einer Mappe (oder einer anderen Seite) zurück, geht es mit dem Foto weiter, das zuletzt zu sehen war
