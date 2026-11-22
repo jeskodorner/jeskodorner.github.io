@@ -151,8 +151,9 @@ const isCurrent = (match: string[]) => current(path, match);
     width: 3rem;
     height: 3rem;
     border: 0;
-    /* Quadrat in dunklem Beige mit blauem Zeichen (seit 22.11.2026; vorher oranger Kreis), beim Überfahren orange */
-    border-radius: 0;
+    /* Abgerundetes Quadrat in dunklem Beige mit blauem Zeichen (seit 22.11.2026; vorher oranger Kreis), beim
+       Überfahren orange */
+    border-radius: var(--radius-pill);
     background: var(--field);
     color: var(--ink);
     transition:

@@ -145,15 +145,15 @@ const nameWords = site.name.split(' ').map((word) =>
     height: var(--header-h);
     margin-bottom: clamp(0.25rem, 2vw, 1rem);
   }
-  /* Schließen-Knopf wie der Menüknopf auf den Unterseiten: Quadrat in dunklem Beige (seit 22.11.2026; vorher oranger
-     Kreis), beim Überfahren orange */
+  /* Schließen-Knopf wie der Menüknopf auf den Unterseiten: abgerundetes Quadrat in dunklem Beige (seit 22.11.2026;
+     vorher oranger Kreis), beim Überfahren orange */
   .bm-close {
     display: inline-grid;
     place-items: center;
     width: 3rem;
     height: 3rem;
     border: 0;
-    border-radius: 0;
+    border-radius: var(--radius-pill);
     background: var(--field);
     color: var(--ink);
     cursor: pointer;

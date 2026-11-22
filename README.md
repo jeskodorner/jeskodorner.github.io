@@ -767,7 +767,7 @@ Orange nie als Schriftfarbe auf White Chocolate (2,5 : 1), nur als Fläche oder 
   Videotyp (Galerie, Album, Mappe, Portfolio, Film).
 - **Text immer grau:** Einleitungen, Beschreibungen und Fließtext stehen in Grau (`--ink-soft`, Klassen `lead` und
   `prose`); Überschriften, Links, Etiketten und Knöpfe in Blau.
-- **Tippflächen mindestens 44 px:** Knöpfe sind mindestens 44 px hoch (`btn--small`, quadratische Teilen-Knöpfe 44 × 44).
+- **Tippflächen mindestens 44 px:** Knöpfe sind mindestens 44 px hoch (`btn--small`, Teilen-Knöpfe 44 × 44).
   Kleine Textlinks (Logo, Menüpunkte, Fußzeile, Kontakt) bekommen mit der Klasse `tap` eine unsichtbare Fläche um
   den Link; die Schrift bleibt gleich. Wo solche Links untereinander stehen, ist der Abstand so groß, dass sich
   die Flächen nicht überlappen (Fußzeile am Handy, Kontakt).
@@ -811,11 +811,12 @@ Orange nie als Schriftfarbe auf White Chocolate (2,5 : 1), nur als Fläche oder 
   den Ecken, Details als Spalte rechts (`isShort` in `src/scripts/lightbox.ts`, Media-Query am Ende von
   `src/styles/lightbox.css`).
 - **Rückmeldung:** Knöpfe geben beim Drücken kurz nach; „Link kopieren“ wird für zwei Sekunden zum Haken.
-- **Kantig** (seit 22.11.2026, passend zum rechteckigen Feld beim Überfahren): keine runden Ecken mehr – Knöpfe,
-  Menü-Knopf, Knöpfe der Großansicht, Eingabefelder und Kästen (Tokens `--radius` und `--radius-pill` stehen auf 0).
-  Knöpfe ohne eigene Farbe („Zurück“, „Galerie ansehen“ …) haben keinen blauen Rahmen mehr, sondern eine
-  dunkelbeige Fläche (`--field`); der Menü-Knopf ebenso (vorher orange). Volle Knöpfe bleiben orange. Vorher runde
-  Knöpfe mit blauem Rahmen: Git-Tag `alte-version-runde-knoepfe`. Rund ist nur noch der kleine Ladekreis.
+- **Leicht abgerundet** (seit 22.11.2026): Knöpfe, Menü-Knopf, Knöpfe der Großansicht und am Video haben 10 px
+  Rundung (`--radius-pill`), Kästen und Eingabefelder 6 px (`--radius`) – nicht mehr ganz rund wie vorher (Pillen
+  und Kreise) und nicht kantig (kurz ausprobiert). Knöpfe ohne eigene Farbe („Zurück“, „Galerie ansehen“ …) haben
+  keinen blauen Rahmen mehr, sondern eine dunkelbeige Fläche (`--field`); der Menü-Knopf ebenso (vorher orange).
+  Volle Knöpfe bleiben orange. Vorher runde Knöpfe mit blauem Rahmen: Git-Tag `alte-version-runde-knoepfe`.
+  Symbole in Knöpfen sind um ihren leeren Rand gekürzt (`.btn svg`), damit der Inhalt optisch mittig sitzt.
 - **Fokusrahmen** folgt der Form des Elements.
 - **Abschluss mit klarer Handlung:** Am Ende des Portfolios steht „Schreib mir“ als gefüllter Knopf, daneben der
   Weg zur Galerie.

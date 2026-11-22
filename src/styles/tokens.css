@@ -100,10 +100,12 @@
   --max-text: 64ch;
   --header-h: 4.25rem;
 
-  /* Kantig wie das rechteckige Feld beim Überfahren (seit 22.11.2026; vorher 4px und runde Knöpfe, Git-Tag
-     alte-version-runde-knoepfe). Die Namen bleiben, damit man es an einer Stelle zurückdrehen kann. */
-  --radius: 0px; /* Flächen und Eingabefelder */
-  --radius-pill: 0px; /* Knöpfe und Etiketten */
+  /* Leicht abgerundet (seit 22.11.2026): nicht mehr ganz rund wie vorher (Pillen und Kreise, Git-Tag
+     alte-version-runde-knoepfe), aber auch nicht kantig (kurz am selben Tag ausprobiert). Gilt für alle Knöpfe, den
+     Menü-Knopf, die Knöpfe der Großansicht und am Video; Kästen und Eingabefelder etwas weniger. Der Name
+     --radius-pill ist geblieben, damit nichts umbenannt werden musste. */
+  --radius: 6px; /* Flächen und Eingabefelder */
+  --radius-pill: 10px; /* Knöpfe und Etiketten */
   --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
   --pop: cubic-bezier(0.3, 1.6, 0.5, 1);
   /* Fotos beim Überfahren: überall gleich stark vergrößert, im Rahmen (Album, Galerie, Portfolio) */

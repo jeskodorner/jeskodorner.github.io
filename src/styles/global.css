@@ -294,7 +294,8 @@ html:not(.js) .js-only {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6em;
+  /* Abstand Symbol–Schrift; die Symbole sind unten um ihren leeren Rand gekürzt, sichtbar bleibt es wie vorher */
+  gap: 0.75em;
   min-height: 3rem;
   padding: 0.8em 1.5em;
   /* Ohne sichtbaren Rahmen, dunkelbeige hinterlegt (seit 22.11.2026; vorher blauer Rahmen 2,5 px). Der Rahmen bleibt
@@ -372,6 +373,10 @@ html:not(.js) .js-only {
   width: 1.15em;
   height: 1.15em;
   flex: none;
+  /* Optisch mittig (seit 22.11.2026): Die Zeichen haben im 24er-Raster links und rechts 3–5 Einheiten leeren Rand
+     (≈ 0,2 Schrifthöhen). Ohne Ausgleich saß der Inhalt sichtbar neben der Mitte, z. B. „← Zurück“ 2–3 px zu weit
+     rechts (leerer Rand links vom Pfeil, rechts nur der Buchstabenabstand nach dem K). */
+  margin-inline: -0.18em;
 }
 .arrow {
   display: inline-block;
