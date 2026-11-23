@@ -32,3 +32,10 @@ alben.local.json
 
 # Mac-Programm „Fotos aufbereiten“ (wird mit scripts/make-app.sh gebaut, enthält lokale Pfade)
 /Fotos aufbereiten.app/
+
+# Werkzeuge für KI-Assistenten (Skills, Hooks) – gehören nicht zur Website (seit 23.11.2026)
+/.agents/
+/.codex/
+/.github/hooks/
+/skills-lock.json
+/.impeccable/
