@@ -205,6 +205,10 @@ Die Formulare stehen in `.pages.yml`. Jede Speicherung ist ein Commit auf `main`
 - **Album löschen** (seit 23.11.2026): im CMS unter „Alben“ beim Album auf „Delete“. Das CMS löscht nur die
   `index.md`; beim nächsten Bauen räumt GitHub den Rest des Ordners (Fotos, `meta.json`) auf
   (`scripts/cleanup-albums.mjs`). Zurückholen geht nur über die Git-Geschichte.
+- **Versehentlich hochgeladene Fotos** (seit 23.11.2026): Wird beim Vorschaufoto, Titelbild oder in der Mappe im
+  Auswahlfenster ein Foto neu hochgeladen statt aus dem Album gewählt, repariert GitHub das beim Bauen
+  (`scripts/fix-album-photos.mjs`): gibt es das Foto schon im Album (gleicher Name), wird das genommen, sonst kommt es
+  aufbereitet ins Album; die lose Datei wird gelöscht.
 - **Mehrere Fotos auf einmal hochladen**: unter „Fotos hochladen“ alle Fotos im Finder markieren und aufs Feld „Fotos“
   ziehen, oder dort auf „Upload“ und im Fenster alle markieren (⌘A). Das „Upload“ im Auswahlfenster („Select“) nimmt
   nur ein Foto pro Klick.

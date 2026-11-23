@@ -6,9 +6,9 @@ description: bunt
 visibility: public
 portfolio:
   zeigen: true
-  vorschau: /alben/DSCF6580-1.jpg
+  vorschau: /alben/liv-und-hilda/images/dscf6580.jpg
 showExif: true
-cover: /alben/DSCF6580.jpg
+cover: /alben/liv-und-hilda/images/dscf6580.jpg
 images:
   - file: /alben/liv-und-hilda/images/dscf6556.jpg
     alt: Foto aus „Liv und Hilda“

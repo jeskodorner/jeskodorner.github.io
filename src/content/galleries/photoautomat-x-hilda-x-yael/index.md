@@ -7,13 +7,13 @@ description: Berliner Kultur lebt durch den Photoautomat
 visibility: public
 portfolio:
   zeigen: true
-  vorschau: /alben/DSCF6712.jpg
+  vorschau: /alben/photoautomat-x-hilda-x-yael/images/dscf6712.jpg
 showExif: true
 images:
-  - file: dscf6701.jpg
+  - file: /alben/photoautomat-x-hilda-x-yael/images/dscf6701.jpg
     alt: Foto aus „Photoautomat x Hilda x Yael“
     hero: false
-  - file: dscf6712.jpg
+  - file: /alben/photoautomat-x-hilda-x-yael/images/dscf6712.jpg
     alt: Foto aus „Photoautomat x Hilda x Yael“
     hero: false
 albumRequest: false
