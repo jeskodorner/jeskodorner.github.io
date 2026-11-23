@@ -303,7 +303,7 @@ und festen Seitenverhältnissen, damit beim Laden nichts springt.
 | `downloadSize` | | z. B. `1,2 GB` |
 | `downloadFormat` | | z. B. `ZIP · JPG in voller Auflösung` |
 | `downloadNote` | | Hinweiszeile, z. B. Nutzungsrechte, Gültigkeit, Passworthinweis |
-| `albumRequest` | | Zeile „Ganzes Album anfordern“ unter den Fotos mit Knopf „Album anfordern“. Standard: an bei öffentlichen, aus bei Unlisted-Galerien. `false` blendet ihn aus. Siehe Abschnitt 6. |
+| `albumRequest` | | Zeile „Ganzes Album anfordern“ unter den Fotos mit Knopf „Album anfordern“. Standard seit 22.11.2026: aus. `true` blendet ihn ein (z. B. CC DS-Kurs). Im CMS: Album → „Kasten „Ganzes Album anfordern“ zeigen“. Siehe Abschnitt 6. |
 | `shareText` | | eigener Teilen-Text, `{title}` und `{url}` werden ersetzt |
 | `images` | ja | Liste der Bilder (siehe unten) |
 
@@ -432,7 +432,7 @@ mit `rel="noopener noreferrer"`.
 
 ### „Ganzes Album anfordern“
 
-Auf öffentlichen Galerien steht unter den Fotos, bewusst ruhig, **„Ganzes Album anfordern“**
+Nur auf Galerien mit `albumRequest: true` (seit 22.11.2026 Standard: aus) steht unter den Fotos, bewusst ruhig, **„Ganzes Album anfordern“**
 (rechts daneben „Album teilen“ mit kleinen Symbolen):
 „Hier siehst du eine Auswahl. Das ganze Album in voller Auflösung schicke ich dir gern als Link – schreib mir dafür
 kurz.“

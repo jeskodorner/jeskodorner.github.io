@@ -12,6 +12,8 @@ description: "Eindrücke von einer Aufführung des DS-Kurses 26: bemalte Hemden,
 # Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
 # color: green
 # public = in der Übersicht · unlisted = nur per Direktlink, noindex
+# Kasten „Ganzes Album anfordern“ zeigen (standardmäßig aus)
+albumRequest: true
 visibility: public
 # Aufnahmedaten (Kamera, Blende …) anzeigen
 showExif: true

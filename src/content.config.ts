@@ -99,7 +99,7 @@ const galleries = defineCollection({
       /** Hinweiszeile, z. B. Nutzungsrechte, Gültigkeit, Passworthinweis */
       downloadNote: opt(z.string()),
       /**
-       * Kasten „Ganzes Album anfordern“ (Code per E-Mail anfordern). Standard: an bei öffentlichen, aus bei Unlisted-Galerien.
+       * Kasten „Ganzes Album anfordern“ (Code per E-Mail anfordern). Standard seit 22.11.2026: aus; nur wo eingeschaltet.
        * Mit downloadUrl erscheint zusätzlich „Album öffnen“ – das Passwort setzt du beim Anbieter, nie hier.
        */
       albumRequest: opt(z.boolean()),

@@ -176,7 +176,8 @@ async function load(): Promise<Gallery[]> {
       download: d.downloadUrl
         ? { url: d.downloadUrl, size: d.downloadSize, format: d.downloadFormat, note: d.downloadNote }
         : undefined,
-      albumRequest: d.albumRequest ?? d.visibility !== 'unlisted',
+      // Kasten „Ganzes Album anfordern“: seit 22.11.2026 standardmäßig aus, nur wo eingeschaltet (z. B. CC DS-Kurs)
+      albumRequest: d.albumRequest ?? false,
       shareText: d.shareText ?? site.shareText,
       entry,
     } satisfies Gallery;
