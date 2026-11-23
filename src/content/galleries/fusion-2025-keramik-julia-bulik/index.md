@@ -1,61 +1,55 @@
 ---
-# Titel der Galerie
-title: "Fusion 2025 – Keramik von Julia Bulik"
-# URL-Teil: /galerien/fusion-2025-keramik-julia-bulik/
+title: Fusion 2025 – Keramik von Julia Bulik
 slug: fusion-2025-keramik-julia-bulik
 date: 2025-06-25
-# location: "Ort"
-# Kurzbeschreibung (1–2 Sätze) – erscheint auf der Kachel und in Link-Vorschauen
 description: "Keramikbrunnen und Skulpturen von Julia Bulik auf der Fusion 2025:
   Figuren, fließendes Wasser und leuchtende Glasuren zwischen Bäumen und
   Holzbauten."
-# Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: green
-# public = in der Übersicht · unlisted = nur per Direktlink, noindex
 visibility: public
-# Aufnahmedaten (Kamera, Blende …) anzeigen
+portfolio:
+  zeigen: false
 showExif: true
-# Titelbild (Dateiname aus der Liste unten). Ohne Angabe: das erste Bild
-# cover: bild-01.jpg
-
-# --- Download (optional, siehe README) ---
-# downloadUrl: https://…
-# downloadSize: 1,2 GB
-# downloadFormat: ZIP · JPG
-# downloadNote: Link gültig bis 31.12.2026 – Passwort bekommst du separat.
-
-# Bilder: werden von "npm run optimize" automatisch ergänzt.
-# Pro Bild Pflicht: alt (Bildbeschreibung). Optional: caption, originalUrl, hero, focus, exif
+cover: /alben/fusion-2025-keramik-julia-bulik/images/dscf0160.jpg
 images:
   - file: dscf0160.jpg
-    alt: "Keramikbrunnen auf einem Baumstumpf im Wald, dahinter ein Tisch mit rosa
-      Keramik und ein großes Gemälde."
+    alt: Keramikbrunnen auf einem Baumstumpf im Wald, dahinter ein Tisch mit rosa
+      Keramik und ein großes Gemälde.
+    hero: false
   - file: dscf0173.jpg
     alt: "Nahaufnahme eines Keramikbrunnens: Wasser rinnt über eine schlanke Figur,
       warm beleuchtet."
+    hero: false
   - file: dscf0175.jpg
-    alt: "Keramikbrunnen mit mehreren Figuren am Beckenrand, Wasser fließt von oben,
-      im Hintergrund Bäume und ein Holzbau."
+    alt: Keramikbrunnen mit mehreren Figuren am Beckenrand, Wasser fließt von oben,
+      im Hintergrund Bäume und ein Holzbau.
+    hero: false
   - file: dscf0182.jpg
-    alt: "Heller Keramikbrunnen mit Gesichtern und blauen Strukturen, im Hintergrund
-      ein weiterer Brunnen und eine Person."
+    alt: Heller Keramikbrunnen mit Gesichtern und blauen Strukturen, im Hintergrund
+      ein weiterer Brunnen und eine Person.
+    hero: false
   - file: dscf0183.jpg
-    alt: "Keramikbrunnen in Pilzform auf gelb bemaltem Becken, Wasser tropft im
-      Gegenlicht vor grünem Wald."
+    alt: Keramikbrunnen in Pilzform auf gelb bemaltem Becken, Wasser tropft im
+      Gegenlicht vor grünem Wald.
+    hero: false
   - file: dscf0187.jpg
-    alt: "Keramikbrunnen mit zwei Figuren im Becken, dahinter ein Holzbau mit bunten
-      Stoffbändern."
+    alt: Keramikbrunnen mit zwei Figuren im Becken, dahinter ein Holzbau mit bunten
+      Stoffbändern.
+    hero: false
   - file: dscf0198.jpg
-    alt: "Draufsicht auf eine Keramikschale mit blauen Wabenstrukturen, roten Formen
-      und kleinen liegenden Figuren."
+    alt: Draufsicht auf eine Keramikschale mit blauen Wabenstrukturen, roten Formen
+      und kleinen liegenden Figuren.
+    hero: false
   - file: dscf0201.jpg
-    alt: "Rosa Keramikbrunnen mit vielen Figuren auf einem bemalten Becken, daneben
-      eine kleinere Skulptur, Wald im Hintergrund."
+    alt: Rosa Keramikbrunnen mit vielen Figuren auf einem bemalten Becken, daneben
+      eine kleinere Skulptur, Wald im Hintergrund.
+    hero: false
   - file: dscf0217.jpg
-    alt: "Kleine Keramikskulptur mit Figur und korallenartigen Formen auf einem rot
-      gefärbten Holztisch."
+    alt: Kleine Keramikskulptur mit Figur und korallenartigen Formen auf einem rot
+      gefärbten Holztisch.
+    hero: false
   - file: dscf0233.jpg
     alt: "Nahaufnahme: Keramikfiguren liegen in einem Wasserbecken, am Rand eine
       hasenähnliche Figur mit Schuppenmuster."
-cover: /alben/fusion-2025-keramik-julia-bulik/images/dscf0183.jpg
+    hero: false
+albumRequest: false
 ---
