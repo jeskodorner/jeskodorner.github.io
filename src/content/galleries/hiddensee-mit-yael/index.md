@@ -1,44 +1,30 @@
 ---
-# Titel der Galerie
-title: "Hiddensee mit Yael"
-# URL-Teil: /galerien/hiddensee-mit-yael/
-slug: hiddensee-mit-yael
+title: Hiddensee
+slug: hiddensee
 date: 2026-04-01
-# location: "Ort"
-# Kurzbeschreibung (1–2 Sätze) – erscheint auf der Kachel und in Link-Vorschauen
-description: "Mit Yael auf Hiddensee Anfang April: Vollmond über dem Feld,
-  Rinder in der Dämmerung, sandverwehte Wege durch die Dünen und der Blick auf
-  die Ostsee."
-# Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: green
-# public = in der Übersicht · unlisted = nur per Direktlink, noindex
+location: Hiddensee
+description: Diese Insel hat mir schon oft in stillen Momenten wärme ins Herz gezaubert.
 visibility: public
-# Aufnahmedaten (Kamera, Blende …) anzeigen
+portfolio:
+  zeigen: false
 showExif: true
-# Titelbild (Dateiname aus der Liste unten). Ohne Angabe: das erste Bild
-# cover: bild-01.jpg
-
-# --- Download (optional, siehe README) ---
-# downloadUrl: https://…
-# downloadSize: 1,2 GB
-# downloadFormat: ZIP · JPG
-# downloadNote: Link gültig bis 31.12.2026 – Passwort bekommst du separat.
-
-# Bilder: werden von "npm run optimize" automatisch ergänzt.
-# Pro Bild Pflicht: alt (Bildbeschreibung). Optional: caption, originalUrl, hero, focus, exif
+cover: /alben/hiddensee-mit-yael/images/dscf1724.jpg
 images:
   - file: /alben/hiddensee-mit-yael/images/dscf1651.jpg
-    alt: "Person mit Schal und Haarknoten in der Dämmerung, dahinter steht der
-      Vollmond tief über einem Feld."
+    alt: Person mit Schal und Haarknoten in der Dämmerung, dahinter steht der
+      Vollmond tief über einem Feld.
+    hero: false
   - file: /alben/hiddensee-mit-yael/images/dscf1690.jpg
-    alt: "Rind blickt in der Dämmerung frontal in die Kamera, dahinter weitere
-      Rinder auf einer kargen Weide."
+    alt: Rind blickt in der Dämmerung frontal in die Kamera, dahinter weitere Rinder
+      auf einer kargen Weide.
+    hero: false
   - file: /alben/hiddensee-mit-yael/images/dscf1716.jpg
-    alt: "Person schiebt ein Fahrrad über einen sandverwehten Weg zwischen hohem
-      Dünengras, in Schwarzweiß."
+    alt: Person schiebt ein Fahrrad über einen sandverwehten Weg zwischen hohem
+      Dünengras, in Schwarzweiß.
+    hero: false
   - file: /alben/hiddensee-mit-yael/images/dscf1724.jpg
-    alt: "Person mit rosa Kopfbedeckung geht über eine Metalltreppe zum Strand, vor
-      ihr die bewegte Ostsee mit Buhnen."
-location: Hiddensee
-cover: /alben/hiddensee-mit-yael/images/dscf1724.jpg
+    alt: Person mit rosa Kopfbedeckung geht über eine Metalltreppe zum Strand, vor
+      ihr die bewegte Ostsee mit Buhnen.
+    hero: false
+albumRequest: false
 ---
