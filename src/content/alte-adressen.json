@@ -50,9 +50,14 @@
     "frueher": []
   },
   "hiddensee-mit-yael": {
-    "slug": "hiddensee-mit-yael",
+    "slug": "hiddensee",
     "visibility": "public",
-    "frueher": []
+    "frueher": [
+      {
+        "slug": "hiddensee-mit-yael",
+        "visibility": "public"
+      }
+    ]
   },
   "hilda": {
     "slug": "hilda",
