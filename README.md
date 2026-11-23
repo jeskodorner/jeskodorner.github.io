@@ -101,22 +101,23 @@ photos.config.json          ← Einstellungen für die Bildverarbeitung (Größe
 > öffentlichen Seiten eigentlich; eine c/o-Adresse eines Impressum-Dienstes wäre eine Möglichkeit. Die
 > Datenschutzerklärung hat noch Platzhalter, die auf der Seite markiert sind. Das hier ist keine Rechtsberatung.
 
-**Portfolio:** In `startseite.md` legt die Liste `showroom` fest, welche Fotos ausgewählt sind und unter welchem
-Namen. Die Reihenfolge ergibt sich seit 22.11.2026 aus dem Datum des Albums, das neueste zuerst (bei gleichem Datum
-wie in der Liste) – das gilt auch für den Fotowechsel auf der Startseite. Sie erscheinen auf der Seite **/portfolio/** als kleine Ausstellung (jedes Foto
-einzeln untereinander: am Laptop linksbündig mit dem Namen daneben auf halber Höhe, am Handy Fotos, Schilder und Knöpfe mittig, Überschrift und Einleitung linksbündig wie auf allen Seiten; ein Klick aufs Foto oder auf den Namen daneben öffnet die Mappe des Albums, eine ruhige Übersicht mit einer Auswahl der Fotos; beim Überfahren von Foto oder Name wird das Foto leicht größer und der Name orange unterstrichen wie in der Galerie-Übersicht, seit 21.11.2026)
-und liefern das Foto für die Vorschaukarte der Startseite (siehe „Vorschau beim Teilen“).
+**Portfolio:** Seit 22.11.2026 wird es **im Album** eingestellt (im CMS: Alben → Album → „Portfolio“), Feld
+`portfolio` in index.md. Die Reihenfolge ergibt sich aus dem Datum des Album, das neueste zuerst – auch für den
+Fotowechsel auf der Startseite. Die Alben erscheinen auf der Seite **/portfolio/** als kleine Ausstellung und haben je
+eine **Mappe** (`/mappe/<kurzname>/`): eine eigene, reduzierte Seite; „Ganzes Album ansehen“ führt von dort ins Album.
 
 ```yaml
-showroom:
-  - galerie: hilda-setcard        # Ordnername in src/content/galleries/
-    bild: hilda-setcard-gesicht.jpg   # ohne Angabe: Vorschaubild der Galerie
-    name: "Hilda"                 # ohne Angabe: Name der Galerie
+portfolio:
+  zeigen: true                                  # im Portfolio anzeigen
+  vorschau: /alben/hoodie/images/dsc01421.jpg   # Vorschaufoto, zugleich Titelbild des Albums (Dateiname genügt auch)
+  fotos:                                        # Fotos der Mappe in dieser Reihenfolge; leer = automatisch bis zu 8
+    - /alben/hoodie/images/dsc01423.jpg
+  name: "Beton und Rüschen"                     # optional: Titel in Portfolio und Mappe (sonst Name des Albums)
+  beschreibung: "Ein Satz zur Mappe"            # optional: steht in der Mappe unter dem Titel
 ```
 
-Mit Namen zeigt das Schild den Namen, darunter Album und Datum. Ohne Namen zeigt es den Namen der Galerie und die Bildanzahl. Das Schild hat keinen Link, ein Klick aufs Foto öffnet das Album in der Lightbox.
-Neue Galerien erscheinen dort nicht automatisch. Mit `showroom: []` kommt jede öffentliche Galerie einmal mit ihrem Vorschaubild.
-Ein Tippfehler bei `galerie` oder `bild` bricht den Build mit einer Meldung ab, welche Namen möglich sind.
+Das Vorschaufoto steht in der Mappe nie vorne. Ein falscher Dateiname bricht den Build mit einer Meldung ab. Vorher
+stand die Auswahl als Liste `showroom` in `startseite.md` (wird nur noch genutzt, wenn kein Album `zeigen: true` hat).
 
 **Video hinzufügen:** In `src/content/films/` eine neue Datei anlegen, z. B. `mein-video.md`. Am einfachsten kopierst du eine vorhandene:
 
@@ -198,11 +199,9 @@ Die Formulare stehen in `.pages.yml`. Jede Speicherung ist ein Commit auf `main`
   bestehenden Album hinzufügen“ schreiben. GitHub macht daraus automatisch das Album (`scripts/inbox.mjs`, wie
   `npm run optimize`: verkleinern, Wasserzeichen, GPS weg, Aufnahmedaten, Eintrag in `index.md`) und leert den
   Eingang (`photos-inbox/`, Fotos in `photos-uploads/`) wieder.
-- **Alben**: Titel, Texte, Bildbeschreibungen, Ausschnitt (`focus`), Mappe-Fotos usw. ändern.
-- **Portfolio**: welche Alben im Portfolio stehen; je Eintrag **Vorschaufoto** und **Fotos der Mappe** per Klick aus
-  dem Album wählen (Medienquelle „Album-Fotos“; dort nichts hochladen). Die Mappe-Auswahl steht seit 22.11.2026 im
-  Portfolio-Eintrag (`startseite.md` → `showroom[].mappe`), nicht mehr im Album; `mappe:` im Album gilt nur noch
-  als Ersatz.
+- **Alben**: Titel, Texte, Bildbeschreibungen, Ausschnitt (`focus`) usw. ändern.
+- **Portfolio** (im Album-Formular): Schalter „Im Portfolio anzeigen“, **Vorschaufoto** und **Fotos der Mappe** per
+  Klick aus dem Album-Ordner (Medienquelle „Album-Fotos“; dort nichts hochladen), Name und Beschreibung der Mappe.
 - **Filme**, **Über mich**: Texte und Felder.
 
 **Fotos aus Lightroom exportieren** (vor dem Hochladen): JPEG, sRGB, lange Kante 2400 px, Qualität ca. 85,

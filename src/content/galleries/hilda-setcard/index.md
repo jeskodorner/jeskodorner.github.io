@@ -28,4 +28,13 @@ images:
   - file: hilda-setcard-oberkorper-2.jpg
     alt: "Brustbild von Hilda mit offenem Blick in die Kamera, in schwarzem
       Trägertop vor einer rostigen Wand."
+portfolio:
+  # Portfolio: im Portfolio zeigen, Vorschaufoto (zugleich Titelbild), Fotos der Mappe, Name, Beschreibung
+  zeigen: true
+  vorschau: /alben/hilda-setcard/images/hilda-setcard-gesicht.jpg
+  fotos:
+    - /alben/hilda-setcard/images/hilda-setcard-gesicht.jpg
+    - /alben/hilda-setcard/images/hilda-setcard-profil.jpg
+    - /alben/hilda-setcard/images/hilda-setcard-korper-1.jpg
+    - /alben/hilda-setcard/images/hilda-setcard-oberkorper-1.jpg
 ---

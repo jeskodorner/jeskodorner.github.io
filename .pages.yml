@@ -109,11 +109,41 @@ content:
           values:
             - { name: public, label: Öffentlich (in der Galerie) }
             - { name: unlisted, label: Privat (nur mit Link) }
+      - name: portfolio
+        label: Portfolio
+        type: object
+        description: Ob und wie das Album im Portfolio steht. Die Mappe ist eine eigene, reduzierte Seite – „Ganzes Album ansehen“ führt von dort hierher.
+        fields:
+          - name: zeigen
+            label: Im Portfolio anzeigen
+            type: boolean
+          - name: vorschau
+            label: Vorschaufoto
+            type: image
+            description: Im Ordner dieses Albums → images ein Foto wählen. Es ist zugleich das Titelbild des Albums.
+            options:
+              media: alben
+          - name: fotos
+            label: Fotos der Mappe
+            type: image
+            description: Welche Fotos die Mappe zeigt, in dieser Reihenfolge (aus dem Ordner dieses Albums). Leer = automatisch bis zu 8. Das Vorschaufoto steht in der Mappe nie vorne.
+            options:
+              media: alben
+              multiple:
+                max: 30
+          - name: name
+            label: Name der Mappe (optional)
+            type: string
+            description: Eigener Titel im Portfolio und in der Mappe. Leer = Name des Albums.
+          - name: beschreibung
+            label: Beschreibung der Mappe (optional)
+            type: text
+            description: Steht in der Mappe unter dem Titel.
       - { name: showExif, label: Aufnahmedaten zeigen, type: boolean }
       - name: cover
         label: Titelbild (Dateiname, optional)
         type: string
-        description: Bei Alben im Portfolio gilt automatisch das Foto aus dem Portfolio.
+        description: Nur für Alben, die nicht im Portfolio stehen – sonst gilt das Vorschaufoto aus „Portfolio“.
       - name: mappeVideo
         label: Video oben in der Mappe (Dateiname in public/videos/, optional)
         type: string
@@ -150,48 +180,6 @@ content:
       - { name: downloadFormat, label: "Kundengalerie: Download-Format", type: string }
       - { name: downloadNote, label: "Kundengalerie: Hinweis zum Download", type: string }
       - { name: albumRequest, label: Kasten „Ganzes Album anfordern“ zeigen, type: boolean }
-
-  # ---------------------------------------------------------------- Portfolio
-  - name: portfolio
-    label: Portfolio
-    type: file
-    path: src/content/pages/startseite.md
-    fields:
-      - name: showroom
-        label: Alben im Portfolio
-        description: Reihenfolge egal – sortiert wird nach dem Datum des Albums.
-        type: object
-        list:
-          collapsible:
-            collapsed: true
-            summary: "{name} {galerie}"
-        fields:
-          - name: galerie
-            label: Album (Kurzname)
-            type: string
-            description: Kurzname aus der Adresse, z. B. „hoodie“ für /galerien/hoodie/. Kann leer bleiben – dann gilt das Album des Vorschaufotos.
-          - name: bild
-            label: Vorschaufoto
-            type: image
-            description: Im Ordner des Albums → images ein Foto wählen. Es ist zugleich das Titelbild des Albums.
-            options:
-              media: alben
-          - name: mappe
-            label: Fotos der Mappe
-            type: image
-            description: Welche Fotos die Mappe zeigt, in dieser Reihenfolge. Leer = automatisch bis zu 8. Das Vorschaufoto steht in der Mappe nie vorne.
-            options:
-              media: alben
-              multiple:
-                max: 30
-          - name: name
-            label: Name der Mappe (optional)
-            type: string
-            description: Eigener Titel für Portfolio und Mappe, z. B. „Beton und Rüschen“. Leer = Name des Albums. „Ganzes Album ansehen“ führt trotzdem zum Album.
-      - { name: kicker, type: string, hidden: true }
-      - { name: statement, type: string, hidden: true }
-      - { name: note, type: string, hidden: true }
-      - { name: aboutTeaser, type: string, hidden: true }
 
   # ---------------------------------------------------------------- Filme
   - name: filme

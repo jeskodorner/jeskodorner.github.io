@@ -105,6 +105,20 @@ const galleries = defineCollection({
       albumRequest: opt(z.boolean()),
       /** Eigener Teilen-Text; {title} und {url} werden ersetzt */
       shareText: opt(z.string()),
+      /** Portfolio (seit 22.11.2026 im Album statt in startseite.md): Schalter „Im Portfolio anzeigen“, Vorschaufoto
+       *  (zugleich Titelbild des Albums), Fotos der Mappe, eigener Name und Beschreibung der Mappe. Fotos als Dateiname
+       *  oder als Pfad aus dem CMS („/alben/<ordner>/images/<datei>“). */
+      portfolio: opt(
+        z
+          .object({
+            zeigen: z.preprocess(empty, z.boolean().default(false)),
+            vorschau: opt(z.string()),
+            fotos: opt(z.array(z.string())),
+            name: opt(z.string()),
+            beschreibung: opt(z.string()),
+          })
+          .strict(),
+      ),
       images: z.array(galleryImage).min(1, { error: 'Die Galerie braucht mindestens ein Bild.' }),
     })
     .strict()

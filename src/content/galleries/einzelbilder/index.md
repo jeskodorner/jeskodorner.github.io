@@ -30,4 +30,8 @@ images:
     alt: "Person in orangem Oberteil blickt ernst in die Kamera, dahinter Besuchende
       in einem hellen Ausstellungsraum"
 cover: dscf4376.jpg
+portfolio:
+  # Portfolio: im Portfolio zeigen, Vorschaufoto (zugleich Titelbild), Fotos der Mappe, Name, Beschreibung
+  zeigen: true
+  vorschau: /alben/einzelbilder/images/dscf4376.jpg
 ---

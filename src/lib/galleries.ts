@@ -152,7 +152,7 @@ async function load(): Promise<Gallery[]> {
       };
     });
 
-    const fromPortfolio = portfolioCover.get(d.slug) ?? portfolioCover.get(folder);
+    const fromPortfolio = (d.portfolio?.zeigen ? fileOf(d.portfolio.vorschau) : undefined) ?? portfolioCover.get(d.slug) ?? portfolioCover.get(folder);
     const cover =
       (fromPortfolio && images.find((i) => i.file === fromPortfolio)) ||
       (d.cover && images.find((i) => i.file === d.cover)) ||

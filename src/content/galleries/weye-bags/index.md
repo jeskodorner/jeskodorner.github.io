@@ -57,4 +57,17 @@ images:
     alt: "Person mit Jeanstasche auf dem Rücken geht durch eine alte hölzerne
       Haustür"
 cover: dscf5828-cover-bild.jpg
+portfolio:
+  # Portfolio: im Portfolio zeigen, Vorschaufoto (zugleich Titelbild), Fotos der Mappe, Name, Beschreibung
+  zeigen: true
+  vorschau: /alben/weye-bags/images/dscf5828-cover-bild.jpg
+  fotos:
+    - /alben/weye-bags/images/dscf5813.jpg
+    - /alben/weye-bags/images/dscf5823.jpg
+    - /alben/weye-bags/images/dscf5853.jpg
+    - /alben/weye-bags/images/dscf5861.jpg
+    - /alben/weye-bags/images/dscf5926-test.jpg
+    - /alben/weye-bags/images/dscf5928.jpg
+    - /alben/weye-bags/images/dscf5935.jpg
+    - /alben/weye-bags/images/dscf5828-cover-bild.jpg
 ---

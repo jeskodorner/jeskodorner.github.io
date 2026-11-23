@@ -38,4 +38,8 @@ images:
     alt: "Schwarzweiß: Hände mit Spachtel und Fingern malen auf großem Papier am
       Boden, daneben Farbdosen und Farbroller."
 cover: love-exercise-jesko-dorner-31.jpg
+portfolio:
+  # Portfolio: im Portfolio zeigen, Vorschaufoto (zugleich Titelbild), Fotos der Mappe, Name, Beschreibung
+  zeigen: true
+  vorschau: /alben/love-exercise/images/love-exercise-jesko-dorner-52.jpg
 ---

@@ -63,4 +63,8 @@ images:
       Schneefall unter einer Laterne."
 location: Dollgow
 cover: dscf0893.jpg
+portfolio:
+  # Portfolio: im Portfolio zeigen, Vorschaufoto (zugleich Titelbild), Fotos der Mappe, Name, Beschreibung
+  zeigen: true
+  vorschau: /alben/dollgow-neujahr-2025/images/dscf0888.jpg
 ---

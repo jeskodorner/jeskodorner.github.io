@@ -27,7 +27,10 @@ import { useTranslations, formatMonth } from '../../i18n';
 
 export async function getStaticPaths() {
   const mappen = await getMappen();
-  return mappen.map(({ gallery, lead, mappe, name }) => ({ params: { slug: gallery.slug }, props: { gallery, lead, mappe, name } }));
+  return mappen.map(({ gallery, lead, mappe, name, beschreibung }) => ({
+    params: { slug: gallery.slug },
+    props: { gallery, lead, mappe, name, beschreibung },
+  }));
 }
 
 interface Props {
@@ -37,9 +40,11 @@ interface Props {
   mappe?: string[];
   /** Eigener Name aus dem Portfolio-Eintrag – Titel der Mappe (das Album behält seinen Namen) */
   name?: string;
+  /** Beschreibung der Mappe aus dem Portfolio (optional), steht unter dem Titel */
+  beschreibung?: string;
 }
 
-const { gallery: g, lead, mappe, name } = Astro.props;
+const { gallery: g, lead, mappe, name, beschreibung } = Astro.props;
 // Titel der Mappe: eigener Name aus dem Portfolio, sonst der Name des Albums (seit 22.11.2026)
 const title = name ?? g.title;
 const t = useTranslations();
@@ -54,7 +59,7 @@ const og = cardImage(`album/${g.slug}`, g.cover.alt);
 const mappeVideo = g.entry.data.mappeVideo;
 ---
 
-<BaseLayout title={title} description={g.description} image={og}>
+<BaseLayout title={title} description={beschreibung ?? g.description} image={og}>
   <section class="container container--wide head">
     {/* Zurück dorthin, wo man herkam (Startseite oder Portfolio); ohne Vorgeschichte zur Startseite */}
     <a class="back btn btn--small" href="/" data-back>
@@ -62,6 +67,7 @@ const mappeVideo = g.entry.data.mappeVideo;
     </a>
     <h1 class="display display-1 display-compact">{tidyTitle(title)}</h1>
     <p class="label muted">{meta}</p>
+    {beschreibung && <p class="mappe-text">{beschreibung}</p>}
   </section>
 
   {
@@ -150,6 +156,14 @@ const mappeVideo = g.entry.data.mappeVideo;
   }
   .head > .label {
     margin-top: 0.5rem;
+  }
+  /* Beschreibung der Mappe (optional, aus dem Portfolio): grau wie alle Texte, schmal */
+  .mappe-text {
+    max-width: 60ch;
+    margin-top: clamp(0.75rem, 1.5vw, 1.25rem);
+    font-size: var(--fs-base);
+    line-height: 1.5;
+    color: var(--ink-soft);
   }
   /* Film zum Album (z. B. Dollgow): oben über die volle Breite, genau so breit wie die Fotoreihen darunter (seit
      22.11.2026 – vorher nie höher als der Bildschirm und dadurch schmaler als die Reihen). Ohne Knopf zum Anhalten,

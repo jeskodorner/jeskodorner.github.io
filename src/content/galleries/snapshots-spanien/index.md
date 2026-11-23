@@ -66,4 +66,11 @@ images:
       Kopf, dahinter eine weite Bucht mit Bergen"
 location: Spanien
 cover: dscf3835.jpg
+portfolio:
+  # Portfolio: im Portfolio zeigen, Vorschaufoto (zugleich Titelbild), Fotos der Mappe, Name, Beschreibung
+  zeigen: true
+  vorschau: /alben/snapshots-spanien/images/dscf3604.jpg
+  fotos:
+    - /alben/snapshots-spanien/images/dscf3604.jpg
+    - /alben/snapshots-spanien/images/dscf3579.jpg
 ---

@@ -31,4 +31,8 @@ images:
       daneben zwei weitere Personen."
 location: Ostsee
 cover: dscf6969.jpg
+portfolio:
+  # Portfolio: im Portfolio zeigen, Vorschaufoto (zugleich Titelbild), Fotos der Mappe, Name, Beschreibung
+  zeigen: true
+  vorschau: /alben/ostsee-2025/images/dscf6969.jpg
 ---

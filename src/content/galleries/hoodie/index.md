@@ -39,4 +39,13 @@ images:
     alt: "Verwischte Nachtszene: Person mit roter Strickkapuze streckt den Arm zu
       jemandem in blauer Jacke, dahinter Straßenlaternen."
 cover: dsc01438.jpg
+portfolio:
+  # Portfolio: im Portfolio zeigen, Vorschaufoto (zugleich Titelbild), Fotos der Mappe, Name, Beschreibung
+  zeigen: true
+  vorschau: /alben/hoodie/images/dsc01421.jpg
+  fotos:
+    - /alben/hoodie/images/dsc01421.jpg
+    - /alben/hoodie/images/dsc01423.jpg
+    - /alben/hoodie/images/dsc01447.jpg
+    - /alben/hoodie/images/dsc01457.jpg
 ---

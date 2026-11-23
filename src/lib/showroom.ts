@@ -23,6 +23,8 @@ export interface WorkItem {
   meta?: string;
   /** Fotos der Mappe aus dem Portfolio-Eintrag (Dateinamen), sonst undefined */
   mappe?: string[];
+  /** Beschreibung der Mappe (optional) */
+  beschreibung?: string;
 }
 
 export async function getSelectedWorks(): Promise<WorkItem[]> {
@@ -42,6 +44,25 @@ export async function getSelectedWorks(): Promise<WorkItem[]> {
   // Nach dem Datum des Albums, das neueste zuerst (seit 22.11.2026); bei gleichem Datum bleibt die Reihenfolge der
   // Liste (sort ist stabil)
   const byDate = (works: WorkItem[]) => works.sort((a, b) => b.gallery.date.getTime() - a.gallery.date.getTime());
+  // Seit 22.11.2026: Im Album schaltet „portfolio.zeigen“ das Album ins Portfolio (CMS: Alben → Portfolio)
+  const fromAlbums = galleries.filter((g) => g.entry.data.portfolio?.zeigen);
+  if (fromAlbums.length) {
+    return byDate(
+      fromAlbums.map((g) => {
+        const p = g.entry.data.portfolio!;
+        const bild = fileOf(p.vorschau);
+        const image = bild ? g.images.find((i) => i.file === bild) : g.cover;
+        if (!image) throw new Error(`${g.folder}/index.md → portfolio.vorschau: Bild „${bild}“ gibt es im Album nicht.`);
+        const mappe = p.fotos?.map((f) => fileOf(f)).filter((f): f is string => Boolean(f));
+        return {
+          ...workFor(g, image, p.name?.trim() || undefined),
+          mappe: mappe?.length ? mappe : undefined,
+          beschreibung: p.beschreibung?.trim() || undefined,
+        };
+      }),
+    );
+  }
+  // Früher: Liste „showroom“ in startseite.md
   const showroom = text.showroom;
   if (!showroom?.length) return byDate(galleries.map((g) => workFor(g)));
   return byDate(showroom.map((s) => {
