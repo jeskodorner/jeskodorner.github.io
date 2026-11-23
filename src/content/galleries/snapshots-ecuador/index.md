@@ -9,6 +9,13 @@ visibility: public
 portfolio:
   zeigen: true
   vorschau: /alben/snapshots-ecuador/images/p1120154.jpg
+  fotos:
+    - /alben/snapshots-ecuador/images/p1120148.jpg
+    - /alben/snapshots-ecuador/images/p1120154.jpg
+    - /alben/snapshots-ecuador/images/p1120158.jpg
+    - /alben/snapshots-ecuador/images/p1120476.jpg
+    - /alben/snapshots-ecuador/images/p1120454.jpg
+    - /alben/snapshots-ecuador/images/p1120204.jpg
 showExif: true
 cover: p1120158.jpg
 images:
