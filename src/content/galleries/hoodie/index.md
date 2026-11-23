@@ -1,6 +1,6 @@
 ---
-title: Anouk
-slug: hoodie
+title: Anouk Hoodie
+slug: anouk-hoodie
 date: 2026-01-18
 description: Manche Shootings müssen nicht geplant werden. Hoodie von Yael, Model Anouk.
 visibility: public
