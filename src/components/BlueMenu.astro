@@ -450,14 +450,11 @@ const nameWords = site.name.split(' ').map((word) =>
     :is(.bm--aside, .bm--overlay) .bm-body {
       display: contents;
     }
-    /* Menü senkrecht mittig zwischen Name und Unterkante (Startseite) bzw. Instagram (Menü) */
+    /* Menü auf Unterseiten: senkrecht mittig zwischen Name und Instagram (seit 22.11.2026) */
     :is(.bm--aside, .bm--overlay) .bm-body > nav {
       grid-column: 1;
-      grid-row: 2 / 6;
-      align-self: center;
-    }
-    .bm--overlay .bm-body > nav {
       grid-row: 2 / 5;
+      align-self: center;
     }
     /* Foto rechts neben Name und Menü, von der Oberkante des Namens bis über Instagram (darunter mittig). Bis 22.11.2026
        lag seine Unterkante auf der Grundlinie von „KONTAKT“ (Tag alte-version-menue-unten). */
@@ -470,9 +467,26 @@ const nameWords = site.name.split(' ').map((word) =>
       height: auto;
       min-height: 0;
     }
-    /* Foto senkrecht mittig (vorher unten bündig) */
-    .bm--aside .bm-aside :global(.hs-frame) {
-      align-self: center;
+    /* Startseite (seit 22.11.2026): Foto senkrecht mittig, Instagram direkt darunter, die Grundlinie von „KONTAKT“
+       auf der Unterkante des Fotos. Das Foto bekommt eine eigene Zeile in seiner Höhe (4:3 der rechten Spalte, auf
+       niedrigen Bildschirmen kleiner); darüber und darunter gleich viel Luft. Der Name steht oben, wie bisher. */
+    .bm--aside {
+      --photo-h: min((100cqi - var(--col-gap)) * 7 / 12 * 0.75, 100dvh - 2 * var(--bm-pad) - 3.5rem);
+      grid-template-rows: minmax(0, 1fr) var(--photo-h) auto minmax(0, 1fr);
+    }
+    .bm--aside .bm-name {
+      grid-row: 1 / 3;
+      align-self: start;
+    }
+    .bm--aside .bm-body > nav {
+      grid-row: 2;
+      align-self: end;
+      /* unter „KONTAKT“ liegen 0,185 Schrifthöhen Luft bis zum Zeilenende – so weit ragt das Menü nach unten */
+      margin-bottom: calc(-0.185 * var(--bm-item));
+    }
+    .bm--aside .bm-aside :global(.hs) {
+      grid-row: 2;
+      height: 100%;
     }
 
     /* Menü: oben derselbe Abstand wie auf der Startseite; der Schließen-Knopf liegt darüber an der Stelle des
@@ -504,7 +518,10 @@ const nameWords = site.name.split(' ').map((word) =>
        Bildunterschrift). Im Menü (Overlay) bleibt es links. */
     .bm--aside .bm-foot {
       grid-column: 2;
+      grid-row: 3;
       justify-self: center;
+      align-self: start;
+      padding-top: 0.7rem;
     }
   }
   .bm-list {
