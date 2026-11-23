@@ -5,7 +5,7 @@ date: 2026-09-07
 description: Setcard-Fotos von Hilda vor einer rostigen Wand.
 visibility: public
 portfolio:
-  zeigen: false
+  zeigen: true
   vorschau: /alben/hilda-setcard/images/hilda-setcard-gesicht.jpg
   fotos:
     - /alben/hilda-setcard/images/hilda-setcard-gesicht.jpg
