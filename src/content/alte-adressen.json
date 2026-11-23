@@ -75,9 +75,14 @@
     "frueher": []
   },
   "island-sommer-2026": {
-    "slug": "island-sommer-2026",
+    "slug": "island-2026",
     "visibility": "public",
-    "frueher": []
+    "frueher": [
+      {
+        "slug": "island-sommer-2026",
+        "visibility": "public"
+      }
+    ]
   },
   "liv-und-hilda": {
     "slug": "liv-und-hilda",
