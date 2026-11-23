@@ -49,5 +49,5 @@ images:
     alt: Zwei junge Leute sitzen mit Rucksäcken auf einer Bank und einem
       Plastikstuhl an einer baumgesäumten Stadtstraße
     hero: false
-albumRequest: false
+albumRequest: true
 ---
