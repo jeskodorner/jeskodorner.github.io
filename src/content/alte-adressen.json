@@ -145,9 +145,14 @@
     "frueher": []
   },
   "snapshots-spanien": {
-    "slug": "snapshots-spanien",
+    "slug": "spanien-strand",
     "visibility": "public",
-    "frueher": []
+    "frueher": [
+      {
+        "slug": "snapshots-spanien",
+        "visibility": "public"
+      }
+    ]
   },
   "spanien-juni-2023": {
     "slug": "spanien-juni-2023",
