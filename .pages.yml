@@ -164,7 +164,7 @@ content:
         list:
           collapsible:
             collapsed: true
-            summary: "{galerie}"
+            summary: "{name} {galerie}"
         fields:
           - name: galerie
             label: Album (Kurzname)
@@ -184,7 +184,10 @@ content:
               media: alben
               multiple:
                 max: 30
-          - { name: name, label: Eigener Name (optional), type: string }
+          - name: name
+            label: Name der Mappe (optional)
+            type: string
+            description: Eigener Titel für Portfolio und Mappe, z. B. „Beton und Rüschen“. Leer = Name des Albums. „Ganzes Album ansehen“ führt trotzdem zum Album.
       - { name: kicker, type: string, hidden: true }
       - { name: statement, type: string, hidden: true }
       - { name: note, type: string, hidden: true }

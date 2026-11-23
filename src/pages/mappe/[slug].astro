@@ -27,7 +27,7 @@ import { useTranslations, formatMonth } from '../../i18n';
 
 export async function getStaticPaths() {
   const mappen = await getMappen();
-  return mappen.map(({ gallery, lead, mappe }) => ({ params: { slug: gallery.slug }, props: { gallery, lead, mappe } }));
+  return mappen.map(({ gallery, lead, mappe, name }) => ({ params: { slug: gallery.slug }, props: { gallery, lead, mappe, name } }));
 }
 
 interface Props {
@@ -35,9 +35,13 @@ interface Props {
   lead: GalleryImage;
   /** Fotos der Mappe aus dem Portfolio-Eintrag */
   mappe?: string[];
+  /** Eigener Name aus dem Portfolio-Eintrag – Titel der Mappe (das Album behält seinen Namen) */
+  name?: string;
 }
 
-const { gallery: g, lead, mappe } = Astro.props;
+const { gallery: g, lead, mappe, name } = Astro.props;
+// Titel der Mappe: eigener Name aus dem Portfolio, sonst der Name des Albums (seit 22.11.2026)
+const title = name ?? g.title;
 const t = useTranslations();
 const images = mappeImages(g, lead, mappe);
 // Unter dem Titel nur das Datum, wie auf der Albumseite (bis 20.11.2026 auch der Ort)
@@ -50,13 +54,13 @@ const og = cardImage(`album/${g.slug}`, g.cover.alt);
 const mappeVideo = g.entry.data.mappeVideo;
 ---
 
-<BaseLayout title={g.title} description={g.description} image={og}>
+<BaseLayout title={title} description={g.description} image={og}>
   <section class="container container--wide head">
     {/* Zurück dorthin, wo man herkam (Startseite oder Portfolio); ohne Vorgeschichte zur Startseite */}
     <a class="back btn btn--small" href="/" data-back>
       <Icon name="arrow-left" /> {t.back}
     </a>
-    <h1 class="display display-1 display-compact">{tidyTitle(g.title)}</h1>
+    <h1 class="display display-1 display-compact">{tidyTitle(title)}</h1>
     <p class="label muted">{meta}</p>
   </section>
 
@@ -65,7 +69,7 @@ const mappeVideo = g.entry.data.mappeVideo;
       <div class="container container--wide film-top">
         <LoopVideo
           file={mappeVideo}
-          alt={`Video „${g.title}“, ohne Ton, läuft in Schleife`}
+          alt={`Video „${title}“, ohne Ton, läuft in Schleife`}
           class="mappe-video"
           pausable={false}
         />
@@ -103,7 +107,7 @@ const mappeVideo = g.entry.data.mappeVideo;
     <JustifyNow />
   </div>
 
-  <ul class="album-src" hidden data-album-src={g.slug} data-count={images.length} data-title={g.title}>
+  <ul class="album-src" hidden data-album-src={g.slug} data-count={images.length} data-title={title}>
     {
       items.map((it) => (
         <li>
