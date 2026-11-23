@@ -70,9 +70,14 @@
     "frueher": []
   },
   "hoodie": {
-    "slug": "hoodie",
+    "slug": "anouk-hoodie",
     "visibility": "public",
-    "frueher": []
+    "frueher": [
+      {
+        "slug": "hoodie",
+        "visibility": "public"
+      }
+    ]
   },
   "island-sommer-2026": {
     "slug": "island-2026",
