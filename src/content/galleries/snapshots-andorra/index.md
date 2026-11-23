@@ -1,5 +1,5 @@
 ---
-title: Snapshots aus Andorra
+title: Wanderung Andorra
 slug: snapshots-andorra
 date: 2026-06-24
 location: Andorra
