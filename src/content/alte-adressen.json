@@ -54,6 +54,11 @@
     "visibility": "public",
     "frueher": []
   },
+  "hilda": {
+    "slug": "hilda",
+    "visibility": "public",
+    "frueher": []
+  },
   "hilda-setcard": {
     "slug": "hilda-setcard",
     "visibility": "public",
@@ -66,6 +71,11 @@
   },
   "island-sommer-2026": {
     "slug": "island-sommer-2026",
+    "visibility": "public",
+    "frueher": []
+  },
+  "liv-und-hilda": {
+    "slug": "liv-und-hilda",
     "visibility": "public",
     "frueher": []
   },
