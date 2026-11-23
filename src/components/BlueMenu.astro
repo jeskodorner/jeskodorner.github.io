@@ -472,7 +472,8 @@ const nameWords = site.name.split(' ').map((word) =>
        niedrigen Bildschirmen kleiner); darüber und darunter gleich viel Luft. Der Name steht oben, wie bisher. */
     .bm--aside {
       --photo-h: min((100cqi - var(--col-gap)) * 7 / 12 * 0.75, 100dvh - 2 * var(--bm-pad) - 3.5rem);
-      grid-template-rows: minmax(0, 1fr) var(--photo-h) auto minmax(0, 1fr);
+      /* oben doppelt so viel Luft wie unten: Foto und Menü stehen etwas tiefer als genau mittig */
+      grid-template-rows: minmax(0, 2fr) var(--photo-h) auto minmax(0, 1fr);
     }
     .bm--aside .bm-name {
       grid-row: 1 / 3;
