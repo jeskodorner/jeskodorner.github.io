@@ -50,5 +50,5 @@ images:
     alt: "Schwarzweiß: Hände mit Spachtel und Fingern malen auf großem Papier am
       Boden, daneben Farbdosen und Farbroller."
     hero: false
-albumRequest: false
+albumRequest: true
 ---
