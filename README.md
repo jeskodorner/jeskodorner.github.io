@@ -721,18 +721,14 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
 - **Startseite „Bild neben Name“** (seit 16. November 2026, `src/components/HomeSlides.astro` und `BlueMenu.astro`):
   Schrift steht nie auf dem Foto. Am Laptop (ab 1000 px) zwei Spalten: links auf Blau der Name zweizeilig, unten
   das Menü (etwa halb so groß wie der Name) und Instagram; rechts ein Foto aus dem Portfolio in einer festen Fläche
-  im Format 4:3, unten auf seiner Bildunterschrift stehend. Die untere Zeile der Bildunterschrift (Monat und Jahr)
-  endet genau auf der Grundlinie von „KONTAKT“; darunter steht links nur noch „jeskodorner“
-  (`BlueMenu.astro`). Vorher lag die Unterkante des Fotos auf „KONTAKT“ (Commit e565eee). Jedes Foto füllt diese Fläche (Ausschnitt nach dem
+  im Format 4:3. Die Unterkante des Fotos liegt genau auf der Grundlinie von „KONTAKT“; „jeskodorner“ (Instagram)
+  steht mittig unter dem Foto. Seit 22.11.2026 gibt es keine Bildunterschrift mehr – weder am Laptop noch am Handy
+  (vorher: „Albumname – Monat Jahr“ unter dem Foto, Stand im Tag `alte-version-startseite-bildunterschrift`).
+  Jedes Foto füllt diese Fläche (Ausschnitt nach dem
   Bildschwerpunkt), so wechselt beim Bildwechsel nie das Format; ganz zu sehen sind die Fotos im Portfolio. Am Handy
-  und Tablet hochkant steht das Foto ganz oben, randlos, darunter die Bildunterschrift, dann Name (eine Zeile), Menü,
-  Instagram – ohne Scrollen, auch auf kleinen Handys. Am Handy (unter 700 px) fehlt die Bildunterschrift seit
-  21.11.2026: Sie wurde dort meist mit „…“ gekürzt; das Foto führt weiter ins Portfolio. Das Foto hat dort Vorrang (30–45 % der Höhe, höchstens 4:3).
-  Die Bildunterschrift ist immer gleich aufgebaut: eine Zeile „Albumname – Monat Jahr“ (Albumname in
-  der Titelschrift, bei sehr langen Namen mit „…“ gekürzt, das Datum bleibt ganz) – so bleibt sie immer gleich hoch
-  und das Foto springt nicht. Foto und Bildunterschrift führen ins Portfolio genau zu diesem Foto (`/portfolio/#werk-<n>`); beim
-  Überfahren bekommt der Titel den orangen Unterstrich. Bis 20.11.2026 stand dort „Mappe ansehen →“ und führte zur
-  Mappe – die Mappen erreicht man jetzt nur noch übers Portfolio.
+  und Tablet hochkant steht das Foto ganz oben, randlos, darunter Name (eine Zeile), Menü,
+  Instagram – ohne Scrollen, auch auf kleinen Handys. Das Foto hat dort Vorrang (30–45 % der Höhe, höchstens 4:3).
+  Das Foto führt ins Portfolio genau zu diesem Foto (`/portfolio/#werk-<n>`).
   Die Fotos wechseln alle 7 Sekunden in der Reihenfolge des Portfolios (nach Datum, das neueste zuerst): Das neue Foto blendet in 1,8 Sekunden
   weich über dem alten ein und setzt sich dabei langsam aus einer leichten Vergrößerung; das alte bleibt darunter
   stehen, bis das neue ganz da ist (nie eine leere Fläche dazwischen). Ein Foto erscheint erst fertig geladen. Kommt

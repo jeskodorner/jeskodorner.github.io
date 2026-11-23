@@ -238,6 +238,17 @@ const nameWords = site.name.split(' ').map((word) =>
   .bm-aside {
     display: grid;
   }
+  /* Keine Bildunterschrift unter dem Foto der Startseite – seit 21.11.2026 am Handy, seit 22.11.2026 überall (Jeskos
+     Wunsch; Git-Tag alte-version-startseite-bildunterschrift). Das Foto selbst führt zur Stelle im Portfolio, dort
+     stehen Albumname und Datum. */
+  .bm--aside .bm-aside :global(.hs-cap) {
+    display: none;
+  }
+  /* … und auch ihr Platz und der Abstand darüber fallen weg */
+  .bm--aside .bm-aside :global(.hs) {
+    grid-template-rows: minmax(0, 1fr);
+    row-gap: 0;
+  }
   /* Handy – Menü und Startseite: Raster mit drei Spalten. Die mittlere ist genau so breit wie der Name, so steht er
      mittig und die Menüpunkte beginnen an seiner linken Kante. Reihen: Foto (Startseite) bzw. Schließen-Knopf
      (Menü) · Name · (frei) · Menüpunkte · Fußzeile (mittig ganz unten). Die Startseite
@@ -314,7 +325,7 @@ const nameWords = site.name.split(' ').map((word) =>
       --name-lines: 0.98;
       /* Abstand und Bildunterschrift unter dem Foto (0,75rem + eine Zeile 1,25rem); am Handy ohne Bildunterschrift 0
          (Regel weiter unten) */
-      --cap-h: 2rem;
+      --cap-h: 0rem; /* keine Bildunterschrift mehr (seit 22.11.2026); vorher 2rem */
       /* Alles außer Foto und Name: Bildunterschrift (--cap-h), Abstand über dem Namen, Menü (5 Punkte à 0,95
          Schrifthöhen, 4 Abstände, Ränder), Instagram (1,125rem) und Rand unten, 0,5rem Reserve */
       --rest-h: calc(
@@ -375,25 +386,12 @@ const nameWords = site.name.split(' ').map((word) =>
     /* Foto 4:3 über die ganze Breite, auf niedrigen Bildschirmen flacher (nichts soll scrollen) */
     .bm--aside .bm-aside :global(.hs) {
       height: auto;
-      gap: 0.75rem;
     }
     .bm--aside .bm-aside :global(.hs-frame) {
       height: var(--frame-h);
     }
     .bm--aside .bm-aside :global(.hs-cap) {
       padding-inline: var(--gutter);
-    }
-    /* Handy (unter 700 px): keine Bildunterschrift unter dem Foto (seit 21.11.2026, Jeskos Wunsch) – sie wurde dort
-       meist mit „…“ gekürzt („Matvey – Love Exercis…“) und drängte sich zwischen Foto und Namen. Das Foto selbst
-       führt weiter zur Stelle im Portfolio, und dort stehen Albumname und Datum. Tablet und Laptop behalten sie.
-       Das Menü rechnet ohne sie (--cap-h 0), damit der Name dort gleich groß bleibt wie auf der Startseite. */
-    @media (max-width: 699.98px) {
-      :is(.bm--aside, .bm--overlay) {
-        --cap-h: 0rem;
-      }
-      .bm--aside .bm-aside :global(.hs-cap) {
-        display: none;
-      }
     }
     /* Menü: oben die Leiste mit dem Schließen-Knopf (an der Stelle des Menüknopfs), der Name direkt darunter */
     .bm--overlay .bm-top {
@@ -461,10 +459,8 @@ const nameWords = site.name.split(' ').map((word) =>
     :is(.bm--aside, .bm--overlay) .bm-body > nav {
       margin-bottom: calc(-0.185 * var(--bm-item));
     }
-    /* Foto mit Bildunterschrift rechts neben Name und Menü: Die Bildunterschrift („Albumname – Monat Jahr“, eine
-       Zeile) steht auf derselben Grundlinie wie „KONTAKT“; das Foto steht darüber. Unter beiden nur Instagram. Unter
-       der Grundlinie liegen 0,26 Schrifthöhen des Albumnamens bis zur Unterkante (er reicht tiefer als das Datum) – um
-       so viel ragt der Block nach unten (gemessen, ±0,5 px). */
+    /* Foto rechts neben Name und Menü: seine Unterkante liegt auf der Grundlinie von „KONTAKT“ (bis 22.11.2026 stand
+       dort die Bildunterschrift). Darunter mittig Instagram. */
     .bm--aside .bm-aside {
       display: contents;
     }
@@ -473,8 +469,8 @@ const nameWords = site.name.split(' ').map((word) =>
       grid-row: 1 / 5;
       height: auto;
       min-height: 0;
-      margin-bottom: calc(-0.26 * clamp(1.15rem, 1rem + 0.5vw, 1.5rem));
     }
+
     /* Menü: oben derselbe Abstand wie auf der Startseite; der Schließen-Knopf liegt darüber an der Stelle des
        Menüknopfs, ohne den Namen nach unten zu schieben */
     .bm--overlay {
@@ -499,6 +495,12 @@ const nameWords = site.name.split(' ').map((word) =>
       grid-row: 5;
       align-self: last baseline;
       padding-top: clamp(1.25rem, 3vh, 2rem);
+    }
+    /* Startseite: Instagram mittig unter dem Foto (seit 22.11.2026; vorher links unter dem Menü auf der Grundlinie der
+       Bildunterschrift). Im Menü (Overlay) bleibt es links. */
+    .bm--aside .bm-foot {
+      grid-column: 2;
+      justify-self: center;
     }
   }
   .bm-list {
