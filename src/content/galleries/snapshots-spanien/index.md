@@ -3,8 +3,7 @@ title: Spanien am Strand
 slug: spanien-strand
 date: 2025-02-03
 location: Spanien
-description: "Snapshots aus Spanien: weiße Häuser und Zäune, Abende am Wasser,
-  ruhige Buchten und ein Ausblick vom Berg über die Küste."
+description: Jeden Tag geht die Sonne unter. Aber nicht jeden Tag gibt es solches Licht.
 visibility: public
 portfolio:
   zeigen: true
