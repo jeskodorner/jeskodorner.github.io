@@ -144,7 +144,9 @@ async function load(): Promise<Gallery[]> {
         caption: img.caption,
         originalUrl: img.originalUrl,
         hero: img.hero,
-        focus: img.focus ?? '50% 50%',
+        // Ausschnitt, wo ein Foto beschnitten wird (Startseite): ohne Angabe bei Hochformaten das obere Drittel, sonst knapp
+        // über der Mitte – dort sind meist die Gesichter (seit 23.11.2026; vorher genau mittig, Köpfe wurden abgeschnitten)
+        focus: img.focus ?? (mod.default.height > mod.default.width ? '50% 25%' : '50% 40%'),
         exif: { ...(m.exif ?? {}), ...(img.exif ?? {}) },
         color: m.color ?? FALLBACK_COLOR,
         lqip: m.lqip,

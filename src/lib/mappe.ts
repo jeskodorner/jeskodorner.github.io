@@ -43,9 +43,11 @@ export function mappeImages(g: Gallery, lead: GalleryImage = g.cover, own?: stri
 /** Alle Mappen: je Album aus dem Portfolio eine, mit dem Foto aus dem Portfolio vorne */
 export async function getMappen() {
   const works = await getSelectedWorks();
-  const seen = new Map<string, { gallery: Gallery; lead: GalleryImage; mappe?: string[]; name?: string; beschreibung?: string }>();
-  for (const w of works)
+  // werk: Platz im Portfolio (Sprungziel #werk-<n>) – dorthin führt „Zurück“, wenn man direkt auf der Mappe landet
+  const seen = new Map<string, { gallery: Gallery; lead: GalleryImage; mappe?: string[]; name?: string; beschreibung?: string; werk: number }>();
+  works.forEach((w, i) => {
     if (!seen.has(w.gallery.slug))
-      seen.set(w.gallery.slug, { gallery: w.gallery, lead: w.image, mappe: w.mappe, name: w.name, beschreibung: w.beschreibung });
+      seen.set(w.gallery.slug, { gallery: w.gallery, lead: w.image, mappe: w.mappe, name: w.name, beschreibung: w.beschreibung, werk: i + 1 });
+  });
   return [...seen.values()];
 }

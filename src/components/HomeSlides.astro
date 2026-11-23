@@ -126,8 +126,16 @@ const first = slides[0];
       }
     };
 
+    // Anhalten, solange man auf das Foto zeigt oder es mit der Tastatur ansteuert (seit 23.11.2026) – wer ein Foto
+    // gerade anschaut oder anklicken will, dem wechselt es nicht unter der Hand weg
+    let paused = false;
+    box.addEventListener('pointerenter', (e) => e.pointerType === 'mouse' && (paused = true));
+    box.addEventListener('pointerleave', () => (paused = false));
+    box.addEventListener('focusin', () => (paused = true));
+    box.addEventListener('focusout', () => (paused = false));
+
     const tick = async () => {
-      if (!document.hidden) {
+      if (!document.hidden && !paused) {
         const n = (i + 1) % layers.length;
         layers[n]!.classList.add('is-ready');
         await Promise.race([decoded(layers[n]!), timeout(5000)]); // erst laden, dann überblenden
@@ -140,6 +148,8 @@ const first = slides[0];
         next.classList.add('is-on');
         remember(n);
         setTimeout(() => old.classList.remove('is-on'), FADE + 100);
+        // das übernächste Foto schon in Ruhe laden
+        layers[(n + 1) % layers.length]!.classList.add('is-ready');
         // Bildunterschrift kurz aus- und mit dem neuen Foto wieder einblenden
         cap?.classList.add('is-changing');
         setTimeout(() => {
@@ -156,8 +166,9 @@ const first = slides[0];
       timer = setTimeout(tick, STEP);
     };
     let timer = setTimeout(tick, STEP);
-    // Die übrigen Fotos erst nach dem Laden der Seite holen (in Ruhe, vor dem ersten Wechsel nach 7 s)
-    const prepare = () => layers.forEach((l) => l.classList.add('is-ready'));
+    // Nur das nächste Foto nach dem Laden der Seite holen (in Ruhe, vor dem ersten Wechsel nach 7 s) – bis 23.11.2026
+    // luden alle 13 auf einmal (1,6 MB), auch wenn man gleich weiterklickt
+    const prepare = () => layers[(i + 1) % layers.length]!.classList.add('is-ready');
     if (document.readyState === 'complete') setTimeout(prepare, 1000);
     else addEventListener('load', () => setTimeout(prepare, 1000), { once: true });
     // Zurück aus dem Browser-Speicher (Zurück-Knopf): Foto bleibt, das nächste kommt erst wieder nach vollen 7 s

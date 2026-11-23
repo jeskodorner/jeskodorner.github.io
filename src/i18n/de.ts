@@ -53,14 +53,16 @@ export const de = {
   mappe: {
     /** Knopf unten auf der Mappe */
     toAlbum: 'Ganzes Album ansehen',
-    /** Zeile darunter, z. B. „30 Bilder im Album“ */
+    prev: 'Vorherige Mappe',
+    next: 'Nächste Mappe',
+    more: 'Weitere Mappen',
   },
   galleries: {
     title: 'Galerie',
     intro: 'Keine kuratierte Ausstellung, sondern mein offenes Fotoarchiv – Serien, Reisen, Aufträge und alles dazwischen.',
     images: (n: number) => (n === 1 ? '1 Bild' : `${n} Bilder`),
-    prev: 'Vorherige Galerie',
-    next: 'Nächste Galerie',
+    prev: 'Vorheriges Album',
+    next: 'Nächstes Album',
     unlisted:
       'Private Galerie – nur über den direkten Link erreichbar. Bitte nur mit Menschen teilen, die die Bilder sehen dürfen.',
     view: 'Ansicht',
@@ -146,6 +148,7 @@ export const de = {
     intro: 'Kurzfilme, Trailer und Videos.',
     watch: 'Ansehen',
     more: 'Mehr ansehen',
+    prev: 'Vorheriger Film',
     next: 'Nächster Film',
     empty: 'Filmarbeiten folgen.',
   },

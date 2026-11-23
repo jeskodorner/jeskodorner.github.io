@@ -89,7 +89,9 @@
   --fs-h2: clamp(2.8rem, 1.4rem + 6vw, 8rem);
   /* am Handy etwas kleiner (lange Wörter wie „Einzelbilder“ oder „Ausstellung“ passen sicher in eine Zeile),
      ab gut 980 px Breite genau die frühere Größe (1.2rem + 12vw) – sonst bricht z. B. „Hilda – Setcard“ am Laptop um */
-  --fs-h1: clamp(2.9rem, min(0.4rem + 13.3vw, 1.2rem + 12vw), 14rem);
+  /* Große Seitentitel (Portfolio, Galerie, Film, Über mich): seit 23.11.2026 auch durch die Bildschirmhöhe begrenzt
+     (16svh) – auf Laptops (1440×900) 144 statt 192 px, damit das erste Foto weiter oben beginnt. Am Handy unverändert. */
+  --fs-h1: clamp(2.9rem, min(0.4rem + 13.3vw, 1.2rem + 12vw, 16svh), 14rem);
   --fs-mega: clamp(4.5rem, 0.5rem + 18vw, 24rem);
 
   /* Abstände */
@@ -107,7 +109,9 @@
   --radius: 6px; /* Flächen und Eingabefelder */
   --radius-pill: 10px; /* Knöpfe und Etiketten */
   --ease: cubic-bezier(0.2, 0.7, 0.1, 1);
-  --pop: cubic-bezier(0.3, 1.6, 0.5, 1);
+  /* Kurze Rückmeldungen (Pfeil, Haken, Unterstrich): kräftig abbremsend, ohne Nachfedern. Bis 23.11.2026 federte die
+     Kurve über das Ziel hinaus (0.3, 1.6, 0.5, 1) – das wirkte verspielt neben den ruhigen Fotos. */
+  --pop: cubic-bezier(0.23, 1, 0.32, 1);
   /* Fotos beim Überfahren: überall gleich stark vergrößert, im Rahmen (Album, Galerie, Portfolio) */
   --hover-zoom: 1.03;
   /* Schatten eines gehängten Bildes an der Wand */

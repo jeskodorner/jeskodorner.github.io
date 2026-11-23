@@ -12,21 +12,24 @@ export interface Props {
   size?: string;
   format?: string;
   note?: string;
+  /** Hinweis bei privaten Galerien („nur über den direkten Link …“) */
+  privateNote?: string;
 }
 
-const { url, size, format, note } = Astro.props;
+const { url, size, format, note, privateNote } = Astro.props;
 const t = useTranslations();
 const details = [size, format].filter(Boolean).join(' · ');
 ---
 
 <div class="download">
-  <a class="btn" href={url} target="_blank" rel="noopener noreferrer">
+  <a class="btn btn--solid" href={url} target="_blank" rel="noopener noreferrer">
     <Icon name="download" />
     {t.download.gallery}
     <span class="visually-hidden">{t.download.external}</span>
   </a>
   {details && <p class="label details">{details}</p>}
   {note && <p class="note"><Icon name="lock" size="1em" /> {note}</p>}
+  {privateNote && <p class="note">{!note && <Icon name="lock" size="1em" />} {privateNote}</p>}
 </div>
 
 <style>

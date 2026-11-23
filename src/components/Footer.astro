@@ -7,20 +7,28 @@ import EmailLink from './EmailLink.astro';
 const t = useTranslations();
 const year = new Date().getFullYear();
 const years = year > site.copyrightSince ? `${site.copyrightSince}–${year}` : String(year);
+// Auf der Kontaktseite stehen E-Mail und Instagram schon groß – dort nicht noch einmal in der Fußzeile (seit 23.11.2026)
+const onContact = Astro.url.pathname.startsWith('/kontakt');
 ---
 
 <footer class="site-footer">
   <div class="container container--wide">
     <div class="top">
-      <div class="contact">
-        <h2 class="visually-hidden">{t.nav.contact}</h2>
-        <p class="links">
-          <EmailLink class="big-link tap" />
-          <a class="big-link tap" href={site.instagram.url} rel="me noopener" target="_blank">
-            <Icon name="instagram" size="0.9em" /> {site.instagram.handle.toLowerCase()}
-          </a>
-        </p>
-      </div>
+      {
+        onContact ? (
+          <div class="contact" />
+        ) : (
+          <div class="contact">
+            <h2 class="visually-hidden">{t.nav.contact}</h2>
+            <p class="links">
+              <EmailLink class="big-link tap" />
+              <a class="big-link tap" href={site.instagram.url} rel="me noopener" target="_blank">
+                <Icon name="instagram" size="0.9em" /> {site.instagram.handle.toLowerCase()}
+              </a>
+            </p>
+          </div>
+        )
+      }
       <nav class="legal" aria-label="Rechtliches">
         <a class="tap" href="/impressum/">{t.footer.imprint}</a>
         <a class="tap" href="/datenschutz/">{t.footer.privacy}</a>

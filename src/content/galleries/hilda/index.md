@@ -1,15 +1,15 @@
 ---
-title: hilda
+title: Hilda
 slug: hilda
 date: 2026-09-09
-description: "Fotos: hilda."
+description: "Porträt von Hilda."
 visibility: public
 portfolio:
   zeigen: true
 showExif: true
 images:
   - file: /alben/hilda/images/dscf6504.jpg
-    alt: Foto aus „hilda“
+    alt: "Hilda lehnt mit geschlossenen Augen an einem Holzpfosten, im weißen Top mit aufgenähtem gemustertem Stoff."
     hero: false
 albumRequest: false
 ---

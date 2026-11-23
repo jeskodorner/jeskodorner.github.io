@@ -124,8 +124,9 @@ a.email-link:not(.btn, .channel, .big-link):hover {
   top: 0.75rem;
   z-index: 200;
   padding: 0.75rem 1.1rem;
-  background: var(--hover);
-  color: var(--on-hover);
+  /* Blau statt Orange: kleine helle Schrift auf Orange wäre zu kontrastarm (seit 23.11.2026) */
+  background: var(--ink);
+  color: var(--wall);
   font-weight: 800;
   text-decoration: none;
   transform: translateY(-200%);
@@ -178,6 +179,9 @@ html:not(.js) .js-only {
   font-family: var(--font-display);
   font-weight: var(--display-wght);
   font-synthesis-weight: none;
+  /* Melodrama zeichnet die Null mit Schrägstrich – „2Ø25“ las sich wie das dänische Ø. Die Mediävalziffern der Schrift
+     haben eine runde Null (seit 23.11.2026). */
+  font-variant-numeric: oldstyle-nums;
   line-height: 0.95;
   letter-spacing: -0.01em;
   text-wrap: balance;
@@ -337,10 +341,16 @@ html:not(.js) .js-only {
 /* Voller Knopf (Hauptaktion: Ganzes Album ansehen, Schreib mir, Senden): Orange mit heller Schrift wie der
    Menüknopf, beim Überfahren Blau. Vorher blau gefüllt – zusammen mit blauer Schrift und blauer Fußzeile war das zu
    viel Blau (20.11.2026). */
+/* Helle Schrift auf Orange erreicht nur 3,2:1 – genug nur für große Schrift (ab 19 px fett, WCAG). Deshalb steht auf
+   vollen Knöpfen die Schrift seit 23.11.2026 in 19 px statt 15 px; weniger Innenabstand oben/unten, so bleiben sie so
+   hoch wie die normalen Knöpfe daneben. */
 .btn--solid {
   background: var(--hover);
   border-color: var(--hover);
   color: var(--on-hover);
+  font-size: 1.1875rem;
+  padding-block: 0.6em;
+  letter-spacing: 0.04em;
 }
 .btn--solid:hover {
   background: var(--ink);
@@ -418,10 +428,12 @@ a:hover .arrow,
 }
 
 /* ---------- Bewegung (nur wenn erwünscht und unterstützt) ---------- */
+/* Fotos beim Hereinscrollen: nur ein Hauch (seit 23.11.2026; vorher aus ganz durchsichtig und 2,5rem tiefer – die
+   Fotos sahen beim Hereinkommen blass aus) */
 @keyframes reveal {
   from {
-    opacity: 0;
-    translate: 0 2.5rem;
+    opacity: 0.6;
+    translate: 0 0.75rem;
   }
   to {
     opacity: 1;
@@ -485,9 +497,11 @@ a:hover .arrow,
 /* Fotoreihen ([data-justify]) werden direkt im HTML verteilt, noch vor dem ersten Bild (JustifyNow.astro) – sie
    erscheinen sofort an ihrem Platz. Ohne JavaScript gilt die CSS-Verteilung. */
 .tiles {
-  --row: clamp(95px, 55px + 12vw, 230px);
+  /* Zielhöhe einer Reihe: am Handy etwa 175 px (zwei bis drei Fotos pro Reihe), am Laptop 230–240 px. Bis 23.11.2026
+     clamp(95px, 55px + 12vw, 230px) – am Handy waren die Reihen nur 104 px hoch, Hochformate kaum 80 px breit. */
+  --row: clamp(170px, 150px + 6vw, 240px);
   /* So schmal wird kein Foto (Hochformate neben Querformaten bleiben erkennbar) */
-  --min-w: clamp(84px, 22vw, 150px);
+  --min-w: clamp(100px, 26vw, 150px);
   list-style: none;
   padding: 0;
   display: flex;

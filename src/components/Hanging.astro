@@ -129,21 +129,26 @@ const { items } = Astro.props;
     font-size: clamp(0.72rem, 0.66rem + 0.25vw, var(--fs-xs));
   }
 
-  /* ---------- Desktop: Foto links, Schild rechts daneben auf halber Bildhöhe ---------- */
+  /* ---------- Desktop: Foto links, Schild rechts daneben auf halber Bildhöhe ----------
+     Seit 23.11.2026 an einer gemeinsamen Achse: Die Fotos stehen rechtsbündig in einer festen linken Spalte, die
+     Schilder beginnen alle an derselben Linie rechts davon. Vorher stand jedes Schild direkt neben seinem Foto – bei
+     unterschiedlich breiten Fotos begannen die Titel an vier verschiedenen Stellen, und schmale Schilder (20rem)
+     brachen oft unnötig um. */
   @media (min-width: 900px) {
     .work {
-      display: flex;
+      grid-template-columns: 46vw minmax(0, 1fr);
       align-items: center;
-      gap: clamp(2.5rem, 5vw, 5.5rem);
+      justify-items: start;
+      column-gap: clamp(2.5rem, 5vw, 5.5rem);
     }
     .work-media {
-      flex: none;
-      /* Breite aus dem Seitenverhältnis: nie höher als --work-h, nie breiter als 46 % */
+      justify-self: end;
+      /* Breite aus dem Seitenverhältnis: nie höher als --work-h, nie breiter als die Spalte */
       width: min(46vw, calc(var(--work-h) * var(--r)));
     }
     .work-label {
-      flex: 0 1 20rem;
       width: auto;
+      max-width: 26ch;
       justify-items: start;
       text-align: left;
     }

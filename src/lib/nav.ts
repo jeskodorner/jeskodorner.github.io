@@ -13,8 +13,8 @@ export async function navLinks(): Promise<NavLink[]> {
   const t = useTranslations();
   const hasFilms = (await getCollection('films')).length > 0;
   return [
-    { href: '/portfolio/', label: t.nav.selected, match: ['/portfolio/'] },
-    { href: '/galerien/', label: t.nav.galleries, match: ['/galerien/', '/g/'] },
+    { href: '/portfolio/', label: t.nav.selected, match: ['/portfolio/', '/mappe/'] },
+    { href: '/galerien/', label: t.nav.galleries, match: ['/galerien/'] },
     ...(hasFilms ? [{ href: '/film/', label: t.nav.film, match: ['/film/'] }] : []),
     { href: '/ueber-mich/', label: t.nav.about, match: ['/ueber-mich/'] },
     { href: '/kontakt/', label: t.nav.contact, match: ['/kontakt/'] },

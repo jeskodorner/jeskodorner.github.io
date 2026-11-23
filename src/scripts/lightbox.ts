@@ -105,11 +105,13 @@ export function initLightbox(opts: LightboxOptions = {}) {
   // Zustand des Detail-Felds
   let open = false;
   try {
-    open = sessionStorage.getItem(KEY) === '1';
+    // Am Handy startet die Großansicht immer ohne Details – das Feld nimmt dort die halbe Höhe (seit 23.11.2026)
+    open = sessionStorage.getItem(KEY) === '1' && window.innerWidth >= 900;
   } catch {
     /* privater Modus */
   }
   let sheetH = 0; // Höhe des Felds auf dem Handy (wird gemessen)
+  let lastIndex: number | undefined; // zuletzt angesehenes Foto (Fokus nach dem Schließen)
   let panel: HTMLElement | undefined;
   let infoBtn: HTMLElement | undefined;
 
@@ -391,6 +393,7 @@ export function initLightbox(opts: LightboxOptions = {}) {
   lightbox.on('firstUpdate', () => {
     const pswp = lightbox.pswp;
     if (!pswp) return;
+    lastIndex = pswp.currIndex;
     render(pswp);
     measure(pswp);
   });
@@ -439,6 +442,7 @@ export function initLightbox(opts: LightboxOptions = {}) {
   // Teilbare URL: #bild-N
   lightbox.on('change', () => {
     const i = lightbox.pswp?.currIndex;
+    lastIndex = i;
     if (i === undefined || !shareable) return;
     history.replaceState(history.state, '', `#bild-${i + 1}`);
   });
@@ -450,6 +454,16 @@ export function initLightbox(opts: LightboxOptions = {}) {
       const r = target.getBoundingClientRect();
       if (r.bottom < 0 || r.top > window.innerHeight) target.scrollIntoView({ block: 'center', behavior: 'instant' });
     }
+  });
+  // Tastatur: nach dem Schließen steht der Fokus auf dem zuletzt angesehenen Foto, nicht auf dem, mit dem man die
+  // Großansicht geöffnet hat (seit 23.11.2026). Mappen öffnen über eigene Links (data-photo), Alben über die Kacheln.
+  lightbox.on('destroy', () => {
+    const i = lastIndex;
+    if (i === undefined) return;
+    const own = document.querySelector<HTMLElement>(`[data-open-album][data-photo="${i + 1}"]`);
+    const tile = galleryEl.querySelectorAll<HTMLElement>('a.ph')[i];
+    const el = own ?? (tile && tile.offsetParent !== null ? tile : undefined);
+    el?.focus({ preventScroll: true });
   });
 
   lightbox.init();

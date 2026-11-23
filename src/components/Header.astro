@@ -139,6 +139,18 @@ const isCurrent = (match: string[]) => current(path, match);
     background: var(--hover);
     color: var(--on-hover);
   }
+  /* Tablet quer (z. B. iPad, 1024 px): die Wörter erscheinen, aber getippt wird mit dem Finger – unsichtbare Tippfläche
+     von mindestens 44 px Höhe, ohne dass sich die Schrift verschiebt (seit 23.11.2026) */
+  @media (pointer: coarse) {
+    .nav-desktop a {
+      position: relative;
+    }
+    .nav-desktop a::after {
+      content: '';
+      position: absolute;
+      inset: -0.6rem -0.2rem;
+    }
+  }
   .nav-desktop a[aria-current='page'] {
     text-decoration: underline;
     text-decoration-thickness: 0.07em;

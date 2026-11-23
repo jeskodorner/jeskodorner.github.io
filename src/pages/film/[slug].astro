@@ -23,16 +23,22 @@ import { videoInfo } from '../../lib/video';
 export async function getStaticPaths() {
   const films = await getFilms();
   // Nächster Film in der Reihenfolge der Übersicht, nach dem letzten wieder der erste
-  return films.map((film, i) => ({ params: { slug: film.id }, props: { film, next: films.length > 1 ? films[(i + 1) % films.length] : undefined } }));
+  // Vorheriger und nächster Film (seit 23.11.2026 beide, wie bei Alben und Mappen; vorher nur „Nächster Film“ im Kreis)
+  return films.map((film, i) => ({
+    params: { slug: film.id },
+    props: { film, prev: films[i - 1], next: films[i + 1] },
+  }));
 }
 
 interface Props {
   film: Film;
+  prev?: Film;
   next?: Film;
 }
 
-const { film, next } = Astro.props;
+const { film, prev, next } = Astro.props;
 const nextPreview = next && filmPreview(next);
+const prevPreview = prev && filmPreview(prev);
 const t = useTranslations();
 const { Content } = await render(film);
 const d = film.data;
@@ -85,7 +91,9 @@ const ratio = vid ? vid.width / vid.height : 16 / 9;
 
   <NeighbourNav
     label="Weitere Filme"
+    prevLabel={t.film.prev}
     nextLabel={t.film.next}
+    prev={prev && { url: filmUrl(prev), title: prev.data.title, img: prevPreview && { src: prevPreview.src } }}
     next={next && { url: filmUrl(next), title: next.data.title, img: nextPreview && { src: nextPreview.src } }}
   />
 </BaseLayout>

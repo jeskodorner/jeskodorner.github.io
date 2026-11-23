@@ -17,19 +17,28 @@ import Picture from '../../components/Picture.astro';
 import JustifyNow from '../../components/JustifyNow.astro';
 import Icon from '../../components/Icon.astro';
 import LoopVideo from '../../components/LoopVideo.astro';
-import { getMappen, mappeImages } from '../../lib/mappe';
+import NeighbourNav from '../../components/NeighbourNav.astro';
+import { getMappen, mappeImages, mappeUrl } from '../../lib/mappe';
+import type { ImageMetadata } from 'astro';
 import type { Gallery, GalleryImage } from '../../lib/galleries';
 import { photoData } from '../../lib/lightbox-data';
 import { cardImage } from '../../lib/og';
 import { tidyTitle } from '../../lib/text';
-import { cardSizes } from '../../lib/sizes';
+import { mappeSizes } from '../../lib/sizes';
 import { useTranslations, formatMonth } from '../../i18n';
 
 export async function getStaticPaths() {
   const mappen = await getMappen();
-  return mappen.map(({ gallery, lead, mappe, name, beschreibung }) => ({
+  // Nachbarn in der Reihenfolge des Portfolios (seit 23.11.2026: „← Vorherige Mappe / Nächste Mappe →“ wie bei Alben)
+  const nb = (m?: (typeof mappen)[number]) =>
+    m && {
+      url: mappeUrl(m.gallery),
+      title: m.name ?? m.gallery.title,
+      img: { src: m.lead.src, color: m.lead.color, lqip: m.lead.lqip },
+    };
+  return mappen.map(({ gallery, lead, mappe, name, beschreibung, werk }, i) => ({
     params: { slug: gallery.slug },
-    props: { gallery, lead, mappe, name, beschreibung },
+    props: { gallery, lead, mappe, name, beschreibung, werk, prev: nb(mappen[i - 1]), next: nb(mappen[i + 1]) },
   }));
 }
 
@@ -42,13 +51,21 @@ interface Props {
   name?: string;
   /** Beschreibung der Mappe aus dem Portfolio (optional), steht unter dem Titel */
   beschreibung?: string;
+  /** Platz im Portfolio (#werk-<n>) */
+  werk: number;
+  prev?: { url: string; title: string; img?: { src: ImageMetadata; color?: string; lqip?: string } };
+  next?: { url: string; title: string; img?: { src: ImageMetadata; color?: string; lqip?: string } };
 }
 
-const { gallery: g, lead, mappe, name, beschreibung } = Astro.props;
+const { gallery: g, lead, mappe, name, beschreibung, werk, prev, next } = Astro.props;
 // Titel der Mappe: eigener Name aus dem Portfolio, sonst der Name des Albums (seit 22.11.2026)
 const title = name ?? g.title;
 const t = useTranslations();
 const images = mappeImages(g, lead, mappe);
+// Wie viele Fotos das ganze Album mehr zeigt: nur dann lohnt „Ganzes Album ansehen“ (seit 23.11.2026; vorher führte der
+// Knopf bei kleinen Alben zu genau denselben Fotos)
+const albumCount = g.images.length;
+const showAlbum = albumCount > images.length;
 // Unter dem Titel nur das Datum, wie auf der Albumseite (bis 20.11.2026 auch der Ort)
 const meta = formatMonth(g.date);
 // Lightbox-Daten nur der Fotos dieser Mappe (unsichtbar), in ihrer Reihenfolge und eigener Zählung
@@ -61,8 +78,9 @@ const mappeVideo = g.entry.data.mappeVideo;
 
 <BaseLayout title={title} description={beschreibung ?? g.description} image={og}>
   <section class="container container--wide head">
-    {/* Zurück dorthin, wo man herkam (Startseite oder Portfolio); ohne Vorgeschichte zur Startseite */}
-    <a class="back btn btn--small" href="/" data-back>
+    {/* Zurück dorthin, wo man herkam (Startseite oder Portfolio); ohne Vorgeschichte ins Portfolio zu dieser Mappe
+        (bis 23.11.2026 zur Startseite) */}
+    <a class="back btn btn--small" href={`/portfolio/#werk-${werk}`} data-back>
       <Icon name="arrow-left" /> {t.back}
     </a>
     <h1 class="display display-1 display-compact">{tidyTitle(title)}</h1>
@@ -96,12 +114,12 @@ const mappeVideo = g.entry.data.mappeVideo;
                 <Picture
                   src={img.src}
                   alt={img.alt}
-                  sizes={cardSizes(r)}
+                  sizes={mappeSizes(r)}
                   color={img.color}
                   lqip={img.lqip}
                   loading={i < 4 ? 'eager' : 'lazy'}
                   fetchpriority={i === 0 ? 'high' : undefined}
-                  maxWidth={1200}
+                  maxWidth={1600}
                   class="sheet-img"
                 />
               </a>
@@ -125,12 +143,19 @@ const mappeVideo = g.entry.data.mappeVideo;
     }
   </ul>
 
-  {/* Ende der Mappe: der Weg ins ganze Album */}
-  <div class="container container--wide end">
-    <a class="btn btn--solid" href={g.url}>
-      {t.mappe.toAlbum} <Icon name="arrow-right" class="arrow" />
-    </a>
-  </div>
+  {/* Ende der Mappe: der Weg ins ganze Album – nur wenn es dort mehr Fotos gibt, mit ihrer Zahl */}
+  {
+    showAlbum && (
+      <div class="container container--wide end">
+        <a class="btn btn--solid" href={g.url}>
+          {t.mappe.toAlbum} <span class="end-count">· {t.galleries.images(albumCount)}</span>
+          <Icon name="arrow-right" class="arrow" />
+        </a>
+      </div>
+    )
+  }
+
+  <NeighbourNav prev={prev} next={next} prevLabel={t.mappe.prev} nextLabel={t.mappe.next} label={t.mappe.more} />
 </BaseLayout>
 
 <script>
@@ -182,9 +207,12 @@ const mappeVideo = g.entry.data.mappeVideo;
   .container {
     --mappe-gap: clamp(0.45rem, 0.8vw, 0.8rem);
   }
+  /* Mappen zeigen wenige, ausgewählte Fotos – deshalb größer als in der Galerie (seit 23.11.2026; vorher dieselbe
+     Reihenhöhe wie die Galerie-Übersicht, bis 340 px): am Laptop gut die halbe Bildschirmhöhe. Am Handy steht jedes
+     Foto allein in voller Breite (Regel unten). */
   .mappe {
-    --row: clamp(118px, 45px + 19vw, 340px);
-    --min-w: clamp(150px, 40vw, 200px);
+    --row: max(170px, min(55svh, 40px + 30vw));
+    --min-w: clamp(150px, 40vw, 260px);
     list-style: none;
     margin: 0;
     padding: 0;
@@ -192,16 +220,23 @@ const mappeVideo = g.entry.data.mappeVideo;
     flex-wrap: wrap;
     gap: var(--mappe-gap);
   }
-  /* Nur zwei oder drei Fotos (z. B. Spanien): am Handy größer – höhere Zielreihe, so steht ein Querformat allein in
-     voller Breite (seit 22.11.2026, Jeskos Wunsch) */
+  /* Handy: jedes Foto allein in voller Breite (seit 23.11.2026 für alle Mappen; vorher nur bei zwei oder drei Fotos,
+     sonst standen sie im 2×2-Raster nur 165 px breit) */
   @media (max-width: 699.98px) {
-    .mappe--few {
-      --row: 60vw;
+    .mappe {
+      --row: 100vw;
     }
   }
   .mappe::after {
     content: '';
     flex-grow: 1000000;
+  }
+  /* Nur ein Foto (z. B. Ostsee): mittig statt links mit leerem Rest */
+  .mappe:has(> .sheet:only-child) {
+    justify-content: center;
+  }
+  .mappe:has(> .sheet:only-child)::after {
+    display: none;
   }
   .sheet {
     flex-grow: calc(var(--r) * 100);
@@ -234,6 +269,10 @@ const mappeVideo = g.entry.data.mappeVideo;
     justify-items: start;
     gap: 0.9rem;
     padding-top: clamp(2.5rem, 5vw, 4.5rem);
+  }
+  /* Zahl der Fotos im Album: dünner als der Knopftext */
+  .end-count {
+    font-weight: 500;
   }
   @media (max-width: 899.98px) {
     .end {

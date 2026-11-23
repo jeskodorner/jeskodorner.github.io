@@ -553,6 +553,16 @@ const nameWords = site.name.split(' ').map((word) =>
       background-color 0.2s,
       color 0.2s;
   }
+  /* Tippfläche: oben und unten unsichtbar etwas größer (mindestens 44 px; die Zeilen sind nur 0,95 Schrifthöhen hoch,
+     am Handy ~32 px). Die Abstände zwischen den Zeilen reichen, damit sich die Flächen nicht überlappen. */
+  .bm-list a {
+    position: relative;
+  }
+  .bm-list a::after {
+    content: '';
+    position: absolute;
+    inset: min(0px, calc(50% - 22px)) 0;
+  }
   .bm-list a[aria-current='page'] {
     text-decoration: underline;
     text-decoration-thickness: 0.07em;

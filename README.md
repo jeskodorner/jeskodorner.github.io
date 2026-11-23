@@ -966,6 +966,33 @@ Mit Lizenz:
 
 ---
 
+### Design-Durchgang vom 23.11.2026
+
+Ganze Seite geprüft (Laptop, Tablet, Handy; Prüfregeln der Skills „impeccable“ und „emil-design-eng“, Stand davor im
+Tag `alte-version-vor-design-review`). Geändert:
+
+- **Mappen:** „Ganzes Album ansehen · N Bilder“ nur, wenn das Album mehr Fotos hat als die Mappe; „← Vorherige / Nächste
+  Mappe →“ in der Reihenfolge des Portfolios; „Zurück“ ohne Vorgeschichte ins Portfolio zu dieser Mappe (vorher
+  Startseite); größere Fotos (Laptop gut halbe Bildschirmhöhe, Handy jedes Foto in voller Breite), ein einzelnes Foto
+  mittig. Im Menü ist auf Mappen „Portfolio“ markiert.
+- **Ausschnitte:** Fotos ohne `focus` werden bei Hochformaten im oberen Drittel, sonst knapp über der Mitte beschnitten
+  (Startseite, Album-Kopf) – vorher genau mittig, Köpfe fielen ab. Grauer Filter im Album-Kopf mindestens 0,6.
+- **Kontrast:** volle Knöpfe (Orange, helle Schrift) mit 19 px Schrift – helle Schrift auf Orange (3,2:1) reicht nur
+  für große Schrift. „Zum Inhalt springen“ blau.
+- **Portfolio:** Titel an einer gemeinsamen Linie, Fotos rechtsbündig in der linken Spalte.
+- **Alben am Handy:** Reihen ~170 statt 104 px hoch.
+- **Großansicht am Handy:** Pfeile 44 px ohne Beschriftung, Details starten geschlossen; nach dem Schließen steht der
+  Fokus auf dem zuletzt angesehenen Foto.
+- **Startseite:** Diashow hält an, solange die Maus auf dem Foto ist oder es den Tastaturfokus hat; es lädt nur das
+  jeweils nächste Foto vor (vorher alle 13).
+- **Titel:** große Seitentitel höchstens 16 % der Bildschirmhöhe (Laptop 144 statt 192 px); Mediävalziffern mit runder
+  Null (Melodramas Null hat einen Schrägstrich, „2Ø25“); „&“ und „x“ in Titeln brechen nicht allein um.
+- **Begriffe:** „Vorheriges / Nächstes Album“, „Weitere Alben“; Filme haben auch „Vorheriger Film“.
+- **Kleinigkeiten:** Kontaktseite ohne doppelte Adressen in der Fußzeile; private Kundengalerie: Download als voller
+  Knopf, Hinweis im selben Kasten, „Galerie“ im Menü nicht markiert; größere Tippflächen (Menü, Laptop-Menü auf
+  Tablets); Fotos blenden beim Scrollen nur noch leicht ein; keine federnde Bewegungskurve mehr (`--pop`).
+- **Inhalt:** echte Bildbeschreibungen für 9 Fotos (Dramaqueen, Hilda, Liv und Hilda, Photoautomat), „Hilda“ groß.
+
 ## 12. Englisch später ergänzen
 
 Die Struktur ist dafür vorbereitet:

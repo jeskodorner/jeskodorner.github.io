@@ -53,7 +53,7 @@ const first = films.map(filmPreview).find(Boolean);
                 </h2>
               </a>
               <p class="teaser">{filmTeaser(film)}</p>
-              <a class="more label" href={url} aria-label={`${t.film.more}: ${film.data.title}`}>
+              <a class="more label" href={url} tabindex="-1" aria-hidden="true">
                 {t.film.more} <Icon name="arrow-right" class="arrow" />
               </a>
             </li>
