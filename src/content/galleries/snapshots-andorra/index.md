@@ -1,10 +1,14 @@
 ---
-title: Snapshots aus Andorra
+title: Wanderung Andorra
 slug: snapshots-andorra
 date: 2026-06-24
 location: Andorra
-description: "Unterwegs mit Rucksack in den Bergen Andorras: Schotterwege, Rast
-  im Gras, Wolken am Hang und Gipfel im Gegenlicht."
+description: >-
+  10 Tage unterwegs auf dem GRP Andorra. Jeder von uns das Essen für die gesamte
+  Zeit im Rucksack. Mit dem Flixbus hin und zurück, also insgesamt etwa 70
+  Stunden im Bus. Eine absolute Zerstörungstour: Gerne jederzeit wieder!
+
+  Als Kamera habe ich meine kleine Lumix lx3 dabei.
 visibility: public
 portfolio:
   zeigen: false

@@ -7,7 +7,7 @@ description: "Reise-Snapshots aus Ecuador: Flug, Busbahnhof, Straßenszenen,
   Fahrten über Land und Tage im Regenwald."
 visibility: public
 portfolio:
-  zeigen: true
+  zeigen: false
   vorschau: /alben/snapshots-ecuador/images/p1120154.jpg
   fotos:
     - /alben/snapshots-ecuador/images/p1120148.jpg
@@ -17,7 +17,7 @@ portfolio:
     - /alben/snapshots-ecuador/images/p1120454.jpg
     - /alben/snapshots-ecuador/images/p1120204.jpg
 showExif: true
-cover: /alben/snapshots-ecuador/images/p1120158.jpg
+cover: /alben/snapshots-ecuador/images/p1120204.jpg
 images:
   - file: p1120148.jpg
     alt: Eine Person schläft aufrecht auf einem Flugzeugsitz in blau beleuchteter
