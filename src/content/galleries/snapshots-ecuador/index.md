@@ -7,7 +7,7 @@ description: "Reise-Snapshots aus Ecuador: Flug, Busbahnhof, Straßenszenen,
   Fahrten über Land und Tage im Regenwald."
 visibility: public
 portfolio:
-  zeigen: true
+  zeigen: false
   vorschau: /alben/snapshots-ecuador/images/p1120154.jpg
   fotos:
     - /alben/snapshots-ecuador/images/p1120148.jpg
