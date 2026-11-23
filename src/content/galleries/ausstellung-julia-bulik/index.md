@@ -63,5 +63,5 @@ images:
   - file: dscf8442.jpg
     alt: "Schwarzweiß: Zwei Personen im angeregten Gespräch vor gerahmten
       Fotografien an einer rauen Wand."
-cover: dscf8323.jpg
+cover: /alben/ausstellung-julia-bulik/images/dscf8323.jpg
 ---

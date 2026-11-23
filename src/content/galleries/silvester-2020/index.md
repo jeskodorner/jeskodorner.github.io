@@ -29,5 +29,5 @@ images:
   - file: dsc00171.jpg
     alt: "Junge Person beugt sich nachts auf einem Gehweg mit sprühenden Funken über
       eine Glasflasche"
-cover: dsc00171.jpg
+cover: /alben/silvester-2020/images/dsc00171.jpg
 ---

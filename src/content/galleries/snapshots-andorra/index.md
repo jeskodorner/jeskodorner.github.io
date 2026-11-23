@@ -54,5 +54,5 @@ images:
     alt: "Zwei junge Leute sitzen mit Rucksäcken auf einer Bank und einem
       Plastikstuhl an einer baumgesäumten Stadtstraße"
 location: Andorra
-cover: p1080572.jpg
+cover: /alben/snapshots-andorra/images/p1080572.jpg
 ---

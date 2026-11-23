@@ -57,5 +57,5 @@ images:
   - file: dscf0233.jpg
     alt: "Nahaufnahme: Keramikfiguren liegen in einem Wasserbecken, am Rand eine
       hasenähnliche Figur mit Schuppenmuster."
-cover: dscf0183.jpg
+cover: /alben/fusion-2025-keramik-julia-bulik/images/dscf0183.jpg
 ---

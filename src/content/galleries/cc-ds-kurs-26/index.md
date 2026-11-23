@@ -117,5 +117,5 @@ images:
   - file: cc-jeskodorner-29.jpg
     alt: "Ensemble mit Blumenketten reckt bunte Becher in die Höhe, in der Mitte
       eine Person im roten Lackmantel."
-cover: cc-jeskodorner-29.jpg
+cover: /alben/cc-ds-kurs-26/images/cc-jeskodorner-29.jpg
 ---

@@ -30,5 +30,5 @@ images:
     alt: "Mann mit Kappe, Sonnenbrille und Rucksack trägt einen Koffer eine Treppe
       unter Stahlträgern hinauf."
 location: Berlin-Mitte
-cover: dscf1990.jpg
+cover: /alben/mitte-mit-georg/images/dscf1990.jpg
 ---

@@ -30,5 +30,5 @@ images:
     alt: "Weite isländische Landschaft mit rötlichem Bewuchs, einem Flusslauf im Tal
       und Bergen im Dunst."
 location: Island
-cover: island-pics00171767.jpg
+cover: /alben/island-sommer-2026/images/island-pics00171767.jpg
 ---

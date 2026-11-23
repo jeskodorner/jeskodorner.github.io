@@ -155,7 +155,7 @@ async function load(): Promise<Gallery[]> {
     const fromPortfolio = (d.portfolio?.zeigen ? fileOf(d.portfolio.vorschau) : undefined) ?? portfolioCover.get(d.slug) ?? portfolioCover.get(folder);
     const cover =
       (fromPortfolio && images.find((i) => i.file === fromPortfolio)) ||
-      (d.cover && images.find((i) => i.file === d.cover)) ||
+      (d.cover && images.find((i) => i.file === fileOf(d.cover))) ||
       images[0]!;
 
     return {

@@ -41,5 +41,5 @@ images:
   - file: dscf6929.jpg
     alt: "Menschen tanzen nachts vor einer Zeltbühne, im Vordergrund ein Lagerfeuer,
       dahinter bunt angestrahlte Bäume."
-cover: dscf6784.jpg
+cover: /alben/festival-nonostar-2025/images/dscf6784.jpg
 ---

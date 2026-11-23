@@ -62,7 +62,7 @@ images:
     alt: "Vier Personen in Winterjacken bei Nacht an einem Zaun, verwischt im
       Schneefall unter einer Laterne."
 location: Dollgow
-cover: dscf0893.jpg
+cover: /alben/dollgow-neujahr-2025/images/dscf0893.jpg
 portfolio:
   # Portfolio: im Portfolio zeigen, Vorschaufoto (zugleich Titelbild), Fotos der Mappe, Name, Beschreibung
   zeigen: true

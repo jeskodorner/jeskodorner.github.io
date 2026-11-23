@@ -35,5 +35,5 @@ images:
   - file: dsc00039.jpg
     alt: "Abgeknickte Schilfhalme treiben auf dunklem Wasser, auf einem hellen Blatt
       liegen Wassertropfen"
-cover: dsc00016-1.jpg
+cover: /alben/schilf-2020/images/dsc00016-1.jpg
 ---

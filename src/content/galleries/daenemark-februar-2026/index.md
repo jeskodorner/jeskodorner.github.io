@@ -58,5 +58,5 @@ images:
     alt: "Unterwasseraufnahme: drei große Fische schwimmen hintereinander vor einem
       Schwarm kleinerer Fische."
 location: Dänemark
-cover: dscf1361.jpg
+cover: /alben/daenemark-februar-2026/images/dscf1361.jpg
 ---

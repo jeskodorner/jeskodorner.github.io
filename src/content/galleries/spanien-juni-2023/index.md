@@ -36,5 +36,5 @@ images:
     alt: "Mole aus Felsblöcken mit hohen Straßenlaternen, rechts vertäute
       Motorboote, am Ende sitzen Menschen beim Angeln"
 location: Spanien
-cover: dscf100336.jpg
+cover: /alben/spanien-juni-2023/images/dscf100336.jpg
 ---

@@ -354,5 +354,5 @@ images:
       Café und gespiegelte Häuser"
   - file: dscf8662.jpg
     alt: "Schwan auf glitzerndem Wasser im Gegenlicht, in Schwarzweiß"
-cover: dscf6561.jpg
+cover: /alben/random-kollektion/images/dscf6561.jpg
 ---

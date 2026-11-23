@@ -168,5 +168,5 @@ images:
     alt: "Schwarzweiß: Person mit Fahrradhelm beugt sich tief ins Gras, dahinter
       abgestorbene Nadelbäume unter Wolken"
 location: Berlin
-cover: p1080237-als-titelbild.jpg
+cover: /alben/snapshots-berlin/images/p1080237-als-titelbild.jpg
 ---

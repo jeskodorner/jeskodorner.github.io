@@ -55,5 +55,5 @@ images:
   - file: dscf9065.jpg
     alt: "Zwei schwarze Hunde stehen in einem Becken mit trübem, ockerfarbenem
       Wasser."
-cover: dscf1137.jpg
+cover: /alben/aia/images/dscf1137.jpg
 ---

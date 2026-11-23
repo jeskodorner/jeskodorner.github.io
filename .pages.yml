@@ -141,9 +141,11 @@ content:
             description: Steht in der Mappe unter dem Titel.
       - { name: showExif, label: Aufnahmedaten zeigen, type: boolean }
       - name: cover
-        label: Titelbild (Dateiname, optional)
-        type: string
-        description: Nur für Alben, die nicht im Portfolio stehen – sonst gilt das Vorschaufoto aus „Portfolio“.
+        label: Titelbild (optional)
+        type: image
+        description: Im Ordner dieses Albums → images ein Foto wählen. Leer = erstes Foto. Gilt nur für Alben, die nicht im Portfolio stehen – sonst ist das Vorschaufoto aus „Portfolio“ das Titelbild.
+        options:
+          media: alben
       - name: mappeVideo
         label: Video oben in der Mappe (Dateiname in public/videos/, optional)
         type: string

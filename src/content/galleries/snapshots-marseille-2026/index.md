@@ -64,5 +64,5 @@ images:
     alt: "Kleine Kiesbucht von oben mit Badenden im klaren, grünen Wasser und auf
       Handtüchern zwischen Felsen"
 location: Marseille
-cover: p1090091.jpg
+cover: /alben/snapshots-marseille-2026/images/p1090091.jpg
 ---

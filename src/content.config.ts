@@ -132,7 +132,9 @@ const galleries = defineCollection({
         });
       }
       const files = g.images.map((i) => i.file);
-      if (g.cover && !files.includes(g.cover)) {
+      // Titelbild als Dateiname oder als Pfad aus dem CMS („/alben/<ordner>/images/<datei>“)
+      const coverFile = g.cover?.split('/').pop();
+      if (coverFile && !files.includes(coverFile)) {
         ctx.addIssue({
           code: 'custom',
           path: ['cover'],

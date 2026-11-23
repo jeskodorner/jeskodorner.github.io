@@ -8,7 +8,7 @@ description: "Setcard-Fotos von Hilda vor einer rostigen Wand."
 # color: green
 visibility: public
 showExif: true
-cover: hilda-setcard-gesicht.jpg
+cover: /alben/hilda-setcard/images/hilda-setcard-gesicht.jpg
 # downloadUrl: https://…
 images:
   - file: hilda-setcard-gesicht.jpg

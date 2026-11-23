@@ -55,5 +55,5 @@ images:
     alt: "Person in Jeansjacke von hinten am Strand in der Dämmerung, daneben tragen
       zwei Kinder ein Surfbrett."
 location: Pyrenäen
-cover: dscf4849.jpg
+cover: /alben/pyrenaeen-2024/images/dscf4849.jpg
 ---

@@ -40,5 +40,5 @@ images:
     alt: "Person mit rosa Kopfbedeckung geht über eine Metalltreppe zum Strand, vor
       ihr die bewegte Ostsee mit Buhnen."
 location: Hiddensee
-cover: dscf1724.jpg
+cover: /alben/hiddensee-mit-yael/images/dscf1724.jpg
 ---

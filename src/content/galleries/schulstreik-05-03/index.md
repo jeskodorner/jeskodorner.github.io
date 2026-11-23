@@ -37,7 +37,7 @@ images:
   - file: p3050249.jpg
     alt: "Ordner in Warnweste hält Absperrband neben dem Lautsprecherwagen, vor ihm
       zieht der Demonstrationszug durch die Straße"
-cover: p3050211.jpg
+cover: /alben/schulstreik-05-03/images/p3050211.jpg
 portfolio:
   # Portfolio: im Portfolio zeigen, Vorschaufoto (zugleich Titelbild), Fotos der Mappe, Name, Beschreibung
   zeigen: true

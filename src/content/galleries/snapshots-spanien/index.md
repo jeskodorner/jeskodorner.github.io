@@ -65,7 +65,7 @@ images:
     alt: "Zwei junge Personen auf einem Berggipfel, eine mit hellem Tuch auf dem
       Kopf, dahinter eine weite Bucht mit Bergen"
 location: Spanien
-cover: dscf3835.jpg
+cover: /alben/snapshots-spanien/images/dscf3835.jpg
 portfolio:
   # Portfolio: im Portfolio zeigen, Vorschaufoto (zugleich Titelbild), Fotos der Mappe, Name, Beschreibung
   zeigen: true

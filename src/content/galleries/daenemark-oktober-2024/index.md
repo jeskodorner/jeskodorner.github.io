@@ -34,5 +34,5 @@ images:
     alt: "Steile Felsklippe über dem Meer in Schwarzweiß, auf den Vorsprüngen sitzen
       dunkle Seevögel."
 location: Dänemark
-cover: dscf6734.jpg
+cover: /alben/daenemark-oktober-2024/images/dscf6734.jpg
 ---
