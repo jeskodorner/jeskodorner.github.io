@@ -1,6 +1,6 @@
 ---
-title: Spanien
-slug: spanien
+title: Spanien am Strand
+slug: spanien-strand
 date: 2025-02-03
 location: Spanien
 description: "Snapshots aus Spanien: weiße Häuser und Zäune, Abende am Wasser,
