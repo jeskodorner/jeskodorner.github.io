@@ -1,34 +1,20 @@
 ---
-# Titel der Galerie
-title: "Island, Sommer 2026"
-# URL-Teil: /galerien/island-sommer-2026/
-slug: island-sommer-2026
+title: Island 2026
+slug: island-2026
 date: 2026-07-01
-# location: "Ort"
-# Kurzbeschreibung (1–2 Sätze) – erscheint auf der Kachel und in Link-Vorschauen
-description: "Island im Sommer: Blick über eine weite, hügelige Landschaft mit
-  rötlichem Bewuchs, einem Flusslauf und Bergen im Dunst."
-# Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: green
-# public = in der Übersicht · unlisted = nur per Direktlink, noindex
+location: Island
+description: "Tausende Male habe ich gehört, wie schön Island sein soll. Dann
+  selber auf einem Berg in der Steinwüste zu stehen, lässt trotzdem meinen Atem
+  stocken:"
 visibility: public
-# Aufnahmedaten (Kamera, Blende …) anzeigen
+portfolio:
+  zeigen: false
 showExif: true
-# Titelbild (Dateiname aus der Liste unten). Ohne Angabe: das erste Bild
-# cover: bild-01.jpg
-
-# --- Download (optional, siehe README) ---
-# downloadUrl: https://…
-# downloadSize: 1,2 GB
-# downloadFormat: ZIP · JPG
-# downloadNote: Link gültig bis 31.12.2026 – Passwort bekommst du separat.
-
-# Bilder: werden von "npm run optimize" automatisch ergänzt.
-# Pro Bild Pflicht: alt (Bildbeschreibung). Optional: caption, originalUrl, hero, focus, exif
+cover: /alben/island-sommer-2026/images/island-pics00171767.jpg
 images:
   - file: /alben/island-sommer-2026/images/island-pics00171767.jpg
-    alt: "Weite isländische Landschaft mit rötlichem Bewuchs, einem Flusslauf im Tal
-      und Bergen im Dunst."
-location: Island
-cover: /alben/island-sommer-2026/images/island-pics00171767.jpg
+    alt: Weite isländische Landschaft mit rötlichem Bewuchs, einem Flusslauf im Tal
+      und Bergen im Dunst.
+    hero: false
+albumRequest: false
 ---
