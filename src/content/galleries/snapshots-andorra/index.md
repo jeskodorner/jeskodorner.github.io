@@ -3,9 +3,12 @@ title: Wanderung Andorra
 slug: snapshots-andorra
 date: 2026-06-24
 location: Andorra
-description: "10 Tage unterwegs auf dem GRP Andorra. Jeder von uns Essen für die
-  gesamte Zeit im Rucksack. Mit dem Flixbus hin und zurück, also insgesamt etwa
-  70 Stunden im Bus. Eine absolute Zerstörungstour: Gerne jederzeit wieder!"
+description: >-
+  10 Tage unterwegs auf dem GRP Andorra. Jeder von uns das Essen für die gesamte
+  Zeit im Rucksack. Mit dem Flixbus hin und zurück, also insgesamt etwa 70
+  Stunden im Bus. Eine absolute Zerstörungstour: Gerne jederzeit wieder!
+
+  Als Kamera habe ich meine kleine Lumix lx3 dabei.
 visibility: public
 portfolio:
   zeigen: false
