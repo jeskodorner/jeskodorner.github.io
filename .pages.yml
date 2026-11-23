@@ -74,7 +74,7 @@ content:
       - name: fotos
         label: Fotos
         type: image
-        description: Am besten aus Lightroom in Web-Größe exportiert (lange Kante 2400 px, JPEG). Bildbeschreibungen aus Lightroom („Bildunterschrift“) werden übernommen.
+        description: "Mehrere Fotos auf einmal: alle im Finder markieren und hierher ziehen, oder auf „Upload“ klicken und im Fenster alle markieren (⌘A). Am besten aus Lightroom in Web-Größe exportiert (lange Kante 2400 px, JPEG). Bildbeschreibungen aus Lightroom („Bildunterschrift“) werden übernommen."
         options:
           media: eingang
           multiple:
@@ -169,7 +169,14 @@ content:
             collapsed: true
             summary: "{file} – {alt}"
         fields:
-          - { name: file, label: Datei, type: string, readonly: true }
+          # seit 23.11.2026 als Bildfeld (Pfad /alben/<ordner>/images/<datei>), damit das Foto als Vorschau zu sehen ist
+          - name: file
+            label: Foto
+            type: image
+            readonly: true
+            description: Nur zum Ansehen – neue Fotos kommen über „Fotos hochladen“.
+            options:
+              media: alben
           - name: alt
             label: Bildbeschreibung
             type: string

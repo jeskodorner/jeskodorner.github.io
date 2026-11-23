@@ -26,10 +26,14 @@ const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 const galleryImage = z
   .object({
-    /** Dateiname im Unterordner images/ der Galerie, z. B. "kueste-01.jpg" */
-    file: z.string().regex(IMAGE_FILE, {
-      error: 'Ungültiger Dateiname. Erlaubt: Kleinbuchstaben, Ziffern, - _ . und .jpg/.png/.webp/.avif',
-    }),
+    /** Datei im Unterordner images/ der Galerie: seit 23.11.2026 als Pfad „/alben/<ordner>/images/kueste-01.jpg“ (so
+        zeigt das CMS eine Vorschau), früher nur „kueste-01.jpg“ – beides geht, weiter zählt nur der Dateiname */
+    file: z.preprocess(
+      (v) => (typeof v === 'string' ? v.trim().split('/').pop() : v),
+      z.string().regex(IMAGE_FILE, {
+        error: 'Ungültiger Dateiname. Erlaubt: Kleinbuchstaben, Ziffern, - _ . und .jpg/.png/.webp/.avif',
+      }),
+    ),
     /** Pflicht: Beschreibung des Bildinhalts für Screenreader und Suchmaschinen */
     alt: z
       .string({ error: 'Alt-Text fehlt (Feld "alt").' })

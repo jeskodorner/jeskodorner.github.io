@@ -27,31 +27,31 @@ showExif: true
 # Bilder: werden von "npm run optimize" automatisch ergänzt.
 # Pro Bild Pflicht: alt (Bildbeschreibung). Optional: caption, originalUrl, hero, focus, exif
 images:
-  - file: dscf4849.jpg
+  - file: /alben/pyrenaeen-2024/images/dscf4849.jpg
     alt: "Gebirgslandschaft mit einer einzelnen großen Kiefer vor spitzen Gipfeln
       und Wolken am blauen Himmel."
-  - file: dscf4929.jpg
+  - file: /alben/pyrenaeen-2024/images/dscf4929.jpg
     alt: "Untersicht: Person in Shorts und Bergschuhen klettert über einen
       Felsblock, darüber blauer Himmel."
-  - file: dscf4930.jpg
+  - file: /alben/pyrenaeen-2024/images/dscf4930.jpg
     alt: "Person klettert einen Felsen hinauf, von unten gesehen, mit Schuhsohle im
       Vordergrund und blauem Himmel."
-  - file: dscf4932.jpg
+  - file: /alben/pyrenaeen-2024/images/dscf4932.jpg
     alt: "Kletternde Person von unten gesehen, im Vordergrund die Profilsohle ihres
       Bergschuhs, darüber blauer Himmel."
-  - file: dscf4934.jpg
+  - file: /alben/pyrenaeen-2024/images/dscf4934.jpg
     alt: "Person in weißem T-Shirt steht an einem steilen Felsen und blickt in die
       Ferne, darüber blauer Himmel."
-  - file: dscf5100.jpg
+  - file: /alben/pyrenaeen-2024/images/dscf5100.jpg
     alt: "Schneefelder auf einem Geröllhang, dahinter schroffe Felswände unter
       Wolken und blauem Himmel."
-  - file: dscf5479.jpg
+  - file: /alben/pyrenaeen-2024/images/dscf5479.jpg
     alt: "Gebirgsbach mit Steinen im Vordergrund, dahinter ein im warmen Licht
       rötlich leuchtender Berggipfel."
-  - file: dscf5482.jpg
+  - file: /alben/pyrenaeen-2024/images/dscf5482.jpg
     alt: "Massiver Berg mit rötlich angestrahlten Felswänden und kleinen
       Schneeresten vor wolkigem Himmel."
-  - file: dscf5836.jpg
+  - file: /alben/pyrenaeen-2024/images/dscf5836.jpg
     alt: "Person in Jeansjacke von hinten am Strand in der Dämmerung, daneben tragen
       zwei Kinder ein Surfbrett."
 location: Pyrenäen

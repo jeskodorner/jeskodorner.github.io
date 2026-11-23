@@ -27,40 +27,40 @@ showExif: true
 # Bilder: werden von "npm run optimize" automatisch ergänzt.
 # Pro Bild Pflicht: alt (Bildbeschreibung). Optional: caption, originalUrl, hero, focus, exif
 images:
-  - file: p1090091.jpg
+  - file: /alben/snapshots-marseille-2026/images/p1090091.jpg
     alt: "Silhouette einer Person mit Smartphone vor einer bunt besprühten Wand mit
       Graffiti, Plakaten und blauer Tür"
-  - file: p1090113.jpg
+  - file: /alben/snapshots-marseille-2026/images/p1090113.jpg
     alt: "Blick durch einen Gitterzaun auf eine Bucht mit Wellenbrecher, Strand und
       grüner Küste im Dunst"
-  - file: p1090117.jpg
+  - file: /alben/snapshots-marseille-2026/images/p1090117.jpg
     alt: "Dunstiger Blick über das Meer auf eine Stadt an der Küste mit Bergen, vorn
       ein Geländer"
-  - file: p1090185.jpg
+  - file: /alben/snapshots-marseille-2026/images/p1090185.jpg
     alt: "Ein spiegelndes Dach zeigt Boote kopfüber, darunter ein Kai mit weißen
       Zelten, Menschen und zerknitterter Metallfolie"
-  - file: p1090283.jpg
+  - file: /alben/snapshots-marseille-2026/images/p1090283.jpg
     alt: "Silhouetten von Tauben auf einem fleckigen, lichtdurchlässigen Dach von
       unten gesehen, am Rand Himmel und Bootsmasten"
-  - file: p1090298.jpg
+  - file: /alben/snapshots-marseille-2026/images/p1090298.jpg
     alt: "Dunkle Kugel an rotem Faden über einer spiegelnden Metallschale auf weißem
       Sockel, dahinter der Schatten einer Person"
-  - file: p1090301.jpg
+  - file: /alben/snapshots-marseille-2026/images/p1090301.jpg
     alt: "Nahaufnahme einer dunklen Kugel über einer polierten Metallschale, in der
       sich ein Ausstellungsraum verzerrt spiegelt"
-  - file: p1090315.jpg
+  - file: /alben/snapshots-marseille-2026/images/p1090315.jpg
     alt: "Beine und Schatten einer Person in dunklem Rock auf hellen Steinplatten
       mit welligen Lichtreflexen"
-  - file: p1090333.jpg
+  - file: /alben/snapshots-marseille-2026/images/p1090333.jpg
     alt: "Langer, dunkler Flur in einem Wohnhaus mit farbigen Türen, vorn eine blaue
       Tür im Lampenlicht"
-  - file: p1090393.jpg
+  - file: /alben/snapshots-marseille-2026/images/p1090393.jpg
     alt: "Nasser, dunkler Fliesenboden mit Wassertropfen und Fußabdrücken, in dem
       sich helles Fensterlicht spiegelt"
-  - file: p1090410.jpg
+  - file: /alben/snapshots-marseille-2026/images/p1090410.jpg
     alt: "Zwei Kinder mit Schwimmringen schwimmen in klarem, grünem Wasser vor einer
       Felswand"
-  - file: p1090423.jpg
+  - file: /alben/snapshots-marseille-2026/images/p1090423.jpg
     alt: "Kleine Kiesbucht von oben mit Badenden im klaren, grünen Wasser und auf
       Handtüchern zwischen Felsen"
 location: Marseille

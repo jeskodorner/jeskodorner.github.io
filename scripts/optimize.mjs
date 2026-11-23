@@ -195,13 +195,16 @@ async function updateIndex(indexPath, files, prefill) {
     seq = doc.get('images', true);
   }
   seq.flow = false;
+  // Einträge als Pfad „/alben/<ordner>/images/<datei>“ (seit 23.11.2026: so zeigt das CMS eine Vorschau);
+  // vorhandene Einträge zählen nach dem Dateinamen, egal ob mit oder ohne Pfad
+  const folder = path.basename(path.dirname(indexPath));
   const existing = new Set(
-    seq.items.map((it) => (isMap(it) ? String(it.get('file') ?? '') : '')).filter(Boolean),
+    seq.items.map((it) => (isMap(it) ? String(it.get('file') ?? '').split('/').pop() : '')).filter(Boolean),
   );
   const added = [];
   for (const file of files) {
     if (existing.has(file)) continue;
-    const entry = { file, alt: prefill[file]?.alt ?? '' };
+    const entry = { file: `/alben/${folder}/images/${file}`, alt: prefill[file]?.alt ?? '' };
     if (prefill[file]?.caption) entry.caption = prefill[file].caption;
     seq.add(doc.createNode(entry));
     added.push(file);
@@ -213,7 +216,7 @@ async function updateIndex(indexPath, files, prefill) {
 async function findMissingAlt(indexPath) {
   const { yaml } = splitFrontmatter(await fs.readFile(indexPath, 'utf8'));
   const data = parseDocument(yaml).toJS() ?? {};
-  return (data.images ?? []).filter((i) => !i?.alt || String(i.alt).trim().length < 3).map((i) => i.file);
+  return (data.images ?? []).filter((i) => !i?.alt || String(i.alt).trim().length < 3).map((i) => String(i.file).split('/').pop());
 }
 
 async function sizeOf(dir) {

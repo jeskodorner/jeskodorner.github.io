@@ -26,7 +26,7 @@ showExif: true
 # Bilder: werden von "npm run optimize" automatisch ergänzt.
 # Pro Bild Pflicht: alt (Bildbeschreibung). Optional: caption, originalUrl, hero, focus, exif
 images:
-  - file: dscf1990.jpg
+  - file: /alben/mitte-mit-georg/images/dscf1990.jpg
     alt: "Mann mit Kappe, Sonnenbrille und Rucksack trägt einen Koffer eine Treppe
       unter Stahlträgern hinauf."
 location: Berlin-Mitte

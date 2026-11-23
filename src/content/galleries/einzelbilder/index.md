@@ -26,7 +26,7 @@ showExif: true
 # Bilder: werden von "npm run optimize" automatisch ergänzt.
 # Pro Bild Pflicht: alt (Bildbeschreibung). Optional: caption, originalUrl, hero, focus, exif
 images:
-  - file: dscf4376.jpg
+  - file: /alben/einzelbilder/images/dscf4376.jpg
     alt: "Person in orangem Oberteil blickt ernst in die Kamera, dahinter Besuchende
       in einem hellen Ausstellungsraum"
 cover: /alben/einzelbilder/images/dscf4376.jpg

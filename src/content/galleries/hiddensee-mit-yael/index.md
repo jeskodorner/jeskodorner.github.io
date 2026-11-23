@@ -27,16 +27,16 @@ showExif: true
 # Bilder: werden von "npm run optimize" automatisch ergänzt.
 # Pro Bild Pflicht: alt (Bildbeschreibung). Optional: caption, originalUrl, hero, focus, exif
 images:
-  - file: dscf1651.jpg
+  - file: /alben/hiddensee-mit-yael/images/dscf1651.jpg
     alt: "Person mit Schal und Haarknoten in der Dämmerung, dahinter steht der
       Vollmond tief über einem Feld."
-  - file: dscf1690.jpg
+  - file: /alben/hiddensee-mit-yael/images/dscf1690.jpg
     alt: "Rind blickt in der Dämmerung frontal in die Kamera, dahinter weitere
       Rinder auf einer kargen Weide."
-  - file: dscf1716.jpg
+  - file: /alben/hiddensee-mit-yael/images/dscf1716.jpg
     alt: "Person schiebt ein Fahrrad über einen sandverwehten Weg zwischen hohem
       Dünengras, in Schwarzweiß."
-  - file: dscf1724.jpg
+  - file: /alben/hiddensee-mit-yael/images/dscf1724.jpg
     alt: "Person mit rosa Kopfbedeckung geht über eine Metalltreppe zum Strand, vor
       ihr die bewegte Ostsee mit Buhnen."
 location: Hiddensee

@@ -26,13 +26,13 @@ showExif: true
 # Bilder: werden von "npm run optimize" automatisch ergänzt.
 # Pro Bild Pflicht: alt (Bildbeschreibung). Optional: caption, originalUrl, hero, focus, exif
 images:
-  - file: dscf100336.jpg
+  - file: /alben/spanien-juni-2023/images/dscf100336.jpg
     alt: "Zwei schwarze Hunde mit Brustgeschirr sitzen am Strand vor dem Meer im
       Abendlicht"
-  - file: dscf100413.jpg
+  - file: /alben/spanien-juni-2023/images/dscf100413.jpg
     alt: "Kleine Motorboote und Schlauchboote in einem Hafenbecken am Sandstrand,
       auf der Steinmole stehen Menschen mit Angeln"
-  - file: dscf100421.jpg
+  - file: /alben/spanien-juni-2023/images/dscf100421.jpg
     alt: "Mole aus Felsblöcken mit hohen Straßenlaternen, rechts vertäute
       Motorboote, am Ende sitzen Menschen beim Angeln"
 location: Spanien

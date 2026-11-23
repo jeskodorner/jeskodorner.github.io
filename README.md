@@ -199,7 +199,12 @@ Die Formulare stehen in `.pages.yml`. Jede Speicherung ist ein Commit auf `main`
   bestehenden Album hinzufügen“ schreiben. GitHub macht daraus automatisch das Album (`scripts/inbox.mjs`, wie
   `npm run optimize`: verkleinern, Wasserzeichen, GPS weg, Aufnahmedaten, Eintrag in `index.md`) und leert den
   Eingang (`photos-inbox/`, Fotos in `photos-uploads/`) wieder.
-- **Alben**: Titel, Texte, Bildbeschreibungen, Ausschnitt (`focus`) usw. ändern.
+- **Alben**: Titel, Texte, Bildbeschreibungen, Ausschnitt (`focus`) usw. ändern. Jedes Foto ist dort mit Vorschau zu
+  sehen (seit 23.11.2026 steht in `images` der Pfad `/alben/<ordner>/images/<datei>` statt nur des Dateinamens –
+  die Website nimmt beides, `scripts/optimize.mjs` schreibt neue Fotos mit Pfad).
+- **Mehrere Fotos auf einmal hochladen**: unter „Fotos hochladen“ alle Fotos im Finder markieren und aufs Feld „Fotos“
+  ziehen, oder dort auf „Upload“ und im Fenster alle markieren (⌘A). Das „Upload“ im Auswahlfenster („Select“) nimmt
+  nur ein Foto pro Klick.
 - **Adresse eines Albums** (Feld „Adresse“, seit 23.11.2026 änderbar): Die alte Adresse leitet danach automatisch
   auf die neue weiter (auch die Mappe). Dafür merkt sich GitHub beim Bauen jede Adresse
   (`scripts/slug-history.mjs` → `src/content/alte-adressen.json`), `astro.config.mjs` legt die Weiterleitungen an.

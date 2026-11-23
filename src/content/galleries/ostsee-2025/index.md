@@ -26,7 +26,7 @@ showExif: true
 # Bilder: werden von "npm run optimize" automatisch ergänzt.
 # Pro Bild Pflicht: alt (Bildbeschreibung). Optional: caption, originalUrl, hero, focus, exif
 images:
-  - file: dscf6969.jpg
+  - file: /alben/ostsee-2025/images/dscf6969.jpg
     alt: "Vier Personen an einem sonnigen Ostseestrand, zwei umarmen sich lachend,
       daneben zwei weitere Personen."
 location: Ostsee

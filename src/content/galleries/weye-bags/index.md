@@ -26,34 +26,34 @@ showExif: true
 # Bilder: werden von "npm run optimize" automatisch ergänzt.
 # Pro Bild Pflicht: alt (Bildbeschreibung). Optional: caption, originalUrl, hero, focus, exif
 images:
-  - file: dscf5812.jpg
+  - file: /alben/weye-bags/images/dscf5812.jpg
     alt: "Person mit tief ins Gesicht gezogener Kapuze hockt mit einer Jeanstasche
       auf einer Fußgängerbrücke, dahinter Baukräne"
-  - file: dscf5813.jpg
+  - file: /alben/weye-bags/images/dscf5813.jpg
     alt: "Person in blauer Regenjacke hockt auf dem Bogen einer Brücke und schaut in
       eine Tasche aus Jeansstoff"
-  - file: dscf5823.jpg
+  - file: /alben/weye-bags/images/dscf5823.jpg
     alt: "Nahaufnahme einer Tasche aus Jeansstoff in der Hand einer Person am
       Brückengeländer, darunter helle Turnschuhe"
-  - file: dscf5828-cover-bild.jpg
+  - file: /alben/weye-bags/images/dscf5828-cover-bild.jpg
     alt: "Person in Kapuzenjacke und Basecap hält eine Tasche aus alten Jeans am
       Brückengeländer, dahinter Baukräne"
-  - file: dscf5853.jpg
+  - file: /alben/weye-bags/images/dscf5853.jpg
     alt: "Jeanstasche mit Gesäßtaschen und Lederpatch auf dem Schoß einer Person,
       die auf einer grünen Parkbank sitzt"
-  - file: dscf5861.jpg
+  - file: /alben/weye-bags/images/dscf5861.jpg
     alt: "Person mit Basecap sitzt auf einer grünen Parkbank und greift in eine
       Tasche aus Jeansstoff"
-  - file: dscf5878.jpg
+  - file: /alben/weye-bags/images/dscf5878.jpg
     alt: "Blick von oben auf eine Person mit Jeanstasche, die an einem Geländer am
       Uferweg lehnt"
-  - file: dscf5926-test.jpg
+  - file: /alben/weye-bags/images/dscf5926-test.jpg
     alt: "Montage aus sechs Aufnahmen derselben Person mit Jeanstasche auf einem
       geschwungenen Parkweg, stehend, hockend und sitzend"
-  - file: dscf5928.jpg
+  - file: /alben/weye-bags/images/dscf5928.jpg
     alt: "Nahaufnahme einer umgehängten Jeanstasche vor gestreiftem Hemd, im
       Hintergrund eine Straße mit parkenden Autos"
-  - file: dscf5935.jpg
+  - file: /alben/weye-bags/images/dscf5935.jpg
     alt: "Person mit Jeanstasche auf dem Rücken geht durch eine alte hölzerne
       Haustür"
 cover: /alben/weye-bags/images/dscf5828-cover-bild.jpg

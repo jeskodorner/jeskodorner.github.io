@@ -26,13 +26,13 @@ showExif: true
 # Bilder: werden von "npm run optimize" automatisch ergänzt.
 # Pro Bild Pflicht: alt (Bildbeschreibung). Optional: caption, originalUrl, hero, focus, exif
 images:
-  - file: dsc00002-1.jpg
+  - file: /alben/schilf-2020/images/dsc00002-1.jpg
     alt: "Einzelne trockene Schilfhalme ragen aus stillem Wasser, in dem sich der
       bewölkte Himmel spiegelt"
-  - file: dsc00016-1.jpg
+  - file: /alben/schilf-2020/images/dsc00016-1.jpg
     alt: "Dichtes goldbraunes Schilf steht im Wasser, die Halme spiegeln sich als
       dunkle Linien"
-  - file: dsc00039.jpg
+  - file: /alben/schilf-2020/images/dsc00039.jpg
     alt: "Abgeknickte Schilfhalme treiben auf dunklem Wasser, auf einem hellen Blatt
       liegen Wassertropfen"
 cover: /alben/schilf-2020/images/dsc00016-1.jpg

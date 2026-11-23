@@ -15,26 +15,26 @@ portfolio:
 showExif: true
 cover: /alben/hilda-setcard/images/hilda-setcard-gesicht.jpg
 images:
-  - file: hilda-setcard-gesicht.jpg
+  - file: /alben/hilda-setcard/images/hilda-setcard-gesicht.jpg
     alt: Frontales Porträt von Hilda mit ernstem Blick vor einer rostigen Wand.
     focus: 50% 30%
     hero: false
-  - file: hilda-setcard-profil.jpg
+  - file: /alben/hilda-setcard/images/hilda-setcard-profil.jpg
     alt: Profilaufnahme von Hilda, nach links blickend, vor einer rostigen Wand.
     hero: false
-  - file: hilda-setcard-korper-1.jpg
+  - file: /alben/hilda-setcard/images/hilda-setcard-korper-1.jpg
     alt: Ganzkörperaufnahme von Hilda in schwarzem Top und gestreifter Jeans vor
       einer rostigen Wand, Arme hinter dem Rücken.
     hero: false
-  - file: hilda-setcard-korper-2.jpg
+  - file: /alben/hilda-setcard/images/hilda-setcard-korper-2.jpg
     alt: Ganzkörperaufnahme von Hilda in schwarzem Top, Jeans und Stiefeln, ein Bein
       leicht ausgestellt, vor einer rostigen Wand.
     hero: false
-  - file: hilda-setcard-oberkorper-1.jpg
+  - file: /alben/hilda-setcard/images/hilda-setcard-oberkorper-1.jpg
     alt: Halbporträt von Hilda in schwarzem Trägertop, Hände hinter dem Rücken, mit
       ernstem Blick vor einer rostigen Wand.
     hero: false
-  - file: hilda-setcard-oberkorper-2.jpg
+  - file: /alben/hilda-setcard/images/hilda-setcard-oberkorper-2.jpg
     alt: Brustbild von Hilda mit offenem Blick in die Kamera, in schwarzem Trägertop
       vor einer rostigen Wand.
     hero: false

@@ -26,7 +26,7 @@ showExif: true
 # Bilder: werden von "npm run optimize" automatisch ergänzt.
 # Pro Bild Pflicht: alt (Bildbeschreibung). Optional: caption, originalUrl, hero, focus, exif
 images:
-  - file: dsc00171.jpg
+  - file: /alben/silvester-2020/images/dsc00171.jpg
     alt: "Junge Person beugt sich nachts auf einem Gehweg mit sprühenden Funken über
       eine Glasflasche"
 cover: /alben/silvester-2020/images/dsc00171.jpg

@@ -26,19 +26,19 @@ showExif: true
 # Bilder: werden von "npm run optimize" automatisch ergänzt.
 # Pro Bild Pflicht: alt (Bildbeschreibung). Optional: caption, originalUrl, hero, focus, exif
 images:
-  - file: dscf6784.jpg
+  - file: /alben/festival-nonostar-2025/images/dscf6784.jpg
     alt: "Eine Person spielt unter einem beleuchteten Zeltdach Livemusik, im
       Vordergrund lodert ein Lagerfeuer."
-  - file: dscf6787.jpg
+  - file: /alben/festival-nonostar-2025/images/dscf6787.jpg
     alt: "Person singt ins Mikrofon und spielt Gitarre hinter Keyboard und Kabeln,
       davor Flammen eines Feuers."
-  - file: dscf6788.jpg
+  - file: /alben/festival-nonostar-2025/images/dscf6788.jpg
     alt: "Lagerfeuer im Vordergrund, dahinter spielt eine Person unter einem bunt
       beleuchteten Zeltdach Musik."
-  - file: dscf6877.jpg
+  - file: /alben/festival-nonostar-2025/images/dscf6877.jpg
     alt: "Zwei Personen mit Schirmmützen am DJ-Pult unter einem Zeltdach, eine im
       pinken Pullover blickt nach unten."
-  - file: dscf6929.jpg
+  - file: /alben/festival-nonostar-2025/images/dscf6929.jpg
     alt: "Menschen tanzen nachts vor einer Zeltbühne, im Vordergrund ein Lagerfeuer,
       dahinter bunt angestrahlte Bäume."
 cover: /alben/festival-nonostar-2025/images/dscf6784.jpg

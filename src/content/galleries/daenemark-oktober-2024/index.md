@@ -27,10 +27,10 @@ showExif: true
 # Bilder: werden von "npm run optimize" automatisch ergänzt.
 # Pro Bild Pflicht: alt (Bildbeschreibung). Optional: caption, originalUrl, hero, focus, exif
 images:
-  - file: dscf6734.jpg
+  - file: /alben/daenemark-oktober-2024/images/dscf6734.jpg
     alt: "Goldener Himmel über dem Meer, Wasservögel zwischen Steinen im flachen
       Wasser, vorn dunkles Ufergras."
-  - file: dscf6786.jpg
+  - file: /alben/daenemark-oktober-2024/images/dscf6786.jpg
     alt: "Steile Felsklippe über dem Meer in Schwarzweiß, auf den Vorsprüngen sitzen
       dunkle Seevögel."
 location: Dänemark

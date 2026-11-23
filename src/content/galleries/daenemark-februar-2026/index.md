@@ -27,34 +27,34 @@ showExif: true
 # Bilder: werden von "npm run optimize" automatisch ergänzt.
 # Pro Bild Pflicht: alt (Bildbeschreibung). Optional: caption, originalUrl, hero, focus, exif
 images:
-  - file: dscf1197.jpg
+  - file: /alben/daenemark-februar-2026/images/dscf1197.jpg
     alt: "Verwischte Schwarzweißaufnahme einer Küste in der Dämmerung mit Dünengras,
       nassem Sand und Wolkenhimmel."
-  - file: dscf1198.jpg
+  - file: /alben/daenemark-februar-2026/images/dscf1198.jpg
     alt: "Doppelbelichtung: Meereshorizont mit fliegender Möwe, überlagert von einer
       rissigen, fleckigen Oberfläche."
-  - file: dscf1227.jpg
+  - file: /alben/daenemark-februar-2026/images/dscf1227.jpg
     alt: "Doppelbelichtung: zwei Personen am nassen Strand an der Wasserlinie,
       überlagert von Fußspuren im Sand und Felsbrocken."
-  - file: dscf1252.jpg
+  - file: /alben/daenemark-februar-2026/images/dscf1252.jpg
     alt: "Drei Personen tragen nachts Äste einen Weg entlang, von hinten im
       Blitzlicht fotografiert."
-  - file: dscf1356.jpg
+  - file: /alben/daenemark-februar-2026/images/dscf1356.jpg
     alt: "Doppelbelichtung: Beine einer Person in weiter Hose und Stiefeln stapfen
       durch den Schnee, dahinter Dünen und Häuser."
-  - file: dscf1361.jpg
+  - file: /alben/daenemark-februar-2026/images/dscf1361.jpg
     alt: "Person mit Kapuze geht mit gesenktem Kopf am vereisten Strand entlang, im
       Hintergrund Häuser auf der Düne."
-  - file: dscf1462.jpg
+  - file: /alben/daenemark-februar-2026/images/dscf1462.jpg
     alt: "Blick zwischen zwei Säulen auf einen verschneiten Platz mit Autos,
       Fahnenmast und Wohnblock bei trübem Winterwetter."
-  - file: dscf1476.jpg
+  - file: /alben/daenemark-februar-2026/images/dscf1476.jpg
     alt: "Verschneite Glastüren mit dänischem Aushang „Lukket p.g.a. vejret“ – wegen
       des Wetters geschlossen."
-  - file: dscf1485.jpg
+  - file: /alben/daenemark-februar-2026/images/dscf1485.jpg
     alt: "Menschen mit Einkaufstüten überqueren im Schneefall eine verschneite
       Straße vor einem Secondhand-Laden."
-  - file: dscf1526.jpg
+  - file: /alben/daenemark-februar-2026/images/dscf1526.jpg
     alt: "Unterwasseraufnahme: drei große Fische schwimmen hintereinander vor einem
       Schwarm kleinerer Fische."
 location: Dänemark

@@ -26,7 +26,7 @@ showExif: true
 # Bilder: werden von "npm run optimize" automatisch ergänzt.
 # Pro Bild Pflicht: alt (Bildbeschreibung). Optional: caption, originalUrl, hero, focus, exif
 images:
-  - file: island-pics00171767.jpg
+  - file: /alben/island-sommer-2026/images/island-pics00171767.jpg
     alt: "Weite isländische Landschaft mit rötlichem Bewuchs, einem Flusslauf im Tal
       und Bergen im Dunst."
 location: Island

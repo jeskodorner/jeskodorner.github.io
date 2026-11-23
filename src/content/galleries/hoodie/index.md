@@ -10,32 +10,32 @@ visibility: public
 showExif: true
 # downloadUrl: https://…
 images:
-  - file: dsc01421.jpg
+  - file: /alben/hoodie/images/dsc01421.jpg
     alt: "Nahaufnahme bei Nacht: Person mit roter Strickkapuze zieht den Kragen
       ihres Hoodies hoch."
     # Ausschnitt weiter oben, damit das Gesicht im breiten Band oben auf der Albumseite ganz drin ist (vorher 30 %)
     focus: "50% 12%"
-  - file: dsc01438.jpg
+  - file: /alben/hoodie/images/dsc01438.jpg
     alt: "Person im roten Hoodie sitzt nachts auf einem Fahrrad, im Hintergrund
       Leuchtreklamen."
     hero: true
     focus: "50% 15%"
-  - file: dsc01413.jpg
+  - file: /alben/hoodie/images/dsc01413.jpg
     alt: "Zwei Personen nachts auf einem Fahrrad: vorn eine verwischt in rotem
       Licht, dahinter eine im Profil."
-  - file: dsc01423.jpg
+  - file: /alben/hoodie/images/dsc01423.jpg
     alt: "Person mit roter Strickkapuze und bunt verziertem rotem Hoodie blickt
       nachts in die Kamera, dahinter ein Straßenschild."
-  - file: dsc01447.jpg
+  - file: /alben/hoodie/images/dsc01447.jpg
     alt: "Verwischte Nachtaufnahme: Person in rotem Hoodie und Strickkapuze an einer
       Straßenecke mit Leuchtreklamen."
-  - file: dsc01453-1.jpg
+  - file: /alben/hoodie/images/dsc01453-1.jpg
     alt: "Person mit roter Strickkapuze und rotem Hoodie, rechts angeschnitten
       jemand in blauer Trainingsjacke, nachts auf der Straße."
-  - file: dsc01453.jpg
+  - file: /alben/hoodie/images/dsc01453.jpg
     alt: "Person mit roter Strickkapuze blickt nachts in die Kamera, rechts eine
       zweite Person in blauer Trainingsjacke."
-  - file: dsc01457.jpg
+  - file: /alben/hoodie/images/dsc01457.jpg
     alt: "Verwischte Nachtszene: Person mit roter Strickkapuze streckt den Arm zu
       jemandem in blauer Jacke, dahinter Straßenlaternen."
 cover: /alben/hoodie/images/dsc01438.jpg

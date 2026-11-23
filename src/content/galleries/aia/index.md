@@ -26,33 +26,33 @@ showExif: true
 # Bilder: werden von "npm run optimize" automatisch ergänzt.
 # Pro Bild Pflicht: alt (Bildbeschreibung). Optional: caption, originalUrl, hero, focus, exif
 images:
-  - file: dscf0046.jpg
+  - file: /alben/aia/images/dscf0046.jpg
     alt: "Lagerfeuer bei Nacht, Funken steigen über brennenden Holzscheiten auf."
-  - file: dscf0276.jpg
+  - file: /alben/aia/images/dscf0276.jpg
     alt: "Schwarzweiß: Eine Person mit Brille raucht nachts auf einer Terrasse,
       daneben eine zweite Person am Tisch."
-  - file: dscf0313.jpg
+  - file: /alben/aia/images/dscf0313.jpg
     alt: "Person mit Brille und wehenden Haaren steht am Sandstrand vor
       türkisfarbenem Meer, eine Hand an der Stirn."
-  - file: dscf0860.jpg
+  - file: /alben/aia/images/dscf0860.jpg
     alt: "Person läuft am steinigen Ufer und wirft einen Ball Richtung Meer, drei
       schwarze Hunde rennen mit."
-  - file: dscf1137.jpg
+  - file: /alben/aia/images/dscf1137.jpg
     alt: "Wellen auf dem Meer in der Abenddämmerung, dahinter eine Bergkette unter
       rosa Himmel."
-  - file: dscf1185.jpg
+  - file: /alben/aia/images/dscf1185.jpg
     alt: "Steiniger Strand mit auslaufenden Wellen, am Horizont Berge im
       Abendlicht."
-  - file: dscf2176.jpg
+  - file: /alben/aia/images/dscf2176.jpg
     alt: "Zotteliger heller Hund liegt auf rotem Fliesenboden an einer gekachelten
       Wand."
-  - file: dscf2236-2.jpg
+  - file: /alben/aia/images/dscf2236-2.jpg
     alt: "Schwarzweiß: Fischerboot auf dem Meer, umkreist von Möwen, im Hintergrund
       Küste mit Häusern und Bergen."
-  - file: dscf2261.jpg
+  - file: /alben/aia/images/dscf2261.jpg
     alt: "Schwarzweiß: Person sitzt auf einer Kaimauer neben Taschen und blickt aufs
       Meer, unten Graffiti und ein Fahrrad."
-  - file: dscf9065.jpg
+  - file: /alben/aia/images/dscf9065.jpg
     alt: "Zwei schwarze Hunde stehen in einem Becken mit trübem, ockerfarbenem
       Wasser."
 cover: /alben/aia/images/dscf1137.jpg
