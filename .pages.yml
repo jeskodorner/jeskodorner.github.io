@@ -92,10 +92,13 @@ content:
         filename: index.md
         hideDirs: others
       fields: [title, slug, date, visibility]
+    # Löschen seit 23.11.2026 erlaubt: das CMS löscht nur index.md, Fotos und meta.json räumt GitHub danach auf
+    # (scripts/cleanup-albums.mjs). Neue Alben entstehen über „Fotos hochladen“, Ordner umbenennen bleibt gesperrt
+    # (der Ordnername ist der feste Schlüssel für alte Adressen).
     operations:
       create: false
       rename: false
-      delete: false
+      delete: true
     fields:
       - { name: title, label: Titel, type: string, required: true }
       - name: slug

@@ -202,6 +202,9 @@ Die Formulare stehen in `.pages.yml`. Jede Speicherung ist ein Commit auf `main`
 - **Alben**: Titel, Texte, Bildbeschreibungen, Ausschnitt (`focus`) usw. ändern. Jedes Foto ist dort mit Vorschau zu
   sehen (seit 23.11.2026 steht in `images` der Pfad `/alben/<ordner>/images/<datei>` statt nur des Dateinamens –
   die Website nimmt beides, `scripts/optimize.mjs` schreibt neue Fotos mit Pfad).
+- **Album löschen** (seit 23.11.2026): im CMS unter „Alben“ beim Album auf „Delete“. Das CMS löscht nur die
+  `index.md`; beim nächsten Bauen räumt GitHub den Rest des Ordners (Fotos, `meta.json`) auf
+  (`scripts/cleanup-albums.mjs`). Zurückholen geht nur über die Git-Geschichte.
 - **Mehrere Fotos auf einmal hochladen**: unter „Fotos hochladen“ alle Fotos im Finder markieren und aufs Feld „Fotos“
   ziehen, oder dort auf „Upload“ und im Fenster alle markieren (⌘A). Das „Upload“ im Auswahlfenster („Select“) nimmt
   nur ein Foto pro Klick.
