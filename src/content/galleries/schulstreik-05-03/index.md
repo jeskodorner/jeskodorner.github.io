@@ -1,9 +1,9 @@
 ---
-title: Schulstreik 05.03.
+title: Schulstreik Wehrpflicht 05.03.26
 slug: schulstreik-05-03
 date: 2026-03-05
 location: Berlin
-description: Schulstreik gegen die Wehrpflicht am Potsdamer Platz.
+description: Schulstreik gegen die Wehrpflicht zum und am Potsdamer Platz.
 visibility: public
 portfolio:
   zeigen: true
