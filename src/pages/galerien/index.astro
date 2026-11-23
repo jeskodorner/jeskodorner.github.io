@@ -141,6 +141,9 @@ const hero = c0 ? await preloadImage(c0, cardSizes(c0.width / c0.height), 1200) 
   }
   .card {
     display: grid;
+    /* Spalte nie breiter als die Kachel – ein langer Titel bricht um statt das Foto zu verbreitern (23.11.2026:
+       „Photoautomat x Hilda x Yael“ ragte über die Nachbarkachel) */
+    grid-template-columns: minmax(0, 1fr);
     align-content: start;
     gap: 0.45rem;
     text-decoration: none;

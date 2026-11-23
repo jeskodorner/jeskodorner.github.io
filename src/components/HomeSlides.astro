@@ -2,7 +2,7 @@
 /**
  * Fotofläche der Startseite (Richtung „Bild neben Name“): immer EIN Foto, ganz und scharf, darunter die
  * Bildunterschrift in einer Zeile: „Albumname – Monat Jahr“ (bis 20.11.2026 zweizeilig mit „Mappe ansehen →“). Die Fotos kommen aus dem Portfolio (Liste „showroom“ in
- * src/content/pages/startseite.md) in dieser Reihenfolge und wechseln alle 7 Sekunden: Das neue Foto blendet weich
+ * src/content/pages/startseite.md) in dieser Reihenfolge und wechseln alle 5 Sekunden (bis 23.11.2026: 7): Das neue Foto blendet weich
  * über dem alten ein (das alte bleibt darunter stehen, bis das neue ganz da ist – keine leere Fläche dazwischen) und
  * setzt sich dabei langsam aus einer leichten Vergrößerung. Alle Fotos füllen dieselbe Fläche (Laptop 4:3, Handy ein
  * Streifen), zugeschnitten auf ihren Bildschwerpunkt – so gibt es keinen Formatwechsel; ganz zu sehen sind sie in
@@ -92,7 +92,7 @@ const first = slides[0];
 }
 
 <script>
-  const STEP = 7000; // ein neues Foto alle 7 s
+  const STEP = 5000; // ein neues Foto alle 5 s (seit 23.11.2026, vorher 7 s)
   const FADE = 1800; // Dauer der Überblendung (wie im CSS)
   const decoded = (layer: HTMLElement) => {
     const img = layer.querySelector('img');
@@ -166,12 +166,12 @@ const first = slides[0];
       timer = setTimeout(tick, STEP);
     };
     let timer = setTimeout(tick, STEP);
-    // Nur das nächste Foto nach dem Laden der Seite holen (in Ruhe, vor dem ersten Wechsel nach 7 s) – bis 23.11.2026
+    // Nur das nächste Foto nach dem Laden der Seite holen (in Ruhe, vor dem ersten Wechsel nach 5 s) – bis 23.11.2026
     // luden alle 13 auf einmal (1,6 MB), auch wenn man gleich weiterklickt
     const prepare = () => layers[(i + 1) % layers.length]!.classList.add('is-ready');
     if (document.readyState === 'complete') setTimeout(prepare, 1000);
     else addEventListener('load', () => setTimeout(prepare, 1000), { once: true });
-    // Zurück aus dem Browser-Speicher (Zurück-Knopf): Foto bleibt, das nächste kommt erst wieder nach vollen 7 s
+    // Zurück aus dem Browser-Speicher (Zurück-Knopf): Foto bleibt, das nächste kommt erst wieder nach vollen 5 s
     addEventListener('pageshow', (e) => {
       if (!e.persisted) return;
       clearTimeout(timer);

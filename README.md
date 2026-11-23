@@ -180,9 +180,9 @@ Die Datenschutzerklärung bekommt dazu automatisch einen YouTube-Abschnitt.
 
 **Sternchen in Titeln:** `*Wort*` in `startseite.md` und `ueber-mich.md` wird bewusst schlicht gesetzt, ohne Marker (seriöserer Auftritt). Die Sternchen können stehen bleiben.
 
-**Platzhalter entfernen:** Die Beispielgalerien liegen in `src/content/galleries/` (Ordner `kueste-im-oktober`,
-`stadt-nach-regen`, `sommerfest-beispiel-q7m4zt`) und die Beispielfilme in `src/content/films/`. Ordner bzw. Dateien
-löschen, und sie sind von der Seite verschwunden. Gibt es keine Filme mehr, verschwindet auch der Menüpunkt „Film“.
+**Platzhalter entfernen:** Die Beispielgalerien sind gelöscht (zuletzt am 23.11.2026 die Beispiel-Kundengalerie
+`sommerfest-beispiel-q7m4zt`; zurückholen über die Git-Geschichte, Tag `alte-version-vor-design-review`). Gibt es keine
+Filme mehr, verschwindet auch der Menüpunkt „Film“.
 
 ---
 
@@ -971,22 +971,23 @@ Mit Lizenz:
 Ganze Seite geprüft (Laptop, Tablet, Handy; Prüfregeln der Skills „impeccable“ und „emil-design-eng“, Stand davor im
 Tag `alte-version-vor-design-review`). Geändert:
 
-- **Mappen:** „Ganzes Album ansehen · N Bilder“ nur, wenn das Album mehr Fotos hat als die Mappe; „← Vorherige / Nächste
+- **Mappen:** „Ganzes Album ansehen“ nur, wenn das Album mehr Fotos hat als die Mappe; „← Vorherige / Nächste
   Mappe →“ in der Reihenfolge des Portfolios; „Zurück“ ohne Vorgeschichte ins Portfolio zu dieser Mappe (vorher
   Startseite); größere Fotos (Laptop gut halbe Bildschirmhöhe, Handy jedes Foto in voller Breite), ein einzelnes Foto
   mittig. Im Menü ist auf Mappen „Portfolio“ markiert.
 - **Ausschnitte:** Fotos ohne `focus` werden bei Hochformaten im oberen Drittel, sonst knapp über der Mitte beschnitten
   (Startseite, Album-Kopf) – vorher genau mittig, Köpfe fielen ab. Grauer Filter im Album-Kopf mindestens 0,6.
-- **Kontrast:** volle Knöpfe (Orange, helle Schrift) mit 19 px Schrift – helle Schrift auf Orange (3,2:1) reicht nur
-  für große Schrift. „Zum Inhalt springen“ blau.
+- **Kontrast:** „Zum Inhalt springen“ blau. Volle Knöpfe bleiben Orange mit heller Schrift in 15 px (3,2:1) – 19 px
+  Schrift für ausreichenden Kontrast war kurz drin, sah Jesko aber zu klobig aus (zurückgenommen am selben Tag).
 - **Portfolio:** Titel an einer gemeinsamen Linie, Fotos rechtsbündig in der linken Spalte.
 - **Alben am Handy:** Reihen ~170 statt 104 px hoch.
-- **Großansicht am Handy:** Pfeile 44 px ohne Beschriftung, Details starten geschlossen; nach dem Schließen steht der
-  Fokus auf dem zuletzt angesehenen Foto.
-- **Startseite:** Diashow hält an, solange die Maus auf dem Foto ist oder es den Tastaturfokus hat; es lädt nur das
+- **Großansicht:** am Handy Pfeile 44 px ohne Beschriftung, Details starten geschlossen; der „i“-Knopf erscheint nur,
+  wenn ein Foto des Albums eine Bildunterschrift oder Aufnahmedaten hat (nur Albumname und „Bild 1 von 9“ lohnten
+  kein Feld); nach dem Schließen steht der Fokus auf dem zuletzt angesehenen Foto.
+- **Startseite:** Diashow wechselt alle 5 statt 7 Sekunden, hält an, solange die Maus auf dem Foto ist oder es den Tastaturfokus hat; es lädt nur das
   jeweils nächste Foto vor (vorher alle 13).
 - **Titel:** große Seitentitel höchstens 16 % der Bildschirmhöhe (Laptop 144 statt 192 px); Mediävalziffern mit runder
-  Null (Melodramas Null hat einen Schrägstrich, „2Ø25“); „&“ und „x“ in Titeln brechen nicht allein um.
+  Null (Melodramas Null hat einen Schrägstrich, „2Ø25“); „&“ und „x“ in Titeln bleiben beim folgenden Wort.
 - **Begriffe:** „Vorheriges / Nächstes Album“, „Weitere Alben“; Filme haben auch „Vorheriger Film“.
 - **Kleinigkeiten:** Kontaktseite ohne doppelte Adressen in der Fußzeile; private Kundengalerie: Download als voller
   Knopf, Hinweis im selben Kasten, „Galerie“ im Menü nicht markiert; größere Tippflächen (Menü, Laptop-Menü auf

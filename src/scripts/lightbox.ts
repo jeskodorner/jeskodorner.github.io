@@ -102,11 +102,22 @@ export function initLightbox(opts: LightboxOptions = {}) {
   const albumTitle = galleryEl.dataset.title ?? document.title;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  // Gibt es überhaupt etwas zu zeigen (Bildunterschrift oder Aufnahmedaten)? Sonst kein „i“-Knopf und kein Feld –
+  // nur Albumname und „Bild 1 von 9“ lohnen kein eigenes Feld (seit 23.11.2026, Jeskos Wunsch)
+  const hasDetails = [...galleryEl.querySelectorAll<HTMLElement>('a.ph')].some((a) => {
+    if (a.dataset.caption) return true;
+    try {
+      return Array.isArray(JSON.parse(a.dataset.details || '[]')) && JSON.parse(a.dataset.details || '[]').length > 0;
+    } catch {
+      return false;
+    }
+  });
+
   // Zustand des Detail-Felds
   let open = false;
   try {
     // Am Handy startet die Großansicht immer ohne Details – das Feld nimmt dort die halbe Höhe (seit 23.11.2026)
-    open = sessionStorage.getItem(KEY) === '1' && window.innerWidth >= 900;
+    open = hasDetails && sessionStorage.getItem(KEY) === '1' && window.innerWidth >= 900;
   } catch {
     /* privater Modus */
   }
@@ -277,8 +288,8 @@ export function initLightbox(opts: LightboxOptions = {}) {
       },
     });
 
-    // Details ein-/ausklappen
-    ui.registerElement({
+    // Details ein-/ausklappen (nur wenn es welche gibt)
+    if (hasDetails) ui.registerElement({
       name: 'jd-info',
       title: de.lightbox.details,
       ariaLabel: de.lightbox.details,
@@ -294,7 +305,7 @@ export function initLightbox(opts: LightboxOptions = {}) {
     });
 
     // Das Detail-Feld selbst
-    ui.registerElement({
+    if (hasDetails) ui.registerElement({
       name: 'jd-details',
       isButton: false,
       appendTo: 'root',
@@ -401,7 +412,7 @@ export function initLightbox(opts: LightboxOptions = {}) {
   // Taste I: Details ein-/ausklappen
   lightbox.on('keydown', (e) => {
     const k = e.originalEvent;
-    if (k.key.toLowerCase() === 'i' && !k.metaKey && !k.ctrlKey && !k.altKey && lightbox.pswp) {
+    if (hasDetails && k.key.toLowerCase() === 'i' && !k.metaKey && !k.ctrlKey && !k.altKey && lightbox.pswp) {
       k.preventDefault();
       toggle(lightbox.pswp);
     }

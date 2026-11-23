@@ -12,7 +12,9 @@ export function tidyTitle(title = ''): string {
   return (
     title
       .replace(/ ([–—]) /g, '\u00A0$1 ')
-      // „Anouk & Yael“, „Photoautomat x Hilda“: das Zeichen nie allein am Zeilenende oder -anfang (seit 23.11.2026)
-      .replace(/ (&|x|×|\+) /g, '\u00A0$1\u00A0')
+      // „Anouk & Yael“, „Photoautomat x Hilda“: das Zeichen bleibt beim Wort danach, steht also nie allein am Zeilenende
+      // (seit 23.11.2026). Nur nach dem Zeichen ist der Umbruch gesperrt – davor bleibt er erlaubt, sonst würde
+      // „Photoautomat x Hilda x Yael“ zu einem einzigen unteilbaren Wort und ragte aus seiner Kachel.
+      .replace(/ (&|x|×|\+) /g, ' $1\u00A0')
   );
 }

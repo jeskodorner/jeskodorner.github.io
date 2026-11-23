@@ -341,16 +341,10 @@ html:not(.js) .js-only {
 /* Voller Knopf (Hauptaktion: Ganzes Album ansehen, Schreib mir, Senden): Orange mit heller Schrift wie der
    Menüknopf, beim Überfahren Blau. Vorher blau gefüllt – zusammen mit blauer Schrift und blauer Fußzeile war das zu
    viel Blau (20.11.2026). */
-/* Helle Schrift auf Orange erreicht nur 3,2:1 – genug nur für große Schrift (ab 19 px fett, WCAG). Deshalb steht auf
-   vollen Knöpfen die Schrift seit 23.11.2026 in 19 px statt 15 px; weniger Innenabstand oben/unten, so bleiben sie so
-   hoch wie die normalen Knöpfe daneben. */
 .btn--solid {
   background: var(--hover);
   border-color: var(--hover);
   color: var(--on-hover);
-  font-size: 1.1875rem;
-  padding-block: 0.6em;
-  letter-spacing: 0.04em;
 }
 .btn--solid:hover {
   background: var(--ink);

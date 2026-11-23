@@ -143,13 +143,12 @@ const mappeVideo = g.entry.data.mappeVideo;
     }
   </ul>
 
-  {/* Ende der Mappe: der Weg ins ganze Album – nur wenn es dort mehr Fotos gibt, mit ihrer Zahl */}
+  {/* Ende der Mappe: der Weg ins ganze Album – nur wenn es dort mehr Fotos gibt (seit 23.11.2026) */}
   {
     showAlbum && (
       <div class="container container--wide end">
         <a class="btn btn--solid" href={g.url}>
-          {t.mappe.toAlbum} <span class="end-count">· {t.galleries.images(albumCount)}</span>
-          <Icon name="arrow-right" class="arrow" />
+          {t.mappe.toAlbum} <Icon name="arrow-right" class="arrow" />
         </a>
       </div>
     )
@@ -269,10 +268,6 @@ const mappeVideo = g.entry.data.mappeVideo;
     justify-items: start;
     gap: 0.9rem;
     padding-top: clamp(2.5rem, 5vw, 4.5rem);
-  }
-  /* Zahl der Fotos im Album: dünner als der Knopftext */
-  .end-count {
-    font-weight: 500;
   }
   @media (max-width: 899.98px) {
     .end {
