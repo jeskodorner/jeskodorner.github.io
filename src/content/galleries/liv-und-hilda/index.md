@@ -1,34 +1,22 @@
 ---
-# Titel der Galerie
-title: "Liv und Hilda"
-# URL-Teil: /galerien/liv-und-hilda/
+title: Liv und Hilda
 slug: liv-und-hilda
 date: 2026-09-10
-# location: "Ort"
-# Kurzbeschreibung (1–2 Sätze) – erscheint auf der Kachel und in Link-Vorschauen
-description: "bunt"
-# Farbe: pink | blue | lime | orange | violet (ohne Angabe: automatisch reihum)
-# color: pink
-# public = in der Übersicht · unlisted = nur per Direktlink, noindex
+description: bunt
 visibility: public
-# Aufnahmedaten (Kamera, Blende …) anzeigen
+portfolio:
+  zeigen: true
 showExif: true
-# Titelbild (Dateiname aus der Liste unten). Ohne Angabe: das erste Bild
-# cover: bild-01.jpg
-
-# --- Download (optional, siehe README) ---
-# downloadUrl: https://…
-# downloadSize: 1,2 GB
-# downloadFormat: ZIP · JPG
-# downloadNote: Link gültig bis 31.12.2026 – Passwort bekommst du separat.
-
-# Bilder: werden von "npm run optimize" automatisch ergänzt.
-# Pro Bild Pflicht: alt (Bildbeschreibung). Optional: caption, originalUrl, hero, focus, exif
+cover: /alben/DSCF6580.jpg
 images:
   - file: /alben/liv-und-hilda/images/dscf6556.jpg
-    alt: "Foto aus „Liv und Hilda“"
+    alt: Foto aus „Liv und Hilda“
+    hero: false
   - file: /alben/liv-und-hilda/images/dscf6570.jpg
-    alt: "Foto aus „Liv und Hilda“"
+    alt: Foto aus „Liv und Hilda“
+    hero: false
   - file: /alben/liv-und-hilda/images/dscf6580.jpg
-    alt: "Foto aus „Liv und Hilda“"
+    alt: Foto aus „Liv und Hilda“
+    hero: false
+albumRequest: false
 ---
