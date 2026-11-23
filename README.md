@@ -200,6 +200,11 @@ Die Formulare stehen in `.pages.yml`. Jede Speicherung ist ein Commit auf `main`
   `npm run optimize`: verkleinern, Wasserzeichen, GPS weg, Aufnahmedaten, Eintrag in `index.md`) und leert den
   Eingang (`photos-inbox/`, Fotos in `photos-uploads/`) wieder.
 - **Alben**: Titel, Texte, Bildbeschreibungen, Ausschnitt (`focus`) usw. ändern.
+- **Adresse eines Albums** (Feld „Adresse“, seit 23.11.2026 änderbar): Die alte Adresse leitet danach automatisch
+  auf die neue weiter (auch die Mappe). Dafür merkt sich GitHub beim Bauen jede Adresse
+  (`scripts/slug-history.mjs` → `src/content/alte-adressen.json`), `astro.config.mjs` legt die Weiterleitungen an.
+  Ausnahme: Wird ein öffentliches Album privat, leitet die alte Adresse nicht weiter (sonst wäre die geheime Adresse
+  verraten). Private Alben behalten beim Ändern ihren zufälligen Teil am Ende (z. B. `-x7k2p9`).
 - **Portfolio** (im Album-Formular): Schalter „Im Portfolio anzeigen“, **Vorschaufoto** und **Fotos der Mappe** per
   Klick aus dem Album-Ordner (Medienquelle „Album-Fotos“; dort nichts hochladen), Name und Beschreibung der Mappe.
 - **Filme**, **Über mich**: Texte und Felder.

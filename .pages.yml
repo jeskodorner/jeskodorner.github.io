@@ -98,7 +98,14 @@ content:
       delete: false
     fields:
       - { name: title, label: Titel, type: string, required: true }
-      - { name: slug, label: Kurzname (Adresse), type: string, readonly: true }
+      - name: slug
+        label: Adresse
+        type: string
+        required: true
+        description: "Der Teil der Adresse nach /galerien/ (bei privaten Alben nach /g/), z. B. „ostsee-2025“. Nur Kleinbuchstaben, Ziffern und Bindestriche, keine Umlaute (ä → ae). Ändern geht jederzeit – die alte Adresse leitet automatisch auf die neue weiter. Private Alben brauchen am Ende einen zufälligen Teil, z. B. „-x7k2p9“ – den beim Ändern bitte behalten."
+        pattern:
+          regex: "^[a-z0-9]+(-[a-z0-9]+)*$"
+          message: Nur Kleinbuchstaben, Ziffern und Bindestriche (keine Leerzeichen, keine Umlaute).
       - { name: date, label: Datum, type: date }
       - { name: location, label: Ort, type: string }
       - { name: description, label: Kurzbeschreibung, type: text, required: true }

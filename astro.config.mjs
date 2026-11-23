@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { albumRedirects } from './scripts/lib/album-addresses.mjs';
 
 // GitHub-User-Site (Repo "jeskodorner.github.io") mit eigener Domain jeskodorner.de,
 // deshalb wird nur `site` gesetzt und kein `base`. jeskodorner.github.io leitet auf die Domain weiter.
@@ -18,8 +19,11 @@ export default defineConfig({
   devToolbar: { enabled: false },
   // Umbenannte Alben: alte Adressen leiten weiter (GitHub Pages kann keine echten Weiterleitungen, Astro legt dafür kleine
   // Seiten an, die sofort weiterspringen)
+  // Seit 23.11.2026 automatisch: wird im CMS die Adresse eines Albums geändert, merkt sich scripts/slug-history.mjs die
+  // alte (src/content/alte-adressen.json) und sie leitet hierüber weiter.
   redirects: {
     '/galerien/einzelbilder/': '/galerien/museum-mit-freundinnen/',
     '/mappe/einzelbilder/': '/mappe/museum-mit-freundinnen/',
+    ...(await albumRedirects(process.cwd())),
   },
 });
