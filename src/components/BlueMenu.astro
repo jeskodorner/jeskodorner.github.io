@@ -433,6 +433,7 @@ const nameWords = site.name.split(' ').map((word) =>
       --bm-item: min(4.05rem, (100cqi - var(--col-gap)) * 5 / 12 / 11.85);
       display: grid;
       grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      /* Menü mittig zwischen Name und Unterkante (seit 22.11.2026; vorher unten auf der Unterkante des Fotos) */
       grid-template-rows: auto auto 1fr auto auto;
       column-gap: var(--col-gap);
       height: 100dvh;
@@ -449,18 +450,17 @@ const nameWords = site.name.split(' ').map((word) =>
     :is(.bm--aside, .bm--overlay) .bm-body {
       display: contents;
     }
+    /* Menü senkrecht mittig zwischen Name und Unterkante (Startseite) bzw. Instagram (Menü) */
     :is(.bm--aside, .bm--overlay) .bm-body > nav {
       grid-column: 1;
-      grid-row: 4;
+      grid-row: 2 / 6;
+      align-self: center;
     }
-    /* Unter der letzten Zeile („Kontakt“) liegen 0,185 Schrifthöhen Luft bis zum Zeilenende (gemessen; Melodrama hat
-       dafür in fonts.css dieselben Zeilenmaße wie vorher Cyrene) – um genau so viel ragt das Menü nach unten, damit die
-       Grundlinie von „Kontakt“ auf der Linie der Bildunterschrift liegt (Migha: 0,15, Bodoni: 0,128) */
-    :is(.bm--aside, .bm--overlay) .bm-body > nav {
-      margin-bottom: calc(-0.185 * var(--bm-item));
+    .bm--overlay .bm-body > nav {
+      grid-row: 2 / 5;
     }
-    /* Foto rechts neben Name und Menü: seine Unterkante liegt auf der Grundlinie von „KONTAKT“ (bis 22.11.2026 stand
-       dort die Bildunterschrift). Darunter mittig Instagram. */
+    /* Foto rechts neben Name und Menü, von der Oberkante des Namens bis über Instagram (darunter mittig). Bis 22.11.2026
+       lag seine Unterkante auf der Grundlinie von „KONTAKT“ (Tag alte-version-menue-unten). */
     .bm--aside .bm-aside {
       display: contents;
     }
@@ -469,6 +469,10 @@ const nameWords = site.name.split(' ').map((word) =>
       grid-row: 1 / 5;
       height: auto;
       min-height: 0;
+    }
+    /* Foto senkrecht mittig (vorher unten bündig) */
+    .bm--aside .bm-aside :global(.hs-frame) {
+      align-self: center;
     }
 
     /* Menü: oben derselbe Abstand wie auf der Startseite; der Schließen-Knopf liegt darüber an der Stelle des

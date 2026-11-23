@@ -721,8 +721,10 @@ Fotos – Git-Tag `alte-version-ultramarin-climate-crisis`.
 - **Startseite „Bild neben Name“** (seit 16. November 2026, `src/components/HomeSlides.astro` und `BlueMenu.astro`):
   Schrift steht nie auf dem Foto. Am Laptop (ab 1000 px) zwei Spalten: links auf Blau der Name zweizeilig, unten
   das Menü (etwa halb so groß wie der Name) und Instagram; rechts ein Foto aus dem Portfolio in einer festen Fläche
-  im Format 4:3. Die Unterkante des Fotos liegt genau auf der Grundlinie von „KONTAKT“; „jeskodorner“ (Instagram)
-  steht mittig unter dem Foto. Seit 22.11.2026 gibt es keine Bildunterschrift mehr – weder am Laptop noch am Handy
+  im Format 4:3. Seit 22.11.2026 steht das Menü senkrecht mittig zwischen Name und Unterkante (im Menü auf
+  Unterseiten genauso, zwischen Name und Instagram), das Foto senkrecht mittig; „jeskodorner“ (Instagram) steht
+  mittig unten unter dem Foto. Vorher lagen Menü und Fotounterkante unten auf einer Linie (Tag
+  `alte-version-menue-unten`). Seit 22.11.2026 gibt es keine Bildunterschrift mehr – weder am Laptop noch am Handy
   (vorher: „Albumname – Monat Jahr“ unter dem Foto, Stand im Tag `alte-version-startseite-bildunterschrift`).
   Jedes Foto füllt diese Fläche (Ausschnitt nach dem
   Bildschwerpunkt), so wechselt beim Bildwechsel nie das Format; ganz zu sehen sind die Fotos im Portfolio. Am Handy
