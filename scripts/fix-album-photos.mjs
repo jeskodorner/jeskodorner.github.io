@@ -43,12 +43,34 @@ for (const e of await fs.readdir(galleriesRoot, { withFileTypes: true })) {
 
   const text = await fs.readFile(indexPath, 'utf8');
   const { yaml, body } = splitFrontmatter(text);
-  const doc = parseDocument(yaml);
+  let doc = parseDocument(yaml);
   let changed = false;
   const imagesDir = path.join(dir, 'images');
   const listFiles = async () => ((await exists(imagesDir)) ? (await fs.readdir(imagesDir)).filter((f) => IMG.test(f)) : []);
-  let present = await listFiles();
   const own = (f) => `/alben/${folder}/images/${f}`;
+
+  // 0. Fotos, die im CMS direkt in den images-Ordner eines Albums hochgeladen wurden (stehen nicht in der Fotoliste,
+  //    z. B. „DSCF6515.jpg“ als Vorschaufoto): wie bei „Fotos hochladen“ aufbereiten und ins Album aufnehmen (seit
+  //    23.11.2026 – vorher brach der Bau ab, weil das Foto „im Album nicht“ stand)
+  const listed = new Set(
+    (doc.get('images')?.toJSON?.() ?? []).map((i) => String(i?.file ?? '').split('/').pop()).filter(Boolean),
+  );
+  const raw = (await listFiles()).filter((f) => !listed.has(f));
+  if (raw.length) {
+    const src = path.join(sourceRoot, folder);
+    await fs.mkdir(src, { recursive: true });
+    for (const f of raw) {
+      await fs.copyFile(path.join(imagesDir, f), path.join(src, f));
+      await fs.rm(path.join(imagesDir, f), { force: true });
+    }
+    const run = spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'optimize.mjs'), folder], { stdio: 'inherit', cwd: ROOT });
+    if (run.status === 0) console.log(`  + ${folder}: ${raw.length} hochgeladene(s) Foto(s) aufbereitet: ${raw.join(', ')}`);
+    // optimize.mjs hat die Fotoliste in index.md ergänzt: Dokument neu einlesen
+    const fresh = splitFrontmatter(await fs.readFile(indexPath, 'utf8'));
+    doc = parseDocument(fresh.yaml);
+    changed = true;
+  }
+  let present = await listFiles();
 
 
   /** passenden Pfad für eine Angabe finden (oder das hochgeladene Foto ins Album holen) */
