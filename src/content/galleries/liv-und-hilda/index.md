@@ -6,6 +6,7 @@ description: bunt
 visibility: public
 portfolio:
   zeigen: true
+  vorschau: /alben/DSCF6580-1.jpg
 showExif: true
 cover: /alben/DSCF6580.jpg
 images:
