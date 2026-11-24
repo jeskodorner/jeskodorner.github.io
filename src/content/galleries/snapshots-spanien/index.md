@@ -1,9 +1,9 @@
 ---
-title: Spanien am Strand
+title: Spanien
 slug: spanien-strand
 date: 2025-02-03
 location: Spanien
-description: Jeden Tag geht die Sonne unter. Aber nicht jeden Tag gibt es solches Licht.
+description: Wie eine zweite Heimat für mich.
 visibility: public
 portfolio:
   zeigen: true
@@ -11,6 +11,8 @@ portfolio:
   fotos:
     - /alben/snapshots-spanien/images/dscf3604.jpg
     - /alben/snapshots-spanien/images/dscf3579.jpg
+  name: Spanien  am Strand
+  beschreibung: Jeden Tag geht die Sonne unter. Aber nicht jeden Tag gibt es solches Licht.
 showExif: true
 cover: /alben/snapshots-spanien/images/dscf3835.jpg
 images:
