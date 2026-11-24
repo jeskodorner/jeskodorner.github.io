@@ -116,6 +116,8 @@ const galleries = defineCollection({
         z
           .object({
             zeigen: z.preprocess(empty, z.boolean().default(false)),
+            /** Vorschaufoto auch in der Diashow der Startseite (seit 24.11.2026; ohne Angabe: ja) */
+            startseite: z.preprocess(empty, z.boolean().default(true)),
             vorschau: opt(z.string()),
             fotos: opt(z.array(z.string())),
             name: opt(z.string()),

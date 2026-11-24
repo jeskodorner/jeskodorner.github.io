@@ -217,7 +217,8 @@ Die Formulare stehen in `.pages.yml`. Jede Speicherung ist ein Commit auf `main`
   (`scripts/slug-history.mjs` → `src/content/alte-adressen.json`), `astro.config.mjs` legt die Weiterleitungen an.
   Ausnahme: Wird ein öffentliches Album privat, leitet die alte Adresse nicht weiter (sonst wäre die geheime Adresse
   verraten). Private Alben behalten beim Ändern ihren zufälligen Teil am Ende (z. B. `-x7k2p9`).
-- **Portfolio** (im Album-Formular): Schalter „Im Portfolio anzeigen“, **Vorschaufoto** und **Fotos der Mappe** per
+- **Portfolio** (im Album-Formular): Schalter „Im Portfolio anzeigen“ und „Auf der Startseite zeigen“ (seit
+  24.11.2026, Standard an: ausgeschaltet steht die Mappe nur im Portfolio, nicht in der Diashow der Startseite), **Vorschaufoto** und **Fotos der Mappe** per
   Klick aus dem Album-Ordner (Medienquelle „Album-Fotos“; dort nichts hochladen), Name und Beschreibung der Mappe.
 - **Filme**, **Über mich**: Texte und Felder.
 

@@ -25,6 +25,8 @@ export interface WorkItem {
   mappe?: string[];
   /** Beschreibung der Mappe (optional) */
   beschreibung?: string;
+  /** Erscheint in der Diashow der Startseite (CMS: „Auf der Startseite zeigen“, ohne Angabe ja) */
+  startseite?: boolean;
 }
 
 export async function getSelectedWorks(): Promise<WorkItem[]> {
@@ -58,6 +60,7 @@ export async function getSelectedWorks(): Promise<WorkItem[]> {
           ...workFor(g, image, p.name?.trim() || undefined),
           mappe: mappe?.length ? mappe : undefined,
           beschreibung: p.beschreibung?.trim() || undefined,
+          startseite: p.startseite !== false,
         };
       }),
     );

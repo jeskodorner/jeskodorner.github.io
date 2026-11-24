@@ -27,12 +27,16 @@ export interface Props {
 
 const { works } = Astro.props;
 // Die Fotos stehen im Portfolio in derselben Reihenfolge (getSelectedWorks) – #werk-<n> ist ihr Platz dort
-const slides = works.map((w, i) => ({
+// Nur Mappen mit „Auf der Startseite zeigen“ (seit 24.11.2026); der Sprung ins Portfolio zählt weiter alle Mappen.
+// Ist keine markiert, zeigt die Startseite alle.
+const all = works.map((w, i) => ({
   w,
   title: tidyTitle(w.name ?? w.album),
   meta: formatMonth(w.gallery.date),
   href: `/portfolio/#werk-${i + 1}`,
 }));
+const chosen = all.filter((s) => s.w.startseite !== false);
+const slides = chosen.length ? chosen : all;
 const first = slides[0];
 ---
 

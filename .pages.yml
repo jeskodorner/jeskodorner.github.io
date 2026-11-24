@@ -127,6 +127,11 @@ content:
           - name: zeigen
             label: Im Portfolio anzeigen
             type: boolean
+          - name: startseite
+            label: Auf der Startseite zeigen
+            type: boolean
+            default: true
+            description: Vorschaufoto auch in der wechselnden Fotoreihe der Startseite. Ausgeschaltet steht die Mappe nur im Portfolio.
           - name: vorschau
             label: Vorschaufoto
             type: image
