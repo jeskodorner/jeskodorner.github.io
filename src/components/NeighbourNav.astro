@@ -102,7 +102,14 @@ const { prev, next, prevLabel, nextLabel, label } = Astro.props;
     gap: 1.25rem;
   }
   /* Vorschaubild unbeschnitten im Originalformat, mit leichtem Schatten */
+  /* Vorschaubild nie zusammendrücken: Bei langen Titeln schrumpfte es in der Flex-Zeile in der Breite und wirkte
+     verzerrt (gemeldet 24.11.2026) – es behält seine Breite, der Titel bricht um */
+  .nb-body > :global(picture),
   .nb :global(.nb-img) {
+    flex: none;
+  }
+  .nb :global(.nb-img) {
+    object-fit: cover;
     width: auto;
     height: clamp(72px, 9vw, 130px);
     box-shadow:
